@@ -1,9 +1,10 @@
+package Yaron;
 
-public class NEw {
+public class YAronn {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		System.out.println("bla");
+
 	}
 
 }
