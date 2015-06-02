@@ -2,6 +2,8 @@ package UI;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
@@ -117,10 +119,20 @@ public class Login_GUI extends JFrame {
 		    label2.setBounds(215, 396, 150, 155);
 		    label2.setBackground(Color.WHITE);
 		    label2.addMouseListener(new MouseAdapter() {
-		        public void mouseClicked(MouseEvent me) {
-		        	JOptionPane.showMessageDialog(contentPane,  "Forgot Password OK!.");
-		        	txtOneOrMore.setVisible(true);
-		        }
+		        public void mouseClicked(MouseEvent me){
+	                   ForgotPassword_GUI nw;
+					try {
+						nw = new ForgotPassword_GUI();
+						nw.fpScreen();
+						contentPane.setVisible(false);
+					} catch (MalformedURLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+	                   
+						//ForgotPassword_GUI.fpScreen();
+						//contentPane.setVisible(false);
+					}
 		      });		    
 		    contentPane.add(label2);
 		    ///////////////////////////////////////////
@@ -168,6 +180,7 @@ public class Login_GUI extends JFrame {
 		  
 		    //f.setVisible(true);
 	}
+	
 }
 
 

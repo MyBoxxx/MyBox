@@ -22,13 +22,14 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class CreateFolderScreen extends JFrame {
+	
 	private JTextField textField;
 	private JTextField textField_1;
   CreateFolderScreen() {
     final UI.ContentPanel contentPanel = new ContentPanel();
     getContentPane().add(contentPanel);
     contentPanel.setLayout(null);
-    
+    this.setTitle("Create New Folder");
     JLabel lblFolderName = new JLabel("Folder Name:");
     lblFolderName.setFont(new Font("Tahoma", Font.PLAIN, 14));
     lblFolderName.setBounds(20, 444, 90, 23);
