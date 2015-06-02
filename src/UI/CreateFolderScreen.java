@@ -1,17 +1,23 @@
 package UI;
 
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.MediaTracker;
 import java.awt.Toolkit;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
+
 import java.awt.Color;
 import java.awt.Font;
+
 import javax.swing.JButton;
 import javax.swing.JTextField;
+
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -19,7 +25,7 @@ public class CreateFolderScreen extends JFrame {
 	private JTextField textField;
 	private JTextField textField_1;
   CreateFolderScreen() {
-    UI.ContentPanel contentPanel = new ContentPanel();
+    final UI.ContentPanel contentPanel = new ContentPanel();
     getContentPane().add(contentPanel);
     contentPanel.setLayout(null);
     
@@ -41,14 +47,31 @@ public class CreateFolderScreen extends JFrame {
     
     JButton btnCancel = new JButton("Cancel");
     btnCancel.addMouseListener(new MouseAdapter() {
-    	@Override
+    	@SuppressWarnings("deprecation")
+		@Override
     	public void mouseClicked(MouseEvent arg0) {
+    		 final ImageIcon icon = new ImageIcon("src/UI/imageno.jpg");
+             JOptionPane.showMessageDialog(null, "No Folder created", "About", JOptionPane.INFORMATION_MESSAGE, icon);
+             System.exit(0);
     	}
     });
     btnCancel.setBounds(73, 514, 89, 23);
     contentPanel.add(btnCancel);
     
     JButton btnOk = new JButton("OK");
+    btnOk.addMouseListener(new MouseAdapter() {
+    	@Override
+    	public void mouseClicked(MouseEvent e) {
+    		 final ImageIcon icon = new ImageIcon("src/UI/imageyes.jpg");
+    		 if (textField.getText().equals("") && textField.getText() != null)
+    		 {
+        		 final ImageIcon icono = new ImageIcon("src/UI/imageno.jpg");
+                 JOptionPane.showMessageDialog(null, "You have to insert a Name!", "About", JOptionPane.INFORMATION_MESSAGE, icono);
+    		 }
+    		 else
+    			 JOptionPane.showMessageDialog(null, "Folder with the name "  + textField.getText() + " created\n" + "Description: " + textField_1.getText(), "About", JOptionPane.INFORMATION_MESSAGE, icon);
+    	}
+    });
     btnOk.setBounds(272, 514, 89, 23);
     contentPanel.add(btnOk);
     
@@ -71,6 +94,10 @@ public class CreateFolderScreen extends JFrame {
 
   public static void main(String[] args) {
     CreateFolderScreen jrframe = new CreateFolderScreen();
+    Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
+	int x = (int) ((dimension.getWidth() - jrframe.getWidth()) / 2);
+	int y = (int) ((dimension.getHeight() - jrframe.getHeight()) / 2);
+	jrframe.setLocation(x, y);
     jrframe.setVisible(true);
   }
 }
