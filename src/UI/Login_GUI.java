@@ -1,7 +1,9 @@
-package Yaron;
+package UI;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
@@ -21,6 +23,9 @@ import java.awt.Color;
 
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
+
+import com.thehowtotutorial.splashscreen.JSplash;
+
 import java.awt.Font;
 
 public class Login_GUI extends JFrame {
@@ -34,8 +39,27 @@ public class Login_GUI extends JFrame {
 
 	/**
 	 * Launch the application.
+	 * @throws InterruptedException 
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws InterruptedException {
+		
+		
+		JSplash splashs = new JSplash(Main.class.getResource("logo.png"), true, true, false, "V1",null,Color.RED,Color.BLACK);
+		splashs.splashOn();
+		//call Method;
+		splashs.setProgress(20, "Init");
+		Thread.sleep(1000);
+		splashs.setProgress(40, "Loading");
+		Thread.sleep(1000);
+		splashs.setProgress(60, "Applying Configs");
+		Thread.sleep(1000);
+		splashs.setProgress(80, "Making JAVA");
+		Thread.sleep(1000);
+		splashs.setProgress(100, "100 Ein ma");
+		Thread.sleep(1000);
+		splashs.splashOff();
+		
+		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -95,10 +119,20 @@ public class Login_GUI extends JFrame {
 		    label2.setBounds(215, 396, 150, 155);
 		    label2.setBackground(Color.WHITE);
 		    label2.addMouseListener(new MouseAdapter() {
-		        public void mouseClicked(MouseEvent me) {
-		        	JOptionPane.showMessageDialog(contentPane,  "Forgot Password OK!.");
-		        	txtOneOrMore.setVisible(true);
-		        }
+		        public void mouseClicked(MouseEvent me){
+	                   ForgotPassword_GUI nw;
+					try {
+						nw = new ForgotPassword_GUI();
+						nw.fpScreen();
+						contentPane.setVisible(false);
+					} catch (MalformedURLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+	                   
+						//ForgotPassword_GUI.fpScreen();
+						//contentPane.setVisible(false);
+					}
 		      });		    
 		    contentPane.add(label2);
 		    ///////////////////////////////////////////
@@ -146,6 +180,7 @@ public class Login_GUI extends JFrame {
 		  
 		    //f.setVisible(true);
 	}
+	
 }
 
 
