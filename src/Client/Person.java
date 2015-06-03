@@ -1,4 +1,4 @@
-package Client;
+package client;
 
 public class Person {
 	private int id;
@@ -10,19 +10,10 @@ public class Person {
 	private int status;
 	private int premissions;
 	
-	public Person(int id, String name, String password, String email,
-			String phone, String position, int status, int premissions) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.password = password;
-		this.email = email;
-		this.phone = phone;
-		this.position = position;
-		this.status = status;
-		this.premissions = premissions;
+	public Person(int id2, String name2, String password2, String email2,
+			String phone2, String position2, int status2, int premissions2) {
+		// TODO Auto-generated constructor stub
 	}
-	
 	public int getId() {
 		return id;
 	}

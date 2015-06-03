@@ -1,4 +1,4 @@
-package Client;
+package client;
 
 import java.util.ArrayList;
 
@@ -6,12 +6,10 @@ public class Owner extends Person {
 
 	private int ownerNumber;
 	private ArrayList<String> ownerFiles;
-	
 	public int getOwnerNumFilles()
 	{
 		return ownerFiles.size();
 	}
-	
 	public ArrayList<String> getOwnerFiles() {
 		return ownerFiles;
 	}
