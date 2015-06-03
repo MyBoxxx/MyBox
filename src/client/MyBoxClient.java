@@ -48,7 +48,7 @@ public class MyBoxClient implements ChatIF
   /**
    * The instance of the client that created this ConsoleChat.
    */
-  ChatClient client;
+  public static ChatClient client;
 
   
   //Constructors ****************************************************

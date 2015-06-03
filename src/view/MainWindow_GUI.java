@@ -3,13 +3,19 @@ package view;
 import java.awt.*;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileSystemView;
+import javax.swing.filechooser.FileView;
 
 import java.awt.event.*;
+import java.io.File;
+import java.io.IOException;
 
 
 
-public class MainWindow_GUI extends JFrame {
 
+public class MainWindow_GUI extends javax.swing.JFrame {
+
+	private static final Container JavaFileView = null;
 	private JPanel contentPane;
 	private JTextField textField;
 
@@ -17,7 +23,7 @@ public class MainWindow_GUI extends JFrame {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-		JProgressBarb jp = new JProgressBarb();
+		JProgressBar jp = new JProgressBar();
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -41,7 +47,7 @@ public class MainWindow_GUI extends JFrame {
 		
 		public JProgressBarb(){
 			JFrame frame = new JFrame();
-			frame.setLayout(new FlowLayout());
+			frame.getContentPane().setLayout(new FlowLayout());
 			btn = new JButton("Start");
 			
 			btn.addActionListener(new ActionListener() {
@@ -56,8 +62,8 @@ public class MainWindow_GUI extends JFrame {
 			prg.setValue(0);
 			prg.setStringPainted(true);
 			
-			frame.add(prg);
-			frame.add(btn);
+			frame.getContentPane().add(prg);
+			frame.getContentPane().add(btn);
 			
 			
 			
@@ -88,58 +94,95 @@ public class MainWindow_GUI extends JFrame {
 	public MainWindow_GUI() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 800, 800);
+		
+		JMenuBar menuBar = new JMenuBar();
+		setJMenuBar(menuBar);
+		
+		JMenu mnMybox = new JMenu("MyBox");
+		menuBar.add(mnMybox);
+		
+		JMenuItem mntmSettings = new JMenuItem("Settings");
+		mnMybox.add(mntmSettings);
+		
+		JMenuItem mntmLogOut = new JMenuItem("Log Out");
+		mnMybox.add(mntmLogOut);
+		
+		JMenu mnFile = new JMenu("File");
+		menuBar.add(mnFile);
+		
+		JMenuItem mntmCreateNewFolder = new JMenuItem("Create New Folder");
+		mnFile.add(mntmCreateNewFolder);
+		
+		JMenuItem mntmUploadfile = new JMenuItem("UploadFile");
+		mnFile.add(mntmUploadfile);
+		
+		JMenuItem mntmSearch = new JMenuItem("Search");
+		mnFile.add(mntmSearch);
+		
+		JMenu mnGroup = new JMenu("Group");
+		menuBar.add(mnGroup);
+		
+		JMenuItem mntmCreateNewGroup = new JMenuItem("Create New Group");
+		mnGroup.add(mntmCreateNewGroup);
+		
+		JMenuItem mntmAskToJoin = new JMenuItem("Ask to Join");
+		mnGroup.add(mntmAskToJoin);
+		
+		JMenu mnEdit = new JMenu("Edit");
+		menuBar.add(mnEdit);
+		
+		JMenuItem mntmCopy = new JMenuItem("Move");
+		mnEdit.add(mntmCopy);
+		
+		JMenuItem mntmPaste = new JMenuItem("Select NON");
+		mnEdit.add(mntmPaste);
+		
+		JMenuItem mntmSelectAll = new JMenuItem("Select All");
+		mnEdit.add(mntmSelectAll);
+		
+		JMenuItem mntmDelete = new JMenuItem("Delete");
+		mnEdit.add(mntmDelete);
+		
+		JMenuItem mntmRename = new JMenuItem("ReName");
+		mnEdit.add(mntmRename);
+		
+		JMenu mnHelp = new JMenu("Edit");
+		menuBar.add(mnHelp);
+		
+		JMenu mnView = new JMenu("Go");
+		menuBar.add(mnView);
+		
+		JCheckBoxMenuItem chckbxmntmMyFiles = new JCheckBoxMenuItem("My Files");
+		mnView.add(chckbxmntmMyFiles);
+		
+		JCheckBoxMenuItem chckbxmntmSharedWithMe = new JCheckBoxMenuItem("Shared With Me");
+		mnView.add(chckbxmntmSharedWithMe);
+		
+		JMenuItem mntmTrash = new JMenuItem("Trash");
+		mnView.add(mntmTrash);
+		
+		JMenu mnHelp_1 = new JMenu("Help");
+		menuBar.add(mnHelp_1);
+		
+		JMenuItem mntmAboutUs = new JMenuItem("About Us");
+		mnHelp_1.add(mntmAboutUs);
+		
+		JMenuItem mntmHelp = new JMenuItem("Help");
+		mnHelp_1.add(mntmHelp);
+		
+		JMenuItem mntmNewMenuItem = new JMenuItem("                    ");
+		menuBar.add(mntmNewMenuItem);
+		
+		JLabel lblLogInAs = new JLabel("Log in as : Eyalpano@gmail.com");
+		menuBar.add(lblLogInAs);
+		
+		JButton btnNotifications = new JButton("notifications");
+		menuBar.add(btnNotifications);
 		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		
+		
 		setContentPane(contentPane);
-		contentPane.setLayout(null);
+		contentPane.setLayout(new GridLayout(0, 2, 0, 0));
 		
-		JButton btnNewButton = new JButton("Back");
-		btnNewButton.setBounds(48, 180, 117, 29);
-		contentPane.add(btnNewButton);
-		
-		JButton button = new JButton("About Us");
-		button.setBounds(48, 238, 117, 29);
-		contentPane.add(button);
-		
-		JButton button_1 = new JButton("Help");
-		button_1.setBounds(48, 96, 117, 29);
-		contentPane.add(button_1);
-		
-		JButton button_2 = new JButton("Settings");
-		button_2.setBounds(48, 39, 117, 29);
-		contentPane.add(button_2);
-		
-		JButton button_3 = new JButton("Sign Out");
-		button_3.setBounds(194, 96, 117, 29);
-		contentPane.add(button_3);
-		
-		JButton button_4 = new JButton("Create Group");
-		button_4.setBounds(194, 39, 117, 29);
-		contentPane.add(button_4);
-		
-		JButton button_5 = new JButton("Upload");
-		button_5.setBounds(194, 180, 117, 29);
-		contentPane.add(button_5);
-		
-		JButton button_6 = new JButton("Create Folder");
-		button_6.setBounds(194, 238, 117, 29);
-		contentPane.add(button_6);
-		
-		JButton button_7 = new JButton("Ask To Join/Remove");
-		button_7.setBounds(245, 639, 117, 29);
-		contentPane.add(button_7);
-		
-		JButton button_8 = new JButton("Recycle Bin");
-		button_8.setBounds(454, 639, 117, 29);
-		contentPane.add(button_8);
-		
-		JButton button_9 = new JButton("Notifications");
-		button_9.setBounds(616, 639, 117, 29);
-		contentPane.add(button_9);
-		
-		textField = new JTextField();
-		textField.setBounds(390, 31, 385, 42);
-		contentPane.add(textField);
-		textField.setColumns(10);
 	}
 }

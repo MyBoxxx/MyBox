@@ -1,109 +1,188 @@
 package view;
 
-import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
+import java.awt.*;
+
+import javax.swing.*;
+import javax.swing.filechooser.FileSystemView;
+import javax.swing.filechooser.FileView;
+
+import java.awt.event.*;
+import java.io.File;
 import java.io.IOException;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 
-import model.Envelope;
-import client.CcrmApp;
-/**
- * this class is Abstract Gui  that extends JFrame
- * @author jacob
- *
- */
-public abstract class AbstractGUI extends JFrame
-{
-	protected JButton backButton=null;
+
+
+public class AbstractGUI extends javax.swing.JFrame {
+
+	private static final Container JavaFileView = null;
+	private JPanel contentPane;
+	private JTextField textField;
 
 	/**
-	 * constructor
-	 * add window Listener 
+	 * Launch the application.
 	 */
-	public AbstractGUI(){
-		this.addWindowListener(new Exit());
-	}
-	/**
-	 * constructor
-	 *  
-	 */
-	public AbstractGUI(int i){
-		
-	}
-	public void displayInfoMessage(String message,String title,int messageType)
-	{
-		JOptionPane.showMessageDialog(this, message, title,messageType);
-	}
-	
-
-	
-	
-	/**
-	 * This method adds an action listener to back to menu button.
-	 * @param listener
-	 */
-	public void addBackActionListener(ActionListener listener){
-		backButton.addActionListener(listener);
-	}
-	/**
-	 * Inner class that we press on Exit button - update the status of Employee to 0 (Disconnected) and exit from program
-	 * @author jacob
-	 *
-	 */
-	class Exit implements WindowListener{
-
-		@Override
-		public void windowOpened(WindowEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		@Override
-		public void windowClosing(WindowEvent e) {
-			// TODO Auto-generated method stub
-			 Envelope en1 = new Envelope(CcrmApp.clien.getCurrUser(),"updateStatus0");
+	public static void main(String[] args) {
+		JProgressBar jp = new JProgressBar();
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
 				try {
-					CcrmApp.clien.sendToServer(en1);
-					System.exit(1);
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					AbstractGUI frame = new AbstractGUI();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
 				}
-		}
+			}
+		});
+	}
 
-		@Override
-		public void windowClosed(WindowEvent e) {
-			// TODO Auto-generated method stub
+	public class JProgressBarb{
+		final static int interval = 1000;
+		int i;
+		Timer t;
+		
+		JButton btn;
+		
+		JProgressBar prg;
+		
+		public JProgressBarb(){
+			JFrame frame = new JFrame();
+			frame.getContentPane().setLayout(new FlowLayout());
+			btn = new JButton("Start");
 			
-		}
-
-		@Override
-		public void windowIconified(WindowEvent e) {
-			// TODO Auto-generated method stub
+			btn.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent ae){
+					i=0;
+					t.start();
+					btn.setEnabled(false);
+				}
+			});
 			
-		}
-
-		@Override
-		public void windowDeiconified(WindowEvent e) {
-			// TODO Auto-generated method stub
+			prg = new JProgressBar(0,20);
+			prg.setValue(0);
+			prg.setStringPainted(true);
 			
-		}
-
-		@Override
-		public void windowActivated(WindowEvent e) {
-			// TODO Auto-generated method stub
+			frame.getContentPane().add(prg);
+			frame.getContentPane().add(btn);
 			
-		}
-
-		@Override
-		public void windowDeactivated(WindowEvent e) {
-			// TODO Auto-generated method stub
 			
+			
+			
+			t = new Timer(interval, new ActionListener() {
+				
+				public void actionPerformed(ActionEvent ae) {
+					if (i==20)
+					{
+						t.stop();
+						btn.setEnabled(true);
+					}
+					else
+					{
+						i++;
+						prg.setValue(i);
+					}
+				}
+			});
+		frame.setVisible(true);
+		frame.setSize(300,300);
+		
 		}
+	}
+	/**
+	 * Create the frame.
+	 */
+	public AbstractGUI() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 800, 800);
+		
+		JMenuBar menuBar = new JMenuBar();
+		setJMenuBar(menuBar);
+		
+		JMenu mnMybox = new JMenu("MyBox");
+		menuBar.add(mnMybox);
+		
+		JMenuItem mntmSettings = new JMenuItem("Settings");
+		mnMybox.add(mntmSettings);
+		
+		JMenuItem mntmLogOut = new JMenuItem("Log Out");
+		mnMybox.add(mntmLogOut);
+		
+		JMenu mnFile = new JMenu("File");
+		menuBar.add(mnFile);
+		
+		JMenuItem mntmCreateNewFolder = new JMenuItem("Create New Folder");
+		mnFile.add(mntmCreateNewFolder);
+		
+		JMenuItem mntmUploadfile = new JMenuItem("UploadFile");
+		mnFile.add(mntmUploadfile);
+		
+		JMenuItem mntmSearch = new JMenuItem("Search");
+		mnFile.add(mntmSearch);
+		
+		JMenu mnGroup = new JMenu("Group");
+		menuBar.add(mnGroup);
+		
+		JMenuItem mntmCreateNewGroup = new JMenuItem("Create New Group");
+		mnGroup.add(mntmCreateNewGroup);
+		
+		JMenuItem mntmAskToJoin = new JMenuItem("Ask to Join");
+		mnGroup.add(mntmAskToJoin);
+		
+		JMenu mnEdit = new JMenu("Edit");
+		menuBar.add(mnEdit);
+		
+		JMenuItem mntmCopy = new JMenuItem("Move");
+		mnEdit.add(mntmCopy);
+		
+		JMenuItem mntmPaste = new JMenuItem("Select NON");
+		mnEdit.add(mntmPaste);
+		
+		JMenuItem mntmSelectAll = new JMenuItem("Select All");
+		mnEdit.add(mntmSelectAll);
+		
+		JMenuItem mntmDelete = new JMenuItem("Delete");
+		mnEdit.add(mntmDelete);
+		
+		JMenuItem mntmRename = new JMenuItem("ReName");
+		mnEdit.add(mntmRename);
+		
+		JMenu mnHelp = new JMenu("Edit");
+		menuBar.add(mnHelp);
+		
+		JMenu mnView = new JMenu("Go");
+		menuBar.add(mnView);
+		
+		JCheckBoxMenuItem chckbxmntmMyFiles = new JCheckBoxMenuItem("My Files");
+		mnView.add(chckbxmntmMyFiles);
+		
+		JCheckBoxMenuItem chckbxmntmSharedWithMe = new JCheckBoxMenuItem("Shared With Me");
+		mnView.add(chckbxmntmSharedWithMe);
+		
+		JMenuItem mntmTrash = new JMenuItem("Trash");
+		mnView.add(mntmTrash);
+		
+		JMenu mnHelp_1 = new JMenu("Help");
+		menuBar.add(mnHelp_1);
+		
+		JMenuItem mntmAboutUs = new JMenuItem("About Us");
+		mnHelp_1.add(mntmAboutUs);
+		
+		JMenuItem mntmHelp = new JMenuItem("Help");
+		mnHelp_1.add(mntmHelp);
+		
+		JMenuItem mntmNewMenuItem = new JMenuItem("                    ");
+		menuBar.add(mntmNewMenuItem);
+		
+		JLabel lblLogInAs = new JLabel("Log in as : Eyalpano@gmail.com");
+		menuBar.add(lblLogInAs);
+		
+		JButton btnNotifications = new JButton("notifications");
+		menuBar.add(btnNotifications);
+		contentPane = new JPanel();
+		
+		
+		setContentPane(contentPane);
+		contentPane.setLayout(new GridLayout(0, 2, 0, 0));
 		
 	}
 }

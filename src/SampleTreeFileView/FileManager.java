@@ -66,7 +66,7 @@ class FileManager {
 	}
 
     /** Title of the application */
-    public static final String APP_TITLE = "FileMan";
+    public static final String APP_TITLE = "MyBox";
     /** Used to open/edit/print files. */
     private Desktop desktop;
     /** Provides nice icons and names for files. */
@@ -86,6 +86,7 @@ class FileManager {
     private JTable table;
     private JProgressBar progressBar;
     /** Table model for File[]. */
+    
     private FileTableModel fileTableModel;
     private ListSelectionListener listSelectionListener;
     private boolean cellSizesSet = false;
@@ -113,6 +114,12 @@ class FileManager {
     private JTextField name;
 	private Dimension preferredSize;
 	private Container fileDetailsLabels;
+	JPanel simpleOutput;
+	JButton renameFile;
+	JPanel southRadio;
+	JRadioButton newTypeDirectory;
+	JLabel label;
+	
 	private int count;
 
     public Container getGui() {
@@ -164,171 +171,171 @@ class FileManager {
                 fileDetailsLabels.getComponent(ii).setEnabled(false);
             }
     		    		
-    		    		            JPanel simpleOutput = new JPanel(new BorderLayout(3,3));
-    		    		            progressBar = new JProgressBar();
-    		    		            simpleOutput.add(progressBar, BorderLayout.EAST);
-    		    		            progressBar.setVisible(false);
+            simpleOutput = new JPanel(new BorderLayout(3,3));
+            progressBar = new JProgressBar();
+            simpleOutput.add(progressBar, BorderLayout.EAST);
+            progressBar.setVisible(false);
     		    		                        
-    		    		                                    JPanel detailView = new JPanel(new BorderLayout(3,3));
+    		JPanel detailView = new JPanel(new BorderLayout(3,3));
     		    		                                    //fileTableModel = new FileTableModel();
 
-    		    		                                    table = new JTable();
-    		    		                                    table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-    		    		                                    table.setAutoCreateRowSorter(true);
-    		    		                                    table.setShowVerticalLines(false);
-    		    		                                    table.getSelectionModel().addListSelectionListener(listSelectionListener);
-    		    		                                    JScrollPane tableScroll = new JScrollPane(table);
-    		    		                                    Dimension d = tableScroll.getPreferredSize();
-    		    		                                    tableScroll.setPreferredSize(new Dimension((int)d.getWidth(), (int)d.getHeight()/2));
-    		    		                                    detailView.add(tableScroll, BorderLayout.CENTER);
-    		    		                                    
-    		    		                                                tree = new JTree(treeModel);
-    		    		                                                tree.setRootVisible(false);
-    		    		                                                tree.addTreeSelectionListener(treeSelectionListener);
-    		    		                                                tree.setCellRenderer(new FileTreeCellRenderer());
-    		    		                                                tree.expandRow(0);
-    		    		                                                JScrollPane treeScroll = new JScrollPane(tree);
-    		    		                                                
-    		    		                                                            // as per trashgod tip
-    		    		                                                            tree.setVisibleRowCount(15);
-    		    		                                                            
-    		    		                                                                        Dimension preferredSize = treeScroll.getPreferredSize();
-    		    		                                                                        treeScroll.setPreferredSize( widePreferred );
-    		    		                                                                        
-    		    		                                                                                    // details for a File
-    		    		                                                                                    JPanel fileMainDetails = new JPanel(new BorderLayout(4,2));
-    		    		                                                                                    fileMainDetails.setBorder(new EmptyBorder(0,6,0,6));
-    		    		                                                                                    
-    		    		                                                                                                JPanel fileDetailsLabels = new JPanel(new GridLayout(0,1,2,2));
-    		    		                                                                                                fileMainDetails.add(fileDetailsLabels, BorderLayout.WEST);
-    		    		                                                                                                
-    		    		                                                                                                            JPanel fileDetailsValues = new JPanel(new GridLayout(0,1,2,2));
-    		    		                                                                                                            fileMainDetails.add(fileDetailsValues, BorderLayout.CENTER);
-    		    		                                                                                                            
-    		    		                                                                                                                        fileDetailsLabels.add(new JLabel("File", JLabel.TRAILING));
-    		    		                                                                                                                        fileName = new JLabel();
-    		    		                                                                                                                        fileDetailsValues.add(fileName);
-    		    		                                                                                                                        fileDetailsLabels.add(new JLabel("Path/name", JLabel.TRAILING));
-    		    		                                                                                                                        path = new JTextField(5);
-    		    		                                                                                                                        path.setEditable(false);
-    		    		                                                                                                                        fileDetailsValues.add(path);
-    		    		                                                                                                                        fileDetailsLabels.add(new JLabel("Last Modified", JLabel.TRAILING));
-    		    		                                                                                                                        date = new JLabel();
-    		    		                                                                                                                        fileDetailsValues.add(date);
-    		    		                                                                                                                        fileDetailsLabels.add(new JLabel("File size", JLabel.TRAILING));
-    		    		                                                                                                                        size = new JLabel();
-    		    		                                                                                                                        fileDetailsValues.add(size);
-    		    		                                                                                                                        fileDetailsLabels.add(new JLabel("Type", JLabel.TRAILING));
-    		    		                                                                                                                        
-    		    		                                                                                                                                    JPanel flags = new JPanel(new FlowLayout(FlowLayout.LEADING,4,0));
-    		    		                                                                                                                                    isDirectory = new JRadioButton("Directory");
-    		    		                                                                                                                                    isDirectory.setEnabled(false);
-    		    		                                                                                                                                    flags.add(isDirectory);
-    		    		                                                                                                                                    
-    		    		                                                                                                                                                isFile = new JRadioButton("File");
-    		    		                                                                                                                                                isFile.setEnabled(false);
-    		    		                                                                                                                                                flags.add(isFile);
-    		    		                                                                                                                                                fileDetailsValues.add(flags);
-    		    		                                                                                                                                                
-    		    		                                                                                                                                                            int count = fileDetailsLabels.getComponentCount();
-    		    		                                                                                                                                                            
-    		    		                                                                                                                                                                        JToolBar toolBar = new JToolBar();
-    		    		                                                                                                                                                                        // mnemonics stop working in a floated toolbar
-    		    		                                                                                                                                                                        toolBar.setFloatable(false);
-    		    		                                                                                                                                                                        
-    		    		                                                                                                                                                                                    openFile = new JButton("Open");
-    		    		                                                                                                                                                                                    openFile.setMnemonic('o');
-    		    		                                                                                                                                                                                    
-    		    		                                                                                                                                                                                                openFile.addActionListener(new ActionListener(){
-    		    		                                                                                                                                                                                                    public void actionPerformed(ActionEvent ae) {
-    		    		                                                                                                                                                                                                        try {
-    		    		                                                                                                                                                                                                            desktop.open(currentFile);
-    		    		                                                                                                                                                                                                        } catch(Throwable t) {
-    		    		                                                                                                                                                                                                            showThrowable(t);
-    		    		                                                                                                                                                                                                        }
-    		    		                                                                                                                                                                                                        gui.repaint();
-    		    		                                                                                                                                                                                                    }
-    		    		                                                                                                                                                                                                });
-    		    		                                                                                                                                                                                                toolBar.add(openFile);
-    		    		                                                                                                                                                                                                                        
-    		    		                                                                                                                                                                                                                                    // Check the actions are supported on this platform!
-    		    		                                                                                                                                                                                                                                    openFile.setEnabled(desktop.isSupported(Desktop.Action.OPEN));
-    		    		                                                                                                                                                                                                                                    
-    		    		                                                                                                                                                                                                                                                toolBar.addSeparator();
-    		    		                                                                                                                                                                                                                                                
-    		    		                                                                                                                                                                                                                                                            newFile = new JButton("New");
-    		    		                                                                                                                                                                                                                                                            newFile.setMnemonic('n');
-    		    		                                                                                                                                                                                                                                                            newFile.addActionListener(new ActionListener(){
-    		    		                                                                                                                                                                                                                                                                public void actionPerformed(ActionEvent ae) {
-    		    		                                                                                                                                                                                                                                                                    newFile();
-    		    		                                                                                                                                                                                                                                                                }
-    		    		                                                                                                                                                                                                                                                            });
-    		    		                                                                                                                                                                                                                                                            toolBar.add(newFile);
-    		    		                                                                                                                                                                                                                                                            
-    		    		                                                                                                                                                                                                                                                                        moveFile = new JButton("Move");
-    		    		                                                                                                                                                                                                                                                                        moveFile.setMnemonic('c');
-    		    		                                                                                                                                                                                                                                                                        moveFile.addActionListener(new ActionListener(){
-    		    		                                                                                                                                                                                                                                                                            public void actionPerformed(ActionEvent ae) {
-    		    		                                                                                                                                                                                                                                                                            	try {
-																																																																											MoveFile();
-																																																																										} catch (IOException e) {
-																																																																											// TODO Auto-generated catch block
-																																																																											e.printStackTrace();
-																																																																										}
-    		    		                                                                                                                                                                                                                                                                            }
-    		    		                                                                                                                                                                                                                                                                        });
-    		    		                                                                                                                                                                                                                                                                        toolBar.add(moveFile);
-    		    		                                                                                                                                                                                                                                                                        
-    		    		                                                                                                                                                                                                                                                                                    JButton renameFile = new JButton("Rename");
-    		    		                                                                                                                                                                                                                                                                                    renameFile.setMnemonic('r');
-    		    		                                                                                                                                                                                                                                                                                    renameFile.addActionListener(new ActionListener(){
-    		    		                                                                                                                                                                                                                                                                                        public void actionPerformed(ActionEvent ae) {
-    		    		                                                                                                                                                                                                                                                                                            renameFile();
-    		    		                                                                                                                                                                                                                                                                                        }
-    		    		                                                                                                                                                                                                                                                                                    });
-    		    		                                                                                                                                                                                                                                                                                    toolBar.add(renameFile);
-    		    		                                                                                                                                                                                                                                                                                    
-    		    		                                                                                                                                                                                                                                                                                                deleteFile = new JButton("Delete");
-    		    		                                                                                                                                                                                                                                                                                                deleteFile.setMnemonic('d');
-    		    		                                                                                                                                                                                                                                                                                                deleteFile.addActionListener(new ActionListener(){
-    		    		                                                                                                                                                                                                                                                                                                    public void actionPerformed(ActionEvent ae) {
-    		    		                                                                                                                                                                                                                                                                                                        deleteFile();
-    		    		                                                                                                                                                                                                                                                                                                    }
-    		    		                                                                                                                                                                                                                                                                                                });
-    		    		                                                                                                                                                                                                                                                                                                toolBar.add(deleteFile);
-    		    		                                                                                                                                                                                                                                                                                                
-    		    		                                                                                                                                                                                                                                                                                                            toolBar.addSeparator();
-    		    		                                                                                                                                                                                                                                                                                                            
-    		    		                                                                                                                                                                                                                                                                                                                        readable = new JCheckBox("Read  ");
-    		    		                                                                                                                                                                                                                                                                                                                        readable.setMnemonic('a');
-    		    		                                                                                                                                                                                                                                                                                                                        //readable.setEnabled(false);
-    		    		                                                                                                                                                                                                                                                                                                                        toolBar.add(readable);
-    		    		                                                                                                                                                                                                                                                                                                                        
-    		    		                                                                                                                                                                                                                                                                                                                                    writable = new JCheckBox("Write  ");
-    		    		                                                                                                                                                                                                                                                                                                                                    writable.setMnemonic('w');
-    		    		                                                                                                                                                                                                                                                                                                                                    //writable.setEnabled(false);
-    		    		                                                                                                                                                                                                                                                                                                                                    toolBar.add(writable);
-    		    		                                                                                                                                                                                                                                                                                                                                    
-    		    		                                                                                                                                                                                                                                                                                                                                                executable = new JCheckBox("Execute");
-    		    		                                                                                                                                                                                                                                                                                                                                                executable.setMnemonic('x');
-    		    		                                                                                                                                                                                                                                                                                                                                                //executable.setEnabled(false);
-    		    		                                                                                                                                                                                                                                                                                                                                                toolBar.add(executable);
-    		    		                                                                                                                                                                                                                                                                                                                                                
-    		    		                                                                                                                                                                                                                                                                                                                                                            JPanel fileView = new JPanel(new BorderLayout(3,3));
-    		    		                                                                                                                                                                                                                                                                                                                                                            
-    		    		                                                                                                                                                                                                                                                                                                                                                                        fileView.add(toolBar,BorderLayout.NORTH);
-    		    		                                                                                                                                                                                                                                                                                                                                                                        fileView.add(fileMainDetails,BorderLayout.CENTER);
-    		    		                                                                                                                                                                                                                                                                                                                                                                        
-    		    		                                                                                                                                                                                                                                                                                                                                                                                    detailView.add(fileView, BorderLayout.SOUTH);
-    		    		                                                                                                                                                                                                                                                                                                                                                                                    
-    		    		                                                                                                                                                                                                                                                                                                                                                                                                JSplitPane splitPane = new JSplitPane(
-    		    		                                                                                                                                                                                                                                                                                                                                                                                                    JSplitPane.HORIZONTAL_SPLIT,
-    		    		                                                                                                                                                                                                                                                                                                                                                                                                    treeScroll,
-    		    		                                                                                                                                                                                                                                                                                                                                                                                                    detailView);
-    		    		                                                                                                                                                                                                                                                                                                                                                                                                gui.add(splitPane, BorderLayout.CENTER);
-    		    		            
-    		    		                        gui.add(simpleOutput, BorderLayout.SOUTH);
-    		
+    		table = new JTable();
+    		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+    		table.setAutoCreateRowSorter(true);
+            table.setShowVerticalLines(false);
+            table.getSelectionModel().addListSelectionListener(listSelectionListener);
+            JScrollPane tableScroll = new JScrollPane(table);
+            Dimension d = tableScroll.getPreferredSize();
+            tableScroll.setPreferredSize(new Dimension((int)d.getWidth(), (int)d.getHeight()/2));
+            detailView.add(tableScroll, BorderLayout.CENTER);
+            
+            tree = new JTree(treeModel);
+            tree.setRootVisible(false);
+            tree.addTreeSelectionListener(treeSelectionListener);
+            tree.setCellRenderer(new FileTreeCellRenderer());
+            tree.expandRow(0);
+            JScrollPane treeScroll = new JScrollPane(tree);
+            
+            // as per trashgod tip
+            tree.setVisibleRowCount(15);
+            
+            Dimension preferredSize = treeScroll.getPreferredSize();
+            treeScroll.setPreferredSize( widePreferred );
+            
+// details for a File
+JPanel fileMainDetails = new JPanel(new BorderLayout(4,2));
+fileMainDetails.setBorder(new EmptyBorder(0,6,0,6));
+
+JPanel fileDetailsLabels = new JPanel(new GridLayout(0,1,2,2));
+fileMainDetails.add(fileDetailsLabels, BorderLayout.WEST);
+                                                        
+JPanel fileDetailsValues = new JPanel(new GridLayout(0,1,2,2));
+fileMainDetails.add(fileDetailsValues, BorderLayout.CENTER);
+                            
+fileDetailsLabels.add(new JLabel("File", JLabel.TRAILING));
+fileName = new JLabel();
+fileDetailsValues.add(fileName);
+fileDetailsLabels.add(new JLabel("Path/name", JLabel.TRAILING));
+path = new JTextField(5);
+path.setEditable(false);
+fileDetailsValues.add(path);
+fileDetailsLabels.add(new JLabel("Last Modified", JLabel.TRAILING));
+date = new JLabel();
+fileDetailsValues.add(date);
+fileDetailsLabels.add(new JLabel("File size", JLabel.TRAILING));
+size = new JLabel();
+fileDetailsValues.add(size);
+fileDetailsLabels.add(new JLabel("Type", JLabel.TRAILING));
+
+JPanel flags = new JPanel(new FlowLayout(FlowLayout.LEADING,4,0));
+isDirectory = new JRadioButton("Directory");
+isDirectory.setEnabled(false);
+flags.add(isDirectory);
+
+isFile = new JRadioButton("File");
+isFile.setEnabled(false);
+flags.add(isFile);
+fileDetailsValues.add(flags);
+
+int count = fileDetailsLabels.getComponentCount();
+            
+JToolBar toolBar = new JToolBar();
+// mnemonics stop working in a floated toolbar
+toolBar.setFloatable(false);
+
+openFile = new JButton("Open");
+openFile.setMnemonic('o');
+
+openFile.addActionListener(new ActionListener(){
+public void actionPerformed(ActionEvent ae) {
+        try {
+        		desktop.open(currentFile);
+        } catch(Throwable t) {
+            showThrowable(t);
+        }
+        gui.repaint();
+    }
+});
+toolBar.add(openFile);
+                        
+                                    // Check the actions are supported on this platform!
+openFile.setEnabled(desktop.isSupported(Desktop.Action.OPEN));
+
+toolBar.addSeparator();
+
+newFile = new JButton("New");
+newFile.setMnemonic('n');
+newFile.addActionListener(new ActionListener(){
+    public void actionPerformed(ActionEvent ae) {
+        newFile();
+    }
+});
+toolBar.add(newFile);
+
+moveFile = new JButton("Move");
+moveFile.setMnemonic('c');
+moveFile.addActionListener(new ActionListener(){
+    public void actionPerformed(ActionEvent ae) {
+    	try {
+			MoveFile();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
+});
+toolBar.add(moveFile);
+
+renameFile = new JButton("Rename");
+renameFile.setMnemonic('r');
+renameFile.addActionListener(new ActionListener(){
+    public void actionPerformed(ActionEvent ae) {
+        renameFile();
+    }
+});
+toolBar.add(renameFile);
+
+            deleteFile = new JButton("Delete");
+deleteFile.setMnemonic('d');
+deleteFile.addActionListener(new ActionListener(){
+    public void actionPerformed(ActionEvent ae) {
+        deleteFile();
+    }
+});
+toolBar.add(deleteFile);
+
+toolBar.addSeparator();
+
+readable = new JCheckBox("Read  ");
+readable.setMnemonic('a');
+//readable.setEnabled(false);
+toolBar.add(readable);
+
+writable = new JCheckBox("Write  ");
+writable.setMnemonic('w');
+//writable.setEnabled(false);
+toolBar.add(writable);
+
+executable = new JCheckBox("Execute");
+executable.setMnemonic('x');
+//executable.setEnabled(false);
+toolBar.add(executable);
+
+JPanel fileView = new JPanel(new BorderLayout(3,3));
+
+fileView.add(toolBar,BorderLayout.NORTH);
+fileView.add(fileMainDetails,BorderLayout.CENTER);
+
+detailView.add(fileView, BorderLayout.SOUTH);
+
+JSplitPane splitPane = new JSplitPane(
+JSplitPane.HORIZONTAL_SPLIT,
+treeScroll,
+detailView);
+gui.add(splitPane, BorderLayout.CENTER);
+
+gui.add(simpleOutput, BorderLayout.SOUTH);
+
         }
         return gui;
     }
@@ -456,9 +463,9 @@ class FileManager {
         if (newFilePanel==null) {
             newFilePanel = new JPanel(new BorderLayout(3,3));
 
-            JPanel southRadio = new JPanel(new GridLayout(1,0,2,2));
+            southRadio = new JPanel(new GridLayout(1,0,2,2));
             newTypeFile = new JRadioButton("File", true);
-            JRadioButton newTypeDirectory = new JRadioButton("Directory");
+            newTypeDirectory = new JRadioButton("Directory");
             ButtonGroup bg = new ButtonGroup();
             bg.add(newTypeFile);
             bg.add(newTypeDirectory);
@@ -578,7 +585,7 @@ class FileManager {
         TableColumn tableColumn = table.getColumnModel().getColumn(column);
         if (width<0) {
             // use the preferred width of the header..
-            JLabel label = new JLabel( (String)tableColumn.getHeaderValue() );
+            label = new JLabel( (String)tableColumn.getHeaderValue() );
             Dimension preferred = label.getPreferredSize();
             // altered 10->14 as per camickr comment.
             width = (int)preferred.getWidth()+14;
@@ -723,6 +730,17 @@ class FileManager {
                 mnFile.add(mntmCreateNewFolder);
                 
                 JMenuItem mntmUploadfile = new JMenuItem("UploadFile");
+                mntmUploadfile.addActionListener(new ActionListener() {
+          	      public void actionPerformed(ActionEvent ae) {
+          	        JFileChooser fileChooser = new JFileChooser();
+          	        int returnValue = fileChooser.showOpenDialog(null);
+          	        if (returnValue == JFileChooser.APPROVE_OPTION) {
+          	          File selectedFile = fileChooser.getSelectedFile();
+          	          System.out.println(selectedFile.getName());
+          	        }
+          	      }
+          	    });
+               
                 mnFile.add(mntmUploadfile);
                 
                 JMenuItem mntmSearch = new JMenuItem("Search");
@@ -747,6 +765,11 @@ class FileManager {
                 mnEdit.add(mntmSelectAll);
                 
                 JMenuItem mntmCopy = new JMenuItem("Move");
+                mntmCopy.addActionListener(new ActionListener() {
+                	public void actionPerformed(ActionEvent e) {
+                		//todo move
+                	}
+                });
                 mntmCopy.addMenuKeyListener(new MenuKeyListener() {
                 	public void menuKeyPressed(MenuKeyEvent e) {
                 	}
@@ -758,6 +781,11 @@ class FileManager {
                 mnEdit.add(mntmCopy);
                 
                 JMenuItem mntmDelete = new JMenuItem("Delete");
+                mntmDelete.addActionListener(new ActionListener(){
+                    public void actionPerformed(ActionEvent ae) {
+                        //deleteFile();
+                    }
+                });
                 mnEdit.add(mntmDelete);
                 
                 JMenuItem mntmRename = new JMenuItem("ReName");
