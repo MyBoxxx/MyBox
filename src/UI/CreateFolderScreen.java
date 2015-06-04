@@ -108,7 +108,7 @@ class ContentPanel extends JPanel {
 
   ContentPanel() {
     MediaTracker mt = new MediaTracker(this);
-    bgimage = Toolkit.getDefaultToolkit().getImage("src/UI/folder.jpg");
+    bgimage = Toolkit.getDefaultToolkit().getImage("images/folder.jpg");
     mt.addImage(bgimage, 0);
     try {
       mt.waitForAll();
