@@ -51,7 +51,7 @@ public class CreateFolderScreen extends JFrame {
     	@SuppressWarnings("deprecation")
 		@Override
     	public void mouseClicked(MouseEvent arg0) {
-    		 final ImageIcon icon = new ImageIcon("src/UI/imageno.jpg");
+    		 final ImageIcon icon = new ImageIcon("images/imageno.jpg");
              JOptionPane.showMessageDialog(null, "No Folder created", "About", JOptionPane.INFORMATION_MESSAGE, icon);
              System.exit(0);
     	}
@@ -63,10 +63,10 @@ public class CreateFolderScreen extends JFrame {
     btnOk.addMouseListener(new MouseAdapter() {
     	@Override
     	public void mouseClicked(MouseEvent e) {
-    		 final ImageIcon icon = new ImageIcon("src/UI/imageyes.jpg");
+    		 final ImageIcon icon = new ImageIcon("images/imageyes.jpg");
     		 if (textField.getText().equals("") && textField.getText() != null)
     		 {
-        		 final ImageIcon icono = new ImageIcon("src/UI/imageno.jpg");
+        		 final ImageIcon icono = new ImageIcon("images/imageno.jpg");
                  JOptionPane.showMessageDialog(null, "You have to insert a Name!", "About", JOptionPane.INFORMATION_MESSAGE, icono);
     		 }
     		 else
