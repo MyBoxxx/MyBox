@@ -1,72 +1,35 @@
 package SampleTreeFileView;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
-import java.awt.Frame;
 import java.awt.GridLayout;
 import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.Container;
 import java.awt.Component;
-import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.*;
-import java.awt.image.*;
-
 import javax.swing.*;
 import javax.swing.border.*;
 import javax.swing.event.*;
 import javax.swing.tree.*;
 import javax.swing.table.*;
 import javax.swing.filechooser.FileSystemView;
-import javax.imageio.ImageIO;
 
-import view.AbstractGUI;
-import view.MoveTo_Gui2;
+import javax.imageio.ImageIO;
 
 import java.util.Date;
 import java.util.List;
 import java.util.ArrayList;
+
 import java.io.*;
 import java.nio.channels.FileChannel;
+
 import java.net.URL;
 
-/**
-A basic File Manager.  Requires 1.6+ for the Desktop & SwingWorker
-classes, amongst other minor things.
-
-Includes support classes FileTableModel & FileTreeCellRenderer.
-
-@TODO Bugs
-<li>Still throws occasional AIOOBEs and NPEs, so some update on
-the EDT must have been missed.
-<li>Fix keyboard focus issues - especially when functions like
-rename/delete etc. are called that update nodes & file lists.
-<li>Needs more testing in general.
-
-@TODO Functionality
-<li>Implement Read/Write/Execute checkboxes
-<li>Implement Copy
-<li>Extra prompt for directory delete (camickr suggestion)
-<li>Add File/Directory fields to FileTableModel
-<li>Double clicking a directory in the table, should update the tree
-<li>Move progress bar?
-<li>Add other file display modes (besides table) in CardLayout?
-<li>Menus + other cruft?
-<li>Implement history/back
-<li>Allow multiple selection
-<li>Add file search
-
-@author Andrew Thompson
-@version 2011-06-01
-@see http://stackoverflow.com/questions/6182110
-@license LGPL
-*/
 class FileManager {
-	public FileManager() {
-	}
 
     /** Title of the application */
-    public static final String APP_TITLE = "MyBox";
+    public static final String APP_TITLE = "FileMan";
     /** Used to open/edit/print files. */
     private Desktop desktop;
     /** Provides nice icons and names for files. */
@@ -76,7 +39,7 @@ class FileManager {
     private File currentFile;
 
     /** Main GUI container */
-    private static JPanel gui;
+    private JPanel gui;
 
     /** File-system tree. Built Lazily */
     private JTree tree;
@@ -86,7 +49,6 @@ class FileManager {
     private JTable table;
     private JProgressBar progressBar;
     /** Table model for File[]. */
-    
     private FileTableModel fileTableModel;
     private ListSelectionListener listSelectionListener;
     private boolean cellSizesSet = false;
@@ -96,7 +58,7 @@ class FileManager {
     private JButton openFile;
     private JButton deleteFile;
     private JButton newFile;
-    private JButton moveFile;
+    private JButton copyFile;
     /* File details. */
     private JLabel fileName;
     private JTextField path;
@@ -112,15 +74,31 @@ class FileManager {
     private JPanel newFilePanel;
     private JRadioButton newTypeFile;
     private JTextField name;
-	private Dimension preferredSize;
-	private Container fileDetailsLabels;
-	JPanel simpleOutput;
-	JButton renameFile;
-	JPanel southRadio;
-	JRadioButton newTypeDirectory;
-	JLabel label;
-	
-	private int count;
+    private static JMenuBar menuBar;
+    private static JMenu menu;
+    private static JMenuItem menuItem;
+    private static JMenuItem menuItem_1;
+    private static JMenu menu_1;
+    private static JMenuItem menuItem_2;
+    private static JMenuItem menuItem_3;
+    private static JMenuItem menuItem_4;
+    private static JMenu menu_2;
+    private static JMenuItem menuItem_5;
+    private static JMenuItem menuItem_6;
+    private static JMenu menu_3;
+    private static JMenuItem menuItem_7;
+    private static JMenuItem menuItem_8;
+    private static JMenuItem menuItem_9;
+    private static JMenu menu_4;
+    private static JCheckBoxMenuItem checkBoxMenuItem;
+    private static JCheckBoxMenuItem checkBoxMenuItem_1;
+    private static JMenuItem menuItem_10;
+    private static JMenu menu_5;
+    private static JMenuItem menuItem_11;
+    private static JMenuItem menuItem_12;
+    private static JMenuItem menuItem_13;
+    private static JLabel label_1;
+    private static JButton button;
 
     public Container getGui() {
         if (gui==null) {
@@ -130,6 +108,14 @@ class FileManager {
             fileSystemView = FileSystemView.getFileSystemView();
             desktop = Desktop.getDesktop();
 
+            JPanel detailView = new JPanel(new BorderLayout(3,3));
+            //fileTableModel = new FileTableModel();
+
+            table = new JTable();
+            table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+            table.setAutoCreateRowSorter(true);
+            table.setShowVerticalLines(false);
+
             listSelectionListener = new ListSelectionListener() {
                 @Override
                 public void valueChanged(ListSelectionEvent lse) {
@@ -137,6 +123,11 @@ class FileManager {
                     setFileDetails( ((FileTableModel)table.getModel()).getFile(row) );
                 }
             };
+            table.getSelectionModel().addListSelectionListener(listSelectionListener);
+            JScrollPane tableScroll = new JScrollPane(table);
+            Dimension d = tableScroll.getPreferredSize();
+            tableScroll.setPreferredSize(new Dimension((int)d.getWidth(), (int)d.getHeight()/2));
+            detailView.add(tableScroll, BorderLayout.CENTER);
 
             // the File tree
             DefaultMutableTreeNode root = new DefaultMutableTreeNode();
@@ -166,182 +157,165 @@ class FileManager {
                 }
                 //
             }
-            Dimension widePreferred = new Dimension(200,150);
-            for (int ii=0; ii<count; ii++) {
-                fileDetailsLabels.getComponent(ii).setEnabled(false);
-            }
-    		    		
-            simpleOutput = new JPanel(new BorderLayout(3,3));
-            progressBar = new JProgressBar();
-            simpleOutput.add(progressBar, BorderLayout.EAST);
-            progressBar.setVisible(false);
-    		    		                        
-    		JPanel detailView = new JPanel(new BorderLayout(3,3));
-    		    		                                    //fileTableModel = new FileTableModel();
 
-    		table = new JTable();
-    		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-    		table.setAutoCreateRowSorter(true);
-            table.setShowVerticalLines(false);
-            table.getSelectionModel().addListSelectionListener(listSelectionListener);
-            JScrollPane tableScroll = new JScrollPane(table);
-            Dimension d = tableScroll.getPreferredSize();
-            tableScroll.setPreferredSize(new Dimension((int)d.getWidth(), (int)d.getHeight()/2));
-            detailView.add(tableScroll, BorderLayout.CENTER);
-            
             tree = new JTree(treeModel);
             tree.setRootVisible(false);
             tree.addTreeSelectionListener(treeSelectionListener);
             tree.setCellRenderer(new FileTreeCellRenderer());
             tree.expandRow(0);
             JScrollPane treeScroll = new JScrollPane(tree);
-            
+
             // as per trashgod tip
             tree.setVisibleRowCount(15);
-            
+
             Dimension preferredSize = treeScroll.getPreferredSize();
+            Dimension widePreferred = new Dimension(
+                200,
+                (int)preferredSize.getHeight());
             treeScroll.setPreferredSize( widePreferred );
-            
-// details for a File
-JPanel fileMainDetails = new JPanel(new BorderLayout(4,2));
-fileMainDetails.setBorder(new EmptyBorder(0,6,0,6));
 
-JPanel fileDetailsLabels = new JPanel(new GridLayout(0,1,2,2));
-fileMainDetails.add(fileDetailsLabels, BorderLayout.WEST);
-                                                        
-JPanel fileDetailsValues = new JPanel(new GridLayout(0,1,2,2));
-fileMainDetails.add(fileDetailsValues, BorderLayout.CENTER);
-                            
-fileDetailsLabels.add(new JLabel("File", JLabel.TRAILING));
-fileName = new JLabel();
-fileDetailsValues.add(fileName);
-fileDetailsLabels.add(new JLabel("Path/name", JLabel.TRAILING));
-path = new JTextField(5);
-path.setEditable(false);
-fileDetailsValues.add(path);
-fileDetailsLabels.add(new JLabel("Last Modified", JLabel.TRAILING));
-date = new JLabel();
-fileDetailsValues.add(date);
-fileDetailsLabels.add(new JLabel("File size", JLabel.TRAILING));
-size = new JLabel();
-fileDetailsValues.add(size);
-fileDetailsLabels.add(new JLabel("Type", JLabel.TRAILING));
+            // details for a File
+            JPanel fileMainDetails = new JPanel(new BorderLayout(4,2));
+            fileMainDetails.setBorder(new EmptyBorder(0,6,0,6));
 
-JPanel flags = new JPanel(new FlowLayout(FlowLayout.LEADING,4,0));
-isDirectory = new JRadioButton("Directory");
-isDirectory.setEnabled(false);
-flags.add(isDirectory);
+            JPanel fileDetailsLabels = new JPanel(new GridLayout(0,1,2,2));
+            fileMainDetails.add(fileDetailsLabels, BorderLayout.WEST);
 
-isFile = new JRadioButton("File");
-isFile.setEnabled(false);
-flags.add(isFile);
-fileDetailsValues.add(flags);
+            JPanel fileDetailsValues = new JPanel(new GridLayout(0,1,2,2));
+            fileMainDetails.add(fileDetailsValues, BorderLayout.CENTER);
 
-int count = fileDetailsLabels.getComponentCount();
-            
-JToolBar toolBar = new JToolBar();
-// mnemonics stop working in a floated toolbar
-toolBar.setFloatable(false);
+            fileDetailsLabels.add(new JLabel("File", JLabel.TRAILING));
+            fileName = new JLabel();
+            fileDetailsValues.add(fileName);
+            fileDetailsLabels.add(new JLabel("Path/name", JLabel.TRAILING));
+            path = new JTextField(5);
+            path.setEditable(false);
+            fileDetailsValues.add(path);
+            fileDetailsLabels.add(new JLabel("Last Modified", JLabel.TRAILING));
+            date = new JLabel();
+            fileDetailsValues.add(date);
+            fileDetailsLabels.add(new JLabel("File size", JLabel.TRAILING));
+            size = new JLabel();
+            fileDetailsValues.add(size);
+            fileDetailsLabels.add(new JLabel("Type", JLabel.TRAILING));
 
-openFile = new JButton("Open");
-openFile.setMnemonic('o');
+            JPanel flags = new JPanel(new FlowLayout(FlowLayout.LEADING,4,0));
+            isDirectory = new JRadioButton("Directory");
+            isDirectory.setEnabled(false);
+            flags.add(isDirectory);
 
-openFile.addActionListener(new ActionListener(){
-public void actionPerformed(ActionEvent ae) {
-        try {
-        		desktop.open(currentFile);
-        } catch(Throwable t) {
-            showThrowable(t);
-        }
-        gui.repaint();
-    }
-});
-toolBar.add(openFile);
-                        
-                                    // Check the actions are supported on this platform!
-openFile.setEnabled(desktop.isSupported(Desktop.Action.OPEN));
+            isFile = new JRadioButton("File");
+            isFile.setEnabled(false);
+            flags.add(isFile);
+            fileDetailsValues.add(flags);
 
-toolBar.addSeparator();
+            int count = fileDetailsLabels.getComponentCount();
+            for (int ii=0; ii<count; ii++) {
+                fileDetailsLabels.getComponent(ii).setEnabled(false);
+            }
 
-newFile = new JButton("New");
-newFile.setMnemonic('n');
-newFile.addActionListener(new ActionListener(){
-    public void actionPerformed(ActionEvent ae) {
-        newFile();
-    }
-});
-toolBar.add(newFile);
+            JToolBar toolBar = new JToolBar();
+            // mnemonics stop working in a floated toolbar
+            toolBar.setFloatable(false);
 
-moveFile = new JButton("Move");
-moveFile.setMnemonic('c');
-moveFile.addActionListener(new ActionListener(){
-    public void actionPerformed(ActionEvent ae) {
-    	try {
-			MoveFile();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    }
-});
-toolBar.add(moveFile);
+            openFile = new JButton("Open");
+            openFile.setMnemonic('o');
 
-renameFile = new JButton("Rename");
-renameFile.setMnemonic('r');
-renameFile.addActionListener(new ActionListener(){
-    public void actionPerformed(ActionEvent ae) {
-        renameFile();
-    }
-});
-toolBar.add(renameFile);
+            openFile.addActionListener(new ActionListener(){
+                public void actionPerformed(ActionEvent ae) {
+                    try {
+                        desktop.open(currentFile);
+                    } catch(Throwable t) {
+                        showThrowable(t);
+                    }
+                    gui.repaint();
+                }
+            });
+            toolBar.add(openFile);
+
+            // Check the actions are supported on this platform!
+            openFile.setEnabled(desktop.isSupported(Desktop.Action.OPEN));
+
+            toolBar.addSeparator();
+
+            newFile = new JButton("New");
+            newFile.setMnemonic('n');
+            newFile.addActionListener(new ActionListener(){
+                public void actionPerformed(ActionEvent ae) {
+                    newFile();
+                }
+            });
+            toolBar.add(newFile);
+
+            copyFile = new JButton("Copy");
+            copyFile.setMnemonic('c');
+            copyFile.addActionListener(new ActionListener(){
+                public void actionPerformed(ActionEvent ae) {
+                    showErrorMessage("'Copy' not implemented.", "Not implemented.");
+                }
+            });
+            toolBar.add(copyFile);
+
+            JButton renameFile = new JButton("Rename");
+            renameFile.setMnemonic('r');
+            renameFile.addActionListener(new ActionListener(){
+                public void actionPerformed(ActionEvent ae) {
+                    renameFile();
+                }
+            });
+            toolBar.add(renameFile);
 
             deleteFile = new JButton("Delete");
-deleteFile.setMnemonic('d');
-deleteFile.addActionListener(new ActionListener(){
-    public void actionPerformed(ActionEvent ae) {
-        deleteFile();
-    }
-});
-toolBar.add(deleteFile);
+            deleteFile.setMnemonic('d');
+            deleteFile.addActionListener(new ActionListener(){
+                public void actionPerformed(ActionEvent ae) {
+                    deleteFile();
+                }
+            });
+            toolBar.add(deleteFile);
 
-toolBar.addSeparator();
+            toolBar.addSeparator();
 
-readable = new JCheckBox("Read  ");
-readable.setMnemonic('a');
-//readable.setEnabled(false);
-toolBar.add(readable);
+            readable = new JCheckBox("Read  ");
+            readable.setMnemonic('a');
+            //readable.setEnabled(false);
+            toolBar.add(readable);
 
-writable = new JCheckBox("Write  ");
-writable.setMnemonic('w');
-//writable.setEnabled(false);
-toolBar.add(writable);
+            writable = new JCheckBox("Write  ");
+            writable.setMnemonic('w');
+            //writable.setEnabled(false);
+            toolBar.add(writable);
 
-executable = new JCheckBox("Execute");
-executable.setMnemonic('x');
-//executable.setEnabled(false);
-toolBar.add(executable);
+            executable = new JCheckBox("Execute");
+            executable.setMnemonic('x');
+            //executable.setEnabled(false);
+            toolBar.add(executable);
 
-JPanel fileView = new JPanel(new BorderLayout(3,3));
+            JPanel fileView = new JPanel(new BorderLayout(3,3));
 
-fileView.add(toolBar,BorderLayout.NORTH);
-fileView.add(fileMainDetails,BorderLayout.CENTER);
+            fileView.add(toolBar,BorderLayout.NORTH);
+            fileView.add(fileMainDetails,BorderLayout.CENTER);
 
-detailView.add(fileView, BorderLayout.SOUTH);
+            detailView.add(fileView, BorderLayout.SOUTH);
 
-JSplitPane splitPane = new JSplitPane(
-JSplitPane.HORIZONTAL_SPLIT,
-treeScroll,
-detailView);
-gui.add(splitPane, BorderLayout.CENTER);
+            JSplitPane splitPane = new JSplitPane(
+                JSplitPane.HORIZONTAL_SPLIT,
+                treeScroll,
+                detailView);
+            gui.add(splitPane, BorderLayout.CENTER);
 
-gui.add(simpleOutput, BorderLayout.SOUTH);
+            JPanel simpleOutput = new JPanel(new BorderLayout(3,3));
+            progressBar = new JProgressBar();
+            simpleOutput.add(progressBar, BorderLayout.EAST);
+            progressBar.setVisible(false);
+
+            gui.add(simpleOutput, BorderLayout.SOUTH);
 
         }
         return gui;
     }
 
-
-	public void showRootFile() {
+    public void showRootFile() {
         // ensure the main files are displayed
         tree.setSelectionInterval(0,0);
     }
@@ -463,9 +437,9 @@ gui.add(simpleOutput, BorderLayout.SOUTH);
         if (newFilePanel==null) {
             newFilePanel = new JPanel(new BorderLayout(3,3));
 
-            southRadio = new JPanel(new GridLayout(1,0,2,2));
+            JPanel southRadio = new JPanel(new GridLayout(1,0,2,2));
             newTypeFile = new JRadioButton("File", true);
-            newTypeDirectory = new JRadioButton("Directory");
+            JRadioButton newTypeDirectory = new JRadioButton("Directory");
             ButtonGroup bg = new ButtonGroup();
             bg.add(newTypeFile);
             bg.add(newTypeDirectory);
@@ -585,7 +559,7 @@ gui.add(simpleOutput, BorderLayout.SOUTH);
         TableColumn tableColumn = table.getColumnModel().getColumn(column);
         if (width<0) {
             // use the preferred width of the header..
-            label = new JLabel( (String)tableColumn.getHeaderValue() );
+            JLabel label = new JLabel( (String)tableColumn.getHeaderValue() );
             Dimension preferred = label.getPreferredSize();
             // altered 10->14 as per camickr comment.
             width = (int)preferred.getWidth()+14;
@@ -653,7 +627,7 @@ gui.add(simpleOutput, BorderLayout.SOUTH);
 
         isFile.setSelected(file.isFile());
 
-        JFrame f = (JFrame) gui.getTopLevelAncestor();
+        JFrame f = (JFrame)gui.getTopLevelAncestor();
         if (f!=null) {
             f.setTitle(
                 APP_TITLE +
@@ -664,28 +638,34 @@ gui.add(simpleOutput, BorderLayout.SOUTH);
         gui.repaint();
     }
 
-    public boolean MoveFile() throws IOException {
+    public static boolean copyFile(File from, File to) throws IOException {
 
-    	if (currentFile==null) {
-            showErrorMessage("No file selected for deletion.","Select File");
-            return false;
+        boolean created = to.createNewFile();
+
+        if (created) {
+            FileChannel fromChannel = null;
+            FileChannel toChannel = null;
+            try {
+                fromChannel = new FileInputStream(from).getChannel();
+                toChannel = new FileOutputStream(to).getChannel();
+
+                toChannel.transferFrom(fromChannel, 0, fromChannel.size());
+
+                // set the flags of the to the same as the from
+                to.setReadable(from.canRead());
+                to.setWritable(from.canWrite());
+                to.setExecutable(from.canExecute());
+            } finally {
+                if (fromChannel != null) {
+                    fromChannel.close();
+                }
+                if (toChannel != null) {
+                    toChannel.close();
+                }
+                return false;
+            }
         }
-    	
-     	try{
-     		 
-     	   File afile = currentFile;
-  //todo --> tree and choose
-     	   String new_path = null;
-		if(afile.renameTo(new File( new_path  +""+ afile.getName()))){
-     		System.out.println("File is moved successful!");
-     	   }else{
-     		System.out.println("File is failed to move!");
-     	   }
-  
-     	}catch(Exception e){
-     		e.printStackTrace();
-     	}
-    	return true;
+        return created;
     }
 
     public static void main(String[] args) {
@@ -702,124 +682,80 @@ gui.add(simpleOutput, BorderLayout.SOUTH);
 
                 FileManager fileManager = new FileManager();
                 
-                JMenuBar menuBar = new JMenuBar();
+                menuBar = new JMenuBar();
                 f.setJMenuBar(menuBar);
                 
-                JMenu mnMybox = new JMenu("MyBox");
-                menuBar.add(mnMybox);
+                menu = new JMenu("MyBox");
+                menuBar.add(menu);
                 
-                JMenuItem mntmSettings = new JMenuItem("Settings");
-                mntmSettings.addMenuKeyListener(new MenuKeyListener() {
-                	public void menuKeyPressed(MenuKeyEvent e) {
-                		//toDO --> go to settings
-                	}
-                	public void menuKeyReleased(MenuKeyEvent e) {
-                	}
-                	public void menuKeyTyped(MenuKeyEvent e) {
-                	}
-                });
-                mnMybox.add(mntmSettings);
+                menuItem = new JMenuItem("Settings");
+                menu.add(menuItem);
                 
-                JMenuItem mntmLogOut = new JMenuItem("Log Out");
-                mnMybox.add(mntmLogOut);
+                menuItem_1 = new JMenuItem("Log Out");
+                menu.add(menuItem_1);
                 
-                JMenu mnFile = new JMenu("File");
-                menuBar.add(mnFile);
+                menu_1 = new JMenu("File");
+                menuBar.add(menu_1);
                 
-                JMenuItem mntmCreateNewFolder = new JMenuItem("Create New Folder");
-                mnFile.add(mntmCreateNewFolder);
+                menuItem_2 = new JMenuItem("Create New Folder");
+                menu_1.add(menuItem_2);
                 
-                JMenuItem mntmUploadfile = new JMenuItem("UploadFile");
-                mntmUploadfile.addActionListener(new ActionListener() {
-          	      public void actionPerformed(ActionEvent ae) {
-          	        JFileChooser fileChooser = new JFileChooser();
-          	        int returnValue = fileChooser.showOpenDialog(null);
-          	        if (returnValue == JFileChooser.APPROVE_OPTION) {
-          	          File selectedFile = fileChooser.getSelectedFile();
-          	          System.out.println(selectedFile.getName());
-          	        }
-          	      }
-          	    });
-               
-                mnFile.add(mntmUploadfile);
+                menuItem_3 = new JMenuItem("UploadFile");
+                menu_1.add(menuItem_3);
                 
-                JMenuItem mntmSearch = new JMenuItem("Search");
-                mnFile.add(mntmSearch);
+                menuItem_4 = new JMenuItem("Search");
+                menu_1.add(menuItem_4);
                 
-                JMenu mnGroup = new JMenu("Group");
-                menuBar.add(mnGroup);
+                menu_2 = new JMenu("Group");
+                menuBar.add(menu_2);
                 
-                JMenuItem mntmCreateNewGroup = new JMenuItem("Create New Group");
-                mnGroup.add(mntmCreateNewGroup);
+                menuItem_5 = new JMenuItem("Create New Group");
+                menu_2.add(menuItem_5);
                 
-                JMenuItem mntmAskToJoin = new JMenuItem("Ask to Join");
-                mnGroup.add(mntmAskToJoin);
+                menuItem_6 = new JMenuItem("Ask to Join");
+                menu_2.add(menuItem_6);
                 
-                JMenu mnEdit = new JMenu("Edit");
-                menuBar.add(mnEdit);
+                menu_3 = new JMenu("Edit");
+                menuBar.add(menu_3);
                 
-                JMenuItem mntmPaste = new JMenuItem("Select NON");
-                mnEdit.add(mntmPaste);
+                menuItem_7 = new JMenuItem("Move");
+                menu_3.add(menuItem_7);
                 
-                JMenuItem mntmSelectAll = new JMenuItem("Select All");
-                mnEdit.add(mntmSelectAll);
+                menuItem_8 = new JMenuItem("Delete");
+                menu_3.add(menuItem_8);
                 
-                JMenuItem mntmCopy = new JMenuItem("Move");
-                mntmCopy.addActionListener(new ActionListener() {
-                	public void actionPerformed(ActionEvent e) {
-                		//todo move
-                	}
-                });
-                mntmCopy.addMenuKeyListener(new MenuKeyListener() {
-                	public void menuKeyPressed(MenuKeyEvent e) {
-                	}
-                	public void menuKeyReleased(MenuKeyEvent e) {
-                	}
-                	public void menuKeyTyped(MenuKeyEvent e) {
-                	}
-                });
-                mnEdit.add(mntmCopy);
+                menuItem_9 = new JMenuItem("ReName");
+                menu_3.add(menuItem_9);
                 
-                JMenuItem mntmDelete = new JMenuItem("Delete");
-                mntmDelete.addActionListener(new ActionListener(){
-                    public void actionPerformed(ActionEvent ae) {
-                        //deleteFile();
-                    }
-                });
-                mnEdit.add(mntmDelete);
+                menu_4 = new JMenu("Go");
+                menuBar.add(menu_4);
                 
-                JMenuItem mntmRename = new JMenuItem("ReName");
-                mnEdit.add(mntmRename);
+                checkBoxMenuItem = new JCheckBoxMenuItem("My Files");
+                menu_4.add(checkBoxMenuItem);
                 
-                JMenu mnView = new JMenu("Go");
-                menuBar.add(mnView);
+                checkBoxMenuItem_1 = new JCheckBoxMenuItem("Shared With Me");
+                menu_4.add(checkBoxMenuItem_1);
                 
-                JCheckBoxMenuItem chckbxmntmMyFiles = new JCheckBoxMenuItem("My Files");
-                mnView.add(chckbxmntmMyFiles);
+                menuItem_10 = new JMenuItem("Trash");
+                menu_4.add(menuItem_10);
                 
-                JCheckBoxMenuItem chckbxmntmSharedWithMe = new JCheckBoxMenuItem("Shared With Me");
-                mnView.add(chckbxmntmSharedWithMe);
+                menu_5 = new JMenu("Help");
+                menuBar.add(menu_5);
                 
-                JMenuItem mntmTrash = new JMenuItem("Trash");
-                mnView.add(mntmTrash);
+                menuItem_11 = new JMenuItem("About Us");
+                menu_5.add(menuItem_11);
                 
-                JMenu mnHelp_1 = new JMenu("Help");
-                menuBar.add(mnHelp_1);
+                menuItem_12 = new JMenuItem("Help");
+                menu_5.add(menuItem_12);
                 
-                JMenuItem mntmAboutUs = new JMenuItem("About Us");
-                mnHelp_1.add(mntmAboutUs);
+                menuItem_13 = new JMenuItem("                    ");
+                menuBar.add(menuItem_13);
                 
-                JMenuItem mntmHelp = new JMenuItem("Help");
-                mnHelp_1.add(mntmHelp);
+                label_1 = new JLabel("Log in as : Eyalpano@gmail.com");
+                menuBar.add(label_1);
                 
-                JMenuItem mntmNewMenuItem = new JMenuItem("                    ");
-                menuBar.add(mntmNewMenuItem);
-                
-                JLabel lblLogInAs = new JLabel("Log in as : Eyalpano@gmail.com");
-                menuBar.add(lblLogInAs);
-                
-                JButton btnNotifications = new JButton("notifications");
-                menuBar.add(btnNotifications);
+                button = new JButton("notifications");
+                menuBar.add(button);
                 f.setContentPane(fileManager.getGui());
 
                 try {
@@ -842,4 +778,138 @@ gui.add(simpleOutput, BorderLayout.SOUTH);
     }
 }
 
+/** A TableModel to hold File[]. */
+class FileTableModel extends AbstractTableModel {
 
+    private File[] files;
+    private FileSystemView fileSystemView = FileSystemView.getFileSystemView();
+    private String[] columns = {
+        "Icon",
+        "File",
+        "Path/name",
+        "Size",
+        "Last Modified",
+        "R",
+        "W",
+        "E",
+        "D",
+        "F",
+    };
+
+    FileTableModel() {
+        this(new File[0]);
+    }
+
+    FileTableModel(File[] files) {
+        this.files = files;
+    }
+
+    public Object getValueAt(int row, int column) {
+        File file = files[row];
+        switch (column) {
+            case 0:
+                return fileSystemView.getSystemIcon(file);
+            case 1:
+                return fileSystemView.getSystemDisplayName(file);
+            case 2:
+                return file.getPath();
+            case 3:
+                return file.length();
+            case 4:
+                return file.lastModified();
+            case 5:
+                return file.canRead();
+            case 6:
+                return file.canWrite();
+            case 7:
+                return file.canExecute();
+            case 8:
+                return file.isDirectory();
+            case 9:
+                return file.isFile();
+            default:
+                System.err.println("Logic Error");
+        }
+        return "";
+    }
+
+    public int getColumnCount() {
+        return columns.length;
+    }
+
+    public Class<?> getColumnClass(int column) {
+        switch (column) {
+            case 0:
+                return ImageIcon.class;
+            case 3:
+                return Long.class;
+            case 4:
+                return Date.class;
+            case 5:
+            case 6:
+            case 7:
+            case 8:
+            case 9:
+                return Boolean.class;
+        }
+        return String.class;
+    }
+
+    public String getColumnName(int column) {
+        return columns[column];
+    }
+
+    public int getRowCount() {
+        return files.length;
+    }
+
+    public File getFile(int row) {
+        return files[row];
+    }
+
+    public void setFiles(File[] files) {
+        this.files = files;
+        fireTableDataChanged();
+    }
+}
+
+/** A TreeCellRenderer for a File. */
+class FileTreeCellRenderer extends DefaultTreeCellRenderer {
+
+    private FileSystemView fileSystemView;
+
+    private JLabel label;
+
+    FileTreeCellRenderer() {
+        label = new JLabel();
+        label.setOpaque(true);
+        fileSystemView = FileSystemView.getFileSystemView();
+    }
+
+    @Override
+    public Component getTreeCellRendererComponent(
+        JTree tree,
+        Object value,
+        boolean selected,
+        boolean expanded,
+        boolean leaf,
+        int row,
+        boolean hasFocus) {
+
+        DefaultMutableTreeNode node = (DefaultMutableTreeNode)value;
+        File file = (File)node.getUserObject();
+        label.setIcon(fileSystemView.getSystemIcon(file));
+        label.setText(fileSystemView.getSystemDisplayName(file));
+        label.setToolTipText(file.getPath());
+
+        if (selected) {
+            label.setBackground(backgroundSelectionColor);
+            label.setForeground(textSelectionColor);
+        } else {
+            label.setBackground(backgroundNonSelectionColor);
+            label.setForeground(textNonSelectionColor);
+        }
+
+        return label;
+    }
+}
