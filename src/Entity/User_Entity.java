@@ -1,6 +1,8 @@
 package Entity;
 import java.util.List;
 
+import com.sun.security.ntlm.Client;
+
 @SuppressWarnings("serial")
 public class User_Entity extends AbstractEntity_Entity{
 	
