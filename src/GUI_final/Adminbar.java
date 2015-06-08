@@ -91,5 +91,9 @@ public class Adminbar extends JFrame {
 		Cover.setIcon(new ImageIcon("src/GUI_final/admin.jpg"));
 		Cover.setBounds(0, 0, 593, 474);
 		contentPane.add(Cover);
+		
+		JLabel lblNotificationCenter = new JLabel("Notification center");
+		lblNotificationCenter.setBounds(277, 40, 46, 14);
+		contentPane.add(lblNotificationCenter);
 	}
 }
