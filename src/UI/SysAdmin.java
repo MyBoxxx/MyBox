@@ -6,6 +6,7 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.ImageIcon;
 import javax.swing.JList;
 import javax.swing.JComboBox;
 import javax.swing.JCheckBox;
@@ -22,6 +23,7 @@ import javax.swing.JLabel;
 public class SysAdmin extends JFrame {
 
 	private JPanel contentPane;
+	private JLabel lblNewLabel; 
 
 	/**
 	 * Launch the application.
@@ -136,9 +138,9 @@ public class SysAdmin extends JFrame {
 		lblRequesstPage.setBounds(156, 20, 193, 16);
 		contentPane.add(lblRequesstPage);
 		
-		JLabel lblNewLabel = new JLabel("New label");
-		lblNewLabel.setBounds(44, 64, 61, 16);
+		lblNewLabel = new JLabel("New label");
+		lblNewLabel.setBounds(19, 60, 69, 62);
 		contentPane.add(lblNewLabel);
-		ButtonSend.setIcon(new ImageIcon("images/sendrequest.gif"));
+		lblNewLabel.setIcon(new ImageIcon("images/delete2.png"));
 	}
 }

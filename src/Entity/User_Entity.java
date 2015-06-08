@@ -82,15 +82,5 @@ public User_Entity(String IDuser, String Username,String Password, int Status, b
 				      + "WHERE user_name = "+username+" ";
 				
 	}
-	
-	public void SetStatusDB(Client client, int stat){
 		
-		String username = client.getCurrentUser().getUserName();
-		String query = "Update users"
-					   + "SET status = "+stat+""
-					   +"WHERE user_name = "+username+" ";
-		client.getDate(query,true);
-	}
-	
-	
 }
