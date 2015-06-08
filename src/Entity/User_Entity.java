@@ -27,6 +27,12 @@ public User_Entity(String IDuser, String Username,String Password, int Status, b
 
 
 
+	public User_Entity() {
+	// TODO Auto-generated constructor stub
+}
+
+
+
 	public String getIDuser() {
 		return IDuser;
 	}

@@ -1,6 +1,7 @@
 package SampleTreeFileView;
 
 
+import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
 
@@ -14,9 +15,9 @@ public class Main
                 Model model = new Model();
                 View view = new View(); 
                 Controller controller = new Controller(model,view);
-                controller.setVisible(true);
                 controller.contol();
-              
+                controller.setVisible(true);
+                view.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             }
         });  
     }

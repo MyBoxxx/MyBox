@@ -37,6 +37,17 @@ import java.awt.event.FocusAdapter;
 
 public class Login_GUI extends JFrame {
 
+	public JLabel getForgotPassword() {
+		return ForgotPassword;
+	}
+
+	public JButton getLoginButtun() {
+		return LoginButtun;
+	}
+
+	JLabel ForgotPassword;
+	JButton LoginButtun;
+	
 	private JPanel contentPane;
 	private JTextField txtUserName;
 	private JTextField txtOneOrMore;
@@ -67,7 +78,7 @@ public class Login_GUI extends JFrame {
 	 */
 	public Login_GUI() throws MalformedURLException {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 820, 600);
+		setBounds(100, 100, 800, 600);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -75,29 +86,25 @@ public class Login_GUI extends JFrame {
 		
 		 URL url = new URL("http://i.imgur.com/6Bq6MQr.gif");
 		    Icon icon = new ImageIcon(url);
-		    JLabel label = new JLabel(icon);
-		    label.setBounds(10, 32, 773, 257);
-		    label.setBackground(Color.WHITE);
-		    label.addMouseListener(new MouseAdapter() {
+		    JLabel TopPicture = new JLabel(icon);
+		    TopPicture.setBounds(10, 32, 773, 257);
+		    TopPicture.setBackground(Color.WHITE);
+		    TopPicture.addMouseListener(new MouseAdapter() {
 		        public void mouseClicked(MouseEvent me) {
 		          System.out.println("CLICKED");
 		        }
-		      });		    
+		      });	
+		    
 		    contentPane.setLayout(null);
-		    contentPane.add(label);
+		    contentPane.add(TopPicture);
 		    ///////////////////////
 		    URL url1 = new URL("http://www.freevectors.net/files/small/LoginIcon.jpg");
 		    Icon icon1 = new ImageIcon(url1);
-		    JLabel label1 = new JLabel(icon1);
-		    label1.setBounds(437, 396, 150, 150);
-		    label.setBackground(Color.WHITE);
-		    label1.addMouseListener(new MouseAdapter() {
-		        public void mouseClicked(MouseEvent me) {
-		        	JOptionPane.showMessageDialog(contentPane,  "Login OK!.");
-		        	txtOneOrMore.setVisible(false);
-		        }
-		      });		    
-		    contentPane.add(label1);
+		    LoginButtun = new JButton(icon1);
+		    LoginButtun.setBounds(437, 396, 150, 150);
+		    TopPicture.setBackground(Color.WHITE);
+			    
+		    contentPane.add(LoginButtun);
 		    /////////////////////////////////////////////
 		    
 		 
@@ -105,12 +112,12 @@ public class Login_GUI extends JFrame {
 		    /////////////////////////////////////
 		    URL url2 = new URL("http://honourrollreports.com/Assets/Images/Icons/LargeHelp.png");
 		    Icon icon2 = new ImageIcon(url2);
-		    JLabel label2 = new JLabel(icon2);
-		    label2.setLocation(143, 401);
-		    label2.setSize(150, 150);
-		    label2.setBounds(215, 396, 150, 155);
-		    label2.setBackground(Color.WHITE);
-		    contentPane.add(label2);
+		    ForgotPassword = new JLabel(icon2);
+		    ForgotPassword.setLocation(143, 401);
+		    ForgotPassword.setSize(150, 150);
+		    ForgotPassword.setBounds(215, 396, 150, 155);
+		    ForgotPassword.setBackground(Color.WHITE);
+		    contentPane.add(ForgotPassword);
 		    //////////////////
 		/*   label2.addMouseListener(new MouseAdapter() {
 		        public void mouseClicked(MouseEvent me) {
@@ -194,6 +201,27 @@ public class Login_GUI extends JFrame {
 		  
 		    //f.setVisible(true);
 	}
+	public JTextField getTxtUserName() {
+		return txtUserName;
+	}
+
+	public void setTxtUserName(JTextField txtUserName) {
+		this.txtUserName = txtUserName;
+	}
+
+	public void setTxtOneOrMoreVisible(Boolean b) {
+		txtOneOrMore.setVisible(b);;
+	}
+
+
+	public JPasswordField getPasswordField() {
+		return passwordField;
+	}
+
+	public void setPasswordField(JPasswordField passwordField) {
+		this.passwordField = passwordField;
+	}
+
 }
 
 

@@ -1,8 +1,23 @@
 package SampleTreeFileView;
 
+import java.awt.BorderLayout;
 import java.awt.Desktop;
+import java.awt.GridLayout;
 import java.io.File;
+
+import javafx.scene.control.TableColumn;
+
+import javax.swing.ButtonGroup;
+import javax.swing.Icon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.JTree;
+import javax.swing.SwingUtilities;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
@@ -39,10 +54,10 @@ private TreePath findTreePath(File find) {
     // not found!
     return null;
 }
-/*
-private void deleteFile(Component gui) {
+
+void deleteFile(JPanel gui) {
     if (currentFile==null) {
-        showErrorMessage("No file selected for deletion.","Select File");
+        showErrorMessage("No file selected for deletion.","Select File",gui);
         return;
     }
     int result = JOptionPane.showConfirmDialog(gui, "Are you sure you want to delete this file?","Delete File",JOptionPane.ERROR_MESSAGE);
@@ -68,50 +83,46 @@ private void deleteFile(Component gui) {
                     treeModel.removeNodeFromParent(currentNode);
                 }
 
-                showChildren(parentNode);
+                //showChildren(parentNode);
             } else {
                 String msg = "The file '" +
                     currentFile +
                     "' could not be deleted.";
-                showErrorMessage(msg,"Delete Failed");
+                showErrorMessage(msg,"Delete Failed",gui);
             }
         } catch(Throwable t) {
-            showThrowable(t);
+           // showThrowable(t);
         }
     }
     gui.repaint();
 }
-/*
-private void newFile() {
+
+private void newFile(View view) {
     if (currentFile==null) {
-        showErrorMessage("No location selected for new file.","Select Location");
+        showErrorMessage("No location selected for new file.","Select Location",view.getGui());
         return;
     }
 
-    if (newFilePanel==null) {
-        newFilePanel = new JPanel(new BorderLayout(3,3));
+    if (view.newFilePanel == null) {
+        view.newFilePanel = new JPanel(new BorderLayout(3,3));
 
-        southRadio = new JPanel(new GridLayout(1,0,2,2));
-        newTypeFile = new JRadioButton("File", true);
-        newTypeDirectory = new JRadioButton("Directory");
+        view.southRadio = new JPanel(new GridLayout(1,0,2,2));
+        view.newTypeFile = new JRadioButton("File", true);
+        view.newTypeDirectory = new JRadioButton("Directory");
         ButtonGroup bg = new ButtonGroup();
-        bg.add(newTypeFile);
-        bg.add(newTypeDirectory);
-        southRadio.add( newTypeFile );
-        southRadio.add( newTypeDirectory );
+        bg.add(view.newTypeFile);
+        bg.add(view.newTypeDirectory);
+        view.southRadio.add( view.newTypeFile );
+        view.southRadio.add( view.newTypeDirectory );
 
-        name = new JTextField(15);
+        view.name = new JTextField(15);
 
-        newFilePanel.add( new JLabel("Name"), BorderLayout.WEST );
-        newFilePanel.add( name );
-        newFilePanel.add( southRadio, BorderLayout.SOUTH );
+        view.newFilePanel.add( new JLabel("Name"), BorderLayout.WEST );
+        view.newFilePanel.add( view.name );
+        view.newFilePanel.add( view.southRadio, BorderLayout.SOUTH );
     }
 
-    int result = JOptionPane.showConfirmDialog(
-        gui,
-        newFilePanel,
-        "Create File",
-        JOptionPane.OK_CANCEL_OPTION);
+    int result = JOptionPane.showConfirmDialog(view.gui,view.newFilePanel,"Create File",JOptionPane.OK_CANCEL_OPTION);
     if (result==JOptionPane.OK_OPTION) {
         try {
             boolean created;
@@ -119,8 +130,8 @@ private void newFile() {
             if (!parentFile.isDirectory()) {
                 parentFile = parentFile.getParentFile();
             }
-            File file = new File( parentFile, name.getText() );
-            if (newTypeFile.isSelected()) {
+            File file = new File( parentFile, view.name.getText() );
+            if (view.newTypeFile.isSelected()) {
                 created = file.createNewFile();
             } else {
                 created = file.mkdir();
@@ -142,19 +153,20 @@ private void newFile() {
                     treeModel.insertNodeInto(newNode, parentNode, parentNode.getChildCount());
                 }
 
-                showChildren(parentNode);
+               // showChildren(parentNode);
             } else {
                 String msg = "The file '" +
                     file +
                     "' could not be created.";
-                showErrorMessage(msg, "Create Failed");
+                showErrorMessage(msg, "Create Failed",view.getGui());
             }
         } catch(Throwable t) {
-            showThrowable(t);
+            //showThrowable(t);
         }
     }
-    gui.repaint();
+    view.getGui().repaint();
 }
+/*
 private void setColumnWidth(int column, int width) {
     TableColumn tableColumn = table.getColumnModel().getColumn(column);
     if (width<0) {
@@ -168,6 +180,7 @@ private void setColumnWidth(int column, int width) {
     tableColumn.setMaxWidth(width);
     tableColumn.setMinWidth(width);
 }
+*/
 
 /** Add the files that are contained within the directory of this node.
 Thanks to Hovercraft Full Of Eels. */
@@ -236,7 +249,7 @@ public boolean MoveFile() throws IOException {
  	}
 	return true;
 }
-*/
+
 /** Update the File details view with the details of this File. */
 /*
 private void setFileDetails(File file) {
@@ -265,8 +278,8 @@ private void setFileDetails(File file) {
     gui.repaint();
 }
 
-
-private void showErrorMessage(String errorMessage, String errorTitle) {
+*/
+private void showErrorMessage(String errorMessage, String errorTitle,JPanel gui) {
     JOptionPane.showMessageDialog(
         gui,
         errorMessage,
@@ -274,7 +287,7 @@ private void showErrorMessage(String errorMessage, String errorTitle) {
         JOptionPane.ERROR_MESSAGE
         );
 }
-
+/*
 private void showThrowable(Throwable t) {
     t.printStackTrace();
     JOptionPane.showMessageDialog(
@@ -285,7 +298,7 @@ private void showThrowable(Throwable t) {
         );
     gui.repaint();
 }
-*/
+
 /** Update the table on the EDT */
 /*
 private void setTableData(final File[] files) {
