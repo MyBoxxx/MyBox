@@ -1,4 +1,4 @@
-package UI;
+package GUI_final;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -25,8 +25,9 @@ public class CreateFolderScreen extends JFrame {
 	
 	private JTextField textField;
 	private JTextField textField_1;
-  CreateFolderScreen() {
-    final UI.ContentPanel contentPanel = new ContentPanel();
+	
+   CreateFolderScreen() {
+    final ContentPanel contentPanel = new ContentPanel();
     getContentPane().add(contentPanel);
     contentPanel.setLayout(null);
     this.setTitle("Create New Folder");
@@ -103,7 +104,7 @@ public class CreateFolderScreen extends JFrame {
   }
 }
 
-public class ContentPanel extends JPanel {
+class ContentPanel extends JPanel {
   Image bgimage = null;
 
   ContentPanel() {
