@@ -37,15 +37,8 @@ import java.awt.event.FocusAdapter;
 
 public class Login_GUI extends JFrame {
 
-	public JLabel getForgotPassword() {
-		return ForgotPassword;
-	}
 
-	public JButton getLoginButtun() {
-		return LoginButtun;
-	}
-
-	JLabel ForgotPassword;
+	JButton ForgotPassword;
 	JButton LoginButtun;
 	
 	private JPanel contentPane;
@@ -112,7 +105,7 @@ public class Login_GUI extends JFrame {
 		    /////////////////////////////////////
 		    URL url2 = new URL("http://honourrollreports.com/Assets/Images/Icons/LargeHelp.png");
 		    Icon icon2 = new ImageIcon(url2);
-		    ForgotPassword = new JLabel(icon2);
+		    ForgotPassword = new JButton(icon2);
 		    ForgotPassword.setLocation(143, 401);
 		    ForgotPassword.setSize(150, 150);
 		    ForgotPassword.setBounds(215, 396, 150, 155);
@@ -221,6 +214,14 @@ public class Login_GUI extends JFrame {
 	public void setPasswordField(JPasswordField passwordField) {
 		this.passwordField = passwordField;
 	}
+	public JButton getForgotPassword() {
+		return ForgotPassword;
+	}
+
+	public JButton getLoginButtun() {
+		return LoginButtun;
+	}
+
 
 }
 
