@@ -1,4 +1,4 @@
-package GUI;
+package GUI_final;
 import java.awt.EventQueue;
 
 import javax.naming.ldap.Rdn;
