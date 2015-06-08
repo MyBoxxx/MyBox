@@ -12,6 +12,7 @@ import javax.swing.JComboBox;
 import javax.swing.JButton;
 import javax.swing.JSpinner;
 import javax.swing.JTextArea;
+import javax.swing.JLabel;
 
 
 public class Adminbar extends JFrame {
@@ -45,26 +46,12 @@ public class Adminbar extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JTextPane txtpnSystemAdminWindow = new JTextPane();
-		txtpnSystemAdminWindow.setText("System Admin Window");
-		txtpnSystemAdminWindow.setBounds(144, 11, 160, 30);
-		contentPane.add(txtpnSystemAdminWindow);
-		
 		JButton btnNotifications = new JButton("Notifications");
-		btnNotifications.setBounds(10, 65, 160, 50);
+		btnNotifications.setBounds(10, 136, 160, 50);
 		contentPane.add(btnNotifications);
 		
-		JTextArea textArea = new JTextArea();
-		textArea.setBounds(180, 75, 44, 30);
-		contentPane.add(textArea);
-		
-		JTextPane txtpnNumberOfNew = new JTextPane();
-		txtpnNumberOfNew.setText("number of new notifications");
-		txtpnNumberOfNew.setBounds(247, 75, 198, 30);
-		contentPane.add(txtpnNumberOfNew);
-		
 		JButton btnChangeFms = new JButton("Change FMS");
-		btnChangeFms.setBounds(160, 146, 160, 50);
+		btnChangeFms.setBounds(277, 136, 160, 50);
 		contentPane.add(btnChangeFms);
 		
 		JButton btnQuit = new JButton("Quit");
@@ -74,6 +61,17 @@ public class Adminbar extends JFrame {
 		JButton btnNext = new JButton("Next");
 		btnNext.setBounds(277, 240, 160, 50);
 		contentPane.add(btnNext);
+		
+		JLabel lblSystemAdminWindow = new JLabel("System Admin Window");
+		lblSystemAdminWindow.setBounds(160, 6, 160, 30);
+		contentPane.add(lblSystemAdminWindow);
+		
+		JLabel lblNumberOfNew = new JLabel("number of new notifications:");
+		lblNumberOfNew.setBounds(66, 69, 187, 16);
+		contentPane.add(lblNumberOfNew);
+		
+		JLabel lblNone = new JLabel("none");
+		lblNone.setBounds(277, 69, 61, 16);
+		contentPane.add(lblNone);
 	}
-
 }
