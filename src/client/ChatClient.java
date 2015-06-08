@@ -2,11 +2,17 @@
 // "Object Oriented Software Engineering" and is issued under the open-source
 // license found at www.lloseng.com 
 
-package client;
+package Client;
 
 import ocsf.client.*;
 import common.*;
+
 import java.io.*;
+
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileView;
+import javax.swing.plaf.FileChooserUI;
 
 /**
  * This class overrides some of the methods defined in the abstract
@@ -57,8 +63,6 @@ public class ChatClient extends AbstractClient
   public void handleMessageFromServer(Object msg) 
   {
     clientUI.display(msg.toString());
-   
-    
   }
 
   /**
@@ -69,7 +73,7 @@ public class ChatClient extends AbstractClient
   public void handleMessageFromClientUI(String message)
   {
     try
-    {
+    {		
     	sendToServer(message);
     }
     catch(IOException e)
