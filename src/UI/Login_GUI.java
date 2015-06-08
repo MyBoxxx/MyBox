@@ -11,6 +11,8 @@ import java.awt.event.MouseEvent;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import javafx.scene.image.Image;
+
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -23,6 +25,8 @@ import java.awt.Color;
 
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
+
+import server.MyBoxServer;
 
 import com.thehowtotutorial.splashscreen.JSplash;
 
@@ -40,11 +44,11 @@ public class Login_GUI extends JFrame {
 	/**
 	 * Launch the application.
 	 * @throws InterruptedException 
+	 * @throws MalformedURLException 
 	 */
-	public static void main(String[] args) throws InterruptedException {
+	public static void main(String[] args) throws InterruptedException, MalformedURLException {
 		
-		
-		JSplash splashs = new JSplash(Main.class.getResource("logo.png"), true, true, false, "V1",null,Color.RED,Color.BLACK);
+		JSplash splashs = new JSplash(Login_GUI.class.getResource("CloudPrint.png"), true, true, false, null,null,Color.RED,Color.BLACK);
 		splashs.splashOn();
 		//call Method;
 		splashs.setProgress(20, "Init");
@@ -55,11 +59,9 @@ public class Login_GUI extends JFrame {
 		Thread.sleep(1000);
 		splashs.setProgress(80, "Making JAVA");
 		Thread.sleep(1000);
-		splashs.setProgress(100, "100 Ein ma");
-		Thread.sleep(1000);
+		splashs.setProgress(100, "All Ready. Starting");
+		Thread.sleep(2000);
 		splashs.splashOff();
-		
-		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
