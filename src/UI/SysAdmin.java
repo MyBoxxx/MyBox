@@ -16,6 +16,7 @@ import javax.swing.JSpinner;
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import javax.swing.JDesktopPane;
+import javax.swing.JLabel;
 
 
 public class SysAdmin extends JFrame {
@@ -124,16 +125,20 @@ public class SysAdmin extends JFrame {
 		contentPane.add(btnNewButton_1);
 		
 		JButton btnAprove = new JButton("Aprove");
-		btnAprove.setBounds(233, 358, 101, 23);
+		btnAprove.setBounds(235, 358, 101, 23);
 		contentPane.add(btnAprove);
 		
-		JTextPane txtpnRequestPage = new JTextPane();
-		txtpnRequestPage.setText("Request Page");
-		txtpnRequestPage.setBounds(142, 43, 73, 23);
-		contentPane.add(txtpnRequestPage);
-		
 		JComboBox comboBox = new JComboBox();
-		comboBox.setBounds(0, 75, 358, 191);
+		comboBox.setBounds(0, 153, 358, 73);
 		contentPane.add(comboBox);
+		
+		JLabel lblRequesstPage = new JLabel("System Admin Requesst Page");
+		lblRequesstPage.setBounds(156, 20, 193, 16);
+		contentPane.add(lblRequesstPage);
+		
+		JLabel lblNewLabel = new JLabel("New label");
+		lblNewLabel.setBounds(44, 64, 61, 16);
+		contentPane.add(lblNewLabel);
+		ButtonSend.setIcon(new ImageIcon("images/sendrequest.gif"));
 	}
 }
