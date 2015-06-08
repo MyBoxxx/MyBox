@@ -1,28 +1,8 @@
 package SampleTreeFileView;
 
-import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.Desktop;
-import java.awt.Dimension;
-import java.awt.GridLayout;
 import java.io.File;
-import java.io.IOException;
-import java.util.Date;
-import java.util.List;
-
-import javax.swing.ButtonGroup;
-import javax.swing.Icon;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JTextField;
 import javax.swing.JTree;
-import javax.swing.SwingUtilities;
-import javax.swing.SwingWorker;
-import javax.swing.table.TableColumn;
-import javax.swing.text.View;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
@@ -59,7 +39,7 @@ private TreePath findTreePath(File find) {
     // not found!
     return null;
 }
-
+/*
 private void deleteFile(Component gui) {
     if (currentFile==null) {
         showErrorMessage("No file selected for deletion.","Select File");
@@ -101,7 +81,7 @@ private void deleteFile(Component gui) {
     }
     gui.repaint();
 }
-
+/*
 private void newFile() {
     if (currentFile==null) {
         showErrorMessage("No location selected for new file.","Select Location");
@@ -191,6 +171,7 @@ private void setColumnWidth(int column, int width) {
 
 /** Add the files that are contained within the directory of this node.
 Thanks to Hovercraft Full Of Eels. */
+/*
 private void showChildren(final DefaultMutableTreeNode node) {
     tree.setEnabled(false);
     progressBar.setVisible(true);
@@ -255,7 +236,9 @@ public boolean MoveFile() throws IOException {
  	}
 	return true;
 }
+*/
 /** Update the File details view with the details of this File. */
+/*
 private void setFileDetails(File file) {
     currentFile = file;
     Icon icon = fileSystemView.getSystemIcon(file);
@@ -302,8 +285,9 @@ private void showThrowable(Throwable t) {
         );
     gui.repaint();
 }
-
+*/
 /** Update the table on the EDT */
+/*
 private void setTableData(final File[] files) {
     SwingUtilities.invokeLater(new Runnable() {
         public void run() {
@@ -335,6 +319,7 @@ private void setTableData(final File[] files) {
         }
     });
 }
+*/
 
 public Object getDesktop() {
 	// TODO Auto-generated method stub

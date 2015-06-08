@@ -6,7 +6,6 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.io.File;
 
-import javax.swing.AbstractButton;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JCheckBoxMenuItem;
@@ -23,20 +22,14 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.JToolBar;
 import javax.swing.JTree;
-import javax.swing.event.MenuKeyEvent;
-import javax.swing.event.MenuKeyListener;
 import javax.swing.filechooser.FileSystemView;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.JMenuBar;
 
 import java.awt.BorderLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 import javax.swing.border.EmptyBorder;
 import javax.swing.tree.TreeModel;
 
-@SuppressWarnings("serial")
 public class View extends JFrame{
 
     /** Title of the application */
@@ -56,7 +49,7 @@ public class View extends JFrame{
 
 	/** File-system tree. Built Lazily */
      JTree tree;
-    
+     JPanel fileView;
     
     /** Directory listing */
      JTable table;
@@ -95,20 +88,28 @@ public class View extends JFrame{
 	
 	JPanel detailView;
 	JPanel fileMainDetails;
+	 
+	
+	/*menu but*/
+	JButton btnNotifications;
+	JLabel lblLogInAs;
+	JMenuItem mntmHelp;
+	JMenuItem mntmTrash;
+	JCheckBoxMenuItem chckbxmntmSharedWithMe;
+	JCheckBoxMenuItem chckbxmntmMyFiles;
+	JMenuItem mntmRename;
+	JMenuItem mntmDelete;
+	JMenuItem mntmMove;
+	JMenuItem mntmAskToJoin;
+	JMenuItem mntmCreateNewGroup;
+	JMenuItem mntmSearch;
+	JMenuItem mntmLogOut;
+	JMenuItem mntmSettings;
 	
 	
-    
-    
+	
 	public View() {
-		super();
-		 getGui();
-	}
-	
-	public Container getGui() {
-		        if (gui==null) {
-		            gui = new JPanel(new BorderLayout(3,3));
-		            gui.setBorder(new EmptyBorder(5,5,5,5));
-
+		      		getGui();
 		            fileSystemView = FileSystemView.getFileSystemView();
 		           // show the file system roots.
 		            File[] roots = fileSystemView.getRoots();
@@ -133,12 +134,8 @@ public class View extends JFrame{
 		            progressBar.setVisible(false);
 		    		    		                        
 		    		detailView = new JPanel(new BorderLayout(3,3));
-		    		    		                                    //fileTableModel = new FileTableModel();
-
-		    		table = new JTable();
-		    		//table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		    		table.setAutoCreateRowSorter(true);
-		            table.setShowVerticalLines(false);
+		    		    		                                   // fileTableModel = new FileTableModel();
+		            
 		            //table.getSelectionModel().addListSelectionListener(listSelectionListener);
 		            JScrollPane tableScroll = new JScrollPane(table);
 		            Dimension d = tableScroll.getPreferredSize();
@@ -208,166 +205,81 @@ public class View extends JFrame{
 		openFile = new JButton("Open");
 		openFile.setMnemonic('o');
 		
+		toolBarInit(toolBar);
+				
+		 fileView = new JPanel(new BorderLayout(3,3));
 		
+		fileView.add(toolBar,BorderLayout.NORTH);
+		fileView.add(fileMainDetails,BorderLayout.CENTER);
+		
+		detailView.add(fileView, BorderLayout.SOUTH);
+		
+		JSplitPane splitPane = new JSplitPane(
+		JSplitPane.HORIZONTAL_SPLIT,
+		treeScroll,
+		detailView);
+		gui.add(splitPane, BorderLayout.CENTER);
+		
+		gui.add(simpleOutput, BorderLayout.SOUTH);
+
+	JMenuBar menuBar = new JMenuBar();
+	gui.add(menuBar, BorderLayout.NORTH);
+	initMenuBar(menuBar);
+	
+   }
+
+	private void toolBarInit(JToolBar toolBar) {
 		toolBar.add(openFile);
         
         // Check the actions are supported on this platform!
-//openFile.setEnabled(desktop.isSupported(Desktop.Action.OPEN));
+		//openFile.setEnabled(desktop.isSupported(Desktop.Action.OPEN));
+		
+		toolBar.addSeparator();
+		
+		newFile = new JButton("New");
+		
+		newFile.setMnemonic('n');
+		
+		toolBar.add(newFile);
+		
+		moveFile = new JButton("Move");
+		moveFile.setMnemonic('c');
+		
+		
+		toolBar.add(moveFile);
+		
+		renameFile = new JButton("Rename");
+		renameFile.setMnemonic('r');
+		
+		
+		toolBar.add(renameFile);
+		
+		deleteFile = new JButton("Delete");
+		deleteFile.setMnemonic('d');
+		
+		toolBar.add(deleteFile);
+		
+		toolBar.addSeparator();
+		
+		readable = new JCheckBox("Read  ");
+		readable.setMnemonic('a');
+		//readable.setEnabled(false);
+		toolBar.add(readable);
+		
+		writable = new JCheckBox("Write  ");
+		writable.setMnemonic('w');
+		//writable.setEnabled(false);
+		toolBar.add(writable);
+		
+		executable = new JCheckBox("Execute");
+		executable.setMnemonic('x');
+		//executable.setEnabled(false);
+		toolBar.add(executable);
 
-toolBar.addSeparator();
-
-newFile = new JButton("New");
-
-newFile.setMnemonic('n');
-
-toolBar.add(newFile);
-
-moveFile = new JButton("Move");
-moveFile.setMnemonic('c');
-
-
-toolBar.add(moveFile);
-
-renameFile = new JButton("Rename");
-renameFile.setMnemonic('r');
-
-
-toolBar.add(renameFile);
-
-deleteFile = new JButton("Delete");
-deleteFile.setMnemonic('d');
-
-toolBar.add(deleteFile);
-
-toolBar.addSeparator();
-
-readable = new JCheckBox("Read  ");
-readable.setMnemonic('a');
-//readable.setEnabled(false);
-toolBar.add(readable);
-
-writable = new JCheckBox("Write  ");
-writable.setMnemonic('w');
-//writable.setEnabled(false);
-toolBar.add(writable);
-
-executable = new JCheckBox("Execute");
-executable.setMnemonic('x');
-//executable.setEnabled(false);
-toolBar.add(executable);
-
-JPanel fileView = new JPanel(new BorderLayout(3,3));
-
-fileView.add(toolBar,BorderLayout.NORTH);
-fileView.add(fileMainDetails,BorderLayout.CENTER);
-
-detailView.add(fileView, BorderLayout.SOUTH);
-
-JSplitPane splitPane = new JSplitPane(
-JSplitPane.HORIZONTAL_SPLIT,
-treeScroll,
-detailView);
-gui.add(splitPane, BorderLayout.CENTER);
-
-gui.add(simpleOutput, BorderLayout.SOUTH);
-
-JMenuBar menuBar = new JMenuBar();
-gui.add(menuBar, BorderLayout.NORTH);
-
-JMenu mnMybox = new JMenu("MyBox");
-menuBar.add(mnMybox);
-
-JMenuItem mntmSettings = new JMenuItem("Settings");
-mntmSettings.addMenuKeyListener(new MenuKeyListener() {
-	public void menuKeyPressed(MenuKeyEvent e) {
-		//toDO --> go to settings
+		
 	}
-	public void menuKeyReleased(MenuKeyEvent e) {
-	}
-	public void menuKeyTyped(MenuKeyEvent e) {
-	}
-});
-mnMybox.add(mntmSettings);
-
-JMenuItem mntmLogOut = new JMenuItem("Log Out");
-mnMybox.add(mntmLogOut);
-
-JMenu mnFile = new JMenu("File");
-menuBar.add(mnFile);
-
-JMenuItem mntmCreateNewFolder = new JMenuItem("Create New Folder");
-mnFile.add(mntmCreateNewFolder);
-
-JMenuItem mntmUploadfile = new JMenuItem("UploadFile");
 
 
-mnFile.add(mntmUploadfile);
-
-JMenuItem mntmSearch = new JMenuItem("Search");
-mnFile.add(mntmSearch);
-
-JMenu mnGroup = new JMenu("Group");
-menuBar.add(mnGroup);
-
-JMenuItem mntmCreateNewGroup = new JMenuItem("Create New Group");
-mnGroup.add(mntmCreateNewGroup);
-
-JMenuItem mntmAskToJoin = new JMenuItem("Ask to Join");
-mnGroup.add(mntmAskToJoin);
-
-JMenu mnEdit = new JMenu("Edit");
-menuBar.add(mnEdit);
-
-JMenuItem mntmCopy = new JMenuItem("Move");
-
-
-mnEdit.add(mntmCopy);
-
-
-JMenuItem mntmDelete = new JMenuItem("Delete");
-mntmDelete.addActionListener(new ActionListener(){
-    public void actionPerformed(ActionEvent ae) {
-        //deleteFile();
-    }
-});
-mnEdit.add(mntmDelete);
-
-JMenuItem mntmRename = new JMenuItem("ReName");
-mnEdit.add(mntmRename);
-
-JMenu mnView = new JMenu("Go");
-menuBar.add(mnView);
-
-JCheckBoxMenuItem chckbxmntmMyFiles = new JCheckBoxMenuItem("My Files");
-mnView.add(chckbxmntmMyFiles);
-
-JCheckBoxMenuItem chckbxmntmSharedWithMe = new JCheckBoxMenuItem("Shared With Me");
-mnView.add(chckbxmntmSharedWithMe);
-
-JMenuItem mntmTrash = new JMenuItem("Trash");
-mnView.add(mntmTrash);
-
-JMenu mnHelp_1 = new JMenu("Help");
-menuBar.add(mnHelp_1);
-
-JMenuItem mntmAboutUs = new JMenuItem("About Us");
-mnHelp_1.add(mntmAboutUs);
-
-JMenuItem mntmHelp = new JMenuItem("Help");
-mnHelp_1.add(mntmHelp);
-
-JMenuItem mntmNewMenuItem = new JMenuItem("                    ");
-menuBar.add(mntmNewMenuItem);
-
-JLabel lblLogInAs = new JLabel("Log in as : Eyalpano@gmail.com");
-menuBar.add(lblLogInAs);
-
-JButton btnNotifications = new JButton("notifications");
-menuBar.add(btnNotifications);
-
-       }
-       return gui;
-	}
 
 	public JButton getOpenFile() {
 		// TODO Auto-generated method stub
@@ -399,10 +311,98 @@ menuBar.add(btnNotifications);
 	}
 
 	public JTable getTable() {
+		if(table == null ){
+    		table = new JTable();
+    		//table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+    		table.setAutoCreateRowSorter(true);
+            table.setShowVerticalLines(false);
+		}
 		return table;
 	}
+	public JMenuBar initMenuBar(JMenuBar menuBar)
+	{
 
-	public void setTable(JTable table) {
+JMenu mnMybox = new JMenu("MyBox");
+menuBar.add(mnMybox);
+
+ mntmSettings = new JMenuItem("Settings");
+mnMybox.add(mntmSettings);
+
+ mntmLogOut = new JMenuItem("Log Out");
+mnMybox.add(mntmLogOut);
+
+JMenu mnFile = new JMenu("File");
+menuBar.add(mnFile);
+
+JMenuItem mntmCreateNewFolder = new JMenuItem("Create New Folder");
+
+mnFile.add(mntmCreateNewFolder);
+
+JMenuItem mntmUploadfile = new JMenuItem("UploadFile");
+
+
+mnFile.add(mntmUploadfile);
+
+ mntmSearch = new JMenuItem("Search");
+mnFile.add(mntmSearch);
+
+JMenu mnGroup = new JMenu("Group");
+menuBar.add(mnGroup);
+
+JMenuItem mntmCreateNewGroup = new JMenuItem("Create New Group");
+mnGroup.add(mntmCreateNewGroup);
+
+ mntmAskToJoin = new JMenuItem("Ask to Join");
+mnGroup.add(mntmAskToJoin);
+
+JMenu mnEdit = new JMenu("Edit");
+menuBar.add(mnEdit);
+
+ mntmMove = new JMenuItem("Move");
+
+mnEdit.add(mntmMove);
+
+
+ mntmDelete = new JMenuItem("Delete");
+mnEdit.add(mntmDelete);
+
+ mntmRename = new JMenuItem("ReName");
+mnEdit.add(mntmRename);
+
+JMenu mnView = new JMenu("Go");
+menuBar.add(mnView);
+
+JCheckBoxMenuItem chckbxmntmMyFiles = new JCheckBoxMenuItem("My Files");
+mnView.add(chckbxmntmMyFiles);
+
+ chckbxmntmSharedWithMe = new JCheckBoxMenuItem("Shared With Me");
+mnView.add(chckbxmntmSharedWithMe);
+
+ mntmTrash = new JMenuItem("Trash");
+mnView.add(mntmTrash);
+
+JMenu mnHelp_1 = new JMenu("Help");
+menuBar.add(mnHelp_1);
+
+JMenuItem mntmAboutUs = new JMenuItem("About Us");
+mnHelp_1.add(mntmAboutUs);
+
+ mntmHelp = new JMenuItem("Help");
+mnHelp_1.add(mntmHelp);
+
+JMenuItem mntmNewMenuItem = new JMenuItem("                    ");
+menuBar.add(mntmNewMenuItem);
+
+ lblLogInAs = new JLabel("Log in as : Eyalpano@gmail.com");
+menuBar.add(lblLogInAs);
+
+ btnNotifications = new JButton("notifications");
+menuBar.add(btnNotifications);
+return menuBar;
+
+	}
+	
+ 	public void setTable(JTable table) {
 		this.table = table;
 	}
 
@@ -605,6 +605,14 @@ menuBar.add(btnNotifications);
 
 	public void setOpenFile(JButton openFile) {
 		this.openFile = openFile;
+	}
+
+	public JPanel getGui() {
+		  if (gui==null) {
+	            gui = new JPanel(new BorderLayout(3,3));
+	            gui.setBorder(new EmptyBorder(5,5,5,5));
+		  }
+		return gui;
 	}
 }
 
