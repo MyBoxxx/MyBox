@@ -41,7 +41,7 @@ public class Adminbar extends JFrame {
 	 */
 	public Adminbar() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 599, 340);
+		setBounds(100, 100, 601, 505);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -78,7 +78,7 @@ public class Adminbar extends JFrame {
 		
 		JLabel Cover = new JLabel();
 		Cover.setIcon(new ImageIcon("src/GUI_final/admin.jpg"));
-		Cover.setBounds(20, 109, 554, 181);
+		Cover.setBounds(10, 109, 564, 347);
 		contentPane.add(Cover);
 	}
 }
