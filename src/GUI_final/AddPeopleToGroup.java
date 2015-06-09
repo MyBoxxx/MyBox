@@ -21,20 +21,7 @@ import java.awt.SystemColor;
 
 public class AddPeopleToGroup extends JFrame {
 
-<<<<<<< HEAD
 	
-	private JLabel join;
-	private JButton cancelButton;
-	private JButton OkButton;
-	private TextField textField;
-	private JTextPane textPane;
-	private Choice choose_user;
-	private JTextPane txtpnChooseUser_1;
-	private JTextPane txtpnChooseGroup;
-	private Choice choiceGroup;
-	private JTextPane txtpnAddPeopleTo;	
-=======
-	private JPanel contentPane;
 	private JLabel join;
 	private JButton cancelButton;
 	private JButton OkButton;
@@ -46,10 +33,6 @@ public class AddPeopleToGroup extends JFrame {
 	private Choice choiceGroup;
 	private JTextPane txtpnAddPeopleTo;
 	
-<<<<<<< HEAD
->>>>>>> branch 'ofir' of https://github.com/MyBoxxx/MyBox.git
-=======
->>>>>>> branch 'ofir' of https://github.com/MyBoxxx/MyBox.git
 
 	/**
 	 * Launch the application.
@@ -78,13 +61,6 @@ public class AddPeopleToGroup extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		
-<<<<<<< HEAD
-<<<<<<< HEAD
-				
-=======
->>>>>>> branch 'ofir' of https://github.com/MyBoxxx/MyBox.git
-=======
->>>>>>> branch 'ofir' of https://github.com/MyBoxxx/MyBox.git
 		txtpnAddPeopleTo = new JTextPane();
 		txtpnAddPeopleTo.setForeground(SystemColor.textHighlightText);
 		txtpnAddPeopleTo.setBackground(new Color(59, 89, 151));
@@ -139,42 +115,14 @@ public class AddPeopleToGroup extends JFrame {
 		cancelButton.setBounds(277, 209, 209, 42);
 		contentPane.add(cancelButton);
 		
-<<<<<<< HEAD
-<<<<<<< HEAD
 		join = new JLabel();
-=======
 		join= new JLabel();
->>>>>>> branch 'ofir' of https://github.com/MyBoxxx/MyBox.git
-=======
 		join= new JLabel();
->>>>>>> branch 'ofir' of https://github.com/MyBoxxx/MyBox.git
 		join.setIcon(new ImageIcon("src/GUI_final/join.jpeg"));
 		join.setBounds(10, 27, 260	, 165);
 		contentPane.add(join);
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-	
-=======
-	public JPanel getContentPane() {
-		return contentPane;
-	}
-
-	public void setContentPane(JPanel contentPane) {
-		this.contentPane = contentPane;
-	}
->>>>>>> branch 'ofir' of https://github.com/MyBoxxx/MyBox.git
-=======
-	public JPanel getContentPane() {
-		return contentPane;
-	}
-
-	public void setContentPane(JPanel contentPane) {
-		this.contentPane = contentPane;
-	}
->>>>>>> branch 'ofir' of https://github.com/MyBoxxx/MyBox.git
 
 	public JLabel getJoin() {
 		return join;
