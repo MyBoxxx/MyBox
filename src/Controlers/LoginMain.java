@@ -5,7 +5,7 @@ import java.net.MalformedURLException;
 import Controlers.*;
 import Entity.*;
 import GUI_final.*;
-public class tempMain {
+public class LoginMain {
 
 	
 	public static void main(String[] args) {
