@@ -20,13 +20,17 @@ import javax.swing.JTextField;
 import java.awt.Font;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class ForgotPassword_GUI extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField txtEnterYourEmail;
+	private JLabel txtEnterYourEmail;
 	private JTextField txtEmail;
-
+	private JButton sumbit;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -58,9 +62,8 @@ public class ForgotPassword_GUI extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		//////////////////////////////////////////
-		 URL url = new URL("http://www.nifiindia.com/images/forgot-password.gif");
-		    Icon icon = new ImageIcon(url);
-		    JLabel ForgotPass = new JLabel(icon);
+	
+		    JLabel ForgotPass = new JLabel(new ImageIcon(ForgotPassword_GUI.class.getResource("/images_icons/forgot-password_top.gif")));
 		   
 		    ForgotPass.setBounds(10, 11, 360, 267);
 		    ForgotPass.setBackground(Color.WHITE);
@@ -68,49 +71,47 @@ public class ForgotPassword_GUI extends JFrame {
 		    contentPane.setLayout(null);
 		    contentPane.add(ForgotPass);
 		    /////////////////////////////////////////
-		    URL url1 = new URL("http://www.ccj-online.com/wp-content/uploads/2011/03/button_1.gif");
-		    Icon icon1 = new ImageIcon(url1);
-		    JLabel sumbit = new JLabel(icon1);
+		  
+		    sumbit = new JButton(new ImageIcon(ForgotPassword_GUI.class.getResource("/images_icons/subbmit_button.gif")));
 		  
 		    sumbit.setBounds(421, 255, 196, 141);
 		    sumbit.setBackground(Color.WHITE);
-		    sumbit.addMouseListener(new MouseAdapter() {
-		        public void mouseClicked(MouseEvent me) {
-		        	JOptionPane.showMessageDialog(contentPane,  "Sumbit OK!");
-		        }
-		      });
+		    sumbit.setOpaque(false);
+		    sumbit.setContentAreaFilled(false);
+		    sumbit.setBorderPainted(false);
 		    contentPane.setLayout(null);
 		    contentPane.add(sumbit);
 		    
 		    
 		    /////////////////////////////////////////////////
-		    txtEnterYourEmail = new JTextField();
+		    txtEnterYourEmail = new JLabel();
 		    txtEnterYourEmail.setBackground(Color.WHITE);
 		    txtEnterYourEmail.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		    txtEnterYourEmail.setEditable(false);
 		    txtEnterYourEmail.setText("Enter your email address to show your password");
 		    txtEnterYourEmail.setBounds(10, 309, 360, 20);
 		    txtEnterYourEmail.setBorder(javax.swing.BorderFactory.createEmptyBorder());
 		    contentPane.add(txtEnterYourEmail);
-		    txtEnterYourEmail.setColumns(10);
 		    
 		    txtEmail = new JTextField();
 		    txtEmail.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		    txtEmail.addFocusListener(new FocusAdapter() {
-		    	@Override
-		    	public void focusGained(FocusEvent arg0) {
-		    		txtEmail.setText("");
-		    	}
-		    	@Override
-		    	public void focusLost(FocusEvent e) {
-		    		txtEmail.setText("E-mail");
-		    	}
-		    });
+
 		    
-		   
 		    txtEmail.setText("E-mail");
-		    txtEmail.setBounds(10, 350, 136, 20);
+		    txtEmail.setBounds(10, 350, 360, 20);
 		    contentPane.add(txtEmail);
 		    txtEmail.setColumns(10);
 	}
+
+	public JTextField getTxtEmail() {
+		return txtEmail;
+	}
+
+	public void setTxtEmail(String txtEmail) {
+		this.txtEmail.setText(txtEmail);
+	}
+	public JButton getSumbit() {
+		return sumbit;
+	}
+
+
 }

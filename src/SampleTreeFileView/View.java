@@ -61,7 +61,8 @@ public class View extends JFrame{
      JButton deleteFile;
      JButton newFile;
      JButton moveFile;
-    /* File details. */
+    
+     /* File details. */
      JLabel fileName;
      JTextField path;
      JLabel date;
@@ -105,8 +106,9 @@ public class View extends JFrame{
 	JMenuItem mntmSearch;
 	JMenuItem mntmLogOut;
 	JMenuItem mntmSettings;
-	
-	
+	JMenuItem mntmCreateNewFolder;
+	JMenuItem mntmUploadfile;
+	JMenuItem mntmAboutUs;
 	
 	public View() {
 		      		getGui();
@@ -279,8 +281,6 @@ public class View extends JFrame{
 		
 	}
 
-
-
 	public JButton getOpenFile() {
 		// TODO Auto-generated method stub
 		return openFile;
@@ -319,7 +319,7 @@ public class View extends JFrame{
 		}
 		return table;
 	}
-	public JMenuBar initMenuBar(JMenuBar menuBar)
+public JMenuBar initMenuBar(JMenuBar menuBar)
 	{
 
 JMenu mnMybox = new JMenu("MyBox");
@@ -334,11 +334,11 @@ mnMybox.add(mntmLogOut);
 JMenu mnFile = new JMenu("File");
 menuBar.add(mnFile);
 
-JMenuItem mntmCreateNewFolder = new JMenuItem("Create New Folder");
+ mntmCreateNewFolder = new JMenuItem("Create New Folder");
 
 mnFile.add(mntmCreateNewFolder);
 
-JMenuItem mntmUploadfile = new JMenuItem("UploadFile");
+ mntmUploadfile = new JMenuItem("UploadFile");
 
 
 mnFile.add(mntmUploadfile);
@@ -349,7 +349,7 @@ mnFile.add(mntmSearch);
 JMenu mnGroup = new JMenu("Group");
 menuBar.add(mnGroup);
 
-JMenuItem mntmCreateNewGroup = new JMenuItem("Create New Group");
+ mntmCreateNewGroup = new JMenuItem("Create New Group");
 mnGroup.add(mntmCreateNewGroup);
 
  mntmAskToJoin = new JMenuItem("Ask to Join");
@@ -384,7 +384,7 @@ mnView.add(mntmTrash);
 JMenu mnHelp_1 = new JMenu("Help");
 menuBar.add(mnHelp_1);
 
-JMenuItem mntmAboutUs = new JMenuItem("About Us");
+ mntmAboutUs = new JMenuItem("About Us");
 mnHelp_1.add(mntmAboutUs);
 
  mntmHelp = new JMenuItem("Help");
@@ -606,11 +606,161 @@ return menuBar;
 	public void setOpenFile(JButton openFile) {
 		this.openFile = openFile;
 	}
+	public JPanel getFileView() {
+		return fileView;
+	}
 
+	public void setFileView(JPanel fileView) {
+		this.fileView = fileView;
+	}
+
+	public JButton getBtnNotifications() {
+		return btnNotifications;
+	}
+
+	public void setBtnNotifications(JButton btnNotifications) {
+		this.btnNotifications = btnNotifications;
+	}
+
+	public JLabel getLblLogInAs() {
+		return lblLogInAs;
+	}
+
+	public void setLblLogInAs(JLabel lblLogInAs) {
+		this.lblLogInAs = lblLogInAs;
+	}
+
+	public JMenuItem getMntmHelp() {
+		return mntmHelp;
+	}
+
+	public void setMntmHelp(JMenuItem mntmHelp) {
+		this.mntmHelp = mntmHelp;
+	}
+
+	public JMenuItem getMntmTrash() {
+		return mntmTrash;
+	}
+
+	public void setMntmTrash(JMenuItem mntmTrash) {
+		this.mntmTrash = mntmTrash;
+	}
+
+	public JCheckBoxMenuItem getChckbxmntmSharedWithMe() {
+		return chckbxmntmSharedWithMe;
+	}
+
+	public void setChckbxmntmSharedWithMe(JCheckBoxMenuItem chckbxmntmSharedWithMe) {
+		this.chckbxmntmSharedWithMe = chckbxmntmSharedWithMe;
+	}
+
+	public JCheckBoxMenuItem getChckbxmntmMyFiles() {
+		return chckbxmntmMyFiles;
+	}
+
+	public void setChckbxmntmMyFiles(JCheckBoxMenuItem chckbxmntmMyFiles) {
+		this.chckbxmntmMyFiles = chckbxmntmMyFiles;
+	}
+
+	public JMenuItem getMntmRename() {
+		return mntmRename;
+	}
+
+	public void setMntmRename(JMenuItem mntmRename) {
+		this.mntmRename = mntmRename;
+	}
+
+	public JMenuItem getMntmDelete() {
+		return mntmDelete;
+	}
+
+	public void setMntmDelete(JMenuItem mntmDelete) {
+		this.mntmDelete = mntmDelete;
+	}
+
+	public JMenuItem getMntmMove() {
+		return mntmMove;
+	}
+
+	public void setMntmMove(JMenuItem mntmMove) {
+		this.mntmMove = mntmMove;
+	}
+
+	public JMenuItem getMntmAskToJoin() {
+		return mntmAskToJoin;
+	}
+
+	public void setMntmAskToJoin(JMenuItem mntmAskToJoin) {
+		this.mntmAskToJoin = mntmAskToJoin;
+	}
+
+	public JMenuItem getMntmCreateNewGroup() {
+		return mntmCreateNewGroup;
+	}
+
+	public void setMntmCreateNewGroup(JMenuItem mntmCreateNewGroup) {
+		this.mntmCreateNewGroup = mntmCreateNewGroup;
+	}
+
+	public JMenuItem getMntmSearch() {
+		return mntmSearch;
+	}
+
+	public void setMntmSearch(JMenuItem mntmSearch) {
+		this.mntmSearch = mntmSearch;
+	}
+
+	public JMenuItem getMntmLogOut() {
+		return mntmLogOut;
+	}
+
+	public void setMntmLogOut(JMenuItem mntmLogOut) {
+		this.mntmLogOut = mntmLogOut;
+	}
+
+	public JMenuItem getMntmSettings() {
+		return mntmSettings;
+	}
+
+	public void setMntmSettings(JMenuItem mntmSettings) {
+		this.mntmSettings = mntmSettings;
+	}
+
+	public JMenuItem getMntmCreateNewFolder() {
+		return mntmCreateNewFolder;
+	}
+
+	public void setMntmCreateNewFolder(JMenuItem mntmCreateNewFolder) {
+		this.mntmCreateNewFolder = mntmCreateNewFolder;
+	}
+
+	public JMenuItem getMntmUploadfile() {
+		return mntmUploadfile;
+	}
+
+	public void setMntmUploadfile(JMenuItem mntmUploadfile) {
+		this.mntmUploadfile = mntmUploadfile;
+	}
+
+	public JMenuItem getMntmAboutUs() {
+		return mntmAboutUs;
+	}
+
+	public void setMntmAboutUs(JMenuItem mntmAboutUs) {
+		this.mntmAboutUs = mntmAboutUs;
+	}
+
+	public static String getAppTitle() {
+		return APP_TITLE;
+	}
+	
 	public JPanel getGui() {
 		  if (gui==null) {
 	            gui = new JPanel(new BorderLayout(3,3));
 	            gui.setBorder(new EmptyBorder(5,5,5,5));
+	            setBounds(100, 100, 800	, 600);
+	            gui.setBounds(100, 100, 800	, 600);
+	            setContentPane(gui);
 		  }
 		return gui;
 	}
