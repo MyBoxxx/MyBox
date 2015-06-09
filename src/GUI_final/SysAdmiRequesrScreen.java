@@ -24,6 +24,8 @@ import javax.swing.JDesktopPane;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JRadioButton;
+import java.awt.Color;
+import java.awt.Font;
 
 
 public class SysAdmiRequesrScreen extends JFrame {
@@ -59,8 +61,9 @@ public class SysAdmiRequesrScreen extends JFrame {
 	 */
 	public SysAdmiRequesrScreen() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 500, 501);
+		setBounds(100, 100, 551, 514);
 		contentPane = new JPanel();
+		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
@@ -70,7 +73,9 @@ public class SysAdmiRequesrScreen extends JFrame {
 		contentPane.add(Requestlist);
 		
 		lblRequest = new JLabel("System Admin Requests");
-		lblRequest.setBounds(214, 19, 167, 16);
+		lblRequest.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		lblRequest.setForeground(Color.BLACK);
+		lblRequest.setBounds(190, 6, 191, 50);
 		contentPane.add(lblRequest);
 		
 		rbaccept = new JRadioButton("Accept");
@@ -78,7 +83,7 @@ public class SysAdmiRequesrScreen extends JFrame {
 		contentPane.add(rbaccept);
 		
 		rbreject = new JRadioButton("Reject");
-		rbreject.setBounds(251, 233, 141, 23);
+		rbreject.setBounds(63, 270, 141, 23);
 		contentPane.add(rbreject);
 		
 		okButton = new JButton("Save");
@@ -90,12 +95,12 @@ public class SysAdmiRequesrScreen extends JFrame {
 		contentPane.add(Beckbutton);
 		
 		btnReset = new JButton("reset");
-		btnReset.setBounds(418, 232, 81, 29);
+		btnReset.setBounds(63, 310, 81, 29);
 		contentPane.add(btnReset);
 		
 		pic = new JLabel("");
-		pic.setIcon(new ImageIcon("src/images_icons/rsz_requestsystemadmin.jpg"));
-		pic.setBounds(6, 6, 488, 447);
+		pic.setIcon(new ImageIcon("src/images_icons/rsz_systemadminrequest.jpg"));
+		pic.setBounds(-16, 0, 583, 509);
 		contentPane.add(pic);
 		
 		rbaccept.addActionListener(new ActionListener() {
@@ -134,6 +139,70 @@ public class SysAdmiRequesrScreen extends JFrame {
 		});
 		
 		
+	}
+
+	public JList getRequestlist() {
+		return Requestlist;
+	}
+
+	public void setRequestlist(JList requestlist) {
+		Requestlist = requestlist;
+	}
+
+	public JLabel getLblRequest() {
+		return lblRequest;
+	}
+
+	public void setLblRequest(JLabel lblRequest) {
+		this.lblRequest = lblRequest;
+	}
+
+	public JRadioButton getRbaccept() {
+		return rbaccept;
+	}
+
+	public void setRbaccept(JRadioButton rbaccept) {
+		this.rbaccept = rbaccept;
+	}
+
+	public JRadioButton getRbreject() {
+		return rbreject;
+	}
+
+	public void setRbreject(JRadioButton rbreject) {
+		this.rbreject = rbreject;
+	}
+
+	public JButton getOkButton() {
+		return okButton;
+	}
+
+	public void setOkButton(JButton okButton) {
+		this.okButton = okButton;
+	}
+
+	public JButton getBeckbutton() {
+		return Beckbutton;
+	}
+
+	public void setBeckbutton(JButton beckbutton) {
+		Beckbutton = beckbutton;
+	}
+
+	public JButton getBtnReset() {
+		return btnReset;
+	}
+
+	public void setBtnReset(JButton btnReset) {
+		this.btnReset = btnReset;
+	}
+
+	public JLabel getPic() {
+		return pic;
+	}
+
+	public void setPic(JLabel pic) {
+		this.pic = pic;
 	}
 	
 }
