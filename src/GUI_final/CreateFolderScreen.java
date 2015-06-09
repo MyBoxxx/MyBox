@@ -23,8 +23,12 @@ import java.awt.event.MouseEvent;
 
 public class CreateFolderScreen extends JFrame {
 	
-	private JTextField textField;
-	private JTextField textField_1;
+	private JTextField folderNameField;
+	
+
+	private JTextField folderDescriptionField;
+	private JButton btnCancel,btnOk;
+
 	
    public CreateFolderScreen() {
     final ContentPanel contentPanel = new ContentPanel();
@@ -47,34 +51,12 @@ public class CreateFolderScreen extends JFrame {
     labelStarString.setBounds(10, 478, 46, 14);
     contentPanel.add(labelStarString);
     
-    JButton btnCancel = new JButton("Cancel");
-    btnCancel.addMouseListener(new MouseAdapter() {
-    	@SuppressWarnings("deprecation")
-		@Override
-    	public void mouseClicked(MouseEvent arg0) {
-    		 final ImageIcon icon = new ImageIcon("images/imageno.jpg");
-             JOptionPane.showMessageDialog(null, "No Folder created", "About", JOptionPane.INFORMATION_MESSAGE, icon);
-             System.exit(0);
-    	}
-    });
+    btnCancel = new JButton("Cancel");
     btnCancel.setBounds(73, 514, 89, 23);
     contentPanel.add(btnCancel);
     
-    JButton btnOk = new JButton("OK");
-    btnOk.addMouseListener(new MouseAdapter() {
-    	@Override
-    	public void mouseClicked(MouseEvent e) {
-    		 final ImageIcon icon = new ImageIcon("images/imageyes.jpg");
-    		 if (textField.getText().equals("") && textField.getText() != null)
-    		 {
-        		 final ImageIcon icono = new ImageIcon("images/imageno.jpg");
-                 JOptionPane.showMessageDialog(null, "You have to insert a Name!", "About", JOptionPane.INFORMATION_MESSAGE, icono);
-    		 }
-    		 else
-    			 JOptionPane.showMessageDialog(null, "Folder with the name "  + textField.getText() + " created\n" + "Description: " + textField_1.getText(), "About", JOptionPane.INFORMATION_MESSAGE, icon);
-    	}
-    });
-    btnOk.setBounds(272, 514, 89, 23);
+     btnOk = new JButton("OK");
+     btnOk.setBounds(272, 514, 89, 23);
     contentPanel.add(btnOk);
     
     JLabel lblOptional = new JLabel("* Optional");
@@ -82,15 +64,15 @@ public class CreateFolderScreen extends JFrame {
     lblOptional.setBounds(10, 537, 67, 14);
     contentPanel.add(lblOptional);
     
-    textField = new JTextField();
-    textField.setBounds(161, 444, 200, 23);
-    contentPanel.add(textField);
-    textField.setColumns(10);
+    folderNameField = new JTextField();
+    folderNameField.setBounds(161, 444, 200, 23);
+    contentPanel.add(folderNameField);
+    folderNameField.setColumns(10);
     
-    textField_1 = new JTextField();
-    textField_1.setColumns(10);
-    textField_1.setBounds(161, 469, 200, 23);
-    contentPanel.add(textField_1);
+    folderDescriptionField = new JTextField();
+    folderDescriptionField.setColumns(10);
+    folderDescriptionField.setBounds(161, 469, 200, 23);
+    contentPanel.add(folderDescriptionField);
     setSize(460, 600);
   }
 
@@ -102,6 +84,39 @@ public class CreateFolderScreen extends JFrame {
 	jrframe.setLocation(x, y);
     jrframe.setVisible(true);
   }
+  
+  
+  public JTextField getFolderNameField() {
+		return folderNameField;
+	}
+
+	public void setFolderNameField(JTextField folderNameField) {
+		this.folderNameField = folderNameField;
+	}
+
+	public JTextField getFolderDescriptionField() {
+		return folderDescriptionField;
+	}
+
+	public void setFolderDescriptionField(JTextField folderDescriptionField) {
+		this.folderDescriptionField = folderDescriptionField;
+	}
+
+	public JButton getBtnCancel() {
+		return btnCancel;
+	}
+
+	public void setBtnCancel(JButton btnCancel) {
+		this.btnCancel = btnCancel;
+	}
+
+	public JButton getBtnOk() {
+		return btnOk;
+	}
+
+	public void setBtnOk(JButton btnOk) {
+		this.btnOk = btnOk;
+	}
 }
 
 class ContentPanel extends JPanel {
