@@ -10,7 +10,6 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-import UI.*;
 import GUI_final.*;
 import GUI_final.CreateFolderScreen;
 
