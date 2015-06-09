@@ -46,6 +46,9 @@ public class AddPeopleToGroup extends JFrame {
 	private Choice choiceGroup;
 	private JTextPane txtpnAddPeopleTo;
 	
+<<<<<<< HEAD
+>>>>>>> branch 'ofir' of https://github.com/MyBoxxx/MyBox.git
+=======
 >>>>>>> branch 'ofir' of https://github.com/MyBoxxx/MyBox.git
 
 	/**
@@ -76,7 +79,10 @@ public class AddPeopleToGroup extends JFrame {
 		setContentPane(contentPane);
 		
 <<<<<<< HEAD
+<<<<<<< HEAD
 				
+=======
+>>>>>>> branch 'ofir' of https://github.com/MyBoxxx/MyBox.git
 =======
 >>>>>>> branch 'ofir' of https://github.com/MyBoxxx/MyBox.git
 		txtpnAddPeopleTo = new JTextPane();
@@ -134,7 +140,11 @@ public class AddPeopleToGroup extends JFrame {
 		contentPane.add(cancelButton);
 		
 <<<<<<< HEAD
+<<<<<<< HEAD
 		join = new JLabel();
+=======
+		join= new JLabel();
+>>>>>>> branch 'ofir' of https://github.com/MyBoxxx/MyBox.git
 =======
 		join= new JLabel();
 >>>>>>> branch 'ofir' of https://github.com/MyBoxxx/MyBox.git
@@ -144,8 +154,18 @@ public class AddPeopleToGroup extends JFrame {
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	
+=======
+	public JPanel getContentPane() {
+		return contentPane;
+	}
+
+	public void setContentPane(JPanel contentPane) {
+		this.contentPane = contentPane;
+	}
+>>>>>>> branch 'ofir' of https://github.com/MyBoxxx/MyBox.git
 =======
 	public JPanel getContentPane() {
 		return contentPane;

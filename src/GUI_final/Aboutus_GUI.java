@@ -51,6 +51,7 @@ public class Aboutus_GUI extends JFrame {
 		setContentPane(contentPane);
 		
 <<<<<<< HEAD
+<<<<<<< HEAD
 	
 	    join = new JLabel();
 	    join.setIcon(new ImageIcon("src/GUI_final/about_us.jpg"));
@@ -87,6 +88,8 @@ public class Aboutus_GUI extends JFrame {
 	public void setNames(JLabel names) {
 		Names = names;
 =======
+=======
+>>>>>>> branch 'ofir' of https://github.com/MyBoxxx/MyBox.git
 		
 	    contentPane.setLayout(null);
 	    JLabel join = new JLabel();
@@ -101,6 +104,9 @@ public class Aboutus_GUI extends JFrame {
 	    Names.setLocation(10, 276);
 	    Names.setSize(887, 492);	   
 		contentPane.add(Names);
+<<<<<<< HEAD
+>>>>>>> branch 'ofir' of https://github.com/MyBoxxx/MyBox.git
+=======
 >>>>>>> branch 'ofir' of https://github.com/MyBoxxx/MyBox.git
 	}
 

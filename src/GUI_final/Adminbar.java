@@ -60,7 +60,7 @@ public class Adminbar extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-<<<<<<< HEAD
+
 		lblNotificationCenter = new JLabel();
 		lblNotificationCenter.setIcon(new ImageIcon("src/GUI_final/noti.png"));
 		lblNotificationCenter.setBackground(new Color(41,91,150));
@@ -68,7 +68,6 @@ public class Adminbar extends JFrame {
 		contentPane.add(lblNotificationCenter);
 		
 		NotifcationNo = new JButton();
-=======
 		JLabel lblNotificationCenter = new JLabel();
 		lblNotificationCenter.setIcon(new ImageIcon("src/GUI_final/noti.png"));
 		lblNotificationCenter.setBackground(new Color(41,91,150));
@@ -76,7 +75,6 @@ public class Adminbar extends JFrame {
 		contentPane.add(lblNotificationCenter);
 		
 		JButton NotifcationNo = new JButton();
->>>>>>> branch 'ofir' of https://github.com/MyBoxxx/MyBox.git
 		NotifcationNo.setIcon(new ImageIcon("src/GUI_final/notification_no.png"));
 		NotifcationNo.setBounds(385, 180, 50, 52);
 		NotifcationNo.setBackground(new Color(41,91,150));
@@ -114,7 +112,6 @@ public class Adminbar extends JFrame {
 		Cover.setIcon(new ImageIcon("src/GUI_final/admin.jpg"));
 		Cover.setBounds(0, 0, 593, 474);
 		contentPane.add(Cover);
-<<<<<<< HEAD
 	}
 
 
@@ -173,7 +170,5 @@ public class Adminbar extends JFrame {
 
 	public void setLblNotificationCenter(JLabel lblNotificationCenter) {
 		this.lblNotificationCenter = lblNotificationCenter;
-=======
->>>>>>> branch 'ofir' of https://github.com/MyBoxxx/MyBox.git
 	}
 }
