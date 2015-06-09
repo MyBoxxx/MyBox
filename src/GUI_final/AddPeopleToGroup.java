@@ -21,7 +21,7 @@ import java.awt.SystemColor;
 
 public class AddPeopleToGroup extends JFrame {
 
-	private JPanel contentPane;
+	
 	private JLabel join;
 	private JButton cancelButton;
 	private JButton OkButton;
@@ -56,11 +56,10 @@ public class AddPeopleToGroup extends JFrame {
 	public AddPeopleToGroup() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 512, 300);
-		contentPane = new JPanel();
+		JPanel contentPane = new JPanel();
 		contentPane.setBackground(new Color(59, 89, 151));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(null);
 		
 		txtpnAddPeopleTo = new JTextPane();
 		txtpnAddPeopleTo.setForeground(SystemColor.textHighlightText);
@@ -116,19 +115,14 @@ public class AddPeopleToGroup extends JFrame {
 		cancelButton.setBounds(277, 209, 209, 42);
 		contentPane.add(cancelButton);
 		
+		join = new JLabel();
+		join= new JLabel();
 		join= new JLabel();
 		join.setIcon(new ImageIcon("src/GUI_final/join.jpeg"));
 		join.setBounds(10, 27, 260	, 165);
 		contentPane.add(join);
 	}
 
-	public JPanel getContentPane() {
-		return contentPane;
-	}
-
-	public void setContentPane(JPanel contentPane) {
-		this.contentPane = contentPane;
-	}
 
 	public JLabel getJoin() {
 		return join;

@@ -26,7 +26,7 @@ public class CreateFolderScreen extends JFrame {
 	private JTextField textField;
 	private JTextField textField_1;
 	
-   public CreateFolderScreen() {
+   CreateFolderScreen() {
     final ContentPanel contentPanel = new ContentPanel();
     getContentPane().add(contentPanel);
     contentPanel.setLayout(null);
