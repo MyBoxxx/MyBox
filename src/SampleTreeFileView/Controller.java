@@ -10,13 +10,13 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-import UI.*;
 import GUI_final.*;
 import GUI_final.CreateFolderScreen;
 
 public class Controller {
     private Model model;
     private View view;
+    
     //private ActionListener actionListener;
     private ActionListener openFileActionListener;
     
@@ -37,6 +37,7 @@ public class Controller {
     private ActionListener myFileActionListener; 
     private ActionListener sharedWithMeActionListener;
     private ActionListener trashActionListener;
+    RecycleBinScreen recycle;
     
     private ActionListener aboutUsActionListener;
     private ActionListener helpActionListener;
@@ -196,15 +197,37 @@ public class Controller {
 				
 			}
 		};
-		helpActionListener = new ActionListener() {
+		trashActionListener = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				try {
-
+					if(recycle == null){
+						recycle = new RecycleBinScreen();
+						recycle.setType(Type.POPUP);
+						recycle.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+						recycle.setVisible(true);
+						}
+					else recycle.toFront();
+						
 					}
 				 catch(Throwable t) {
 					//showThrowable(t);
+				}
+				
+			}
+		};
+		helpActionListener = new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try{
+					RecycleBinScreen recycle = new RecycleBinScreen();
+					recycle.setVisible(true);
+					
+				}
+				catch(Throwable t){
+					
 				}
 				
 			}
@@ -221,6 +244,8 @@ public class Controller {
 		
 		view.getMntmCreateNewGroup().addActionListener(createNewGroupActionListener);
 		view.getMntmAskToJoin().addActionListener(askToJoinActionListener);
+		
+		view.getMntmTrash().addActionListener(trashActionListener);
 		
 		view.getMntmMove().addActionListener(moveActionListener);
 		view.getMntmDelete().addActionListener(deleteActionListener);

@@ -6,18 +6,18 @@ import java.net.MalformedURLException;
 
 import Entity.*;
 
-public class LoginMain {
+public class ForgotPasswordMain {
 	static User_Entity model ;
 	
-	static Login_GUI view;
+	static ForgotPassword_GUI view;
 	
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		try {
-			 view = new Login_GUI();
+			view = new ForgotPassword_GUI();
 			User_Entity model = new User_Entity();
-			LogIn_Controller controler = new LogIn_Controller(model, view);
+			ForgotPassword_Controller controler = new ForgotPassword_Controller(model, view);
 			view.setBounds(100, 100, 800, 600);
 			controler.control();
 			view.setVisible(true);

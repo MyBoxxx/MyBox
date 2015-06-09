@@ -34,6 +34,8 @@ import javax.swing.JPasswordField;
 
 import java.awt.Font;
 import java.awt.event.FocusAdapter;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class Login_GUI extends JFrame {
 
@@ -77,86 +79,41 @@ public class Login_GUI extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		
-		 URL url = new URL("http://i.imgur.com/6Bq6MQr.gif");
-		    Icon icon = new ImageIcon(url);
-		    JLabel TopPicture = new JLabel(icon);
+		//////////////////////////
+		    JLabel TopPicture = new JLabel(new ImageIcon(Login_GUI.class.getResource("/images_icons/Login_top_pic.gif")));
 		    TopPicture.setBounds(10, 32, 773, 257);
 		    TopPicture.setBackground(Color.WHITE);
-		    TopPicture.addMouseListener(new MouseAdapter() {
-		        public void mouseClicked(MouseEvent me) {
-		          System.out.println("CLICKED");
-		        }
-		      });	
 		    
 		    contentPane.setLayout(null);
 		    contentPane.add(TopPicture);
 		    ///////////////////////
-		    URL url1 = new URL("http://www.freevectors.net/files/small/LoginIcon.jpg");
-		    Icon icon1 = new ImageIcon(url1);
-		    LoginButtun = new JButton(icon1);
+		  
+		    LoginButtun = new JButton(new ImageIcon(Login_GUI.class.getResource("/images_icons/LoginIcon.jpg")));
 		    LoginButtun.setBounds(437, 396, 150, 150);
 		    TopPicture.setBackground(Color.WHITE);
 			    
 		    contentPane.add(LoginButtun);
-		    /////////////////////////////////////////////
-		    
-		 
-		    
-		    /////////////////////////////////////
-		    URL url2 = new URL("http://honourrollreports.com/Assets/Images/Icons/LargeHelp.png");
-		    Icon icon2 = new ImageIcon(url2);
-		    ForgotPassword = new JButton(icon2);
+
+		  
+		    ForgotPassword = new JButton(new ImageIcon(Login_GUI.class.getResource("/images_icons/login_forgot_password.png")));
 		    ForgotPassword.setLocation(143, 401);
 		    ForgotPassword.setSize(150, 150);
 		    ForgotPassword.setBounds(215, 396, 150, 155);
 		    ForgotPassword.setBackground(Color.WHITE);
+		    ForgotPassword.setOpaque(false);
+		    ForgotPassword.setContentAreaFilled(false);
+		    ForgotPassword.setBorderPainted(false);
 		    contentPane.add(ForgotPassword);
-		    //////////////////
-		/*   label2.addMouseListener(new MouseAdapter() {
-		        public void mouseClicked(MouseEvent me) {
-		        	
-		        	ForgotPassword_GUI words = null;
-					try {
-						words = new ForgotPassword_GUI();
-					} catch (MalformedURLException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}		    		
-		    		words.initialize();		        
-		        }
-		      });	*/	    
-		    ////////////////////////////
-		
-		    
 		    
 		    ///////////////////////////////////////////
 		   
 		    
 		    txtUserName = new JTextField();
+		
 		    txtUserName.setBackground(Color.WHITE);
 		    txtUserName.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		    txtUserName.setText("User name");
-		   /* txtUserName.addFocusListener(new FocusAdapter() {
-		    	@Override
-		    	public void focusGained(FocusEvent arg0) {
-		    		
-		    		s = txtUserName.getText();
-		    		//if ( txtUserName.getText() == null)
-		    			txtUserName.setText(null);		    			
-		    		
-		    	//	else
-		    			//txtUserName.setText(s);
-		    		
-		    	}
-		    	@Override
-		    	public void focusLost(FocusEvent e) {
-		    		if ( txtUserName.getText() == null){
-		    			s = txtUserName.getText();
-		    		}
-		    		
-		    			 txtUserName.setText(s);
-		    	}
-		    });*/
+		  
 		    txtUserName.setBounds(205, 317, 387, 20);
 		    contentPane.add(txtUserName);
 		    txtUserName.setColumns(10);
@@ -198,8 +155,8 @@ public class Login_GUI extends JFrame {
 		return txtUserName;
 	}
 
-	public void setTxtUserName(JTextField txtUserName) {
-		this.txtUserName = txtUserName;
+	public void setTxtUserName(String txtUserName) {
+		this.txtUserName.setText(txtUserName);
 	}
 
 	public void setTxtOneOrMoreVisible(Boolean b) {

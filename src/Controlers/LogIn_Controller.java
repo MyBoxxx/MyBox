@@ -3,12 +3,17 @@ package Controlers;
 import java.awt.Window.Type;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.net.MalformedURLException;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 
 import jdk.internal.dynalink.beans.StaticClass;
 import Entity.*;
@@ -68,8 +73,21 @@ public class LogIn_Controller {
 			}
 		};
 		
-		
-		
+	    view.getTxtUserName().addMouseListener(new MouseAdapter() {
+	    	@Override
+	    	public void mouseClicked(MouseEvent e) {
+	    		if(view.getTxtUserName().getText().equals(""))
+	    			view.setTxtUserName("e-mail");
+	    	}
+	    });
+
+	    view.getTxtUserName().addFocusListener(new FocusAdapter() {
+	    	@Override
+	    	public void focusLost(FocusEvent e) {
+	    		if(view.getTxtUserName().getText().equals("")) view.setTxtUserName("UserName");
+	    	}
+	    });
+	    
 		view.getForgotPassword().addActionListener(forgotActionListener);
 		view.getLoginButtun().addActionListener(loginActionListener);
 		
