@@ -38,10 +38,7 @@ public class Aboutus_GUI extends JFrame {
 	 * @throws MalformedURLException 
 	 */
 	public Aboutus_GUI() throws MalformedURLException {
-		setBackground(Color.WHITE);
-		
-		
-		
+		setBackground(Color.WHITE);		
 		setTitle("About Us");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 727, 651);
@@ -50,21 +47,20 @@ public class Aboutus_GUI extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		
-		URL url2 = new URL("http://ktstrust.org/wp-content/uploads/2013/12/about-us-banner.jpg");
-	    Icon icon2 = new ImageIcon(url2);
-	    contentPane.setLayout(null);
-	    JLabel label2 = new JLabel(icon2);	    
-	    label2.setBounds(0, -267, 701, 770);
-		contentPane.add(label2);
 		
-		URL url3 = new URL("http://i.imgur.com/nVXl0Op.jpg");
-	    Icon icon3 = new ImageIcon(url3);
 	    contentPane.setLayout(null);
-	    JLabel label3 = new JLabel(icon3);	    
-	    label3.setLocation(10, 276);
-	    label3.setSize(887, 492);
-	   
-		contentPane.add(label3);
+	    JLabel join = new JLabel();
+	    join.setIcon(new ImageIcon("src/GUI_final/about_us.jpg"));
+	    join.setBounds(0, -267, 701, 770);
+		contentPane.add(join);
+		
+		
+	    contentPane.setLayout(null);
+	    JLabel Names = new JLabel();	
+	    Names.setIcon(new ImageIcon("src/GUI_final/names.jpg"));
+	    Names.setLocation(10, 276);
+	    Names.setSize(887, 492);	   
+		contentPane.add(Names);
 	}
 
 }

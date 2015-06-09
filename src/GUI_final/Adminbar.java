@@ -1,6 +1,7 @@
 package GUI_final;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -47,17 +48,52 @@ public class Adminbar extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
+
 		JButton btnNotifications = new JButton("Notifications");
 		btnNotifications.setBounds(10, 136, 160, 50);
 		contentPane.add(btnNotifications);
+
+		JLabel lblNotificationCenter = new JLabel();
+		lblNotificationCenter.setIcon(new ImageIcon("src/GUI_final/noti.png"));
+		lblNotificationCenter.setBackground(new Color(41,91,150));
+		lblNotificationCenter.setBounds(182, 122, 336, 52);
+		contentPane.add(lblNotificationCenter);
 		
+		JButton NotifcationNo = new JButton();
+		NotifcationNo.setIcon(new ImageIcon("src/GUI_final/notification_no.png"));
+		NotifcationNo.setBounds(385, 180, 50, 52);
+		NotifcationNo.setBackground(new Color(41,91,150));
+		contentPane.add(NotifcationNo);
+
+		
+
 		JButton btnChangeFms = new JButton("Change FMS");
 		btnChangeFms.setBounds(277, 136, 160, 50);
-		contentPane.add(btnChangeFms);
+
+		JButton NotifcationYes = new JButton();
+		NotifcationYes.setIcon(new ImageIcon("src/GUI_final/notification_yes.png"));
+		NotifcationYes.setBackground(new Color(41,91,150));
+		NotifcationYes.setBounds(327, 180, 52, 52);
+		contentPane.add(NotifcationYes);
 		
-		JButton btnQuit = new JButton("Quit");
-		btnQuit.setBounds(10, 240, 160, 50);
-		contentPane.add(btnQuit);
+		JButton btnChangeFms1 = new JButton();		
+		btnChangeFms1.setToolTipText("Chnage FMS");
+		btnChangeFms1.setIcon(new ImageIcon("src/GUI_final/changeFMS.png"));
+		//btnChangeFms.setBackground(Color.WHITE);
+		btnChangeFms1.setOpaque(false);
+		//btnChangeFms.setContentAreaFilled(false);
+		//btnChangeFms.setBorderPainted(false);
+		btnChangeFms1.setBounds(10, 180, 230, 170);
+		contentPane.add(btnChangeFms1);
+		
+
+		
+
+		JButton btnQuit1 = new JButton();
+		btnQuit1.setIcon(new ImageIcon("src/GUI_final/logout_button.png"));
+		btnQuit1.setBackground(new Color(41,91,150));
+		btnQuit1.setBounds(445, 200, 148, 138);
+		contentPane.add(btnQuit1);
 		
 		JButton btnNext = new JButton("Next");
 		btnNext.setBounds(277, 240, 160, 50);
