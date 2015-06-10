@@ -9,8 +9,9 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-import model.Envelope;
-import client.CcrmApp;
+import Client.MainClient;
+import Entity.*;
+import Client.*;
 /**
  * this class is Abstract Gui  that extends JFrame
  * @author jacob
@@ -65,9 +66,9 @@ public abstract class AbstractGUI extends JFrame
 		@Override
 		public void windowClosing(WindowEvent e) {
 			// TODO Auto-generated method stub
-			 Envelope en1 = new Envelope(CcrmApp.clien.getCurrUser(),"updateStatus0");
+			 //Disconect en1 = new Disconect(MainClient.clien.getCurrUser(),"updateStatus0");
 				try {
-					CcrmApp.clien.sendToServer(en1);
+					MainClient.clien.sendToServer("UpdateStatus " + MainClient.clien.getCurrUser().getUsername());
 					System.exit(1);
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block

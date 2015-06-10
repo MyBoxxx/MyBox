@@ -3,7 +3,7 @@ import java.util.List;
 
 
 @SuppressWarnings("serial")
-public class User_Entity extends AbstractEntity_Entity{
+public class User_Entity extends Abstract_Entity{
 	
 	private String IDuser;
 	private String Username;

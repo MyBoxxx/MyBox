@@ -98,11 +98,11 @@ public class myBoxClient extends ObservableClient {
 		this.currController = currObj;
 	}
 
-	public User getCurrUser() {
+	public User_Entity getCurrUser() {
 		return currUser;
 	}
 
-	public void setCurrUser(User currUser) {
+	public void setCurrUser(User_Entity currUser) {
 		this.currUser = currUser;
 	}
 
