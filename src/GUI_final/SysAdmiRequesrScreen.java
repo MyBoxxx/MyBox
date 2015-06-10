@@ -79,10 +79,12 @@ public class SysAdmiRequesrScreen extends JFrame {
 		contentPane.add(lblRequest);
 		
 		rbaccept = new JRadioButton("Accept");
+		rbaccept.setBackground(new Color(6,139,224)); 
 		rbaccept.setBounds(63, 233, 141, 23);
 		contentPane.add(rbaccept);
 		
 		rbreject = new JRadioButton("Reject");
+		rbreject.setBackground(new Color(6,139,224)); 
 		rbreject.setBounds(63, 270, 141, 23);
 		contentPane.add(rbreject);
 		
@@ -90,7 +92,7 @@ public class SysAdmiRequesrScreen extends JFrame {
 		okButton.setBounds(53, 405, 117, 29);
 		contentPane.add(okButton);
 		
-		Beckbutton = new JButton("Beck");
+		Beckbutton = new JButton("back");
 		Beckbutton.setBounds(354, 405, 117, 29);
 		contentPane.add(Beckbutton);
 		
@@ -98,7 +100,7 @@ public class SysAdmiRequesrScreen extends JFrame {
 		btnReset.setBounds(63, 310, 81, 29);
 		contentPane.add(btnReset);
 		
-		pic = new JLabel("");
+		pic = new JLabel();
 		pic.setIcon(new ImageIcon("src/images_icons/rsz_systemadminrequest.jpg"));
 		pic.setBounds(-16, 0, 583, 509);
 		contentPane.add(pic);
