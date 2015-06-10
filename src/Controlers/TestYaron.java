@@ -11,9 +11,14 @@ public class TestYaron {
 		RequestToChangeGroupePremission_Controller thecontroller =new RequestToChangeGroupePremission_Controller(theview);
 		theview.getFrmRequstToChange().setVisible(true);*/
 		
-		AddPeopleToGroup theview = new AddPeopleToGroup ();
+		/*AddPeopleToGroup theview = new AddPeopleToGroup ();
 		User_Entity themodel = new User_Entity();
 		AddPeopleToGroupController  thecontroller = new AddPeopleToGroupController(themodel,theview);
+		theview.setVisible(true);*/
+		
+		Adminbar theview = new Adminbar();
+		User_Entity themodel = new User_Entity();
+		AdminBar_Controller thecontroller = new AdminBar_Controller(themodel, theview);
 		theview.setVisible(true);
 		
 	/*	EventQueue.invokeLater(new Runnable() {
