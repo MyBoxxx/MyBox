@@ -22,7 +22,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 
-public class RequesrToChangeGroupPermission {
+public class RequestToChangeGroupPermission {
 
 	private JFrame frmRequstToChange;
 	private JPanel UpperPanel;
@@ -53,7 +53,7 @@ public class RequesrToChangeGroupPermission {
 	/**
 	 * Create the application.
 	 */
-	public RequesrToChangeGroupPermission() {
+	public RequestToChangeGroupPermission() {
 		initialize();
 	}
 
@@ -107,8 +107,11 @@ public class RequesrToChangeGroupPermission {
 		frmRequstToChange.getContentPane().add(lblChangeGroupPremm);
 	}
 	
-	 public void ButtonPressedActionlistiner(ActionListener listenforbutton) {
+	 public void ButtonPressedActionlistinersend(ActionListener listenforbutton) {
 			ButtonSend.addActionListener(listenforbutton);
+		}
+	 public void ButtonPressedActionlistinercancel(ActionListener listenforbutton) {
+			ButtonCancel.addActionListener(listenforbutton);
 		}
 
 	public JFrame getFrmRequstToChange() {
