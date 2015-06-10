@@ -76,6 +76,30 @@ public class AdminBar_Controller {
 		
 		
 	}
+
+	public static User_Entity getModel() {
+		return model;
+	}
+
+	public static void setModel(User_Entity model) {
+		AdminBar_Controller.model = model;
+	}
+
+	public static Adminbar getView() {
+		return view;
+	}
+
+	public static void setView(Adminbar view) {
+		AdminBar_Controller.view = view;
+	}
+
+	public static ForgotPassword_GUI getForgot() {
+		return forgot;
+	}
+
+	public static void setForgot(ForgotPassword_GUI forgot) {
+		AdminBar_Controller.forgot = forgot;
+	}
 	
 	
 }
