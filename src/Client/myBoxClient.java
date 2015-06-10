@@ -4,10 +4,9 @@
 
 package Client;
 
-import Entites.User;
 import ocsf.client.*;
 import java.io.*;
-import Controllers.*;
+import Entity.*;
 
 /**
  * This class overrides some of the methods defined in the abstract superclass
@@ -26,7 +25,7 @@ public class myBoxClient extends ObservableClient {
 	 */
 	
 	private Object currController;
-	private User currUser;
+	private User_Entity currUser;
 
 	/**
 	 * Constructs an instance of the chat client.
