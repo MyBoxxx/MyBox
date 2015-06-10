@@ -60,4 +60,20 @@ public class ForgotPassword_Controller {
 		}
 	});
 	}
+
+	public static User_Entity getModel() {
+		return model;
+	}
+
+	public static void setModel(User_Entity model) {
+		ForgotPassword_Controller.model = model;
+	}
+
+	public static ForgotPassword_GUI getView() {
+		return view;
+	}
+
+	public static void setView(ForgotPassword_GUI view) {
+		ForgotPassword_Controller.view = view;
+	}
 }
