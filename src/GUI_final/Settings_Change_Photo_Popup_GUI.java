@@ -16,12 +16,16 @@ import java.awt.Color;
 import javax.swing.JTextField;
 
 import java.awt.Font;
+import java.awt.event.ActionListener;
 import java.net.MalformedURLException;
 import java.net.URL;
 
 public class Settings_Change_Photo_Popup_GUI extends JFrame {
 
 	private JPanel contentPane;
+	private JButton btnCancel;
+	private JButton btnChangeYourProfile ;
+	private JLabel pic; 
 
 	/**
 	 * Launch the application.
@@ -43,7 +47,7 @@ public class Settings_Change_Photo_Popup_GUI extends JFrame {
 	 * Create the frame.
 	 * @throws MalformedURLException 
 	 */
-	public Settings_Change_Photo_Popup_GUI() throws MalformedURLException {
+	public Settings_Change_Photo_Popup_GUI() {
 		setTitle("Change photo");
 		setBackground(Color.WHITE);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -52,23 +56,55 @@ public class Settings_Change_Photo_Popup_GUI extends JFrame {
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(null);
+	    contentPane.setLayout(null);
 		
-		URL url4 = new URL("http://sdtimes.com/wp-content/uploads/2015/03/APR15-0323-OPINION-GUESTVIEW-CUSHARD.jpg");
-	    Icon icon4 = new ImageIcon(url4);
+		
 	    
-	    JButton btnCancel = new JButton("Cancel");
-	    btnCancel.setBounds(372, 402, 89, 23);
+	    btnCancel = new JButton("Cancel");
+	    btnCancel.setBounds(365, 373, 89, 23);
 	    contentPane.add(btnCancel);
 	    
-	    JButton btnChangeYourProfile = new JButton("Change your profile picture");
-	    btnChangeYourProfile.setBounds(32, 402, 192, 23);
+	    btnChangeYourProfile = new JButton("Change your profile picture");
+	    btnChangeYourProfile.setBounds(29, 373, 192, 23);
 	    contentPane.add(btnChangeYourProfile);
-	    JLabel label4 = new JLabel(icon4);
-	    label4.setLocation(0, 11);
-	    label4.setSize(759, 450);
-	   
-	    contentPane.add(label4);
+	    
+	    pic = new JLabel("");
+	    pic.setBounds(112, 6, 478, 296);
+	    pic.setIcon(new ImageIcon("images/ChangePhoto.jpg"));
+	    contentPane.add(pic);
+	  
+	}
+	public void changeyourp(ActionListener waitforbutton)
+	{
+		btnChangeYourProfile.addActionListener(waitforbutton);
+	}
+	
+	public void cancelbuttonpresses(ActionListener waitforbutton)
+	{
+		btnCancel.addActionListener(waitforbutton);
 	}
 
+	public JPanel getContentPane() {
+		return contentPane;
+	}
+
+	public void setContentPane(JPanel contentPane) {
+		this.contentPane = contentPane;
+	}
+
+	public JButton getBtnCancel() {
+		return btnCancel;
+	}
+
+	public void setBtnCancel(JButton btnCancel) {
+		this.btnCancel = btnCancel;
+	}
+
+	public JButton getBtnChangeYourProfile() {
+		return btnChangeYourProfile;
+	}
+
+	public void setBtnChangeYourProfile(JButton btnChangeYourProfile) {
+		this.btnChangeYourProfile = btnChangeYourProfile;
+	}
 }

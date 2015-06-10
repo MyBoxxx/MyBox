@@ -1,14 +1,14 @@
 package Controlers;
-import GUI_final.RequestToChangeGroupPermission;
+import GUI_final.Settings_Change_Photo_Popup_GUI;
 
 public class testtyaron {
-
+	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		RequestToChangeGroupPermission theview = new RequestToChangeGroupPermission();
+		Settings_Change_Photo_Popup_GUI theview = new Settings_Change_Photo_Popup_GUI();
 		
-		RequestToChangeGroupePremission_Controller thecontroller = new RequestToChangeGroupePremission_Controller(theview);
-		theview.getFrmRequstToChange().setVisible(true);
+		Settings_Change_Photo_Popup_Controller thecontroller = new Settings_Change_Photo_Popup_Controller(theview);
+		theview.getContentPane().setVisible(true);
 		
 	}
 
