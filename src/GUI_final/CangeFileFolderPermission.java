@@ -44,7 +44,7 @@ public class CangeFileFolderPermission {
     private JLabel ChooseType ;
     private JLabel ReadWrite ;
     private JLabel Permission ;
-	//private JRadioButton  rb1;
+	
 
 	/**
 	 * Launch the application.

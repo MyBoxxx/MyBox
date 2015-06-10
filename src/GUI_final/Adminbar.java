@@ -24,6 +24,14 @@ import java.awt.event.ActionEvent;
 public class Adminbar extends JFrame {
 
 	private JPanel contentPane;
+	private JLabel lblNotificationCenter;
+	private JButton NotifcationNo;	
+	private JButton NotifcationYes;	
+	private JButton btnChangeFms;
+	private JButton btnQuit;
+	private JLabel lblSystemAdminWindow;
+	private JLabel Cover;
+	
 
 	/**
 	 * Launch the application.
@@ -53,25 +61,25 @@ public class Adminbar extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lblNotificationCenter = new JLabel();
+		lblNotificationCenter = new JLabel();
 		lblNotificationCenter.setIcon(new ImageIcon("src/GUI_final/noti.png"));
 		lblNotificationCenter.setBackground(new Color(41,91,150));
 		lblNotificationCenter.setBounds(182, 122, 336, 52);
 		contentPane.add(lblNotificationCenter);
 		
-		JButton NotifcationNo = new JButton();
+		NotifcationNo = new JButton();
 		NotifcationNo.setIcon(new ImageIcon("src/GUI_final/notification_no.png"));
 		NotifcationNo.setBounds(385, 180, 50, 52);
 		NotifcationNo.setBackground(new Color(41,91,150));
 		contentPane.add(NotifcationNo);
 		
-		JButton NotifcationYes = new JButton();
+		NotifcationYes = new JButton();
 		NotifcationYes.setIcon(new ImageIcon("src/GUI_final/notification_yes.png"));
 		NotifcationYes.setBackground(new Color(41,91,150));
 		NotifcationYes.setBounds(327, 180, 52, 52);
 		contentPane.add(NotifcationYes);
 		
-		JButton btnChangeFms = new JButton();		
+		btnChangeFms = new JButton();		
 		btnChangeFms.setToolTipText("Chnage FMS");
 		btnChangeFms.setIcon(new ImageIcon("src/GUI_final/changeFMS.png"));
 		//btnChangeFms.setBackground(Color.WHITE);
@@ -81,21 +89,94 @@ public class Adminbar extends JFrame {
 		btnChangeFms.setBounds(10, 180, 230, 170);
 		contentPane.add(btnChangeFms);
 		
-		JButton btnQuit = new JButton();
+		btnQuit = new JButton();
 		btnQuit.setIcon(new ImageIcon("src/GUI_final/logout_button.png"));
 		btnQuit.setBackground(new Color(41,91,150));
 		btnQuit.setBounds(445, 200, 148, 138);
 		contentPane.add(btnQuit);
 		
-		JLabel lblSystemAdminWindow = new JLabel();
+		lblSystemAdminWindow = new JLabel();
 		lblSystemAdminWindow.setBounds(290, 11, 293, 114);
 		lblSystemAdminWindow.setIcon(new ImageIcon("src/GUI_final/admin.png"));
 		lblSystemAdminWindow.setBackground(null);
 		contentPane.add(lblSystemAdminWindow);
 		
-		JLabel Cover = new JLabel();
+	    Cover = new JLabel();
 		Cover.setIcon(new ImageIcon("src/GUI_final/admin.jpg"));
 		Cover.setBounds(0, 0, 593, 474);
-		contentPane.add(Cover);
+		contentPane.add(Cover);		
+		
+	}
+	
+	public JLabel getLblNotificationCenter() {
+		return lblNotificationCenter;
+	}
+
+	public void setLblNotificationCenter(JLabel lblNotificationCenter) {
+		this.lblNotificationCenter = lblNotificationCenter;
+	}
+
+	public JButton getNotifcationNo() {
+		return NotifcationNo;
+	}
+
+	public void setNotifcationNo(JButton notifcationNo) {
+		NotifcationNo = notifcationNo;
+	}
+
+	public JButton getNotifcationYes() {
+		return NotifcationYes;
+	}
+
+	public void setNotifcationYes(JButton notifcationYes) {
+		NotifcationYes = notifcationYes;
+	}
+
+	public JButton getBtnChangeFms() {
+		return btnChangeFms;
+	}
+
+	public void setBtnChangeFms(JButton btnChangeFms) {
+		this.btnChangeFms = btnChangeFms;
+	}
+
+	public JButton getBtnQuit() {
+		return btnQuit;
+	}
+
+	public void setBtnQuit(JButton btnQuit) {
+		this.btnQuit = btnQuit;
+	}
+
+	public JLabel getLblSystemAdminWindow() {
+		return lblSystemAdminWindow;
+	}
+
+	public void setLblSystemAdminWindow(JLabel lblSystemAdminWindow) {
+		this.lblSystemAdminWindow = lblSystemAdminWindow;
+	}
+
+	public JLabel getCover() {
+		return Cover;
+	}
+
+	public void setCover(JLabel cover) {
+		Cover = cover;
+	}
+
+	public void ChangeFMSLitsner(ActionListener listenForChnageFMSButton){
+		 btnChangeFms.addActionListener(listenForChnageFMSButton);
+	}
+	
+	public void NotifcationYesLitsner(ActionListener listenForNotifcationYesButton){
+		NotifcationYes.addActionListener(listenForNotifcationYesButton);
+	}
+	
+	public void NotifcationNoLitsner(ActionListener listenForNotifcationNoButton){
+		NotifcationYes.addActionListener(listenForNotifcationNoButton);
+	}
+	
+	public void QuitLitsner(ActionListener listenForQuitButton){
+		btnQuit.addActionListener(listenForQuitButton);
 	}
 }
