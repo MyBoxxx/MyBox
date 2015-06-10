@@ -4,6 +4,8 @@ package SampleTreeFileView;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
+import Entity.User_Entity;
+
 
 
 public class Main
@@ -13,7 +15,7 @@ public class Main
             @Override
             public void run() {                                           
                 Model model = new Model();
-                View view = new View(); 
+                View view = new View(new User_Entity("nils")); 
                 Controller controller = new Controller(model,view);
                 controller.contol();
                 controller.setVisible(true);

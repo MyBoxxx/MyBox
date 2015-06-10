@@ -24,10 +24,13 @@ public User_Entity(String IDuser, String Username,String Password, int Status, b
 		
 	}
 
+public User_Entity() {
 
+}
 
-	public User_Entity() {
-	// TODO Auto-generated constructor stub
+	public User_Entity(String Username) {
+		this.Username = Username;
+	// TODO search in sql and complte
 }
 
 

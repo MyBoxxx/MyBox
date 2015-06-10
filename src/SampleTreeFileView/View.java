@@ -27,8 +27,11 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.JMenuBar;
 
 import java.awt.BorderLayout;
+
 import javax.swing.border.EmptyBorder;
 import javax.swing.tree.TreeModel;
+
+import Entity.User_Entity;
 
 public class View extends JFrame{
 
@@ -110,7 +113,7 @@ public class View extends JFrame{
 	JMenuItem mntmUploadfile;
 	JMenuItem mntmAboutUs;
 	
-	public View() {
+	public View(User_Entity user) {
 		      		getGui();
 		            fileSystemView = FileSystemView.getFileSystemView();
 		           // show the file system roots.
@@ -147,7 +150,8 @@ public class View extends JFrame{
 		            tree = new JTree((TreeModel) null);
 		            tree.setVisibleRowCount(15);
 		            tree.setRootVisible(false);
-		            tree.setSize(d);
+		            tree.setBounds(0, 0, 200, 150);
+		            tree.setSize(new Dimension(200, 150));
 
 		           // tree = new JTree(treeModel);
 		            tree.setRootVisible(false);
@@ -226,7 +230,7 @@ public class View extends JFrame{
 
 	JMenuBar menuBar = new JMenuBar();
 	gui.add(menuBar, BorderLayout.NORTH);
-	initMenuBar(menuBar);
+	initMenuBar(menuBar,user.getUsername());
 	
    }
 
@@ -319,7 +323,7 @@ public class View extends JFrame{
 		}
 		return table;
 	}
-public JMenuBar initMenuBar(JMenuBar menuBar)
+public JMenuBar initMenuBar(JMenuBar menuBar,String UserName)
 	{
 
 JMenu mnMybox = new JMenu("MyBox");
@@ -393,7 +397,7 @@ mnHelp_1.add(mntmHelp);
 JMenuItem mntmNewMenuItem = new JMenuItem("                    ");
 menuBar.add(mntmNewMenuItem);
 
- lblLogInAs = new JLabel("Log in as : Eyalpano@gmail.com");
+ lblLogInAs = new JLabel("Log in as : " + UserName);
 menuBar.add(lblLogInAs);
 
  btnNotifications = new JButton("notifications");
@@ -626,8 +630,8 @@ return menuBar;
 		return lblLogInAs;
 	}
 
-	public void setLblLogInAs(JLabel lblLogInAs) {
-		this.lblLogInAs = lblLogInAs;
+	public void setLblLogInAs(String lblLogInAs) {
+		this.lblLogInAs.setText("login as : " + lblLogInAs);
 	}
 
 	public JMenuItem getMntmHelp() {
