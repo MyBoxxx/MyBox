@@ -164,7 +164,7 @@ private void newFile(View view) {
     }
     view.getGui().repaint();
 }
-/*
+
 private void setColumnWidth(int column, int width) {
     TableColumn tableColumn = table.getColumnModel().getColumn(column);
     if (width<0) {
@@ -178,11 +178,11 @@ private void setColumnWidth(int column, int width) {
     tableColumn.setMaxWidth(width);
     tableColumn.setMinWidth(width);
 }
-*/
+
 
 /** Add the files that are contained within the directory of this node.
 Thanks to Hovercraft Full Of Eels. */
-/*
+
 private void showChildren(final DefaultMutableTreeNode node) {
     tree.setEnabled(false);
     progressBar.setVisible(true);
@@ -249,7 +249,7 @@ public boolean MoveFile() throws IOException {
 }
 
 /** Update the File details view with the details of this File. */
-/*
+
 private void setFileDetails(File file) {
     currentFile = file;
     Icon icon = fileSystemView.getSystemIcon(file);
@@ -276,7 +276,7 @@ private void setFileDetails(File file) {
     gui.repaint();
 }
 
-*/
+
 private void showErrorMessage(String errorMessage, String errorTitle,JPanel gui) {
     JOptionPane.showMessageDialog(
         gui,
@@ -285,7 +285,7 @@ private void showErrorMessage(String errorMessage, String errorTitle,JPanel gui)
         JOptionPane.ERROR_MESSAGE
         );
 }
-/*
+
 private void showThrowable(Throwable t) {
     t.printStackTrace();
     JOptionPane.showMessageDialog(
@@ -298,7 +298,7 @@ private void showThrowable(Throwable t) {
 }
 
 /** Update the table on the EDT */
-/*
+
 private void setTableData(final File[] files) {
     SwingUtilities.invokeLater(new Runnable() {
         public void run() {
@@ -330,7 +330,7 @@ private void setTableData(final File[] files) {
         }
     });
 }
-*/
+
 
 public Object getDesktop() {
 	// TODO Auto-generated method stub
