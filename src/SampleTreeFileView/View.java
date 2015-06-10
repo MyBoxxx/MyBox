@@ -5,7 +5,9 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.io.File;
+import java.sql.Date;
 
+import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JCheckBoxMenuItem;
@@ -13,6 +15,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JRadioButton;
@@ -768,6 +771,44 @@ return menuBar;
 		  }
 		return gui;
 	}
+	
+	private void setFileDetails(File file) {
+	    currentFile = file;
+	    Icon icon = fileSystemView.getSystemIcon(file);
+	    fileName.setIcon(icon);
+	    fileName.setText(fileSystemView.getSystemDisplayName(file));
+	    path.setText(file.getPath());
+	    date.setText(new Date(file.lastModified()).toString());
+	    size.setText(file.length() + " bytes");
+	    readable.setSelected(file.canRead());
+	    writable.setSelected(file.canWrite());
+	    executable.setSelected(file.canExecute());
+	    isDirectory.setSelected(file.isDirectory());
+
+	    isFile.setSelected(file.isFile());
+
+	    JFrame f = (JFrame) gui.getTopLevelAncestor();
+	    if (f!=null) {
+	        f.setTitle(
+	            APP_TITLE +
+	            " :: " +
+	            fileSystemView.getSystemDisplayName(file) );
+	    }
+
+	    gui.repaint();
+	}
+	
+	private void showThrowable(Throwable t) {
+	    t.printStackTrace();
+	    JOptionPane.showMessageDialog(
+	        gui,
+	        t.toString(),
+	        t.getMessage(),
+	        JOptionPane.ERROR_MESSAGE
+	        );
+	    gui.repaint();
+	}
+
 }
 
 

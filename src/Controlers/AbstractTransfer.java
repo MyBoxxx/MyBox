@@ -13,13 +13,10 @@ import java.util.Observer;
 
 import javax.imageio.ImageIO;
 
-import model.Envelope;
+import Entity.*;
 import view.AbstractGUI;
-import client.CCRMClient;
-import client.CliMessage;
-import client.IObserve;
-//import client.ImageSerializer;
-import client.CcrmApp;
+import Client.*;
+
 /**
  * this class is abstract transfer 
  * @author jacob
@@ -61,7 +58,7 @@ public abstract class AbstractTransfer
 		{
 			try 
 			{
-				CcrmApp.clien.sendToServer(request);
+				MainClient.clien.sendToServer(request);
 			} 
 			catch (IOException e)
 			{
@@ -77,7 +74,7 @@ public abstract class AbstractTransfer
 		{
 			try 
 			{
-				CcrmApp.clien.sendToServer(request);
+				MainClient.clien.sendToServer(request);
 			} 
 			catch (IOException e)
 			{

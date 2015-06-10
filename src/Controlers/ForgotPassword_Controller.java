@@ -15,12 +15,12 @@ import javax.swing.JOptionPane;
 
 import Entity.*;
 
-public class ForgotPassword_Controller {
+public class ForgotPassword_Controller extends AbstractTransfer{
 
-	static User_Entity model ;
+	static ForgotPassword_Entity model ;
 	static ForgotPassword_GUI view;
 	
-	ForgotPassword_Controller(User_Entity model,ForgotPassword_GUI view){
+	ForgotPassword_Controller(ForgotPassword_Entity model,ForgotPassword_GUI view){
 		this.model = model;
 		this.view = view;
 	}
@@ -59,11 +59,11 @@ public class ForgotPassword_Controller {
 	});
 	}
 
-	public static User_Entity getModel() {
+	public static ForgotPassword_Entity getModel() {
 		return model;
 	}
 
-	public static void setModel(User_Entity model) {
+	public static void setModel(ForgotPassword_Entity model) {
 		ForgotPassword_Controller.model = model;
 	}
 

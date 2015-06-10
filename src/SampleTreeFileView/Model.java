@@ -17,6 +17,8 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.JTree;
 import javax.swing.SwingUtilities;
+import javax.swing.SwingWorker;
+import javax.swing.table.TableColumn;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
@@ -34,7 +36,8 @@ public class Model {
     
     /** Used to open/edit/print files. */
     private Desktop desktop;
-	
+    private JTable table;
+    private TableColumn tableColumn;
 
 public void showRootFile() {
     // ensure the main files are displayed
@@ -97,14 +100,14 @@ void deleteFile(JPanel gui) {
     }
     gui.repaint();
 }
-
-public void newFile(View view) {
+/*
+public void newFile() {
   /*  if (currentFile==null) {
         showErrorMessage("No location selected for new file.","Select Location",view.getGui());
         return;
     }
 
-*/
+
 	JDialog dialog = new CreateFolderScreen();
 	dialog.setVisible(true);
 	
@@ -118,7 +121,7 @@ public void newFile(View view) {
                 parentFile = parentFile.getParentFile();
             }
             File file = new File( parentFile, view.name.getText() );
-            if (view.newTypeFile.isSelected()) {
+            if (newTypeFile.isSelected()) {
                 created = file.createNewFile();
             } else {
                 created = file.mkdir();
@@ -151,11 +154,10 @@ public void newFile(View view) {
             //showThrowable(t);
         }
     }
-    view.getGui().repaint();
 }
 /*
 private void setColumnWidth(int column, int width) {
-    TableColumn tableColumn = table.getColumnModel().getColumn(column);
+     tableColumn = table.getColumnModel().getColumn(column);
     if (width<0) {
         // use the preferred width of the header..
         label = new JLabel( (String)tableColumn.getHeaderValue() );
@@ -211,7 +213,7 @@ private void showChildren(final DefaultMutableTreeNode node) {
     };
     worker.execute();
 }
-
+/*
 public boolean MoveFile() throws IOException {
 
 	if (currentFile==null) {
@@ -238,33 +240,9 @@ public boolean MoveFile() throws IOException {
 }
 
 /** Update the File details view with the details of this File. */
-/*
-private void setFileDetails(File file) {
-    currentFile = file;
-    Icon icon = fileSystemView.getSystemIcon(file);
-    fileName.setIcon(icon);
-    fileName.setText(fileSystemView.getSystemDisplayName(file));
-    path.setText(file.getPath());
-    date.setText(new Date(file.lastModified()).toString());
-    size.setText(file.length() + " bytes");
-    readable.setSelected(file.canRead());
-    writable.setSelected(file.canWrite());
-    executable.setSelected(file.canExecute());
-    isDirectory.setSelected(file.isDirectory());
 
-    isFile.setSelected(file.isFile());
 
-    JFrame f = (JFrame) gui.getTopLevelAncestor();
-    if (f!=null) {
-        f.setTitle(
-            APP_TITLE +
-            " :: " +
-            fileSystemView.getSystemDisplayName(file) );
-    }
 
-    gui.repaint();
-}
-*/
 
 private void showErrorMessage(String errorMessage, String errorTitle,JPanel gui) {
     JOptionPane.showMessageDialog(
@@ -274,59 +252,18 @@ private void showErrorMessage(String errorMessage, String errorTitle,JPanel gui)
         JOptionPane.ERROR_MESSAGE
         );
 }
-/*
-private void showThrowable(Throwable t) {
-    t.printStackTrace();
-    JOptionPane.showMessageDialog(
-        gui,
-        t.toString(),
-        t.getMessage(),
-        JOptionPane.ERROR_MESSAGE
-        );
-    gui.repaint();
-}
+
 
 /** Update the table on the EDT */
-/*
-private void setTableData(final File[] files) {
-    SwingUtilities.invokeLater(new Runnable() {
-        public void run() {
-            if (fileTableModel==null) {
-                fileTableModel = new FileTableModel();
-                table.setModel(fileTableModel);
-            }
-            table.getSelectionModel().removeListSelectionListener(listSelectionListener);
-            fileTableModel.setFiles(files);
-            table.getSelectionModel().addListSelectionListener(listSelectionListener);
-            if (!cellSizesSet) {
-                Icon icon = fileSystemView.getSystemIcon(files[0]);
 
-                // size adjustment to better account for icons
-                table.setRowHeight( icon.getIconHeight()+rowIconPadding );
-
-                setColumnWidth(0,-1);
-                setColumnWidth(3,60);
-                table.getColumnModel().getColumn(3).setMaxWidth(120);
-                setColumnWidth(4,-1);
-                setColumnWidth(5,-1);
-                setColumnWidth(6,-1);
-                setColumnWidth(7,-1);
-                setColumnWidth(8,-1);
-                setColumnWidth(9,-1);
-
-                cellSizesSet = true;
-            }
-        }
-    });
-}
 
 
 public Object getDesktop() {
 	// TODO Auto-generated method stub
 	return null;
 }
-
-public void setDesktop(Desktop desktop) {
+/*
+public void setDesktop(Desktop desktop){
 	this.desktop = desktop;
 }
 

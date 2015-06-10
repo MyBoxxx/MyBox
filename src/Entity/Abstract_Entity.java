@@ -3,7 +3,7 @@ package Entity;
 
 	import java.io.Serializable;
 	@SuppressWarnings("serial")
-	public class AbstractEntity_Entity implements Serializable{
+	public class Abstract_Entity implements Serializable{
 		
 		
 	}

@@ -1,8 +1,8 @@
 package Client;
 
-import UI.*;
-import Controllers.*;
-import Entites.*;
+import GUI_final.*;
+import Controlers.*;
+import Entity.*;
 /**
  * the main class that start mybox application
  * @author Niv

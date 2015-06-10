@@ -17,11 +17,12 @@ import javax.swing.JTextField;
 
 import Entity.*;
 import GUI_final.*;
+import Client.*;
 import SampleTreeFileView.Main;
 
-public class LogIn_Controller {
+public class LogIn_Controller extends AbstractTransfer{
 
-	static User_Entity model ;
+	static Login_Entity model ;
 	static Login_GUI view;
 	
 	static ForgotPassword_Controller forgot_con;
@@ -32,15 +33,14 @@ public class LogIn_Controller {
 	
 	
 	
-	LogIn_Controller(User_Entity model,Login_GUI view){
+	LogIn_Controller(Login_Entity model,Login_GUI view){
 		this.model = model;
 		this.view = view;
 		view.setBounds(100, 100, 800, 600);
 		view.setVisible(true);
 		try {
-			
 			forgot_gui = new ForgotPassword_GUI();
-			forgot_con = new ForgotPassword_Controller(new User_Entity(), forgot_gui);
+			forgot_con = new ForgotPassword_Controller(new ForgotPassword_Entity(), forgot_gui);
 			forgot_con.control();
 			
 		} catch (Exception e) {
@@ -54,7 +54,24 @@ public class LogIn_Controller {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				if(view.getTxtUserName().getText().equals("eyal")) 
+			if(view.getPasswordField().getText().equals("password") || view.getTxtUserName().getText().equals("UserName"))
+				{
+				JOptionPane.showMessageDialog(view.getContentPane(),  "Login Failed!."+view.getTxtUserName().getText()+ view.getPasswordField().getText());
+				view.settxtOneOrMoreVisible(true);
+				}
+			else view.settxtOneOrMoreVisible(false);
+				
+			try{
+				model.setUser(view.getTxtUserName().getText());
+				model.setPassword(view.getPasswordField().getText());
+				sendToServer(model);
+				
+			}
+			catch (Exception eee){
+				
+			}
+			
+			if(view.getTxtUserName().getText().equals("eyal")) 
 					{
 					//JOptionPane.showMessageDialog(view.getContentPane(),  "Login OK!.");
 					//redirect to systemfileview
@@ -63,10 +80,7 @@ public class LogIn_Controller {
 		        	Main.main(User);
 					}
 				else {
-					JOptionPane.showMessageDialog(view.getContentPane(),  "Login Failed!."+view.getTxtUserName().getText()+ view.getPasswordField().getText());
-					if(view.getPasswordField().getText().equals("password") || view.getTxtUserName().getText().equals("UserName"))
-					view.settxtOneOrMoreVisible(true);
-					else view.settxtOneOrMoreVisible(false);
+
 				}
 			}
 		});

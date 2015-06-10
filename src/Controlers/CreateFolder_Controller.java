@@ -15,7 +15,7 @@ import javax.swing.JOptionPane;
 import Entity.*;
 import GUI_final.*;
 
-public class CreateFolder_Controller {
+public class CreateFolder_Controller extends AbstractTransfer{
 
 	private static  File model ;
 	private static  CreateFolderScreen view;

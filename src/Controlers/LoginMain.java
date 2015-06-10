@@ -16,7 +16,7 @@ public class LoginMain {
 		// TODO Auto-generated method stub
 		try {
 			 view = new Login_GUI();
-			User_Entity model = new User_Entity();
+			 model = new User_Entity();
 			LogIn_Controller controler = new LogIn_Controller(model, view);
 			view.setBounds(100, 100, 800, 600);
 			controler.control();
