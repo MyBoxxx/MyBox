@@ -15,8 +15,13 @@ import java.awt.TextField;
 import java.awt.Button;
 import java.awt.Color;
 import java.awt.Font;
+
 import javax.swing.JLabel;
+
 import java.awt.SystemColor;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 
 public class AddPeopleToGroup extends JFrame {
@@ -72,6 +77,10 @@ public class AddPeopleToGroup extends JFrame {
 		
 		choiceGroup = new Choice();
 		choiceGroup.setBounds(301, 70, 185, 20);
+		choiceGroup.add("");
+		choiceGroup.add("100");
+		choiceGroup.add("ein ma");
+		choiceGroup.add("peter");
 		contentPane.add(choiceGroup);
 		
 		txtpnChooseGroup = new JTextPane();
@@ -91,6 +100,10 @@ public class AddPeopleToGroup extends JFrame {
 		contentPane.add(txtpnChooseUser_1);
 		
 		choose_user = new Choice();
+		choose_user.add("");
+		choose_user.add("100");
+		choose_user.add("ein ma");
+		choose_user.add("peter");
 		choose_user.setBounds(301, 119, 185, 20);
 		contentPane.add(choose_user);
 		
@@ -106,7 +119,7 @@ public class AddPeopleToGroup extends JFrame {
 		textField.setBounds(301, 168, 185, 20);
 		contentPane.add(textField);
 		
-		OkButton = new JButton();
+		OkButton = new JButton();		
 		OkButton.setIcon(new ImageIcon("src/GUI_final/OkButton.jpg"));
 		OkButton.setBounds(10, 209, 120, 42);
 		contentPane.add(OkButton);
@@ -122,12 +135,13 @@ public class AddPeopleToGroup extends JFrame {
 		contentPane.add(join);
 	}
 
-	public JPanel getContentPane() {
-		return contentPane;
-	}
 
-	public void setContentPane(JPanel contentPane) {
-		this.contentPane = contentPane;
+	public void okListner(ActionListener listenForOkButton){
+		OkButton.addActionListener(listenForOkButton);
+	}
+	
+	public void cancelListner(ActionListener listenForCancelButton){
+		cancelButton.addActionListener(listenForCancelButton);		
 	}
 
 	public JLabel getJoin() {

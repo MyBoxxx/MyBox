@@ -16,6 +16,8 @@ import javax.swing.AbstractListModel;
 import javax.swing.border.TitledBorder;
 import javax.swing.JScrollBar;
 import javax.swing.JButton;
+
+import java.awt.Choice;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.SystemColor;
@@ -27,8 +29,8 @@ public class AskToJoinRemoveFromGroup {
 	private JList listGroup;
 	private JButton btRequest;
 	private JButton btCacel;
-	private JScrollBar scrool;
 	private JLabel chooseGroup;
+	private Choice choiceGroup;
 
 	/**
 	 * Launch the application.
@@ -62,13 +64,7 @@ public class AskToJoinRemoveFromGroup {
 		frame.setBounds(100, 100, 598, 499);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-		DefaultListModel Dl = new DefaultListModel();
-		Dl.addElement("100");
-		Dl.addElement("Yaron");
-		Dl.addElement("Eran");
-		Dl.addElement("Sima ");
-		Dl.addElement("Sveta");
-		Dl.addElement("En Ma");
+	
 		
 		btRequest = new JButton();
 		btRequest.setIcon(new ImageIcon("src/GUI_final/sendReuqest.PNG"));
@@ -81,7 +77,7 @@ public class AskToJoinRemoveFromGroup {
 		frame.getContentPane().add(btCacel);
 		
 		chooseGroup = new JLabel();
-		chooseGroup.setBounds(0, 0, 173, 146);
+		chooseGroup.setBounds(10, 11, 173, 146);
 		frame.getContentPane().add(chooseGroup);
 		chooseGroup.setIcon(new ImageIcon("src/GUI_final/thechoosegroup.png"));
 		
@@ -92,15 +88,13 @@ public class AskToJoinRemoveFromGroup {
 		lblAskToJoin.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		lblAskToJoin.setIcon(new ImageIcon("src/GUI_final/ask.png"));
 		
-		listGroup = new JList();
-		listGroup.setBounds(0, 142, 141, 139);
-		frame.getContentPane().add(listGroup);
-		listGroup.setEnabled(false);
-		listGroup.setModel(Dl);
-		
-		scrool = new JScrollBar();
-		scrool.setBounds(157, 178, 15, 96);
-		frame.getContentPane().add(scrool);
+		Choice choiceGroup = new Choice();
+		choiceGroup.setBounds(10, 173, 185, 20);
+		choiceGroup.add("");
+		choiceGroup.add("100");
+		choiceGroup.add("ein ma");
+		choiceGroup.add("peter");
+		frame.getContentPane().add(choiceGroup);
 	}
 
 	public JLabel getLblAskToJoin() {
@@ -135,12 +129,13 @@ public class AskToJoinRemoveFromGroup {
 		this.btCacel = btCacel;
 	}
 
-	public JScrollBar getScrool() {
-		return scrool;
+	
+	public Choice getChoiceGroup() {
+		return choiceGroup;
 	}
 
-	public void setScrool(JScrollBar scrool) {
-		this.scrool = scrool;
+	public void setChoiceGroup(Choice choiceGroup) {
+		this.choiceGroup = choiceGroup;
 	}
 
 	public JLabel getChooseGroup() {
@@ -149,5 +144,13 @@ public class AskToJoinRemoveFromGroup {
 
 	public void setChooseGroup(JLabel chooseGroup) {
 		this.chooseGroup = chooseGroup;
+	}
+	
+	public void sendRequestListner(ActionListener listenForOkButton){
+		btRequest.addActionListener(listenForOkButton);
+	}
+	
+	public void cancelListner(ActionListener listenForCancelButton){
+		btCacel.addActionListener(listenForCancelButton);		
 	}
 }
