@@ -75,10 +75,6 @@ public class AdminBar_Controller {
 				}				
 			});			
 		}		
-	}
-	
-	
-
-	
+	}	
 	
 }
