@@ -18,11 +18,11 @@ public class ForgotPasswordMain {
 			view = new ForgotPassword_GUI();
 			User_Entity model = new User_Entity();
 			ForgotPassword_Controller controler = new ForgotPassword_Controller(model, view);
-			view.setBounds(100, 100, 800, 600);
 			controler.control();
+			view.setBounds(100, 100, 600, 450);
 			view.setVisible(true);
 			
-		} catch (MalformedURLException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

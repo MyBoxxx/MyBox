@@ -23,8 +23,7 @@ public class AdminBar_Controller {
 	ActionListener loginActionListener ;
 	ActionListener forgotActionListener ;
 	
-	
-	
+
 	AdminBar_Controller(User_Entity model,Adminbar view){
 		this.model = model;
 		this.view = view;

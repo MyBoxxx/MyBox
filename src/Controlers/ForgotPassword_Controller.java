@@ -23,8 +23,6 @@ public class ForgotPassword_Controller {
 	ForgotPassword_Controller(User_Entity model,ForgotPassword_GUI view){
 		this.model = model;
 		this.view = view;
-		view.setBounds(100, 100, 800, 600);
-		view.setVisible(true);
 	}
 	
 	void control()
@@ -33,14 +31,14 @@ public class ForgotPassword_Controller {
     
 		@Override
     	public void mouseClicked(MouseEvent e) {
-			if(view.getTxtEmail().getText().equals("e-mail")) view.setTxtEmail("");
+			if(view.getTxtEmail().getText().equals("E-mail")) view.setTxtEmail("");
     	}
     });
 
     view.getTxtEmail().addFocusListener(new FocusAdapter() {
     	@Override
     	public void focusLost(FocusEvent e) {
-    		if(view.getTxtEmail().getText().equals("")) view.setTxtEmail("e-mail");
+    		if(view.getTxtEmail().getText().equals("")) view.setTxtEmail("E-mail");
     	}
     });
 	

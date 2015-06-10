@@ -5,8 +5,6 @@ import java.awt.Desktop;
 import java.awt.GridLayout;
 import java.io.File;
 
-import javafx.scene.control.TableColumn;
-
 import javax.swing.ButtonGroup;
 import javax.swing.Icon;
 import javax.swing.JFrame;

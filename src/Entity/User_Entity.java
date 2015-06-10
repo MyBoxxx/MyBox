@@ -1,7 +1,6 @@
 package Entity;
 import java.util.List;
 
-import com.sun.security.ntlm.Client;
 
 @SuppressWarnings("serial")
 public class User_Entity extends AbstractEntity_Entity{
@@ -24,6 +23,12 @@ public User_Entity(String IDuser, String Username,String Password, int Status, b
 		this.isAdmin = isadmin;
 		
 	}
+
+
+
+	public User_Entity() {
+	// TODO Auto-generated constructor stub
+}
 
 
 
@@ -74,23 +79,5 @@ public User_Entity(String IDuser, String Username,String Password, int Status, b
 	public void setAdmin(boolean isAdmin) {
 		this.isAdmin = isAdmin;
 	}
-	
-	public void getUserFromDB( Client client,String username){
-		
-		String query = "Slect *"
-				      + "From users	"
-				      + "WHERE user_name = "+username+" ";
-				
-	}
-	
-	public void SetStatusDB(Client client, int stat){
-		
-		String username = client.getCurrentUser().getUserName();
-		String query = "Update users"
-					   + "SET status = "+stat+""
-					   +"WHERE user_name = "+username+" ";
-		client.getDate(query,true);
-	}
-	
 	
 }
