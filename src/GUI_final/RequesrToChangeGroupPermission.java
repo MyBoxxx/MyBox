@@ -37,7 +37,7 @@ public class RequesrToChangeGroupPermission {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+/*	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -49,7 +49,7 @@ public class RequesrToChangeGroupPermission {
 			}
 		});
 	}
-
+**/
 	/**
 	 * Create the application.
 	 */
@@ -110,4 +110,76 @@ public class RequesrToChangeGroupPermission {
 	 public void ButtonPressedActionlistiner(ActionListener listenforbutton) {
 			ButtonSend.addActionListener(listenforbutton);
 		}
+
+	public JFrame getFrmRequstToChange() {
+		return frmRequstToChange;
+	}
+
+	public void setFrmRequstToChange(JFrame frmRequstToChange) {
+		this.frmRequstToChange = frmRequstToChange;
+	}
+
+	public JPanel getUpperPanel() {
+		return UpperPanel;
+	}
+
+	public void setUpperPanel(JPanel upperPanel) {
+		UpperPanel = upperPanel;
+	}
+
+	public JLabel getChooseLabel() {
+		return ChooseLabel;
+	}
+
+	public void setChooseLabel(JLabel chooseLabel) {
+		ChooseLabel = chooseLabel;
+	}
+
+	public JRadioButton getRAdioRead() {
+		return RAdioRead;
+	}
+
+	public void setRAdioRead(JRadioButton rAdioRead) {
+		RAdioRead = rAdioRead;
+	}
+
+	public JRadioButton getRawrite() {
+		return Rawrite;
+	}
+
+	public void setRawrite(JRadioButton rawrite) {
+		Rawrite = rawrite;
+	}
+
+	public JPanel getButtonPanel() {
+		return ButtonPanel;
+	}
+
+	public void setButtonPanel(JPanel buttonPanel) {
+		ButtonPanel = buttonPanel;
+	}
+
+	public JButton getButtonSend() {
+		return ButtonSend;
+	}
+
+	public void setButtonSend(JButton buttonSend) {
+		ButtonSend = buttonSend;
+	}
+
+	public JButton getButtonCancel() {
+		return ButtonCancel;
+	}
+
+	public void setButtonCancel(JButton buttonCancel) {
+		ButtonCancel = buttonCancel;
+	}
+
+	public JLabel getLblChangeGroupPremm() {
+		return lblChangeGroupPremm;
+	}
+
+	public void setLblChangeGroupPremm(JLabel lblChangeGroupPremm) {
+		this.lblChangeGroupPremm = lblChangeGroupPremm;
+	}
 }
