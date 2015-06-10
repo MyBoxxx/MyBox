@@ -25,7 +25,15 @@ import java.awt.event.ActionEvent;
 public class RequesrToChangeGroupPermission {
 
 	private JFrame frmRequstToChange;
-
+	private JPanel UpperPanel;
+	private JLabel ChooseLabel;
+	private JRadioButton RAdioRead;
+	private JRadioButton Rawrite;
+	private JPanel ButtonPanel;
+	private JButton ButtonSend;
+	private JButton ButtonCancel;
+	private JLabel lblChangeGroupPremm;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -59,7 +67,7 @@ public class RequesrToChangeGroupPermission {
 		frmRequstToChange.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmRequstToChange.getContentPane().setLayout(null);
 		
-		JPanel UpperPanel = new JPanel();
+		UpperPanel = new JPanel();
 		UpperPanel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null), "Please Select Group Premission", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		UpperPanel.setForeground(Color.BLACK);
 		UpperPanel.setToolTipText("");
@@ -67,40 +75,39 @@ public class RequesrToChangeGroupPermission {
 		frmRequstToChange.getContentPane().add(UpperPanel);
 		UpperPanel.setLayout(null);
 		
-		JLabel ChooseLabel = new JLabel("Choose One/bouth");
+		ChooseLabel = new JLabel("Choose One/bouth");
 		ChooseLabel.setBounds(20, 27, 141, 16);
 		UpperPanel.add(ChooseLabel);
 		
-		JRadioButton RAdioRead = new JRadioButton("Read");
+		RAdioRead = new JRadioButton("Read");
 		RAdioRead.setBounds(18, 55, 141, 23);
 		UpperPanel.add(RAdioRead);
 		
-		JRadioButton Rawrite = new JRadioButton("Write");
+		Rawrite = new JRadioButton("Write");
 		Rawrite.setBounds(20, 90, 141, 23);
 		UpperPanel.add(Rawrite);
 		
-		JPanel ButtonPanel = new JPanel();
+		ButtonPanel = new JPanel();
 		ButtonPanel.setBounds(6, 215, 522, 76);
 		frmRequstToChange.getContentPane().add(ButtonPanel);
 		ButtonPanel.setLayout(null);
 		
-		JButton ButtonSend = new JButton("Send Request");
+		ButtonSend = new JButton("Send Request");
 		ButtonSend.setIcon(new ImageIcon("/Users/yaronoz/Desktop/email_icon_small.gif"));
-		ButtonSend.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				System.out.println(100);
-			}
-		});
 		ButtonSend.setBounds(33, 10, 152, 66);
 		ButtonPanel.add(ButtonSend);
 		
-		JButton ButtonCancel = new JButton("Cancel");
+		ButtonCancel = new JButton("Cancel");
 		ButtonCancel.setIcon(new ImageIcon("/Users/yaronoz/Desktop/delete.png"));
 		ButtonCancel.setBounds(331, 10, 152, 66);
 		ButtonPanel.add(ButtonCancel);
 		
-		JLabel lblChangeGroupPremm = new JLabel("              Change Group permission");
+		lblChangeGroupPremm = new JLabel("              Change Group permission");
 		lblChangeGroupPremm.setBounds(97, 8, 302, 16);
 		frmRequstToChange.getContentPane().add(lblChangeGroupPremm);
 	}
+	
+	 public void ButtonPressedActionlistiner(ActionListener listenforbutton) {
+			ButtonSend.addActionListener(listenforbutton);
+		}
 }
