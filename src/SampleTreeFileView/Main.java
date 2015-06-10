@@ -10,12 +10,17 @@ import Entity.User_Entity;
 
 public class Main
 {
-    public static void main(String[] args) {           
+	static String []user;
+   
+	public static void main(String[] args) { 
+    	user = args;
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {                                           
                 Model model = new Model();
-                View view = new View(new User_Entity("nils")); 
+                View view;
+                if(user.length == 0) view = new View(new User_Entity("moshe")); 
+                else view = new View(new User_Entity(user[0])); 
                 Controller controller = new Controller(model,view);
                 controller.contol();
                 controller.setVisible(true);

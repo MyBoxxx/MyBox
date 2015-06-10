@@ -338,7 +338,7 @@ mnMybox.add(mntmLogOut);
 JMenu mnFile = new JMenu("File");
 menuBar.add(mnFile);
 
- mntmCreateNewFolder = new JMenuItem("Create New Folder");
+ mntmCreateNewFolder = new JMenuItem("Create File / Folder");
 
 mnFile.add(mntmCreateNewFolder);
 

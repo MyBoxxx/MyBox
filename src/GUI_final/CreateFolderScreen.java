@@ -1,5 +1,6 @@
 package GUI_final;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -8,6 +9,7 @@ import java.awt.Toolkit;
 
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -24,23 +26,23 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.JRadioButton;
 
-public class CreateFolderScreen extends JFrame {
+public class CreateFolderScreen extends JDialog {
 	
 	private JTextField ItemNameField;
 	
-
+	private final JPanel contentPanel = new JPanel();
 	private JTextField ItemDescriptionField;
 	private JButton btnCancel,btnOk;
 	private ButtonGroup bg;
 	
 
 public CreateFolderScreen() {
-    final ContentPanel contentPanel = new ContentPanel();
+	getContentPane().setLayout(new BorderLayout());
     getContentPane().add(contentPanel);
     contentPanel.setLayout(null);
     this.setTitle("Create File/Folder");
     JLabel lblItemName = new JLabel("Name:");
-    lblItemName.setFont(new Font("Tahoma", Font.PLAIN, 14));
+    lblItemName.setFont(new Font("Tahoma", Font.BOLD, 14));
     lblItemName.setBounds(20, 434, 90, 23);
     contentPanel.add(lblItemName);
     
@@ -80,15 +82,22 @@ public CreateFolderScreen() {
      bg = new ButtonGroup();
     
     JRadioButton rdbtnFile = new JRadioButton("File");
+    rdbtnFile.setFont(new Font("Tahoma", Font.BOLD, 11));
     rdbtnFile.setBounds(141, 489, 109, 23);
     contentPanel.add(rdbtnFile);
     
     JRadioButton rdbtnFolder = new JRadioButton("Folder");
+    rdbtnFolder.setFont(new Font("Tahoma", Font.BOLD, 11));
     rdbtnFolder.setBounds(252, 489, 109, 23);
     contentPanel.add(rdbtnFolder);
     setSize(460, 600);
     bg.add(rdbtnFolder);
     bg.add(rdbtnFile);
+    
+    JLabel lblLogo = new JLabel("Logo");
+    lblLogo.setIcon(new ImageIcon(CreateFolderScreen.class.getResource("/images_icons/folder.jpg")));
+    lblLogo.setBounds(10, 0, 424, 423);
+    contentPanel.add(lblLogo);
   }
 
   public static void main(String[] args) {
@@ -138,26 +147,5 @@ public CreateFolderScreen() {
 
 }
 
-class ContentPanel extends JPanel {
-  Image bgimage = null;
-
-  ContentPanel() {
-    MediaTracker mt = new MediaTracker(this);
-    bgimage = Toolkit.getDefaultToolkit().getImage("images/folder.jpg");
-    mt.addImage(bgimage, 0);
-    try {
-      mt.waitForAll();
-    } catch (InterruptedException e) {
-      e.printStackTrace();
-    }
-  }
-
-  protected void paintComponent(Graphics g) {
-    super.paintComponent(g);
-    int imwidth = bgimage.getWidth(null);
-    int imheight = bgimage.getHeight(null);
-    g.drawImage(bgimage, 1, 1, null);
-  }
-}
 
 

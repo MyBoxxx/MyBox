@@ -7,6 +7,7 @@ import java.io.File;
 
 import javax.swing.ButtonGroup;
 import javax.swing.Icon;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -19,6 +20,8 @@ import javax.swing.SwingUtilities;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
+
+import GUI_final.CreateFolderScreen;
 
 public class Model {
 	
@@ -95,32 +98,18 @@ void deleteFile(JPanel gui) {
     gui.repaint();
 }
 
-private void newFile(View view) {
-    if (currentFile==null) {
+public void newFile(View view) {
+  /*  if (currentFile==null) {
         showErrorMessage("No location selected for new file.","Select Location",view.getGui());
         return;
     }
 
-    if (view.newFilePanel == null) {
-        view.newFilePanel = new JPanel(new BorderLayout(3,3));
-
-        view.southRadio = new JPanel(new GridLayout(1,0,2,2));
-        view.newTypeFile = new JRadioButton("File", true);
-        view.newTypeDirectory = new JRadioButton("Directory");
-        ButtonGroup bg = new ButtonGroup();
-        bg.add(view.newTypeFile);
-        bg.add(view.newTypeDirectory);
-        view.southRadio.add( view.newTypeFile );
-        view.southRadio.add( view.newTypeDirectory );
-
-        view.name = new JTextField(15);
-
-        view.newFilePanel.add( new JLabel("Name"), BorderLayout.WEST );
-        view.newFilePanel.add( view.name );
-        view.newFilePanel.add( view.southRadio, BorderLayout.SOUTH );
-    }
-
-    int result = JOptionPane.showConfirmDialog(view.gui,view.newFilePanel,"Create File",JOptionPane.OK_CANCEL_OPTION);
+*/
+	JDialog dialog = new CreateFolderScreen();
+	dialog.setVisible(true);
+	
+	
+    int result = JOptionPane.showConfirmDialog(view.getGui(),dialog,"Create File",JOptionPane.OK_CANCEL_OPTION);
     if (result==JOptionPane.OK_OPTION) {
         try {
             boolean created;
@@ -164,7 +153,7 @@ private void newFile(View view) {
     }
     view.getGui().repaint();
 }
-
+/*
 private void setColumnWidth(int column, int width) {
     TableColumn tableColumn = table.getColumnModel().getColumn(column);
     if (width<0) {
@@ -182,7 +171,7 @@ private void setColumnWidth(int column, int width) {
 
 /** Add the files that are contained within the directory of this node.
 Thanks to Hovercraft Full Of Eels. */
-
+/*
 private void showChildren(final DefaultMutableTreeNode node) {
     tree.setEnabled(false);
     progressBar.setVisible(true);
@@ -249,7 +238,7 @@ public boolean MoveFile() throws IOException {
 }
 
 /** Update the File details view with the details of this File. */
-
+/*
 private void setFileDetails(File file) {
     currentFile = file;
     Icon icon = fileSystemView.getSystemIcon(file);
@@ -275,7 +264,7 @@ private void setFileDetails(File file) {
 
     gui.repaint();
 }
-
+*/
 
 private void showErrorMessage(String errorMessage, String errorTitle,JPanel gui) {
     JOptionPane.showMessageDialog(
@@ -285,7 +274,7 @@ private void showErrorMessage(String errorMessage, String errorTitle,JPanel gui)
         JOptionPane.ERROR_MESSAGE
         );
 }
-
+/*
 private void showThrowable(Throwable t) {
     t.printStackTrace();
     JOptionPane.showMessageDialog(
@@ -298,7 +287,7 @@ private void showThrowable(Throwable t) {
 }
 
 /** Update the table on the EDT */
-
+/*
 private void setTableData(final File[] files) {
     SwingUtilities.invokeLater(new Runnable() {
         public void run() {
@@ -342,6 +331,6 @@ public void setDesktop(Desktop desktop) {
 }
 
 
-
+*/
 
 }

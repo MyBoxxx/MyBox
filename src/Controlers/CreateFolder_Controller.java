@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.net.MalformedURLException;
 
 import javax.swing.ImageIcon;
@@ -16,7 +17,7 @@ import GUI_final.*;
 
 public class CreateFolder_Controller {
 
-	private static  Folder_Entity model ;
+	private static  File model ;
 	private static  CreateFolderScreen view;
 
 	
@@ -24,7 +25,7 @@ public class CreateFolder_Controller {
 	ActionListener forgotActionListener ;
 	
 
-	CreateFolder_Controller(Folder_Entity model,CreateFolderScreen view){
+	public CreateFolder_Controller(File model,CreateFolderScreen view){
 		this.model = model;
 		this.view = view;
 	}
@@ -40,13 +41,14 @@ public class CreateFolder_Controller {
 	    	@Override
 	    	public void mouseClicked(MouseEvent e) {
 	    		 final ImageIcon icon = new ImageIcon("images/imageyes.jpg");
-	    		 if (view.getFolderNameField().getText().equals("") && view.getFolderNameField().getText() != null)
+	    		 if (view.getItemNameField().getText().equals("") || view.getBg().getSelection() == null )
 	    		 {
-	        		 final ImageIcon icono = new ImageIcon("images/imageno.jpg");
-	                 JOptionPane.showMessageDialog(null, "You have to insert a Name!", "About", JOptionPane.INFORMATION_MESSAGE, icono);
+	    			 final ImageIcon icono = new ImageIcon("images/imageno.jpg");
+	    			 if(view.getBg().getSelection() == null) JOptionPane.showMessageDialog(null, "You have to choose File / Folder!", "About", JOptionPane.INFORMATION_MESSAGE, icono); 
+	                 if(view.getItemNameField().getText().equals(""))JOptionPane.showMessageDialog(null, "You have to insert a Name!", "About", JOptionPane.INFORMATION_MESSAGE, icono);
 	    		 }
 	    		 else
-	    			 JOptionPane.showMessageDialog(null, "Folder with the name "  + view.getFolderNameField().getText() + " created\n" + "Description: " + view.getFolderNameField().getText(), "About", JOptionPane.INFORMATION_MESSAGE, icon);
+	    			 JOptionPane.showMessageDialog(null, "Folder with the name "  + view.getItemNameField().getText() + " created\n" + "Description: " + view.getItemNameField().getText(), "About", JOptionPane.INFORMATION_MESSAGE, icon);
 	    	}
 	    });
 

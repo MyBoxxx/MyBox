@@ -17,6 +17,7 @@ import javax.swing.JTextField;
 
 import Entity.*;
 import GUI_final.*;
+import SampleTreeFileView.Main;
 
 public class LogIn_Controller {
 
@@ -55,9 +56,11 @@ public class LogIn_Controller {
 				// TODO Auto-generated method stub
 				if(view.getTxtUserName().getText().equals("eyal")) 
 					{
-					JOptionPane.showMessageDialog(view.getContentPane(),  "Login OK!.");
+					//JOptionPane.showMessageDialog(view.getContentPane(),  "Login OK!.");
 					//redirect to systemfileview
 		        	view.settxtOneOrMoreVisible(false);
+		        	String []User = {"eyal","pano"};
+		        	Main.main(User);
 					}
 				else {
 					JOptionPane.showMessageDialog(view.getContentPane(),  "Login Failed!."+view.getTxtUserName().getText()+ view.getPasswordField().getText());
