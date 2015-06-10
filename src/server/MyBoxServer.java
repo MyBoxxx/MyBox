@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import Entity.Login_Entity;
 import ocsf.server.AbstractServer;
 import ocsf.server.ConnectionToClient;
 
@@ -121,6 +122,22 @@ public class MyBoxServer extends AbstractServer
 	        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/mybox","root","Braude");
 	        //Connection conn = DriverManager.getConnection("jdbc:mysql://192.168.3.68/test","root","Root");
 	        System.out.println("SQL connection succeed");
+	        if(msg instanceof Login_Entity){
+	        	checkUserPassword(conn,(Login_Entity)msg);
+	        		try {
+						client.sendToClient(msg);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+	        } else
+				try {
+					client.sendToClient("Login failed");
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+	        	
 	        if(msg instanceof String){
 	        	try {
 		        if(msg.toString().startsWith("login")){
@@ -128,7 +145,7 @@ public class MyBoxServer extends AbstractServer
 			    	String delims = " ";
 			    	String[] tokens = temp.split(delims);
 			    	if(tokens.length == 3){
-			    	if(checkUserPassword(conn,tokens[1],tokens[2]))
+			    	if(checkUserPassword(conn,(Login_Entity)msg))
 							client.sendToClient("Login Ok");
 						
 					else client.sendToClient("Login failed");
@@ -416,17 +433,16 @@ private String deleteFile(Connection con, String fileName, String path) {
  * @param pass - Password to check
  * @return Boolean - True if user + pass in DB or False 
  */
-private Boolean checkUserPassword(Connection con, String user,String pass){
+private Boolean checkUserPassword(Connection con, Login_Entity log){
 	
 	Statement stmt;
 	try 
 	{
 		stmt = con.createStatement();
-		ResultSet rs = stmt.executeQuery("SELECT * FROM Users where UserName ='"+ user + "' AND Password = '"+pass +"' ;");
+		ResultSet rs = stmt.executeQuery("SELECT * FROM Users where UserName ='"+ log.getUser() + "' AND Password = '"+log.getPassword() +"' ;");
 		
-		if(rs.next()) return true;
-		else return false;
-
+		if(rs.next()) log.setStatus(rs.getInt("Status"));
+		return true;
 		
 		//stmt.executeUpdate("UPDATE course SET semestr=\"W08\" WHERE num=61309");
 	} catch (SQLException e) {e.printStackTrace();

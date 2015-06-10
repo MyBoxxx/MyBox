@@ -35,8 +35,9 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.tree.TreeModel;
 
 import Entity.User_Entity;
+import GUI_final.AbstractGUI;
 
-public class View extends JFrame{
+public class View extends AbstractGUI{
 
     /** Title of the application */
      static final String APP_TITLE = "MyBox";

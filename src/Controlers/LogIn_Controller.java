@@ -56,7 +56,6 @@ public class LogIn_Controller extends AbstractTransfer{
 				// TODO Auto-generated method stub
 			if(view.getPasswordField().getText().equals("password") || view.getTxtUserName().getText().equals("UserName"))
 				{
-				JOptionPane.showMessageDialog(view.getContentPane(),  "Login Failed!."+view.getTxtUserName().getText()+ view.getPasswordField().getText());
 				view.settxtOneOrMoreVisible(true);
 				}
 			else view.settxtOneOrMoreVisible(false);
@@ -76,8 +75,7 @@ public class LogIn_Controller extends AbstractTransfer{
 					//JOptionPane.showMessageDialog(view.getContentPane(),  "Login OK!.");
 					//redirect to systemfileview
 		        	view.settxtOneOrMoreVisible(false);
-		        	String []User = {"eyal","pano"};
-		        	Main.main(User);
+		        
 					}
 				else {
 
@@ -138,6 +136,16 @@ public class LogIn_Controller extends AbstractTransfer{
 		
 		
 		
+	}
+
+	public void MakeLogin() {
+		String []User = {model.getUser(),model.getPassword()};
+    	Main.main(User);
+	}
+
+	public void ErrorLogin() {
+		JOptionPane.showMessageDialog(view.getContentPane(),  "Login Failed!."+view.getTxtUserName().getText()+ view.getPasswordField().getText());
+
 	}
 	
 	

@@ -62,7 +62,7 @@ public abstract class AbstractTransfer
 			} 
 			catch (IOException e)
 			{
-				theView.displayInfoMessage("Error: Server comunication problem","Commuinication Error",0);
+				//theView.displayInfoMessage("Error: Server comunication problem","Commuinication Error",0);
 				e.printStackTrace();
 			}
 		}
@@ -78,7 +78,7 @@ public abstract class AbstractTransfer
 			} 
 			catch (IOException e)
 			{
-				theView.displayInfoMessage("Error: Server comunication problem","Commuinication Error",0);
+				//theView.displayInfoMessage("Error: Server comunication problem","Commuinication Error",0);
 				e.printStackTrace();
 			}
 		}

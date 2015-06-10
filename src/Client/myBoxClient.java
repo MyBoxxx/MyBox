@@ -5,7 +5,11 @@
 package Client;
 
 import ocsf.client.*;
+import Controlers.LogIn_Controller;
+import Entity.*;
+
 import java.io.*;
+
 import Entity.*;
 
 /**
@@ -54,8 +58,13 @@ public class myBoxClient extends ObservableClient {
 
 		try {
 
-			if (message instanceof User){ // user name and password is found ( 1.setCurrUser that is using application, 2.set status to 1)
-				((LoginController) currController).handleDBResult(message);
+			if (message instanceof Login_Entity){ // user name and password is found ( 1.setCurrUser that is using application, 2.set status to 1)
+				if(    ((Login_Entity) message).getStatus()  == 0) ((LogIn_Controller) currController).ErrorLogin();
+					
+				else {
+					//update DBMS
+					((LogIn_Controller) currController).MakeLogin();
+				}
 			}
 			
 			if (message instanceof String) {

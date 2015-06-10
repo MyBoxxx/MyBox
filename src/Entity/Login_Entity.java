@@ -6,6 +6,14 @@ public class Login_Entity extends Abstract_Entity {
 	private String User;
 	private String Password;
 	int status; 
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
+	}
+
 	// 0 - new 
 	// 1 - logged in 
 	// 2 - not logged in
