@@ -1,5 +1,7 @@
 package Client;
 
+import java.net.MalformedURLException;
+
 import GUI_final.*;
 import Controlers.*;
 import Entity.*;
@@ -12,11 +14,13 @@ public class MainClient {
 
 	 public static myBoxClient clien;
 	 
-        public static void main(String[] args) {
-
-               ClientGui cg = new ClientGui();
-               ClientEntity ce= new ClientEntity();
-               ClientController cc = new ClientController(cg,ce);
+        public static void main(String[] args) 
+        {
+        	try{
+        		 Splash.main(null);
+        	}catch (Exception ee){
+        		
+        	}
 
         }
 

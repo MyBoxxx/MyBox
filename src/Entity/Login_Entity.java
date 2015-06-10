@@ -11,6 +11,7 @@ public class Login_Entity extends Abstract_Entity {
 	// 2 - not logged in
 	// 3 - not exists 
 	// 4 - System Admin
+	public Login_Entity(){}
 	
 	public Login_Entity(String User,String Password)
 	{
