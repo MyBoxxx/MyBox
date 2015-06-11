@@ -13,14 +13,14 @@ import Entity.User_Entity;
 import GUI_final.AdminAddPeopleToGroup;
 import GUI_final.CreateFolderScreen;
 
-public class AddPeopleToGroupController {
+public class AdminAddPeopleToGroupController {
 	
 	private User_Entity model ;
 	private AdminAddPeopleToGroup view;
 	
 	
 	
-	AddPeopleToGroupController(User_Entity model,AdminAddPeopleToGroup view){
+	AdminAddPeopleToGroupController(User_Entity model,AdminAddPeopleToGroup view){
 		this.model = model;
 		this.view = view;
 		

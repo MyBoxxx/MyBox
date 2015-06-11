@@ -16,9 +16,9 @@ import GUI_final.*;
 public class AdminBar_Controller {
 
 	private  User_Entity model ;
-	private  Adminbar view;
+	private  AdminMainWindow view;
 	
-	AdminBar_Controller(User_Entity model,Adminbar view){
+	AdminBar_Controller(User_Entity model,AdminMainWindow view){
 		this.model = model;
 		this.view = view;
 		

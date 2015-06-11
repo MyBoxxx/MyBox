@@ -7,10 +7,10 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.JOptionPane;
 
-import Controlers.AddPeopleToGroupController.cancelListnerer;
-import Controlers.AddPeopleToGroupController.okListner;
+import Controlers.AdminAddPeopleToGroupController.cancelListnerer;
+import Controlers.AdminAddPeopleToGroupController.okListner;
 import Entity.User_Entity;
-import GUI_final.Adminbar;
+import GUI_final.AdminMainWindow;
 import GUI_final.AskToJoinRemoveFromGroup;
 
 public class AskToJoinRemoveFromGroupController {

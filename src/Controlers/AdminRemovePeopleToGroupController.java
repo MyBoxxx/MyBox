@@ -11,31 +11,30 @@ import javax.swing.JOptionPane;
 import Entity.Folder_Entity;
 import Entity.User_Entity;
 import GUI_final.AdminAddPeopleToGroup;
+import GUI_final.AdminDeletePeopleToGroup;
 import GUI_final.CreateFolderScreen;
 
-public class AddPeopleToGroupController {
+public class AdminRemovePeopleToGroupController {
 	
 	private User_Entity model ;
-	private AdminAddPeopleToGroup view;
+	private AdminDeletePeopleToGroup view;
 	
 	
 	
-	AddPeopleToGroupController(User_Entity model,AdminAddPeopleToGroup view){
+	AdminRemovePeopleToGroupController(User_Entity model,AdminDeletePeopleToGroup view){
 		this.model = model;
 		this.view = view;
-		
-		this.view.okListner(new okListner());	
-		this.view.cancelListner(new cancelListnerer());
-		
+
+		this.view.deleteListner(new deleteListner());
 	}
-	
-	class okListner implements ActionListener{
+	//To-do control
+	class deleteListner implements ActionListener{
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			view.getOkButton().addMouseListener(new MouseAdapter() {
+			view.getDeleteButton().addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent e) {				
-					JOptionPane.showMessageDialog(null,"ok button pressed");	
+					JOptionPane.showMessageDialog(null,"delete button pressed");	
 				}
 			});
 		}

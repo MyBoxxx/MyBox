@@ -13,7 +13,7 @@ import javax.swing.JButton;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JEditorPane;
 
-public class EditGroup extends AbstractGUI {
+public class EditGroupNameDescription extends AbstractGUI {
 
 	private JButton b1X;
 	private JButton b2X;
@@ -36,7 +36,7 @@ public class EditGroup extends AbstractGUI {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					EditGroup window = new EditGroup();
+					EditGroupNameDescription window = new EditGroupNameDescription();
 					window.setVisible(true);
 					window.setBounds(100, 100, 510, 370);
 				} catch (Exception e) {
@@ -49,7 +49,7 @@ public class EditGroup extends AbstractGUI {
 	/**
 	 * Create the application.
 	 */
-	public EditGroup() {
+	public EditGroupNameDescription() {
 		JPanel panel = new JPanel();
 		 panel.setBounds(6, 6, 507, 330);
 		 panel.setLayout(null);
