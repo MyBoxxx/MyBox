@@ -17,15 +17,9 @@ import GUI_final.*;
 public class editGroup_Controller extends AbstractTransfer{
 
 	private static  Group_Entity model ;
-<<<<<<< HEAD
 	private static  EditGroupNameDescription view;
 
 	editGroup_Controller(Group_Entity model,EditGroupNameDescription view){
-=======
-	private static  EditGroup view;
-
-	editGroup_Controller(Group_Entity model,EditGroup view){
->>>>>>> refs/heads/eran
 		this.model = model;
 		this.view = view;
 	}
