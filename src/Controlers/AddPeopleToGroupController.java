@@ -10,6 +10,7 @@ import javax.swing.JOptionPane;
 
 import Entity.Folder_Entity;
 import Entity.User_Entity;
+<<<<<<< HEAD
 import GUI_final.AddPeopleToGroup;
 import GUI_final.CreateFolderScreen;
 
@@ -21,6 +22,19 @@ public class AddPeopleToGroupController {
 	
 	
 	AddPeopleToGroupController(User_Entity model,AddPeopleToGroup view){
+=======
+import GUI_final.AdminAddPeopleToGroup;
+import GUI_final.CreateFolderScreen;
+
+public class AddPeopleToGroupController {
+	
+	private User_Entity model ;
+	private AdminAddPeopleToGroup view;
+	
+	
+	
+	AddPeopleToGroupController(User_Entity model,AdminAddPeopleToGroup view){
+>>>>>>> refs/heads/eran
 		this.model = model;
 		this.view = view;
 		
