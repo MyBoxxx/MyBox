@@ -22,7 +22,7 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import javax.swing.JButton;
 
-public class ForgotPassword_GUI extends JFrame {
+public class ForgotPassword_GUI extends AbstractGUI {
 
 	private JPanel contentPane;
 	private JTextField txtEmail;

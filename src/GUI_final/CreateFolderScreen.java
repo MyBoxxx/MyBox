@@ -26,7 +26,7 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.JRadioButton;
 
-public class CreateFolderScreen extends JDialog {
+public class CreateFolderScreen extends AbstractGUI {
 	
 	private JTextField ItemNameField;
 	

@@ -24,7 +24,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 
-public class AddPeopleToGroup extends JFrame {
+public class AddPeopleToGroup extends AbstractGUI {
 
 	private JPanel contentPane;
 	private JLabel join;

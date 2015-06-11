@@ -18,7 +18,7 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 
 
-public class Limitpeopleingroup extends JFrame {
+public class Limitpeopleingroup extends AbstractGUI {
 
 	private JPanel contentPane;
 	private JTextField textField;

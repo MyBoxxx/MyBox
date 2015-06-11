@@ -35,7 +35,7 @@ import javax.swing.JPasswordField;
 import java.awt.Font;
 import java.awt.event.FocusAdapter;
 
-public class Login_GUI extends JFrame {
+public class Login_GUI extends AbstractGUI {
 
 
 	private JPanel contentPane;
