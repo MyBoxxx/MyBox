@@ -22,6 +22,8 @@ public class SystemAdminRequestsScreen_Controller extends AbstractTransfer {
 		this.model = model;
 		this.view = view;
 		view.setBounds(100, 100, 800, 600);
+		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+		view.setLocation(dim.width/2-view.getSize().width/2, dim.height/2-view.getSize().height/2);
 		view.setVisible(true);
 	}
 	

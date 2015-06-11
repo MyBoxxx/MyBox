@@ -2,7 +2,9 @@ package GUI_final;
 import images_icons.*;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -24,10 +26,13 @@ import javax.swing.JDesktopPane;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JRadioButton;
+
 import java.awt.Color;
 import java.awt.Font;
+
 import javax.swing.ButtonGroup;
 import javax.swing.JTable;
+
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
