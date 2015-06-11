@@ -17,9 +17,9 @@ import GUI_final.*;
 public class editGroup_Controller extends AbstractTransfer{
 
 	private static  Group_Entity model ;
-	private static  EditGroupNameDescription view;
+	private static  EditGroup view;
 
-	editGroup_Controller(Group_Entity model,EditGroupNameDescription view){
+	editGroup_Controller(Group_Entity model,EditGroup view){
 		this.model = model;
 		this.view = view;
 	}

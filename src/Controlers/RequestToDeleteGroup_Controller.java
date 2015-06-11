@@ -14,18 +14,17 @@ public class RequestToDeleteGroup_Controller {
 	private RequestToDeleteGroup theview;
 	private Group_Entity themodel;
 	
-	public RequestToDeleteGroup_Controller(RequestToDeleteGroup theview,Group_Entity themodel) {
+	public RequestToDeleteGroup_Controller(RequestToDeleteGroup theview/*,Group_Entity themodel*/) {
 		this.theview = theview;
-		this.themodel = themodel;
-		
-		}
-	public void control() {
+		//this.themodel = themodel;
 		this.theview.ButtonPressedActionlistinerOk(new ButtonPressedActionlistinerOk());
 		this.theview.ButtonPressedActionlistinerNextBeck(new ButtonPressedActionlistinerNextBeck());
 		this.theview.ButtonPressedActionlistinerBeck(new ButtonPressedActionlistinerBeck());
 		//this.theview.ButtonPressedActionlistinersend(new ButtonPressedActionlistinersend());
 		this.theview.isselected(new isselected());
-	}
+			
+	
+		}
 	
 	public class ButtonPressedActionlistinerOk implements ActionListener{
 

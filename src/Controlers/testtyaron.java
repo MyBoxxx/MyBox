@@ -1,8 +1,6 @@
 package Controlers;
-
 import Entity.SystemadminReequestScreen_Entity;
 import GUI_final.*;
-
 
 public class testtyaron {
 
@@ -19,7 +17,7 @@ public class testtyaron {
 		conctroller.control();
 		
 		view.setVisible(true);
+		
+	}
 
-
-}
 }

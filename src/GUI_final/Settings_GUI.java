@@ -27,13 +27,8 @@ public class Settings_GUI extends AbstractGUI {
 
 	private JPanel contentPane;
 	private JTextField txtmyname;
-<<<<<<< HEAD
 	private JTextField txtfieldUserID;
 	private JTextField txtDate;
-=======
-	private JTextField textField;
-	private JTextField txtMayth;
->>>>>>> branch 'master' of https://github.com/MyBoxxx/MyBox.git
 	private JTextField txtActive;
 	private JTextField txtChangePassword;
 	private JPasswordField pwdCurrentPwd;
@@ -90,7 +85,6 @@ public class Settings_GUI extends AbstractGUI {
 		btnChangeName.setBounds(444, 198, 116, 23);
 		ProfilePanel.add(btnChangeName);
 		
-<<<<<<< HEAD
 		btnSaveSettings = new JButton("Save settings");
 		btnSaveSettings.setBounds(243, 474, 116, 23);
 		ProfilePanel.add(btnSaveSettings);
@@ -104,28 +98,6 @@ public class Settings_GUI extends AbstractGUI {
 		UserImage.setLocation(331, 45);
 		UserImage.setSize(128, 128);
 		ProfilePanel.add(UserImage);
-=======
-		JButton btnSaveSettings = new JButton("Save settings");
-		btnSaveSettings.setBounds(36, 325, 101, 23);
-		panel.add(btnSaveSettings);
-		
-		JButton btnCancel = new JButton("Cancel");
-		btnCancel.setBounds(182, 325, 89, 23);
-		panel.add(btnCancel);
-		//https://cf.dropboxstatic.com/static/images/avatar/faceholder-64-vflHTEplh.png
-		URL url1 = new URL("");
-	    Icon icon1 = new ImageIcon(url1);
-		  JLabel label1 = new JLabel(icon1);
-		  label1.setBounds(26, 116, 73, 64);
-		  panel.add(label1);
-		  //png-3.findicons.com/files/icons/1580/devine_icons_part_2/128/account_and_control.png
-		  URL url2 = new URL("");
-		    Icon icon2 = new ImageIcon(url2);
-		    JLabel label2 = new JLabel(icon2);
-		    label2.setLocation(246, 12);
-		    label2.setSize(128, 128);
-			 panel.add(label2);
->>>>>>> branch 'master' of https://github.com/MyBoxxx/MyBox.git
 		  
 		JLabel LblUserID = new JLabel("Mybox user ID");
 		LblUserID.setBounds(243, 250, 73, 14);
@@ -163,36 +135,11 @@ public class Settings_GUI extends AbstractGUI {
 		  ProfilePanel.add(txtActive);
 		  txtActive.setColumns(10);
 		
-<<<<<<< HEAD
 		AccountPanel = new JPanel();
 		AccountPanel.setBackground(Color.WHITE);
 		tabbedPane.addTab("Account", null, AccountPanel, null);
 		AccountPanel.setLayout(null);
-=======
-		JPanel panel_1 = new JPanel();
-		panel_1.setBackground(Color.WHITE);
-		tabbedPane.addTab("Account", null, panel_1, null);
-		panel_1.setLayout(null);
-		//http://www.jigsawbox.com/blog/wp-content/uploads/2011/06/delete.jpg
-		URL url4 = new URL("");
-	    Icon icon4 = new ImageIcon(url4);
-	    JLabel label4 = new JLabel(icon4);
-	    label4.setLocation(126, 156);
-	    label4.setSize(300, 219);
-		JButton btnDelte = new JButton("",icon4);
-		btnDelte.setLocation(94, 147);
-		btnDelte.setSize(400, 228);
-		  panel_1.add(btnDelte);
-		 // http://i.imgur.com/9J0j1KT.jpg
-		  URL url3 = new URL("");
-		    Icon icon3 = new ImageIcon(url3);
-			  JLabel label3 = new JLabel(icon3);
-			  label3.setSize(622, 370);
-			  label3.setLocation(10, -21);
-			  panel_1.add(label3);
->>>>>>> branch 'master' of https://github.com/MyBoxxx/MyBox.git
 			  
-<<<<<<< HEAD
 			  btnDeleteAccount = new JButton("New button");
 			  btnDeleteAccount.setIcon(new ImageIcon(Settings_GUI.class.getResource("/images_icons/deleteall.jpg")));
 			  btnDeleteAccount.setBounds(141, 186, 412, 362);
@@ -217,20 +164,6 @@ public class Settings_GUI extends AbstractGUI {
 	    lblSecurity.setLocation(517, 6);
 	    lblSecurity.setSize(256, 256);
 		  SecurityPanel.add(lblSecurity);
-=======
-			
-		JPanel panel_2 = new JPanel();
-		panel_2.setBackground(Color.WHITE);
-		tabbedPane.addTab("Security", null, panel_2, null);
-		panel_2.setLayout(null);
-		//http://www.wufoo.com/images/powered/security.png
-		URL url5 = new URL("");
-	    Icon icon5 = new ImageIcon(url5);
-	    JLabel label5 = new JLabel(icon5);
-	    label5.setLocation(386, -10);
-	    label5.setSize(256, 256);
-		  panel_2.add(label5);
->>>>>>> branch 'master' of https://github.com/MyBoxxx/MyBox.git
 		
 		txtChangePassword = new JTextField();
 		txtChangePassword.setBackground(Color.WHITE);
