@@ -10,17 +10,17 @@ import javax.swing.JOptionPane;
 
 import Entity.Folder_Entity;
 import Entity.User_Entity;
-import GUI_final.AddPeopleToGroup;
+import GUI_final.AdminAddPeopleToGroup;
 import GUI_final.CreateFolderScreen;
 
 public class AddPeopleToGroupController {
 	
 	private User_Entity model ;
-	private AddPeopleToGroup view;
+	private AdminAddPeopleToGroup view;
 	
 	
 	
-	AddPeopleToGroupController(User_Entity model,AddPeopleToGroup view){
+	AddPeopleToGroupController(User_Entity model,AdminAddPeopleToGroup view){
 		this.model = model;
 		this.view = view;
 		
