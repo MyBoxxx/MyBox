@@ -107,7 +107,7 @@ public class Settings_GUI extends AbstractGUI {
 		  txtfieldUserID.setBackground(Color.WHITE);
 		  txtfieldUserID.setEditable(false);
 		  txtfieldUserID.setText("3831163");
-		  txtfieldUserID.setBounds(444, 244, 116, 25);
+		  txtfieldUserID.setBounds(444, 244, 148, 25);
 		  ProfilePanel.add(txtfieldUserID);
 		  txtfieldUserID.setColumns(10);
 		  
@@ -120,7 +120,7 @@ public class Settings_GUI extends AbstractGUI {
 		  txtDate.setEditable(false);
 		  txtDate.setText("MAY. 27TH, 2013");
 		  txtDate.setColumns(10);
-		  txtDate.setBounds(444, 321,  116, 25);
+		  txtDate.setBounds(444, 321,  148, 25);
 		  ProfilePanel.add(txtDate);
 		  
 		  JLabel lblStatus = new JLabel("Status");
@@ -131,7 +131,7 @@ public class Settings_GUI extends AbstractGUI {
 		  txtActive.setBackground(Color.WHITE);
 		  txtActive.setEditable(false);
 		  txtActive.setText("Active");
-		  txtActive.setBounds(444, 284, 116, 25);
+		  txtActive.setBounds(444, 284, 148, 25);
 		  ProfilePanel.add(txtActive);
 		  txtActive.setColumns(10);
 		
@@ -222,8 +222,8 @@ public class Settings_GUI extends AbstractGUI {
 
 
 
-	public void setTxtmyname(JTextField txtmyname) {
-		this.txtmyname = txtmyname;
+	public void setTxtmyname(String txtmyname) {
+		this.txtmyname.setText(txtmyname);
 	}
 
 
