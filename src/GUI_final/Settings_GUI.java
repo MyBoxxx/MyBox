@@ -21,7 +21,7 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JPasswordField;
 
-public class Settings_GUI extends JFrame {
+public class Settings_GUI extends AbstractGUI {
 
 	private JPanel contentPane;
 	private JTextField txtmyname;
@@ -35,22 +35,7 @@ public class Settings_GUI extends JFrame {
 	private JTextField txtCurrentEmail;
 	private JTextField txteinamcom;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Settings_GUI frame = new Settings_GUI();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
+	
 	/**
 	 * Create the frame.
 	 * @throws MalformedURLException 
