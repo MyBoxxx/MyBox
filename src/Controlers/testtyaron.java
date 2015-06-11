@@ -1,14 +1,22 @@
 package Controlers;
-import GUI_final.RequestToChangeGroupPermission;
+import Entity.SystemadminReequestScreen_Entity;
+import GUI_final.*;
 
 public class testtyaron {
 
+	private static SystemadminReequestScreen_Entity model;
+	private static SysAdminRequesrScreen view; 
+	
+	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		RequestToChangeGroupPermission theview = new RequestToChangeGroupPermission();
+		model = new SystemadminReequestScreen_Entity();
+		view = new SysAdminRequesrScreen();
+		SystemAdminRequestsScreen_Controller conctroller = new SystemAdminRequestsScreen_Controller(model, view);
 		
-		RequestToChangeGroupePremission_Controller thecontroller = new RequestToChangeGroupePremission_Controller(theview);
-		theview.getFrmRequstToChange().setVisible(true);
+		conctroller.control();
+		
+		view.setVisible(true);
 		
 	}
 
