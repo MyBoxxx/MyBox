@@ -24,7 +24,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.ActionEvent;
 
-
 public class AdminAddPeopleToGroup extends AbstractGUI {
 
 	private JPanel contentPane;
@@ -40,9 +39,6 @@ public class AdminAddPeopleToGroup extends AbstractGUI {
 	private JTextPane txtpnAddPeopleTo;
 	
 
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {

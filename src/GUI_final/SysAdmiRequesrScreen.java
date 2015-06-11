@@ -26,6 +26,7 @@ import javax.swing.JLabel;
 import javax.swing.JRadioButton;
 import java.awt.Color;
 import java.awt.Font;
+import javax.swing.ButtonGroup;
 
 
 public class SysAdmiRequesrScreen extends JFrame {
@@ -39,6 +40,7 @@ public class SysAdmiRequesrScreen extends JFrame {
 	private JButton Beckbutton; 
 	private JButton btnReset;
 	private JLabel pic;
+	private final ButtonGroup buttonGroup = new ButtonGroup();
 
 	/**
 	 * Launch the application.
@@ -79,11 +81,13 @@ public class SysAdmiRequesrScreen extends JFrame {
 		contentPane.add(lblRequest);
 		
 		rbaccept = new JRadioButton("Accept");
+		buttonGroup.add(rbaccept);
 		rbaccept.setBackground(new Color(6,139,224)); 
 		rbaccept.setBounds(63, 233, 141, 23);
 		contentPane.add(rbaccept);
 		
 		rbreject = new JRadioButton("Reject");
+		buttonGroup.add(rbreject);
 		rbreject.setBackground(new Color(6,139,224)); 
 		rbreject.setBounds(63, 270, 141, 23);
 		contentPane.add(rbreject);

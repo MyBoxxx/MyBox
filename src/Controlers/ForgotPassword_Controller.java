@@ -59,19 +59,4 @@ public class ForgotPassword_Controller extends AbstractTransfer{
 	});
 	}
 
-	public static ForgotPassword_Entity getModel() {
-		return model;
-	}
-
-	public static void setModel(ForgotPassword_Entity model) {
-		ForgotPassword_Controller.model = model;
-	}
-
-	public static ForgotPassword_GUI getView() {
-		return view;
-	}
-
-	public static void setView(ForgotPassword_GUI view) {
-		ForgotPassword_Controller.view = view;
-	}
 }
