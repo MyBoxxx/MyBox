@@ -1,5 +1,7 @@
 package Controlers;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.Window.Type;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -41,6 +43,8 @@ public class LogIn_Controller extends AbstractTransfer{
 		try {
 			forgot_gui = new ForgotPassword_GUI();
 			forgot_con = new ForgotPassword_Controller(new ForgotPassword_Entity(), forgot_gui);
+			Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+			forgot_gui.setLocation(dim.width/2-forgot_gui.getSize().width/2, dim.height/2-forgot_gui.getSize().height/2);
 			forgot_con.control();
 			
 		} catch (Exception e) {

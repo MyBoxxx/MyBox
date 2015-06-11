@@ -67,13 +67,14 @@ public abstract class AbstractGUI extends JFrame
 		public void windowClosing(WindowEvent e) {
 			// TODO Auto-generated method stub
 			 //Disconect en1 = new Disconect(MainClient.clien.getCurrUser(),"updateStatus0");
-				try {
+				/*try {
 					MainClient.clien.sendToServer("UpdateStatus " + MainClient.clien.getCurrUser().getUsername());
 					System.exit(1);
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
+				*/
 		}
 
 		@Override
@@ -105,6 +106,5 @@ public abstract class AbstractGUI extends JFrame
 			// TODO Auto-generated method stub
 			
 		}
-		
 	}
 }
