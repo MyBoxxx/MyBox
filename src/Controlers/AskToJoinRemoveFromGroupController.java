@@ -7,10 +7,17 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.JOptionPane;
 
+<<<<<<< HEAD
 import Controlers.AdminAddPeopleToGroupController.cancelListnerer;
 import Controlers.AdminAddPeopleToGroupController.okListner;
 import Entity.User_Entity;
 import GUI_final.AdminMainWindow;
+=======
+import Controlers.AddPeopleToGroupController.cancelListnerer;
+import Controlers.AddPeopleToGroupController.okListner;
+import Entity.User_Entity;
+import GUI_final.Adminbar;
+>>>>>>> refs/heads/eran
 import GUI_final.AskToJoinRemoveFromGroup;
 
 public class AskToJoinRemoveFromGroupController {

@@ -16,9 +16,15 @@ import GUI_final.*;
 public class AdminBar_Controller {
 
 	private  User_Entity model ;
+<<<<<<< HEAD
 	private  AdminMainWindow view;
 	
 	AdminBar_Controller(User_Entity model,AdminMainWindow view){
+=======
+	private  Adminbar view;
+	
+	AdminBar_Controller(User_Entity model,Adminbar view){
+>>>>>>> refs/heads/eran
 		this.model = model;
 		this.view = view;
 		
