@@ -21,7 +21,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 
-public class Adminbar extends AbstractGUI {
+public class AdminMainWindow extends AbstractGUI {
 
 	private JPanel contentPane;
 	private JLabel lblNotificationCenter;
@@ -40,7 +40,7 @@ public class Adminbar extends AbstractGUI {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Adminbar frame = new Adminbar();
+					AdminMainWindow frame = new AdminMainWindow();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -52,7 +52,7 @@ public class Adminbar extends AbstractGUI {
 	/**
 	 * Create the frame.
 	 */
-	public Adminbar() {
+	public AdminMainWindow() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 609, 512);
 		contentPane = new JPanel();

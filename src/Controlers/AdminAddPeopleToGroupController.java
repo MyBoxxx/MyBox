@@ -1,5 +1,6 @@
 package Controlers;
 
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -7,21 +8,23 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.JOptionPane;
 
-import Controlers.AdminAddPeopleToGroupController.cancelListnerer;
-import Controlers.AdminAddPeopleToGroupController.okListner;
+import Entity.Folder_Entity;
 import Entity.User_Entity;
-import GUI_final.AdminMainWindow;
-import GUI_final.AskToJoinRemoveFromGroup;
+import GUI_final.AdminAddPeopleToGroup;
+import GUI_final.CreateFolderScreen;
 
-public class AskToJoinRemoveFromGroupController {
+public class AdminAddPeopleToGroupController {
 	
-	private  User_Entity model ;
-	private  AskToJoinRemoveFromGroup view;
+	private User_Entity model ;
+	private AdminAddPeopleToGroup view;
 	
-	AskToJoinRemoveFromGroupController(User_Entity model,AskToJoinRemoveFromGroup view){
+	
+	
+	AdminAddPeopleToGroupController(User_Entity model,AdminAddPeopleToGroup view){
 		this.model = model;
 		this.view = view;
-		this.view.sendRequestListner(new okListner());	
+		
+		this.view.okListner(new okListner());	
 		this.view.cancelListner(new cancelListnerer());
 		
 	}
@@ -30,19 +33,20 @@ public class AskToJoinRemoveFromGroupController {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			view.getBtRequest().addMouseListener(new MouseAdapter() {
+			view.getOkButton().addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent e) {				
-					JOptionPane.showMessageDialog(null,"send request button pressed");	
+					JOptionPane.showMessageDialog(null,"ok button pressed");	
 				}
 			});
-		}		
+		}
+		
 	}
 	
 	class cancelListnerer implements ActionListener{
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			view.getBtCacel().addMouseListener(new MouseAdapter() {
+			view.getCancelButton().addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent e) {				
 					JOptionPane.showMessageDialog(null,"cancel button pressed");				
 				}

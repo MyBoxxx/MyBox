@@ -22,9 +22,10 @@ import java.awt.SystemColor;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.ActionEvent;
 
 
-public class AddPeopleToGroup extends AbstractGUI {
+public class RemovePeopleToGroup extends AbstractGUI {
 
 	private JPanel contentPane;
 	private JLabel join;
@@ -46,7 +47,7 @@ public class AddPeopleToGroup extends AbstractGUI {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					AddPeopleToGroup frame = new AddPeopleToGroup();
+					RemovePeopleToGroup frame = new RemovePeopleToGroup();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -58,7 +59,7 @@ public class AddPeopleToGroup extends AbstractGUI {
 	/**
 	 * Create the frame.
 	 */
-	public AddPeopleToGroup() {
+	public RemovePeopleToGroup() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 512, 300);
 		contentPane = new JPanel();
@@ -119,9 +120,9 @@ public class AddPeopleToGroup extends AbstractGUI {
 		textField.setBounds(301, 168, 185, 20);
 		contentPane.add(textField);
 		
-		OkButton = new JButton();		
-		OkButton.setIcon(new ImageIcon("src/GUI_final/OkButton.jpg"));
-		OkButton.setBounds(10, 209, 120, 42);
+		OkButton = new JButton();	
+		OkButton.setIcon(new ImageIcon("src/GUI_final/add.png"));
+		OkButton.setBounds(20, 188, 192, 63);
 		contentPane.add(OkButton);
 		
 		cancelButton = new JButton();
