@@ -44,16 +44,21 @@ public class Settings_Controller extends AbstractTransfer {
 		
 		view.getBtnDeleteAccount().addActionListener(new ActionListener() {
 		  	public void actionPerformed(ActionEvent e) {
-		  		sendToServer(model);
-		  		view.dispose();
-		  	}
+		  		int p = JOptionPane.showConfirmDialog(null, "Are you sure you want to Delete this account?", "Warning",JOptionPane.YES_NO_OPTION,JOptionPane.WARNING_MESSAGE);
+		          
+	            if (p == JOptionPane.YES_OPTION) {
+	            	sendToServer(model);
+	            	JOptionPane.showMessageDialog(null, "The account is deleted, GoodBye", "Account deleted", JOptionPane.INFORMATION_MESSAGE);
+			  		view.dispose();
+			  		}
+	            }
 		  });
 		
 		view.getBtnChangePwd().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				model.setOldPassword(view.getPwdCurrentPwd().getText());
 				model.setNewPassword(view.getPwdNewPwd().getText());
-				//sendToServer(model);
+				sendToServer(model);
 				JOptionPane.showMessageDialog(view, "Password Changed");
 			}
 		});
