@@ -2,7 +2,9 @@ package GUI_final;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.Toolkit;
 import java.awt.Window.Type;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,6 +12,7 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowEvent;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Random;
@@ -35,18 +38,14 @@ import javax.swing.JPasswordField;
 import java.awt.Font;
 import java.awt.event.FocusAdapter;
 
-public class Login_GUI extends JFrame {
+public class Login_GUI extends AbstractGUI {
 
 
-	JButton ForgotPassword;
-	JButton LoginButtun;
-	
 	private JPanel contentPane;
 	private JTextField txtUserName;
 	private JTextField txtOneOrMore;
 	private JPasswordField passwordField;
-	private String s;
-	 
+	private JButton btnLogin ,btnForgotPassword ;
 		
 
 	/**
@@ -71,46 +70,39 @@ public class Login_GUI extends JFrame {
 	 */
 	public Login_GUI() throws MalformedURLException {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 800, 600);
+		setBounds(100, 100, 820, 600);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		
-		 URL url = new URL("http://i.imgur.com/6Bq6MQr.gif");
-		    Icon icon = new ImageIcon(url);
-		    JLabel TopPicture = new JLabel(icon);
-		    TopPicture.setBounds(10, 32, 773, 257);
-		    TopPicture.setBackground(Color.WHITE);
-		    TopPicture.addMouseListener(new MouseAdapter() {
-		        public void mouseClicked(MouseEvent me) {
-		          System.out.println("CLICKED");
-		        }
-		      });	
-		    
+		
+		    JLabel LoginTopBaner = new JLabel();
+		    LoginTopBaner.setIcon(new ImageIcon(Login_GUI.class.getResource("/images_icons/Login_top_pic.gif")));
+		    LoginTopBaner.setBounds(10, 32, 773, 257);
+		    LoginTopBaner.setBackground(Color.WHITE);
+		
 		    contentPane.setLayout(null);
-		    contentPane.add(TopPicture);
-		    ///////////////////////
-		    URL url1 = new URL("http://www.freevectors.net/files/small/LoginIcon.jpg");
-		    Icon icon1 = new ImageIcon(url1);
-		    LoginButtun = new JButton(icon1);
-		    LoginButtun.setBounds(437, 396, 150, 150);
-		    TopPicture.setBackground(Color.WHITE);
-			    
-		    contentPane.add(LoginButtun);
-		    /////////////////////////////////////////////
+		    contentPane.add(LoginTopBaner);
+		    btnLogin = new JButton(new ImageIcon(Login_GUI.class.getResource("/images_icons/subbmit_button.gif")));
+		    btnLogin.setBorderPainted(false); 
+		    btnLogin.setContentAreaFilled(false); 
+		    btnLogin.setFocusPainted(false); 
+		    btnLogin.setOpaque(false);
 		    
-		 
-		    
-		    /////////////////////////////////////
-		    URL url2 = new URL("http://honourrollreports.com/Assets/Images/Icons/LargeHelp.png");
-		    Icon icon2 = new ImageIcon(url2);
-		    ForgotPassword = new JButton(icon2);
-		    ForgotPassword.setLocation(143, 401);
-		    ForgotPassword.setSize(150, 150);
-		    ForgotPassword.setBounds(215, 396, 150, 155);
-		    ForgotPassword.setBackground(Color.WHITE);
-		    contentPane.add(ForgotPassword);
+		    btnLogin.setBounds(437, 396, 150, 150);
+		    LoginTopBaner.setBackground(Color.WHITE);
+		    contentPane.add(btnLogin);
+		    btnForgotPassword = new JButton(new ImageIcon(Login_GUI.class.getResource("/images_icons/login_forgot_password.png")));
+		    btnForgotPassword.setLocation(143, 401);
+		    btnForgotPassword.setSize(150, 150);
+		    btnForgotPassword.setBounds(215, 396, 150, 155);
+		    btnForgotPassword.setBackground(Color.WHITE);
+		    btnForgotPassword.setBorderPainted(false); 
+		    btnForgotPassword.setContentAreaFilled(false); 
+		    btnForgotPassword.setFocusPainted(false); 
+		    btnForgotPassword.setOpaque(false);
+		    contentPane.add(btnForgotPassword);
 		    //////////////////
 		/*   label2.addMouseListener(new MouseAdapter() {
 		        public void mouseClicked(MouseEvent me) {
@@ -125,17 +117,12 @@ public class Login_GUI extends JFrame {
 		    		words.initialize();		        
 		        }
 		      });	*/	    
-		    ////////////////////////////
-		
-		    
-		    
-		    ///////////////////////////////////////////
-		   
+
 		    
 		    txtUserName = new JTextField();
 		    txtUserName.setBackground(Color.WHITE);
 		    txtUserName.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		    txtUserName.setText("User name");
+		    txtUserName.setText("UserName");
 		   /* txtUserName.addFocusListener(new FocusAdapter() {
 		    	@Override
 		    	public void focusGained(FocusEvent arg0) {
@@ -175,8 +162,9 @@ public class Login_GUI extends JFrame {
 		    txtOneOrMore.setColumns(10);
 		    
 		    passwordField = new JPasswordField();
-		    passwordField.setEchoChar((char) 0);
-		    passwordField.setText("Password");
+		 
+		 
+		    passwordField.setToolTipText("");
 		  /*  passwordField.addFocusListener(new FocusAdapter() {
 		    	@Override
 		    	public void focusGained(FocusEvent e) {
@@ -189,6 +177,7 @@ public class Login_GUI extends JFrame {
 		    		passwordField.setText("Password");
 		    	}
 		    }); */
+		    passwordField.setText("password");;
 		    passwordField.setBounds(205, 348, 387, 20);
 		    contentPane.add(passwordField);
 		  
@@ -198,28 +187,35 @@ public class Login_GUI extends JFrame {
 		return txtUserName;
 	}
 
-	public void setTxtUserName(JTextField txtUserName) {
-		this.txtUserName = txtUserName;
+	public void setTxtUserName(String txtUserName) {
+		this.txtUserName.setText(txtUserName);
 	}
-
-	public void setTxtOneOrMoreVisible(Boolean b) {
-		txtOneOrMore.setVisible(b);;
-	}
-
 
 	public JPasswordField getPasswordField() {
 		return passwordField;
 	}
 
-	public void setPasswordField(JPasswordField passwordField) {
-		this.passwordField = passwordField;
-	}
-	public JButton getForgotPassword() {
-		return ForgotPassword;
+	public void setPasswordField(String passwordField) {
+		this.passwordField.setText(passwordField);
 	}
 
-	public JButton getLoginButtun() {
-		return LoginButtun;
+	public JButton getBtnLogin() {
+		return btnLogin;
+	}
+
+	public void setBtnLogin(JButton btnLogin) {
+		this.btnLogin = btnLogin;
+	}
+	public void settxtOneOrMoreVisible(Boolean boo) {
+		this.txtOneOrMore.setVisible(boo);
+	}
+
+	public JButton getBtnForgotPassword() {
+		return btnForgotPassword;
+	}
+
+	public void setBtnForgotPassword(JButton btnForgotPassword) {
+		this.btnForgotPassword = btnForgotPassword;
 	}
 
 

@@ -1,10 +1,9 @@
 package Entity;
 import java.util.List;
 
-import com.sun.security.ntlm.Client;
 
 @SuppressWarnings("serial")
-public class User_Entity extends AbstractEntity_Entity{
+public class User_Entity extends Abstract_Entity{
 	
 	private String IDuser;
 	private String Username;
@@ -25,10 +24,13 @@ public User_Entity(String IDuser, String Username,String Password, int Status, b
 		
 	}
 
+public User_Entity() {
 
+}
 
-	public User_Entity() {
-	// TODO Auto-generated constructor stub
+	public User_Entity(String Username) {
+		this.Username = Username;
+	// TODO search in sql and complte
 }
 
 
@@ -81,12 +83,4 @@ public User_Entity(String IDuser, String Username,String Password, int Status, b
 		this.isAdmin = isAdmin;
 	}
 	
-	public void getUserFromDB( Client client,String username){
-		
-		String query = "Slect *"
-				      + "From users	"
-				      + "WHERE user_name = "+username+" ";
-				
-	}
-		
 }

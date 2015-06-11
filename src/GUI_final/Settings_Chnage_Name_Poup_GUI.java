@@ -20,27 +20,12 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.awt.SystemColor;
 
-public class Settings_Chnage_Name_Poup_GUI extends JFrame {
+public class Settings_Chnage_Name_Poup_GUI extends AbstractGUI {
 
 	private JPanel contentPane;
 	private JTextField txtNewName;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Settings_Chnage_Name_Poup_GUI frame = new Settings_Chnage_Name_Poup_GUI();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
+	private JButton btnChangeName;
+	private JButton btnCancel;
 	/**
 	 * Create the frame.
 	 * @throws MalformedURLException 
@@ -63,18 +48,37 @@ public class Settings_Chnage_Name_Poup_GUI extends JFrame {
 		contentPane.add(txtNewName);
 		txtNewName.setColumns(10);
 		
-		URL url4 = new URL("http://weddingrepublic.com/blog/wp-content/uploads/2011/10/name-change.jpg");
-	    Icon icon4 = new ImageIcon(url4);
-	    JButton btnChangeName = new JButton("Change name");
+	    btnChangeName = new JButton("Change name");
 	    btnChangeName.setBounds(270, 128, 117, 23);
 	    contentPane.add(btnChangeName);
 	    
 	    JButton btnCancel = new JButton("Cancel\r\n");
 	    btnCancel.setBounds(270, 162, 117, 23);
 	    contentPane.add(btnCancel);
-	    JLabel label4 = new JLabel(icon4);
+	    JLabel label4 = new JLabel();
+	    label4.setIcon(new ImageIcon(Settings_Chnage_Name_Poup_GUI.class.getResource("/images_icons/name-change.jpg")));
 	    label4.setLocation(0, 0);
 	    label4.setSize(480, 320);
 		contentPane.add(label4);
+	}
+	
+
+	public JTextField getTxtNewName() {
+		return txtNewName;
+	}
+	public void setTxtNewName(JTextField txtNewName) {
+		this.txtNewName = txtNewName;
+	}
+	public JButton getBtnChangeName() {
+		return btnChangeName;
+	}
+	public void setBtnChangeName(JButton btnChangeName) {
+		this.btnChangeName = btnChangeName;
+	}
+	public JButton getBtnCancel() {
+		return btnCancel;
+	}
+	public void setBtnCancel(JButton btnCancel) {
+		this.btnCancel = btnCancel;
 	}
 }

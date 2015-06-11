@@ -4,10 +4,13 @@
 
 package Client;
 
-import Entites.User;
 import ocsf.client.*;
+import Controlers.LogIn_Controller;
+import Entity.*;
+
 import java.io.*;
-import Controllers.*;
+
+import Entity.*;
 
 /**
  * This class overrides some of the methods defined in the abstract superclass
@@ -26,7 +29,7 @@ public class myBoxClient extends ObservableClient {
 	 */
 	
 	private Object currController;
-	private User currUser;
+	private User_Entity currUser;
 
 	/**
 	 * Constructs an instance of the chat client.
@@ -55,8 +58,13 @@ public class myBoxClient extends ObservableClient {
 
 		try {
 
-			if (message instanceof User){ // user name and password is found ( 1.setCurrUser that is using application, 2.set status to 1)
-				((LoginController) currController).handleDBResult(message);
+			if (message instanceof Login_Entity){ // user name and password is found ( 1.setCurrUser that is using application, 2.set status to 1)
+				if(    ((Login_Entity) message).getStatus()  == 0) ((LogIn_Controller) currController).ErrorLogin();
+					
+				else {
+					//update DBMS
+					((LogIn_Controller) currController).MakeLogin();
+				}
 			}
 			
 			if (message instanceof String) {
@@ -99,11 +107,11 @@ public class myBoxClient extends ObservableClient {
 		this.currController = currObj;
 	}
 
-	public User getCurrUser() {
+	public User_Entity getCurrUser() {
 		return currUser;
 	}
 
-	public void setCurrUser(User currUser) {
+	public void setCurrUser(User_Entity currUser) {
 		this.currUser = currUser;
 	}
 

@@ -32,6 +32,8 @@ import java.awt.BorderLayout;
 
 import javax.swing.JLabel;
 
+import Controlers.LoginMain;
+
 import com.thehowtotutorial.splashscreen.JSplash;
 
 import java.awt.ScrollPane;
@@ -74,9 +76,7 @@ public class Splash {
 	 * Create the application.
 	 */
 
-		Login_GUI words = new Login_GUI();
-		
-		words.initialize();
+		LoginMain.main(null);
 	
 
 	/**

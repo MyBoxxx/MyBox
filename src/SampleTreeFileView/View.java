@@ -5,7 +5,9 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.io.File;
+import java.sql.Date;
 
+import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JCheckBoxMenuItem;
@@ -13,6 +15,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JRadioButton;
@@ -27,10 +30,14 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.JMenuBar;
 
 import java.awt.BorderLayout;
+
 import javax.swing.border.EmptyBorder;
 import javax.swing.tree.TreeModel;
 
-public class View extends JFrame{
+import Entity.User_Entity;
+import GUI_final.AbstractGUI;
+
+public class View extends AbstractGUI{
 
     /** Title of the application */
      static final String APP_TITLE = "MyBox";
@@ -110,7 +117,7 @@ public class View extends JFrame{
 	JMenuItem mntmUploadfile;
 	JMenuItem mntmAboutUs;
 	
-	public View() {
+	public View(User_Entity user) {
 		      		getGui();
 		            fileSystemView = FileSystemView.getFileSystemView();
 		           // show the file system roots.
@@ -147,7 +154,8 @@ public class View extends JFrame{
 		            tree = new JTree((TreeModel) null);
 		            tree.setVisibleRowCount(15);
 		            tree.setRootVisible(false);
-		            tree.setSize(d);
+		            tree.setBounds(0, 0, 200, 150);
+		            tree.setSize(new Dimension(200, 150));
 
 		           // tree = new JTree(treeModel);
 		            tree.setRootVisible(false);
@@ -226,7 +234,7 @@ public class View extends JFrame{
 
 	JMenuBar menuBar = new JMenuBar();
 	gui.add(menuBar, BorderLayout.NORTH);
-	initMenuBar(menuBar);
+	initMenuBar(menuBar,user.getUsername());
 	
    }
 
@@ -319,7 +327,7 @@ public class View extends JFrame{
 		}
 		return table;
 	}
-public JMenuBar initMenuBar(JMenuBar menuBar)
+public JMenuBar initMenuBar(JMenuBar menuBar,String UserName)
 	{
 
 JMenu mnMybox = new JMenu("MyBox");
@@ -334,7 +342,7 @@ mnMybox.add(mntmLogOut);
 JMenu mnFile = new JMenu("File");
 menuBar.add(mnFile);
 
- mntmCreateNewFolder = new JMenuItem("Create New Folder");
+ mntmCreateNewFolder = new JMenuItem("Create File / Folder");
 
 mnFile.add(mntmCreateNewFolder);
 
@@ -393,7 +401,7 @@ mnHelp_1.add(mntmHelp);
 JMenuItem mntmNewMenuItem = new JMenuItem("                    ");
 menuBar.add(mntmNewMenuItem);
 
- lblLogInAs = new JLabel("Log in as : Eyalpano@gmail.com");
+ lblLogInAs = new JLabel("Log in as : " + UserName);
 menuBar.add(lblLogInAs);
 
  btnNotifications = new JButton("notifications");
@@ -626,8 +634,8 @@ return menuBar;
 		return lblLogInAs;
 	}
 
-	public void setLblLogInAs(JLabel lblLogInAs) {
-		this.lblLogInAs = lblLogInAs;
+	public void setLblLogInAs(String lblLogInAs) {
+		this.lblLogInAs.setText("login as : " + lblLogInAs);
 	}
 
 	public JMenuItem getMntmHelp() {
@@ -764,6 +772,44 @@ return menuBar;
 		  }
 		return gui;
 	}
+	
+	private void setFileDetails(File file) {
+	    currentFile = file;
+	    Icon icon = fileSystemView.getSystemIcon(file);
+	    fileName.setIcon(icon);
+	    fileName.setText(fileSystemView.getSystemDisplayName(file));
+	    path.setText(file.getPath());
+	    date.setText(new Date(file.lastModified()).toString());
+	    size.setText(file.length() + " bytes");
+	    readable.setSelected(file.canRead());
+	    writable.setSelected(file.canWrite());
+	    executable.setSelected(file.canExecute());
+	    isDirectory.setSelected(file.isDirectory());
+
+	    isFile.setSelected(file.isFile());
+
+	    JFrame f = (JFrame) gui.getTopLevelAncestor();
+	    if (f!=null) {
+	        f.setTitle(
+	            APP_TITLE +
+	            " :: " +
+	            fileSystemView.getSystemDisplayName(file) );
+	    }
+
+	    gui.repaint();
+	}
+	
+	private void showThrowable(Throwable t) {
+	    t.printStackTrace();
+	    JOptionPane.showMessageDialog(
+	        gui,
+	        t.toString(),
+	        t.getMessage(),
+	        JOptionPane.ERROR_MESSAGE
+	        );
+	    gui.repaint();
+	}
+
 }
 
 

@@ -24,27 +24,13 @@ import javax.swing.JTextPane;
 import java.awt.Font;
 import javax.swing.JPasswordField;
 
-public class Settings_Delete_Sure_PopUp_GUI extends JFrame {
+public class Settings_Delete_Sure_PopUp_GUI extends AbstractGUI {
 
 	private JPanel contentPane;
 	private JPasswordField passwordField;
 	private JPasswordField passwordField_1;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Settings_Delete_Sure_PopUp_GUI frame = new Settings_Delete_Sure_PopUp_GUI();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	private JButton btnNewButton;
+	private JButton btnCancel;
 
 	/**
 	 * Create the frame.
@@ -95,11 +81,11 @@ public class Settings_Delete_Sure_PopUp_GUI extends JFrame {
 	    passwordField_1.setBounds(267, 505, 152, 20);
 	    contentPane.add(passwordField_1);
 	    
-	    JButton btnNewButton = new JButton("Delete my account");
+	     btnNewButton = new JButton("Delete my account");
 	    btnNewButton.setBounds(30, 539, 152, 23);
 	    contentPane.add(btnNewButton);
 	    
-	    JButton btnCancel = new JButton("Cancel");
+	     btnCancel = new JButton("Cancel");
 	    btnCancel.setBounds(277, 539, 89, 23);
 	    contentPane.add(btnCancel);
 	    

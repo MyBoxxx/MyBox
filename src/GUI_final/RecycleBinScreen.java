@@ -36,9 +36,9 @@ import java.awt.event.MouseEvent;
 import javax.swing.JTable;
 import javax.swing.JButton;
 
-import com.sun.corba.se.spi.orbutil.fsm.Input;
 
-public class RecycleBinScreen extends JFrame implements ActionListener {
+
+public class RecycleBinScreen extends AbstractGUI  {
 
 	private JPanel contentPane;
 	private JTable table;
@@ -98,9 +98,7 @@ public class RecycleBinScreen extends JFrame implements ActionListener {
         RestoreAdd = new JMenuItem("Restore this file");
         DeleteAdd = new JMenuItem("Delete this file");
         
-        RestoreAdd.addActionListener(this);
-        DeleteAdd.addActionListener(this);
-        
+                
         popupMenu.add(RestoreAdd);
         popupMenu.add(DeleteAdd);
         

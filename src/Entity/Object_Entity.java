@@ -1,7 +1,7 @@
 package Entity;
 
 @SuppressWarnings("serial")
-public class Object_Entity extends AbstractEntity_Entity {
+public class Object_Entity extends Abstract_Entity {
 	
 	public String getFileName() {
 		return FileName;
