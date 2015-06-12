@@ -1,5 +1,6 @@
 package Entity;
 
+<<<<<<< HEAD
 public class Login_Entity extends Abstract_Entity {
 	
 	
@@ -43,5 +44,15 @@ public class Login_Entity extends Abstract_Entity {
 	public void setPassword(String password) {
 		Password = password;
 	}
+=======
+public class Login_Entity extends User_Entity {
+	
+	
+
+	public Login_Entity(){
+		
+	}
+	
+>>>>>>> refs/heads/master
 
 }

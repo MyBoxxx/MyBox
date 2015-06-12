@@ -53,6 +53,7 @@ public class LogIn_Controller extends AbstractTransfer{
 	}
 	
 	public void control(){
+		MainClient.clien.setCurrController(this);
 		
 		view.getBtnLogin().addActionListener(new ActionListener() {	
 			@Override
@@ -61,6 +62,7 @@ public class LogIn_Controller extends AbstractTransfer{
 			if(view.getPasswordField().getText().equals("password") || view.getTxtUserName().getText().equals("UserName"))
 				{
 				view.settxtOneOrMoreVisible(true);
+<<<<<<< HEAD
 				}
 			else view.settxtOneOrMoreVisible(false);
 				
@@ -83,8 +85,23 @@ public class LogIn_Controller extends AbstractTransfer{
 					}
 				else {
 
+=======
+>>>>>>> refs/heads/master
 				}
+			else view.settxtOneOrMoreVisible(false);
+				
+			try{
+				model.setUsername(view.getTxtUserName().getText());
+				model.setPassword(view.getPasswordField().getText());
+				sendToServer(model);
 			}
+<<<<<<< HEAD
+=======
+			catch (Exception eee){
+				
+			}
+			}
+>>>>>>> refs/heads/master
 		});
 		
 		
@@ -136,10 +153,28 @@ public class LogIn_Controller extends AbstractTransfer{
 	    });
 	    
 		
+<<<<<<< HEAD
 		
 		
 		
 		
+=======
+			
+		
+	}//end control
+
+
+
+	public void ErrorLogin() {
+		JOptionPane.showMessageDialog(view.getContentPane(),  "Login Failed!."+view.getTxtUserName().getText()+ view.getPasswordField().getText());
+
+	}
+
+	public void MakeLogin() {
+
+		view.dispose();
+		Main.main();
+>>>>>>> refs/heads/master
 	}
 
 	public void MakeLogin() {

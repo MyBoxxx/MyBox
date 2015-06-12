@@ -34,6 +34,12 @@ import java.awt.BorderLayout;
 import javax.swing.border.EmptyBorder;
 import javax.swing.tree.TreeModel;
 
+<<<<<<< HEAD
+=======
+import Client.MainClient;
+import Client.myBoxClient;
+import Controlers.LogIn_Controller;
+>>>>>>> refs/heads/master
 import Entity.User_Entity;
 import GUI_final.AbstractGUI;
 
@@ -401,7 +407,11 @@ mnHelp_1.add(mntmHelp);
 JMenuItem mntmNewMenuItem = new JMenuItem("                    ");
 menuBar.add(mntmNewMenuItem);
 
+<<<<<<< HEAD
  lblLogInAs = new JLabel("Log in as : " + UserName);
+=======
+ lblLogInAs = new JLabel("Log in as : " + MainClient.clien.getCurrUser().getUsername());
+>>>>>>> refs/heads/master
 menuBar.add(lblLogInAs);
 
  btnNotifications = new JButton("notifications");

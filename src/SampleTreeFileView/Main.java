@@ -10,10 +10,15 @@ import Entity.User_Entity;
 
 public class Main
 {
+<<<<<<< HEAD
 	static String []user;
    
 	public static void main(String[] args) { 
     	user = args;
+=======
+   
+	public static void main() { 
+>>>>>>> refs/heads/master
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {                                           

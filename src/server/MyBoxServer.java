@@ -123,7 +123,12 @@ public class MyBoxServer extends AbstractServer
 	        //Connection conn = DriverManager.getConnection("jdbc:mysql://192.168.3.68/test","root","Root");
 	        System.out.println("SQL connection succeed");
 	        if(msg instanceof Login_Entity){
+<<<<<<< HEAD
 	        	checkUserPassword(conn,(Login_Entity)msg);
+=======
+	        	System.out.println("Try To Coneect as "+ ((Login_Entity)msg).getUsername());
+	        	if(checkUserPassword(conn,(Login_Entity)msg));
+>>>>>>> refs/heads/master
 	        		try {
 						client.sendToClient(msg);
 					} catch (IOException e) {
@@ -439,11 +444,29 @@ private Boolean checkUserPassword(Connection con, Login_Entity log){
 	try 
 	{
 		stmt = con.createStatement();
+<<<<<<< HEAD
 		ResultSet rs = stmt.executeQuery("SELECT * FROM Users where UserName ='"+ log.getUser() + "' AND Password = '"+log.getPassword() +"' ;");
+=======
+		ResultSet rs = stmt.executeQuery("SELECT * FROM Users where UserName ='"+ log.getUsername() + "' AND Password = '"+log.getPassword() +"' ;");
+>>>>>>> refs/heads/master
 		
+<<<<<<< HEAD
 		if(rs.next()) log.setStatus(rs.getInt("Status"));
 		return true;
 		
+=======
+		if(rs.next()) {
+			log.setStatus(rs.getInt("Status"));
+			log.setIDuser(rs.getString("IDuser"));
+			log.setLogedin(true);
+			log.setStatus(0);
+			if(rs.getInt("isAdmin")==1) log.setAdmin(true);
+			else log.setAdmin(false);
+			return true;
+		}
+		log.setStatus(-1);
+		return false;
+>>>>>>> refs/heads/master
 		//stmt.executeUpdate("UPDATE course SET semestr=\"W08\" WHERE num=61309");
 	} catch (SQLException e) {e.printStackTrace();
 	return null;
