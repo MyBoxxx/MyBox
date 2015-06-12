@@ -9,8 +9,11 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 import Entity.Login_Entity;
+import Entity.SystemAdminReequestScreen_Entity;
+import Entity.SystemAdminRequestScree_List;
 import ocsf.server.AbstractServer;
 import ocsf.server.ConnectionToClient;
 
@@ -139,6 +142,16 @@ public class MyBoxServer extends AbstractServer
 					e1.printStackTrace();
 				}
 	        	
+	        if(msg instanceof SystemAdminRequestScree_List){
+	        	SystemAdminRequestScree_List_getList(conn,(SystemAdminRequestScree_List)msg);
+	        	try{
+	        		client.sendToClient(msg);
+	        	}
+	        	catch (IOException e){
+	        		e.printStackTrace();
+	        	}
+	        }
+	        
 	        if(msg instanceof String){
 	        	try {
 		        if(msg.toString().startsWith("login")){
@@ -246,7 +259,29 @@ public class MyBoxServer extends AbstractServer
 	  }
 
     
- /**
+ private void SystemAdminRequestScree_List_getList(Connection conn,
+		SystemAdminRequestScree_List msg) {
+	 Statement stmt;
+		try 
+		{
+			stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM AdminRequsts ORDER BY status;");
+			ArrayList<SystemAdminReequestScreen_Entity> ListFromServer = new ArrayList<SystemAdminReequestScreen_Entity>();
+			while (rs.next()) {
+				ListFromServer.add(new SystemAdminReequestScreen_Entity(rs.getInt("requestID"), rs.getInt("theRequest"), rs.getInt("status") , rs.getString("name")));
+			}
+			msg.setListFromServer(ListFromServer);
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+	 
+	
+}
+
+
+
+/**
   *   This method return all option commands
  * @return String of all option list with commands 
  */

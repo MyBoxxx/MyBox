@@ -6,6 +6,7 @@ package Client;
 
 import ocsf.client.*;
 import Controlers.LogIn_Controller;
+import Controlers.SystemAdminRequestsScreen_Controller;
 import Entity.*;
 
 import java.io.*;
@@ -72,6 +73,13 @@ public class myBoxClient extends ObservableClient {
 					((LogIn_Controller) currController).ErrorLogin();	
 				}
 			}
+			
+			if(message instanceof SystemAdminRequestScree_List)
+			{
+				( (SystemAdminRequestsScreen_Controller) currController).refreshList();
+			}
+			
+			
 		
 
 		} catch (Exception e) {

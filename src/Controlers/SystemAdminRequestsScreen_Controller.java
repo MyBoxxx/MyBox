@@ -7,18 +7,25 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import javax.swing.JTable;
+
+import Client.MainClient;
+import Entity.SystemAdminReequestScreen_Entity;
+import Entity.SystemAdminRequestScree_List;
 import Entity.SystemadminReequestScreen_Entity;
 import GUI_final.SysAdminRequesrScreen;
 
 
 public class SystemAdminRequestsScreen_Controller extends AbstractTransfer {
-	static SystemadminReequestScreen_Entity model ;
+	static SystemAdminReequestScreen_Entity model ;
 	static SysAdminRequesrScreen view;
+	
+	static SystemAdminRequestScree_List List_entity;
 	
 	ActionListener loginActionListener ;
 	ActionListener forgotActionListener ;
 	
-	SystemAdminRequestsScreen_Controller(SystemadminReequestScreen_Entity model,SysAdminRequesrScreen view){
+	SystemAdminRequestsScreen_Controller(SystemAdminReequestScreen_Entity model,SysAdminRequesrScreen view){
 		this.model = model;
 		this.view = view;
 		view.setBounds(100, 100, 800, 600);
@@ -28,6 +35,8 @@ public class SystemAdminRequestsScreen_Controller extends AbstractTransfer {
 	}
 	
 	public void control(){
+		MainClient.clien.setCurrController(this); // Set The Current Controller to this
+		SendRefreshList(); 							//request the list
 		
 		view.getBtnReset().addActionListener(new ActionListener() {	
 			@Override
@@ -87,8 +96,23 @@ public class SystemAdminRequestsScreen_Controller extends AbstractTransfer {
 		});
 		
 		}
-		
-		
+
+	private void SendRefreshList() {
+		sendToServer(List_entity);
+	}
+	
+	public void refreshList(){
+		JTable table ;
+		String[] columnNames = {"Request Number",
+                "UserName",
+                "Request Type",
+                "Accept / Reject / NA"};
+		int rowSize = List_entity.getListFromServer().size();
+		Object [rowSize][4] data = new 
+		for(int i= 0 ; i<List_entity.getListFromServer().size();i++){
+			data.
+		}
+	}
 		
 	}
 
