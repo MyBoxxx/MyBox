@@ -5,12 +5,12 @@ import java.util.List;
 @SuppressWarnings("serial")
 public class User_Entity extends Abstract_Entity{
 	
-	private String IDuser;
-	private String Username;
+	private String IDuser; //Not NUll Auto Increment
+	private String Username; 
 	private String Password;
-	private int Status ;
-	private boolean isLogedin ;
-	private boolean isAdmin ;	
+	private int Status ; //-1 Not In system 0 ok 1 ban
+	private boolean isLogedin ; // status of login - > true = in the system
+	private boolean isAdmin ;	// status of user -> true = is admin
 	
 	
 public User_Entity(String IDuser, String Username,String Password, int Status, boolean isLogedin, boolean isadmin){
