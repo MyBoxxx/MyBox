@@ -34,6 +34,9 @@ import java.awt.BorderLayout;
 import javax.swing.border.EmptyBorder;
 import javax.swing.tree.TreeModel;
 
+import Client.MainClient;
+import Client.myBoxClient;
+import Controlers.LogIn_Controller;
 import Entity.User_Entity;
 import GUI_final.AbstractGUI;
 
@@ -117,7 +120,7 @@ public class View extends AbstractGUI{
 	JMenuItem mntmUploadfile;
 	JMenuItem mntmAboutUs;
 	
-	public View(User_Entity user) {
+	public View() {
 		      		getGui();
 		            fileSystemView = FileSystemView.getFileSystemView();
 		           // show the file system roots.
@@ -234,7 +237,7 @@ public class View extends AbstractGUI{
 
 	JMenuBar menuBar = new JMenuBar();
 	gui.add(menuBar, BorderLayout.NORTH);
-	initMenuBar(menuBar,user.getUsername());
+	initMenuBar(menuBar);
 	
    }
 
@@ -327,7 +330,7 @@ public class View extends AbstractGUI{
 		}
 		return table;
 	}
-public JMenuBar initMenuBar(JMenuBar menuBar,String UserName)
+public JMenuBar initMenuBar(JMenuBar menuBar)
 	{
 
 JMenu mnMybox = new JMenu("MyBox");
@@ -401,7 +404,7 @@ mnHelp_1.add(mntmHelp);
 JMenuItem mntmNewMenuItem = new JMenuItem("                    ");
 menuBar.add(mntmNewMenuItem);
 
- lblLogInAs = new JLabel("Log in as : " + UserName);
+ lblLogInAs = new JLabel("Log in as : " + MainClient.clien.getCurrUser().getUsername());
 menuBar.add(lblLogInAs);
 
  btnNotifications = new JButton("notifications");

@@ -31,6 +31,8 @@ public class myBoxClient extends ObservableClient {
 	private Object currController;
 	private User_Entity currUser;
 
+
+
 	/**
 	 * Constructs an instance of the chat client.
 	 *
@@ -43,7 +45,9 @@ public class myBoxClient extends ObservableClient {
 	 */
 
 	public myBoxClient(String host, int port) throws IOException {
-		super(host, port); // Call the superclass constructor
+	
+		 super(host, port); // Call the superclass constructor
+		
 		openConnection();
 	}
 
@@ -59,38 +63,16 @@ public class myBoxClient extends ObservableClient {
 		try {
 
 			if (message instanceof Login_Entity){ // user name and password is found ( 1.setCurrUser that is using application, 2.set status to 1)
-				if(    ((Login_Entity) message).getStatus()  == 0) ((LogIn_Controller) currController).ErrorLogin();
-					
-				else {
-					//update DBMS
+				if(((Login_Entity) message).getStatus()  == 0)
+				{
+					this.currUser = (User_Entity) message;
 					((LogIn_Controller) currController).MakeLogin();
 				}
+				else {
+					((LogIn_Controller) currController).ErrorLogin();	
+				}
 			}
-			
-			if (message instanceof String) {
-
-				if (((String) message).equals("UserNotfoundLogin")) {
-					((LoginController) currController).getLoginGui().setWarningMessageVisibleTrue("Invalid email or password");
-				}
-				
-				if (((String) message).equals("ForgotPassEmailNotFound")) {
-					((ForgotPassController) currController).getFPGui().setWarningMessageVisibleTrue("Email does not Exist");
-				}
-				
-				if (((String) message).equals("ForgotPassEmailFound")) {
-					((ForgotPassController) currController).getFPGui().setWarningMessageVisibleTrue("Email exists, wait for confirmation");
-				}
-				
-				if (((String) message).equals("SignUpEmailNotFound")) {
-					((SignupControler) currController).handleDBResult(message);
-				}
-				
-				if (((String) message).equals("SignUpEmailFound")) {
-					((SignupControler) currController).getSignupGui().setWarningMessageVisibleTrue("Email allready Exists, please choose another one");
-				}
-
-				
-			}// end if message is String
+		
 
 		} catch (Exception e) {
 			System.out.println(e + "mybox client");
@@ -99,21 +81,23 @@ public class myBoxClient extends ObservableClient {
 		notify();
 	}
 
-	public Object getCurrObj() {
-		return currController;
-	}
 
-	public void setCurrObj(Object currObj) {
-		this.currController = currObj;
-	}
-
-	public User_Entity getCurrUser() {
+	public  User_Entity getCurrUser() {
 		return currUser;
 	}
 
 	public void setCurrUser(User_Entity currUser) {
 		this.currUser = currUser;
 	}
+	public  Object getCurrController() {
+		return currController;
+	}
+
+
+	public void setCurrController(Object currController) {
+		this.currController = currController;
+	}
+
 
 	public void quit() {
 		try {
