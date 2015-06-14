@@ -483,10 +483,10 @@ private Boolean checkUserPassword(Connection con, Login_Entity log){
 		if(rs.next()) {
 			if(rs.getString("isAdmin").equals("1")) log.setAdmin(true);
 			if(rs.getInt("isLogin")==1) log.setAdmin(true);
-
+			log.setUser(true);
 			return true;
 		}
-		log.setUser(true);
+		log.setUser(false);
 		return false;
 	} catch (SQLException e) {e.printStackTrace();
 	return null;

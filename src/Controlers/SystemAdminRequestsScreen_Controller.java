@@ -102,7 +102,7 @@ public class SystemAdminRequestsScreen_Controller extends AbstractTransfer {
 	}
 	
 	public void refreshList(){
-		JTable table ;
+		JTable table;
 		String[] columnNames = {"Request Number",
                 "UserName",
                 "Request Type",
