@@ -11,6 +11,7 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 
 import javax.swing.JTable;
@@ -149,7 +150,7 @@ public class MyBoxServer extends AbstractServer
 	        		
 	        	
 	        if(msg instanceof SystemAdminRequestScree_List){
-	        	TableFromDatabase(((SystemAdminRequestScree_List) msg).getListFromServer(),"SELECT * FROM mybox.Users ; ",conn); 
+	        	((SystemAdminRequestScree_List) msg).setListFromServer(buildTableModel(conn,"SELECT * FROM mybox.Users ; ")); 
 	        	try{
 	        		client.sendToClient(msg);
 	        	}
@@ -592,7 +593,60 @@ public void TableFromDatabase(JTable table, String Query,Connection conn)
 	    catch(SQLException e)
 	    {
 	    }
-	    
 	}
 
+public static JTable buildTableModel(Connection con,String stat)
+	{
+	        
+		  Statement stmt;
+			try 
+			{
+			stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery(stat);
+			String[] s = null;
+	        List<Object> l = new ArrayList<Object>();
+	        Object[][] data1 = null;
+	 
+	        ResultSetMetaData metaData = rs.getMetaData();
+	 
+	        // names of columns
+	        // List<String> columnNamesList = new ArrayList<String>();
+	 
+	        // int columnCount = columnNames.size();
+	        int columnCount = metaData.getColumnCount();
+	        for (int column = 0; column <= columnCount; column++) {
+	            s = new String[columnCount];
+	            s[column] = metaData.getColumnName(column);
+	            // columnNames.add(metaData.getColumnName(column));
+	 
+	        }
+	 
+	        // data of the table
+	        // Vector<Vector<Object>> data = new Vector<Vector<Object>>();
+	        while (rs.next()) {
+	            // Vector<Object> vector = new Vector<Object>();
+	 
+	            for (int columnIndex = 1; columnIndex <= columnCount; columnIndex++) {
+	                l.add(rs.getObject(columnIndex));
+	 
+	                // vector.add(rs.getObject(columnIndex));
+	 
+	                // values.toArray(new Object[][] {})
+	            }
+	            data1 = l.toArray(new Object[][] {});
+	            // data.add(vector);
+	        }
+	 
+	        DefaultTableModel t_model = new DefaultTableModel(data1, s);
+	        JTable table = new JTable(t_model);
+	 
+	        return table;
+	 
+	    }
+		catch (Exception e ){
+				
+		}
+		return null;
+	
+	}
 }
