@@ -36,7 +36,7 @@ public class Adminbar extends AbstractGUI {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	public void initialize(){//*void main(String[] args) {*//
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
