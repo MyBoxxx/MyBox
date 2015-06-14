@@ -42,7 +42,7 @@ public class AdminAddPeopleToGroup extends AbstractGUI {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	public void Initalize(){  //*static void main(String[] args) {**//
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -60,7 +60,7 @@ public class AdminAddPeopleToGroup extends AbstractGUI {
 	 */
 	public AdminAddPeopleToGroup() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 512, 300);
+		setBounds(100, 100, 800, 600);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(59, 89, 151));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -70,13 +70,13 @@ public class AdminAddPeopleToGroup extends AbstractGUI {
 		txtpnAddPeopleTo = new JTextPane();
 		txtpnAddPeopleTo.setForeground(SystemColor.textHighlightText);
 		txtpnAddPeopleTo.setBackground(new Color(59, 89, 151));
-		txtpnAddPeopleTo.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		txtpnAddPeopleTo.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		txtpnAddPeopleTo.setText("Add People To Group");		
-		txtpnAddPeopleTo.setBounds(134, 0, 160, 20);
+		txtpnAddPeopleTo.setBounds(320, 33, 177, 42);
 		contentPane.add(txtpnAddPeopleTo);
 		
 		choiceGroup = new Choice();
-		choiceGroup.setBounds(301, 70, 185, 20);
+		choiceGroup.setBounds(430, 256, 185, 20);
 		choiceGroup.add("");
 		choiceGroup.add("100");
 		choiceGroup.add("ein ma");
@@ -88,7 +88,7 @@ public class AdminAddPeopleToGroup extends AbstractGUI {
 		txtpnChooseGroup.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		txtpnChooseGroup.setText("Choose Group");
 		txtpnChooseGroup.setBackground(new Color(59, 89, 151));
-		txtpnChooseGroup.setBounds(301, 44, 185, 20);
+		txtpnChooseGroup.setBounds(430, 230, 185, 20);
 		contentPane.add(txtpnChooseGroup);
 		
 		txtpnChooseUser_1 = new JTextPane();
@@ -96,7 +96,7 @@ public class AdminAddPeopleToGroup extends AbstractGUI {
 		txtpnChooseUser_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		txtpnChooseUser_1.setText("Choose User");
 		txtpnChooseUser_1.setBackground(new Color(59, 89, 151));
-		txtpnChooseUser_1.setBounds(300, 93, 137, 20);
+		txtpnChooseUser_1.setBounds(430, 282, 137, 20);
 		contentPane.add(txtpnChooseUser_1);
 		
 		choose_user = new Choice();
@@ -104,7 +104,7 @@ public class AdminAddPeopleToGroup extends AbstractGUI {
 		choose_user.add("100");
 		choose_user.add("ein ma");
 		choose_user.add("peter");
-		choose_user.setBounds(301, 119, 185, 20);
+		choose_user.setBounds(430, 308, 185, 20);
 		contentPane.add(choose_user);
 		
 		textPane = new JTextPane();
@@ -112,26 +112,26 @@ public class AdminAddPeopleToGroup extends AbstractGUI {
 		textPane.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		textPane.setText("Reason");
 		textPane.setBackground(new Color(59, 89, 151));
-		textPane.setBounds(301, 142, 67, 20);
+		textPane.setBounds(430, 334, 67, 20);
 		contentPane.add(textPane);
 		
 		textField = new TextField();
-		textField.setBounds(301, 168, 185, 20);
+		textField.setBounds(430, 359, 185, 20);
 		contentPane.add(textField);
 		
 		OkButton = new JButton();		
 		OkButton.setIcon(new ImageIcon("src/GUI_final/OkButton.jpg"));
-		OkButton.setBounds(10, 209, 120, 42);
+		OkButton.setBounds(174, 426, 120, 42);
 		contentPane.add(OkButton);
 		
 		cancelButton = new JButton();
 		cancelButton.setIcon(new ImageIcon("src/GUI_final/cancelButton.jpg"));
-		cancelButton.setBounds(277, 209, 209, 42);
+		cancelButton.setBounds(442, 426, 209, 42);
 		contentPane.add(cancelButton);
 		
 		join= new JLabel();
 		join.setIcon(new ImageIcon("src/GUI_final/join.jpeg"));
-		join.setBounds(10, 27, 260	, 165);
+		join.setBounds(131, 167, 260	, 165);
 		contentPane.add(join);
 	}
 

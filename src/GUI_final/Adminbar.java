@@ -36,7 +36,7 @@ public class Adminbar extends AbstractGUI {
 	/**
 	 * Launch the application.
 	 */
-	public void initialize(){//*void main(String[] args) {*//
+	public void Initialize(){//*static  void main(String[] args) {**//
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -65,19 +65,19 @@ public class Adminbar extends AbstractGUI {
 		lblNotificationCenter = new JLabel();
 		lblNotificationCenter.setIcon(new ImageIcon("src/GUI_final/noti.png"));
 		lblNotificationCenter.setBackground(new Color(41,91,150));
-		lblNotificationCenter.setBounds(182, 122, 336, 52);
+		lblNotificationCenter.setBounds(6, 113, 336, 52);
 		contentPane.add(lblNotificationCenter);
 		
 		NotifcationNo = new JButton();
 		NotifcationNo.setIcon(new ImageIcon("src/GUI_final/notification_no.png"));
-		NotifcationNo.setBounds(385, 180, 50, 52);
+		NotifcationNo.setBounds(434, 113, 50, 52);
 		NotifcationNo.setBackground(new Color(41,91,150));
 		contentPane.add(NotifcationNo);
 		
 		NotifcationYes = new JButton();
 		NotifcationYes.setIcon(new ImageIcon("src/GUI_final/notification_yes.png"));
 		NotifcationYes.setBackground(new Color(41,91,150));
-		NotifcationYes.setBounds(327, 180, 52, 52);
+		NotifcationYes.setBounds(354, 113, 52, 52);
 		contentPane.add(NotifcationYes);
 		
 		btnChangeFms = new JButton();		
@@ -87,13 +87,13 @@ public class Adminbar extends AbstractGUI {
 		btnChangeFms.setOpaque(false);
 		//btnChangeFms.setContentAreaFilled(false);
 		//btnChangeFms.setBorderPainted(false);
-		btnChangeFms.setBounds(6, 381, 230, 170);
+		btnChangeFms.setBounds(6, 221, 230, 170);
 		contentPane.add(btnChangeFms);
 		
 		btnQuit = new JButton();
 		btnQuit.setIcon(new ImageIcon("src/GUI_final/logout_button.png"));
 		btnQuit.setBackground(new Color(41,91,150));
-		btnQuit.setBounds(576, 409, 148, 138);
+		btnQuit.setBounds(6, 434, 148, 138);
 		contentPane.add(btnQuit);
 		
 		lblSystemAdminWindow = new JLabel();
