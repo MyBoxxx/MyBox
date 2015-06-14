@@ -42,7 +42,7 @@ public class AdminAddPeopleToGroup extends AbstractGUI {
 	/**
 	 * Launch the application.
 	 */
-	public void Initalize(){  //*static void main(String[] args) {**//
+	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
