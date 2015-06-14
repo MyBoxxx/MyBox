@@ -53,6 +53,7 @@ public class LogIn_Controller extends AbstractTransfer{
 	}
 	
 	public void control(){
+		MainClient.clien.setCurrController(this);
 		
 		view.getBtnLogin().addActionListener(new ActionListener() {	
 			@Override
@@ -65,25 +66,13 @@ public class LogIn_Controller extends AbstractTransfer{
 			else view.settxtOneOrMoreVisible(false);
 				
 			try{
-				model.setUser(view.getTxtUserName().getText());
+				model.setUsername(view.getTxtUserName().getText());
 				model.setPassword(view.getPasswordField().getText());
 				sendToServer(model);
-				
 			}
 			catch (Exception eee){
 				
 			}
-			
-			if(view.getTxtUserName().getText().equals("eyal")) 
-					{
-					//JOptionPane.showMessageDialog(view.getContentPane(),  "Login OK!.");
-					//redirect to systemfileview
-		        	view.settxtOneOrMoreVisible(false);
-		        
-					}
-				else {
-
-				}
 			}
 		});
 		
@@ -136,20 +125,22 @@ public class LogIn_Controller extends AbstractTransfer{
 	    });
 	    
 		
+			
 		
-		
-		
-		
-	}
+	}//end control
 
-	public void MakeLogin() {
-		String []User = {model.getUser(),model.getPassword()};
-    	Main.main(User);
-	}
+
 
 	public void ErrorLogin() {
 		JOptionPane.showMessageDialog(view.getContentPane(),  "Login Failed!."+view.getTxtUserName().getText()+ view.getPasswordField().getText());
 
+	}
+
+	public void MakeLogin() {
+		view.dispose();
+		if(MainClient.clien.getCurrUser().isAdmin()) 
+			MainAdmin.main(null);
+		else Main.main(null);
 	}
 	
 	

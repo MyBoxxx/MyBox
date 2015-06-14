@@ -25,7 +25,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.ActionEvent;
 
 
-public class AdminDeletePeopleToGroup extends AbstractGUI {
+public class AdminDeletePeopleToGroup extends JPanel {
 
 	private JPanel contentPane;
 	private JLabel join;
@@ -37,13 +37,13 @@ public class AdminDeletePeopleToGroup extends AbstractGUI {
 	private JTextPane txtpnChooseUser_1;
 	private JTextPane txtpnChooseGroup;
 	private Choice choiceGroup;
-	private JTextPane txtpnAddPeopleTo;
+	private JLabel deleteLabel;
 	
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -54,86 +54,85 @@ public class AdminDeletePeopleToGroup extends AbstractGUI {
 				}
 			}
 		});
-	}
+	}*/
 
 	/**
 	 * Create the frame.
 	 */
 	public AdminDeletePeopleToGroup() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBackground(SystemColor.textHighlight);
+	/*	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 512, 300);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(214, 20, 20));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(null);
-		
-		txtpnAddPeopleTo = new JTextPane();
-		txtpnAddPeopleTo.setForeground(SystemColor.textHighlightText);
-		txtpnAddPeopleTo.setBackground(new Color(214, 20, 20));
-		txtpnAddPeopleTo.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		txtpnAddPeopleTo.setText("Delete People From Group");		
-		txtpnAddPeopleTo.setBounds(102, 0, 217, 20);
-		contentPane.add(txtpnAddPeopleTo);
+		contentPane.setLayout(null);*/
+		setLayout(null);
 		
 		choiceGroup = new Choice();
-		choiceGroup.setBounds(301, 70, 185, 20);
+		choiceGroup.setBounds(354, 176, 100, 17);
 		choiceGroup.add("");
 		choiceGroup.add("100");
 		choiceGroup.add("ein ma");
 		choiceGroup.add("peter");
-		contentPane.add(choiceGroup);
+		add(choiceGroup);
 		
 		txtpnChooseGroup = new JTextPane();
 		txtpnChooseGroup.setForeground(SystemColor.textHighlightText);
 		txtpnChooseGroup.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		txtpnChooseGroup.setText("Choose Group");
 		txtpnChooseGroup.setBackground(new Color(214, 20, 20));
-		txtpnChooseGroup.setBounds(301, 44, 185, 20);
-		contentPane.add(txtpnChooseGroup);
+		txtpnChooseGroup.setBounds(218, 241, 107, 26);
+	    add(txtpnChooseGroup);
 		
 		txtpnChooseUser_1 = new JTextPane();
 		txtpnChooseUser_1.setForeground(SystemColor.textHighlightText);
 		txtpnChooseUser_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		txtpnChooseUser_1.setText("Choose User");
 		txtpnChooseUser_1.setBackground(new Color(214, 20, 20));
-		txtpnChooseUser_1.setBounds(300, 93, 137, 20);
-		contentPane.add(txtpnChooseUser_1);
+		txtpnChooseUser_1.setBounds(218, 179, 107, 26);
+		add(txtpnChooseUser_1);
 		
 		choose_user = new Choice();
 		choose_user.add("");
 		choose_user.add("100");
 		choose_user.add("ein ma");
 		choose_user.add("peter");
-		choose_user.setBounds(301, 119, 185, 20);
-		contentPane.add(choose_user);
+		choose_user.setBounds(354, 241, 100, 17);
+		add(choose_user);
 		
 		textPane = new JTextPane();
 		textPane.setForeground(SystemColor.textHighlightText);
 		textPane.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		textPane.setText("Reason");
 		textPane.setBackground(new Color(214, 20, 20));
-		textPane.setBounds(301, 142, 67, 20);
-		contentPane.add(textPane);
+		textPane.setBounds(218, 306, 107, 26);
+		add(textPane);
 		
 		textField = new TextField();
-		textField.setBounds(301, 168, 185, 20);
-		contentPane.add(textField);
+		textField.setBounds(354, 313, 100, 19);
+		add(textField);
 		
 		DeleteButton = new JButton();		
 		DeleteButton.setIcon(new ImageIcon("src/GUI_final/remove.png"));
-		DeleteButton.setBounds(20, 188, 192, 63);
-		contentPane.add(DeleteButton);
+		DeleteButton.setBounds(10, 419, 192, 63);
+		add(DeleteButton);
 		
 		cancelButton = new JButton();
 		cancelButton.setIcon(new ImageIcon("src/GUI_final/cancelgreen.jpg"));
-		cancelButton.setBounds(277, 194, 209, 57);
-		contentPane.add(cancelButton);
+		cancelButton.setBounds(489, 408, 248, 74);
+		add(cancelButton);
 		
 		join = new JLabel();
 		join.setIcon(new ImageIcon("src/GUI_final/deleteFromGroup.png"));
-		join.setBounds(10, 27, 260	, 165);
-		contentPane.add(join);
+		join.setBounds(325, 49, 0	, 0);
+		add(join);
+		
+		deleteLabel = new JLabel();
+		deleteLabel.setIcon(new ImageIcon("src/GUI_final/deletePeople.png"));
+		deleteLabel.setBounds(37, 11, 700, 94);
+		add(deleteLabel);
 	}
 
 
@@ -225,11 +224,5 @@ public class AdminDeletePeopleToGroup extends AbstractGUI {
 		this.choiceGroup = choiceGroup;
 	}
 
-	public JTextPane getTxtpnAddPeopleTo() {
-		return txtpnAddPeopleTo;
-	}
 
-	public void setTxtpnAddPeopleTo(JTextPane txtpnAddPeopleTo) {
-		this.txtpnAddPeopleTo = txtpnAddPeopleTo;
-	}
 }

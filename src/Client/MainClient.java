@@ -17,9 +17,10 @@ public class MainClient {
         public static void main(String[] args) 
         {
         	try{
-        		 Splash.main(null);
+        		clien = new myBoxClient("localhost", 5555);
+        		 Splash.main();
         	}catch (Exception ee){
-        		
+        		System.out.println("ERRRROOOORR");
         	}
 
         }

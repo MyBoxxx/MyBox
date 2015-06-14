@@ -1,14 +1,25 @@
 package Controlers;
-import GUI_final.RequestToChangeGroupPermission;
+import java.net.MalformedURLException;
+
+import Entity.Settings_Entity;
+import Entity.SystemadminReequestScreen_Entity;
+import GUI_final.*;
 
 public class testtyaron {
 
-	public static void main(String[] args) {
+	private static Settings_Entity model;
+	private static Settings_GUI view; 
+	
+	
+	public static void main(String[] args) throws MalformedURLException {
 		// TODO Auto-generated method stub
-		RequestToChangeGroupPermission theview = new RequestToChangeGroupPermission();
+		model = new Settings_Entity();
+		view = new Settings_GUI();
+		Settings_Controller conctroller = new Settings_Controller(model, view);
 		
-		RequestToChangeGroupePremission_Controller thecontroller = new RequestToChangeGroupePremission_Controller(theview);
-		theview.getFrmRequstToChange().setVisible(true);
+		conctroller.control();
+		
+		view.setVisible(true);
 		
 	}
 
