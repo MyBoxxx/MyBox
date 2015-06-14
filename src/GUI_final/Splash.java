@@ -56,8 +56,9 @@ public class Splash {
 	 * @throws MalformedURLException 
 	 */
 	public static void main() throws InterruptedException, MalformedURLException {
+		//JSplash splashs = new JSplash(URL , false, false, false, null);
 		
-			JSplash splashs = new JSplash(Splash.class.getResource("matti.png"), true, true, false, "V1",null,Color.RED,Color.BLACK);
+			JSplash splashs = new JSplash(Splash.class.getResource("Cloud printing.png"), true, true, false, "V1",null,Color.RED,Color.BLACK);
 			splashs.splashOn();
 			//call Method;
 			splashs.setProgress(20, "Init");

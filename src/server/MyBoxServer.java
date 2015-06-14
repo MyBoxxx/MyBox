@@ -127,20 +127,23 @@ public class MyBoxServer extends AbstractServer
 	        System.out.println("SQL connection succeed");
 	        if(msg instanceof Login_Entity){
 	        	System.out.println("Try To Coneect as "+ ((Login_Entity)msg).getUsername());
-	        	if(checkUserPassword(conn,(Login_Entity)msg));
-	        		try {
+	        	if(checkUserPassword(conn,(Login_Entity)msg)){
+	        	
+	        	try {
 						client.sendToClient(msg);
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-	        } else
+	        	} else
 				try {
 					client.sendToClient("Login failed");
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
+	        	}
+	        		
 	        	
 	        if(msg instanceof SystemAdminRequestScree_List){
 	        	SystemAdminRequestScree_List_getList(conn,(SystemAdminRequestScree_List)msg);
@@ -480,10 +483,14 @@ private Boolean checkUserPassword(Connection con, Login_Entity log){
 		if(rs.next()) {
 			log.setStatus(rs.getInt("Status"));
 			log.setIDuser(rs.getString("IDuser"));
-			log.setLogedin(true);
-			log.setStatus(0);
+			
+			if(rs.getString("Status").equals("1")) log.setLogedin(true);
+
+			
+			if(rs.getString("isLogedin").equals("1")) log.setStatus(1);
+	
 			if(rs.getInt("isAdmin")==1) log.setAdmin(true);
-			else log.setAdmin(false);
+
 			return true;
 		}
 		log.setStatus(-1);

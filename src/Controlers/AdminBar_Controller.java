@@ -15,20 +15,19 @@ import GUI_final.*;
 
 public class AdminBar_Controller {
 
-	private  User_Entity model ;
+	private  Adminbar_model model ;
 	private  Adminbar view;
 	
-	AdminBar_Controller(User_Entity model,Adminbar view){
+	AdminBar_Controller(Adminbar_model model,Adminbar view){
 		this.model = model;
 		this.view = view;
-		
+	}
+	public void control(){
 		this.view.ChangeFMSLitsner(new ChangeFMSLitsner());
 		this.view.NotifcationYesLitsner(new NotificationYesLitsner());
 		this.view.NotifcationNoLitsner(new NotificationNoLitsner());
 		this.view.QuitLitsner(new QuitLitsner());
-		
 	}
-	
 	
 	class ChangeFMSLitsner implements ActionListener{
 

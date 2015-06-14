@@ -108,7 +108,7 @@ public class SystemAdminRequestsScreen_Controller extends AbstractTransfer {
                 "Request Type",
                 "Accept / Reject / NA"};
 		int rowSize = List_entity.getListFromServer().size();
-		Object [rowSize][4] data = new 
+		Object [rowSize][4] data;
 		for(int i= 0 ; i<List_entity.getListFromServer().size();i++){
 			data.
 		}

@@ -29,8 +29,8 @@ public class myBoxClient extends ObservableClient {
 	 * method in the client.
 	 */
 	
-	private Object currController;
-	private User_Entity currUser;
+	private  Object currController;
+	private  User_Entity currUser;
 
 
 
@@ -64,7 +64,7 @@ public class myBoxClient extends ObservableClient {
 		try {
 
 			if (message instanceof Login_Entity){ // user name and password is found ( 1.setCurrUser that is using application, 2.set status to 1)
-				if(((Login_Entity) message).getStatus()  == 0)
+				if(((Login_Entity) message).isLogedin()  == false)
 				{
 					this.currUser = (User_Entity) message;
 					((LogIn_Controller) currController).MakeLogin();
