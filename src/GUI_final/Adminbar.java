@@ -54,8 +54,9 @@ public class Adminbar extends AbstractGUI {
 	 */
 	public Adminbar() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 609, 512);
+		setBounds(100, 100, 800, 600);
 		contentPane = new JPanel();
+		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setBackground(new Color(2,98,158));
 		setContentPane(contentPane);
@@ -86,24 +87,24 @@ public class Adminbar extends AbstractGUI {
 		btnChangeFms.setOpaque(false);
 		//btnChangeFms.setContentAreaFilled(false);
 		//btnChangeFms.setBorderPainted(false);
-		btnChangeFms.setBounds(10, 180, 230, 170);
+		btnChangeFms.setBounds(6, 381, 230, 170);
 		contentPane.add(btnChangeFms);
 		
 		btnQuit = new JButton();
 		btnQuit.setIcon(new ImageIcon("src/GUI_final/logout_button.png"));
 		btnQuit.setBackground(new Color(41,91,150));
-		btnQuit.setBounds(445, 200, 148, 138);
+		btnQuit.setBounds(576, 409, 148, 138);
 		contentPane.add(btnQuit);
 		
 		lblSystemAdminWindow = new JLabel();
-		lblSystemAdminWindow.setBounds(290, 11, 293, 114);
+		lblSystemAdminWindow.setBounds(290, 11, 800, 114);
 		lblSystemAdminWindow.setIcon(new ImageIcon("src/GUI_final/admin.png"));
 		lblSystemAdminWindow.setBackground(null);
 		contentPane.add(lblSystemAdminWindow);
 		
 	    Cover = new JLabel();
-		Cover.setIcon(new ImageIcon("src/GUI_final/admin.jpg"));
-		Cover.setBounds(0, 0, 593, 474);
+		Cover.setIcon(new ImageIcon("src/GUI_final/admin2.jpg"));
+		Cover.setBounds(0, 0, 800, 600);
 		contentPane.add(Cover);		
 		
 	}
