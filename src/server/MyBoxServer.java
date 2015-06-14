@@ -597,7 +597,6 @@ public void TableFromDatabase(JTable table, String Query,Connection conn)
 
 public static JTable buildTableModel(Connection con,String stat)
 	{
-	        
 		  Statement stmt;
 			try 
 			{

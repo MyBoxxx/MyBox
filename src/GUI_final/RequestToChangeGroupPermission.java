@@ -22,8 +22,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 
-public class RequesrToChangeGroupPermission extends AbstractGUI{
+public class RequestToChangeGroupPermission {
 
+	private JFrame frmRequstToChange;
 	private JPanel UpperPanel;
 	private JLabel ChooseLabel;
 	private JRadioButton RAdioRead;
@@ -36,10 +37,23 @@ public class RequesrToChangeGroupPermission extends AbstractGUI{
 	/**
 	 * Launch the application.
 	 */
+/*	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					RequesrToChangeGroupPermission window = new RequesrToChangeGroupPermission();
+					window.frmRequstToChange.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+**/
 	/**
 	 * Create the application.
 	 */
-	public RequesrToChangeGroupPermission() {
+	public RequestToChangeGroupPermission() {
 		initialize();
 	}
 
@@ -47,17 +61,18 @@ public class RequesrToChangeGroupPermission extends AbstractGUI{
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		 setTitle("Requesr To Change Group Permission");
-		 setBounds(100, 100, 549, 331);
-		 setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		 getContentPane().setLayout(null);
+		frmRequstToChange = new JFrame();
+		frmRequstToChange.setTitle("My Box");
+		frmRequstToChange.setBounds(100, 100, 549, 331);
+		frmRequstToChange.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmRequstToChange.getContentPane().setLayout(null);
 		
 		UpperPanel = new JPanel();
 		UpperPanel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null), "Please Select Group Premission", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		UpperPanel.setForeground(Color.BLACK);
 		UpperPanel.setToolTipText("");
 		UpperPanel.setBounds(37, 36, 491, 167);
-		 getContentPane().add(UpperPanel);
+		frmRequstToChange.getContentPane().add(UpperPanel);
 		UpperPanel.setLayout(null);
 		
 		ChooseLabel = new JLabel("Choose One/bouth");
@@ -74,7 +89,7 @@ public class RequesrToChangeGroupPermission extends AbstractGUI{
 		
 		ButtonPanel = new JPanel();
 		ButtonPanel.setBounds(6, 215, 522, 76);
-		 getContentPane().add(ButtonPanel);
+		frmRequstToChange.getContentPane().add(ButtonPanel);
 		ButtonPanel.setLayout(null);
 		
 		ButtonSend = new JButton("Send Request");
@@ -89,12 +104,23 @@ public class RequesrToChangeGroupPermission extends AbstractGUI{
 		
 		lblChangeGroupPremm = new JLabel("              Change Group permission");
 		lblChangeGroupPremm.setBounds(97, 8, 302, 16);
-		 getContentPane().add(lblChangeGroupPremm);
+		frmRequstToChange.getContentPane().add(lblChangeGroupPremm);
 	}
 	
-	 public void ButtonPressedActionlistiner(ActionListener listenforbutton) {
+	 public void ButtonPressedActionlistinersend(ActionListener listenforbutton) {
 			ButtonSend.addActionListener(listenforbutton);
 		}
+	 public void ButtonPressedActionlistinercancel(ActionListener listenforbutton) {
+			ButtonCancel.addActionListener(listenforbutton);
+		}
+
+	public JFrame getFrmRequstToChange() {
+		return frmRequstToChange;
+	}
+
+	public void setFrmRequstToChange(JFrame frmRequstToChange) {
+		this.frmRequstToChange = frmRequstToChange;
+	}
 
 	public JPanel getUpperPanel() {
 		return UpperPanel;
