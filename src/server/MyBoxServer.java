@@ -481,21 +481,13 @@ private Boolean checkUserPassword(Connection con, Login_Entity log){
 		ResultSet rs = stmt.executeQuery("SELECT * FROM Users where UserName ='"+ log.getUsername() + "' AND Password = '"+log.getPassword() +"' ;");
 		
 		if(rs.next()) {
-			log.setStatus(rs.getInt("Status"));
-			log.setIDuser(rs.getString("IDuser"));
-			
-			if(rs.getString("Status").equals("1")) log.setLogedin(true);
-
-			
-			if(rs.getString("isLogedin").equals("1")) log.setStatus(1);
-	
-			if(rs.getInt("isAdmin")==1) log.setAdmin(true);
+			if(rs.getString("isAdmin").equals("1")) log.setAdmin(true);
+			if(rs.getInt("isLogin")==1) log.setAdmin(true);
 
 			return true;
 		}
-		log.setStatus(-1);
+		log.setUser(true);
 		return false;
-		//stmt.executeUpdate("UPDATE course SET semestr=\"W08\" WHERE num=61309");
 	} catch (SQLException e) {e.printStackTrace();
 	return null;
 	}

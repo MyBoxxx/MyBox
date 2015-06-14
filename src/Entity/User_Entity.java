@@ -8,7 +8,6 @@ public class User_Entity extends Abstract_Entity{
 	private String IDuser; //Not NUll Auto Increment
 	private String Username; 
 	private String Password;
-	private int Status ; //-1 Not In system 0 ok 1 ban
 	private boolean isLogedin ; // status of login - > true = in the system
 	private boolean isAdmin ;	// status of user -> true = is admin
 	
@@ -18,7 +17,6 @@ public User_Entity(String IDuser, String Username,String Password, int Status, b
 		this.IDuser = IDuser;
 		this.Username = Username;
 		this.Password = Password;
-		this.Status = Status;
 		this.isLogedin = isLogedin;
 		this.isAdmin = isadmin;
 		
@@ -27,7 +25,6 @@ public User_Entity(String IDuser, String Username,String Password, int Status, b
 public User_Entity() {
 
 }
-
 	public User_Entity(String Username) {
 		this.Username = Username;
 	// TODO search in sql and complte
@@ -57,14 +54,6 @@ public User_Entity() {
 
 	public void setPassword(String password) {
 		Password = password;
-	}
-
-	public int getStatus() {
-		return Status;
-	}
-
-	public void setStatus(int status) {
-		Status = status;
 	}
 
 	public boolean isLogedin() {
