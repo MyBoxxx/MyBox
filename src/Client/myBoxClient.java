@@ -69,14 +69,13 @@ public class myBoxClient extends ObservableClient {
 					((LogIn_Controller) currController).MakeLogin();
 				}
 				else {
-					System.out.println("zao");
 					((LogIn_Controller) currController).ErrorLogin();	
 				}
 			}
 			
-			if(message instanceof SystemAdminRequestScree_List)
+			if(message instanceof SystemAdminReequestScreen_Entity)
 			{
-				System.out.println(message.toString());
+				( (SystemAdminRequestsScreen_Controller) currController).setModel((SystemAdminReequestScreen_Entity) message);
 				( (SystemAdminRequestsScreen_Controller) currController).refreshList();
 			}
 			

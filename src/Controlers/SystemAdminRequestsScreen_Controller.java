@@ -19,8 +19,6 @@ public class SystemAdminRequestsScreen_Controller extends AbstractTransfer {
 	static SystemAdminReequestScreen_Entity model ;
 	static SysAdminRequesrScreen view;
 	
-	static SystemAdminRequestScree_List List_entity;
-	
 	ActionListener loginActionListener ;
 	ActionListener forgotActionListener ;
 	
@@ -35,11 +33,18 @@ public class SystemAdminRequestsScreen_Controller extends AbstractTransfer {
 	}
 	
 	public void control(){
-		MainClient.clien.setCurrController(this); // Set The Current Controller to this
-		view.setTable(new JTable());
-		SendRefreshList(); 	
+		MainClient.clien.setCurrController(this); // Set The Current Controller to this	
+		SendRefreshList();
 		//request the list
-		
+		view.getBtnLoad().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				sendToServer(model);
+				view.getTable().setModel(model.getTablemodel());
+				System.out.println(view.getTable().getValueAt(0,0).toString());
+				view.getTable().repaint();
+				
+			}
+		});
 		view.getBtnReset().addActionListener(new ActionListener() {	
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -62,6 +67,7 @@ public class SystemAdminRequestsScreen_Controller extends AbstractTransfer {
 		view.getSendButton().addActionListener(new ActionListener() {	
 			@Override
 			public void actionPerformed(ActionEvent e) {
+
 			if (model.getName()!=null && model.getRequestID()!=-1 && model.getStatus()!=-1)
 				sendToServer(model);
 		//////to do a back  step to the admin screen////
@@ -100,13 +106,32 @@ public class SystemAdminRequestsScreen_Controller extends AbstractTransfer {
 		}
 
 	private void SendRefreshList() {
-		List_entity = new  SystemAdminRequestScree_List();
-		sendToServer(List_entity);
+		
+		sendToServer(model);
 	}
 	
 	public void refreshList(){
-		view.setTable(List_entity.getListFromServer());
-	}	
+		view.getTable().setModel(model.getTablemodel());
+		view.getTable().repaint();
+		view.repaint();
+		}	
+	
+	public static SystemAdminReequestScreen_Entity getModel() {
+		return model;
+	}
+
+	public void setModel(SystemAdminReequestScreen_Entity model) {
+		SystemAdminRequestsScreen_Controller.model = model;
+	}
+
+	public static SysAdminRequesrScreen getView() {
+		return view;
+	}
+
+	public static void setView(SysAdminRequesrScreen view) {
+		SystemAdminRequestsScreen_Controller.view = view;
+	}
+
 		
 	}
 

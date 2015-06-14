@@ -35,6 +35,7 @@ import javax.swing.JTable;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.ScrollPaneConstants;
 
 
 public class SysAdminRequesrScreen extends AbstractGUI {
@@ -48,21 +49,29 @@ public class SysAdminRequesrScreen extends AbstractGUI {
 	private JButton btnReset;
 	private JTable table;
 
+	private JButton btnLoad;
+	private JScrollPane scrollPane;
+
+
+
 	/**
 	 * Create the frame.
 	 */
 	public SysAdminRequesrScreen() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 551, 514);
+		setBounds(100, 100, 800, 600);
 		contentPane = new JPanel();
-		contentPane.setBackground(Color.WHITE);
+		contentPane.setBackground(Color.LIGHT_GRAY);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
+		scrollPane = new JScrollPane();
+		scrollPane.setBounds(63, 50, 683, 308);
+		contentPane.add(scrollPane);
+		
 		table = new JTable();
-		table.setBounds(63, 50, 434, 173);
-		contentPane.add(table);
+		scrollPane.setViewportView(table);
 		table.setVisible(true);
 		
 		lblRequest = new JLabel("System Admin Requests");
@@ -73,25 +82,30 @@ public class SysAdminRequesrScreen extends AbstractGUI {
 		
 		rbaccept = new JRadioButton("Accept");
 		rbaccept.setBackground(new Color(6,139,224)); 
-		rbaccept.setBounds(63, 234, 141, 23);
+		rbaccept.setBounds(197, 370, 141, 23);
 		contentPane.add(rbaccept);
 		
 		rbreject = new JRadioButton("Reject");
 		rbreject.setBackground(new Color(6,139,224)); 
-		rbreject.setBounds(63, 269, 141, 23);
+		rbreject.setBounds(197, 405, 141, 23);
 		contentPane.add(rbreject);
 		
 		SendButton = new JButton("Send & Close");
-		SendButton.setBounds(380, 386, 117, 29);
+		SendButton.setBounds(514, 522, 117, 29);
 		contentPane.add(SendButton);
 		
 		Beckbutton = new JButton("back");
-		Beckbutton.setBounds(63, 386, 117, 29);
+		Beckbutton.setBounds(197, 522, 117, 29);
 		contentPane.add(Beckbutton);
 		
 		btnReset = new JButton("reset");
-		btnReset.setBounds(63, 304, 81, 29);
+		btnReset.setBounds(197, 440, 81, 29);
 		contentPane.add(btnReset);
+		
+		 btnLoad = new JButton("Load");
+		
+		btnLoad.setBounds(472, 404, 117, 29);
+		contentPane.add(btnLoad);
 		
 	}
 
@@ -155,4 +169,14 @@ public class SysAdminRequesrScreen extends AbstractGUI {
 	public void setBtnReset(JButton btnReset) {
 		this.btnReset = btnReset;
 	}
+	public JButton getBtnLoad() {
+		return btnLoad;
+	}
+
+
+
+	public void setBtnLoad(JButton btnLoad) {
+		this.btnLoad = btnLoad;
+	}
+
 }
