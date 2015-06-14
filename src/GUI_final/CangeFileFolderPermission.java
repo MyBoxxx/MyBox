@@ -25,9 +25,8 @@ import javax.swing.DefaultComboBoxModel;
 import java.awt.Color;
 
 
-public class CangeFileFolderPermission {
+public class CangeFileFolderPermission extends AbstractGUI{
 
-	private JFrame frmMyBox;
 	private final Action action = new SwingAction();
 	private JButton buttonSend;
 	private JButton buttonCancel;
@@ -47,22 +46,6 @@ public class CangeFileFolderPermission {
 	
 
 	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					CangeFileFolderPermission window = new CangeFileFolderPermission();
-					window.frmMyBox.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
 	 * Create the application.
 	 */
 	public CangeFileFolderPermission() {
@@ -73,94 +56,94 @@ public class CangeFileFolderPermission {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frmMyBox = new JFrame();
-		frmMyBox.getContentPane().setBackground(Color.WHITE);
-		frmMyBox.setTitle("My Box");
-		frmMyBox.setBounds(100, 100, 602, 465);
-		frmMyBox.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frmMyBox.getContentPane().setLayout(null);
+		
+		 getContentPane().setBackground(Color.WHITE);
+		 setTitle("My Box");
+		 setBounds(100, 100, 602, 465);
+		 setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		 getContentPane().setLayout(null);
 		
 		
 		buttonSend = new JButton();
 		buttonSend.setBounds(389, 375, 187, 41);
-		frmMyBox.getContentPane().add(buttonSend);
+		 getContentPane().add(buttonSend);
 		buttonSend.setIcon(new ImageIcon("src/GUI_final/sendReuqest.PNG"));
 		
 		
 		buttonCancel = new JButton();
 		buttonCancel.setBounds(10, 375, 198, 41);
-		frmMyBox.getContentPane().add(buttonCancel);
+		 getContentPane().add(buttonCancel);
 		buttonCancel.setIcon(new ImageIcon("src/GUI_final/cancelButton.jpg"));
 		
 	    lblChageFilefolderPermission = new JLabel();
 		lblChageFilefolderPermission.setIcon(new ImageIcon("src/GUI_final/changePermission.png"));
 		lblChageFilefolderPermission.setBounds(176, 0, 229, 128);
-		frmMyBox.getContentPane().add(lblChageFilefolderPermission);
+		 getContentPane().add(lblChageFilefolderPermission);
 		
 		Private = new JRadioButton("Private");
 		Private.setBackground(Color.WHITE);
 		Private.setBounds(0, 126, 84, 23);
-		frmMyBox.getContentPane().add(Private);
+		 getContentPane().add(Private);
 		
 		All = new JRadioButton("All");
 		All.setBackground(Color.WHITE);
 		All.setBounds(0, 284, 72, 23);
-		frmMyBox.getContentPane().add(All);
+		 getContentPane().add(All);
 		
 		Group = new JRadioButton("Group");
 		Group.setBackground(Color.WHITE);
 		Group.setBounds(0, 211, 72, 23);
-		frmMyBox.getContentPane().add(Group);
+		 getContentPane().add(Group);
 		
 		list = new JList();
 		list.setBounds(0, 0, -19, -38);
-		frmMyBox.getContentPane().add(list);
+		 getContentPane().add(list);
 		
 		readAll = new JRadioButton("Read");
 		readAll.setBackground(Color.WHITE);
 		readAll.setBounds(168, 284, 96, 23);
-		frmMyBox.getContentPane().add(readAll);
+		 getContentPane().add(readAll);
 		readAll.setEnabled(false);
 		
 		writeGroup = new JRadioButton("Write");
 		writeGroup.setBackground(Color.WHITE);
 		writeGroup.setBounds(168, 240, 96, 23);
-		frmMyBox.getContentPane().add(writeGroup);
+		 getContentPane().add(writeGroup);
 		writeGroup.setEnabled(false);
 		
 		comboBox = new JComboBox();
 		comboBox.setBackground(Color.WHITE);
 		comboBox.setBounds(430, 211, 141, 60);
-		frmMyBox.getContentPane().add(comboBox);
+		 getContentPane().add(comboBox);
 		comboBox.setMaximumRowCount(100);
 		comboBox.setEnabled(false);
 		
 		ReadGroup = new JRadioButton("Read");
 		ReadGroup.setBackground(Color.WHITE);
 		ReadGroup.setBounds(168, 211, 121, 23);
-		frmMyBox.getContentPane().add(ReadGroup);
+		 getContentPane().add(ReadGroup);
 		ReadGroup.setEnabled(false);
 		
 		writeAll = new JRadioButton("Write");
 		writeAll.setBackground(Color.WHITE);
 		writeAll.setBounds(168, 310, 114, 23);
-		frmMyBox.getContentPane().add(writeAll);
+		 getContentPane().add(writeAll);
 		writeAll.setEnabled(false);
 		
 		ChooseType = new JLabel();
 		ChooseType.setIcon(new ImageIcon("src/GUI_final/thechoosegroup.png"));
 		ChooseType.setBounds(430, 114, 137, 86);
-		frmMyBox.getContentPane().add(ChooseType);
+		 getContentPane().add(ChooseType);
 		
 		ReadWrite = new JLabel();
 		ReadWrite.setIcon(new ImageIcon("src/GUI_final/readWrite.png"));
 		ReadWrite.setBounds(168, 177, 180, 27);
-		frmMyBox.getContentPane().add(ReadWrite);
+		 getContentPane().add(ReadWrite);
 		
 		Permission = new JLabel();
 		Permission.setIcon(new ImageIcon("src/GUI_final/permission.png"));
 		Permission.setBounds(10, 102, 137, 17);
-		frmMyBox.getContentPane().add(Permission);
+		 getContentPane().add(Permission);
 	
 	}
 	public JButton getButtonSend() {

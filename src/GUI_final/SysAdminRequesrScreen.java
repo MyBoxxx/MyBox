@@ -2,7 +2,9 @@ package GUI_final;
 import images_icons.*;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -24,42 +26,32 @@ import javax.swing.JDesktopPane;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JRadioButton;
+
 import java.awt.Color;
 import java.awt.Font;
 
+import javax.swing.ButtonGroup;
+import javax.swing.JTable;
 
-public class SysAdmiRequesrScreen extends JFrame {
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
+
+public class SysAdminRequesrScreen extends AbstractGUI {
 
 	private JPanel contentPane;
-	private JList Requestlist; 
 	private JLabel lblRequest;
 	private JRadioButton rbaccept;
 	private JRadioButton rbreject;
-	private JButton okButton;
+	private JButton SendButton;
 	private JButton Beckbutton; 
 	private JButton btnReset;
-	private JLabel pic;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					SysAdmiRequesrScreen frame = new SysAdmiRequesrScreen();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	private JTable table;
 
 	/**
 	 * Create the frame.
 	 */
-	public SysAdmiRequesrScreen() {
+	public SysAdminRequesrScreen() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 551, 514);
 		contentPane = new JPanel();
@@ -67,10 +59,6 @@ public class SysAdmiRequesrScreen extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
-		Requestlist = new JList();
-		Requestlist.setBounds(25, 68, 446, 141);
-		contentPane.add(Requestlist);
 		
 		lblRequest = new JLabel("System Admin Requests");
 		lblRequest.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
@@ -80,76 +68,44 @@ public class SysAdmiRequesrScreen extends JFrame {
 		
 		rbaccept = new JRadioButton("Accept");
 		rbaccept.setBackground(new Color(6,139,224)); 
-		rbaccept.setBounds(63, 233, 141, 23);
+		rbaccept.setBounds(63, 234, 141, 23);
 		contentPane.add(rbaccept);
 		
 		rbreject = new JRadioButton("Reject");
 		rbreject.setBackground(new Color(6,139,224)); 
-		rbreject.setBounds(63, 270, 141, 23);
+		rbreject.setBounds(63, 269, 141, 23);
 		contentPane.add(rbreject);
 		
-		okButton = new JButton("Save");
-		okButton.setBounds(53, 405, 117, 29);
-		contentPane.add(okButton);
+		SendButton = new JButton("Send & Close");
+		SendButton.setBounds(380, 386, 117, 29);
+		contentPane.add(SendButton);
 		
 		Beckbutton = new JButton("back");
-		Beckbutton.setBounds(354, 405, 117, 29);
+		Beckbutton.setBounds(63, 386, 117, 29);
 		contentPane.add(Beckbutton);
 		
 		btnReset = new JButton("reset");
-		btnReset.setBounds(63, 310, 81, 29);
+		btnReset.setBounds(63, 304, 81, 29);
 		contentPane.add(btnReset);
 		
-		pic = new JLabel();
-		pic.setIcon(new ImageIcon("src/images_icons/rsz_systemadminrequest.jpg"));
-		pic.setBounds(-16, 0, 583, 509);
-		contentPane.add(pic);
-		
-		rbaccept.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-			if (rbaccept.isSelected())
-				rbreject.setSelected(false);
-			if(!rbaccept.isSelected())
-				rbaccept.setSelected(true);
-			}
-		});
-		
-		rbreject.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				
-				if (rbreject.isSelected())
-					rbaccept.setSelected(false);
-				if(!rbreject.isSelected())
-					rbreject.setSelected(true);
-			}
-		});
-		
-		btnReset.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				rbaccept.setSelected(false);
-				rbreject.setSelected(false);
-			}
-		});
-		
+		table = new JTable();
+		table.setBounds(63, 50, 434, 173);
+		contentPane.add(table);
 		
 	}
 
-	public JList getRequestlist() {
-		return Requestlist;
+	
+
+	public JTable getTable() {
+		return table;
 	}
 
-	public void setRequestlist(JList requestlist) {
-		Requestlist = requestlist;
+
+
+	public void setTable(JTable table) {
+		this.table = table;
 	}
+
 
 	public JLabel getLblRequest() {
 		return lblRequest;
@@ -175,12 +131,12 @@ public class SysAdmiRequesrScreen extends JFrame {
 		this.rbreject = rbreject;
 	}
 
-	public JButton getOkButton() {
-		return okButton;
+	public JButton getSendButton() {
+		return SendButton;
 	}
 
-	public void setOkButton(JButton okButton) {
-		this.okButton = okButton;
+	public void setSendButton(JButton SendButton) {
+		this.SendButton = SendButton;
 	}
 
 	public JButton getBeckbutton() {
@@ -198,13 +154,4 @@ public class SysAdmiRequesrScreen extends JFrame {
 	public void setBtnReset(JButton btnReset) {
 		this.btnReset = btnReset;
 	}
-
-	public JLabel getPic() {
-		return pic;
-	}
-
-	public void setPic(JLabel pic) {
-		this.pic = pic;
-	}
-	
 }

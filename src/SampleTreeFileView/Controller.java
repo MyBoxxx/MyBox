@@ -9,9 +9,13 @@ import java.io.File;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
+import javax.swing.tree.DefaultMutableTreeNode;
 
+import Controlers.*;
+import Entity.Folder_Entity;
 import GUI_final.*;
-import GUI_final.CreateFolderScreen;
 
 public class Controller {
     private Model model;
@@ -42,6 +46,8 @@ public class Controller {
     private ActionListener aboutUsActionListener;
     private ActionListener helpActionListener;
     
+    private TreeSelectionListener treeSelectionListener;
+    
     
     public Controller(Model model, View view){
         this.model = model;
@@ -57,7 +63,7 @@ public class Controller {
     		public void actionPerformed(ActionEvent e) {
     			// TODO Auto-generated method stub
     			try {
-    				((Desktop) model.getDesktop()).open(view.getCurrentFile());
+    				//((Desktop) model.getDesktop()).open(view.getCurrentFile());
     			} catch(Throwable t) {
     				//showThrowable(t);
     			}
@@ -71,7 +77,7 @@ public class Controller {
     		public void actionPerformed(ActionEvent e) {
     			// TODO Auto-generated method stub
     			try {
-    				((Desktop) model.getDesktop()).open(view.getCurrentFile());
+    				//((Desktop) model.getDesktop()).open(view.getCurrentFile());
     			} catch(Throwable t) {
     				//showThrowable(t);
     			}
@@ -85,7 +91,7 @@ public class Controller {
     		public void actionPerformed(ActionEvent e) {
     			// TODO Auto-generated method stub
     			try {
-    				((Desktop) model.getDesktop()).open(view.getCurrentFile());
+    				//((Desktop) model.getDesktop()).open(view.getCurrentFile());
     			} catch(Throwable t) {
     				//showThrowable(t);
     			}
@@ -99,10 +105,11 @@ public class Controller {
     		public void actionPerformed(ActionEvent e) {
     			// TODO Auto-generated method stub
     			try {
-    			CreateFolderScreen snew = new CreateFolderScreen();
-    			snew.setType(Type.POPUP);
-				snew.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-				snew.setVisible(true);
+    			File model = new File("\\file.exe");
+    			CreateFolderScreen view = new CreateFolderScreen();
+    			CreateFolder_Controller controllere = new CreateFolder_Controller(model,view);
+    			controllere.control();
+    			view.setVisible(true);
     			} catch(Throwable t) {
     				//showThrowable(t);
     			}
@@ -133,7 +140,7 @@ public class Controller {
     		public void actionPerformed(ActionEvent e) {
     			// TODO Auto-generated method stub
     			try {
-    				((Desktop) model.getDesktop()).open(view.getCurrentFile());
+    				//((Desktop) model.getDesktop()).open(view.getCurrentFile());
     			} catch(Throwable t) {
     				//showThrowable(t);
     			}
@@ -147,7 +154,7 @@ public class Controller {
     		public void actionPerformed(ActionEvent e) {
     			// TODO Auto-generated method stub
     			try {
-    				((Desktop) model.getDesktop()).open(view.getCurrentFile());
+    				//((Desktop) model.getDesktop()).open(view.getCurrentFile());
     			} catch(Throwable t) {
     				//showThrowable(t);
     			}
@@ -232,8 +239,7 @@ public class Controller {
 				
 			}
 		};
-
-		view.getOpenFile().addActionListener(openFileActionListener);
+		//top menu
 		
 		view.getMntmSettings().addActionListener(settingsActionListener);
 		view.getMntmLogOut().addActionListener(logoutActionListener);
@@ -253,6 +259,28 @@ public class Controller {
 		
 		view.getMntmAboutUs().addActionListener(aboutUsActionListener);
 		view.getMntmHelp().addActionListener(helpActionListener);
+		
+		view.getOpenFile().addActionListener(openFileActionListener);
+		view.getNewFile().addActionListener(createNewFolderActionListener);
+		view.getMoveFile().addActionListener(moveActionListener);
+		view.getRenameFile().addActionListener(renameActionListener);
+		view.getDeleteFile().addActionListener(deleteActionListener);
+		
+		
+		
+		
+		//tree
+		treeSelectionListener = new TreeSelectionListener() {
+            public void valueChanged(TreeSelectionEvent tse){
+                DefaultMutableTreeNode node =
+                    (DefaultMutableTreeNode)tse.getPath().getLastPathComponent();
+               // model.showChildren(node);
+               // view.setFileDetails((File)node.getUserObject());
+            }
+        };
+
+		view.getTree().addTreeSelectionListener(treeSelectionListener);
+		
     }
 	public void setVisible(boolean b) {
 	 view.setVisible(b);

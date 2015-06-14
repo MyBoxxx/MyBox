@@ -24,7 +24,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 
-public class AddPeopleToGroup extends JFrame {
+public class AdminAddPeopleToGroup extends AbstractGUI {
 
 	private JPanel contentPane;
 	private JLabel join;
@@ -46,7 +46,7 @@ public class AddPeopleToGroup extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					AddPeopleToGroup frame = new AddPeopleToGroup();
+					AdminAddPeopleToGroup frame = new AdminAddPeopleToGroup();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -58,7 +58,7 @@ public class AddPeopleToGroup extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public AddPeopleToGroup() {
+	public AdminAddPeopleToGroup() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 512, 300);
 		contentPane = new JPanel();

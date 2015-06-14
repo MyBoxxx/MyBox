@@ -21,7 +21,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 
-public class Adminbar extends JFrame {
+public class Adminbar extends AbstractGUI {
 
 	private JPanel contentPane;
 	private JLabel lblNotificationCenter;

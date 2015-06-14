@@ -13,7 +13,7 @@ import javax.swing.JButton;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JEditorPane;
 
-public class EditGroup extends JFrame {
+public class EditGroup extends AbstractGUI {
 
 	private JButton b1X;
 	private JButton b2X;

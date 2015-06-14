@@ -1,12 +1,15 @@
 package GUI_final;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.MediaTracker;
 import java.awt.Toolkit;
 
+import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -21,34 +24,37 @@ import javax.swing.JTextField;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class CreateFolderScreen extends JFrame {
-	
-	private JTextField folderNameField;
-	
+import javax.swing.JRadioButton;
 
-	private JTextField folderDescriptionField;
+public class CreateFolderScreen extends AbstractGUI {
+	
+	private JTextField ItemNameField;
+	
+	private final JPanel contentPanel = new JPanel();
+	private JTextField ItemDescriptionField;
 	private JButton btnCancel,btnOk;
-
+	private ButtonGroup bg;
 	
-   public CreateFolderScreen() {
-    final ContentPanel contentPanel = new ContentPanel();
+
+public CreateFolderScreen() {
+	getContentPane().setLayout(new BorderLayout());
     getContentPane().add(contentPanel);
     contentPanel.setLayout(null);
-    this.setTitle("Create New Folder");
-    JLabel lblFolderName = new JLabel("Folder Name:");
-    lblFolderName.setFont(new Font("Tahoma", Font.PLAIN, 14));
-    lblFolderName.setBounds(20, 444, 90, 23);
-    contentPanel.add(lblFolderName);
+    this.setTitle("Create File/Folder");
+    JLabel lblItemName = new JLabel("Name:");
+    lblItemName.setFont(new Font("Tahoma", Font.BOLD, 14));
+    lblItemName.setBounds(20, 434, 90, 23);
+    contentPanel.add(lblItemName);
     
-    JLabel lblNewLabel = new JLabel("Folder Description:");
+    JLabel lblNewLabel = new JLabel("Description:");
     lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
-    lblNewLabel.setBounds(20, 469, 122, 23);
+    lblNewLabel.setBounds(20, 459, 122, 23);
     contentPanel.add(lblNewLabel);
     
     JLabel labelStarString = new JLabel("*");
     labelStarString.setFont(new Font("Tahoma", Font.PLAIN, 14));
     labelStarString.setForeground(Color.RED);
-    labelStarString.setBounds(10, 478, 46, 14);
+    labelStarString.setBounds(10, 468, 46, 14);
     contentPanel.add(labelStarString);
     
     btnCancel = new JButton("Cancel");
@@ -64,16 +70,34 @@ public class CreateFolderScreen extends JFrame {
     lblOptional.setBounds(10, 537, 67, 14);
     contentPanel.add(lblOptional);
     
-    folderNameField = new JTextField();
-    folderNameField.setBounds(161, 444, 200, 23);
-    contentPanel.add(folderNameField);
-    folderNameField.setColumns(10);
+    ItemNameField = new JTextField();
+    ItemNameField.setBounds(161, 434, 200, 23);
+    contentPanel.add(ItemNameField);
+    ItemNameField.setColumns(10);
     
-    folderDescriptionField = new JTextField();
-    folderDescriptionField.setColumns(10);
-    folderDescriptionField.setBounds(161, 469, 200, 23);
-    contentPanel.add(folderDescriptionField);
+    ItemDescriptionField = new JTextField();
+    ItemDescriptionField.setColumns(10);
+    ItemDescriptionField.setBounds(161, 459, 200, 23);
+    contentPanel.add(ItemDescriptionField);
+     bg = new ButtonGroup();
+    
+    JRadioButton rdbtnFile = new JRadioButton("File");
+    rdbtnFile.setFont(new Font("Tahoma", Font.BOLD, 11));
+    rdbtnFile.setBounds(141, 489, 109, 23);
+    contentPanel.add(rdbtnFile);
+    
+    JRadioButton rdbtnFolder = new JRadioButton("Folder");
+    rdbtnFolder.setFont(new Font("Tahoma", Font.BOLD, 11));
+    rdbtnFolder.setBounds(252, 489, 109, 23);
+    contentPanel.add(rdbtnFolder);
     setSize(460, 600);
+    bg.add(rdbtnFolder);
+    bg.add(rdbtnFile);
+    
+    JLabel lblLogo = new JLabel("Logo");
+    lblLogo.setIcon(new ImageIcon(CreateFolderScreen.class.getResource("/images_icons/folder.jpg")));
+    lblLogo.setBounds(10, 0, 424, 423);
+    contentPanel.add(lblLogo);
   }
 
   public static void main(String[] args) {
@@ -86,20 +110,20 @@ public class CreateFolderScreen extends JFrame {
   }
   
   
-  public JTextField getFolderNameField() {
-		return folderNameField;
+  public JTextField getItemNameField() {
+		return ItemNameField;
 	}
 
-	public void setFolderNameField(JTextField folderNameField) {
-		this.folderNameField = folderNameField;
+	public void setItemNameField(JTextField folderNameField) {
+		this.ItemNameField = folderNameField;
 	}
 
-	public JTextField getFolderDescriptionField() {
-		return folderDescriptionField;
+	public JTextField getItemDescriptionField() {
+		return ItemDescriptionField;
 	}
 
-	public void setFolderDescriptionField(JTextField folderDescriptionField) {
-		this.folderDescriptionField = folderDescriptionField;
+	public void setItemDescriptionField(JTextField ItemDescriptionField) {
+		this.ItemDescriptionField = ItemDescriptionField;
 	}
 
 	public JButton getBtnCancel() {
@@ -117,28 +141,11 @@ public class CreateFolderScreen extends JFrame {
 	public void setBtnOk(JButton btnOk) {
 		this.btnOk = btnOk;
 	}
+	   public ButtonGroup getBg() {
+			return bg;
+		}
+
 }
 
-class ContentPanel extends JPanel {
-  Image bgimage = null;
-
-  ContentPanel() {
-    MediaTracker mt = new MediaTracker(this);
-    bgimage = Toolkit.getDefaultToolkit().getImage("images/folder.jpg");
-    mt.addImage(bgimage, 0);
-    try {
-      mt.waitForAll();
-    } catch (InterruptedException e) {
-      e.printStackTrace();
-    }
-  }
-
-  protected void paintComponent(Graphics g) {
-    super.paintComponent(g);
-    int imwidth = bgimage.getWidth(null);
-    int imheight = bgimage.getHeight(null);
-    g.drawImage(bgimage, 1, 1, null);
-  }
-}
 
 

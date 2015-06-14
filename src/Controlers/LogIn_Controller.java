@@ -1,5 +1,7 @@
 package Controlers;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.Window.Type;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,10 +19,12 @@ import javax.swing.JTextField;
 
 import Entity.*;
 import GUI_final.*;
+import Client.*;
+import SampleTreeFileView.Main;
 
-public class LogIn_Controller {
+public class LogIn_Controller extends AbstractTransfer{
 
-	static User_Entity model ;
+	static Login_Entity model ;
 	static Login_GUI view;
 	
 	static ForgotPassword_Controller forgot_con;
@@ -31,15 +35,16 @@ public class LogIn_Controller {
 	
 	
 	
-	LogIn_Controller(User_Entity model,Login_GUI view){
+	LogIn_Controller(Login_Entity model,Login_GUI view){
 		this.model = model;
 		this.view = view;
 		view.setBounds(100, 100, 800, 600);
 		view.setVisible(true);
 		try {
-			
 			forgot_gui = new ForgotPassword_GUI();
-			forgot_con = new ForgotPassword_Controller(new User_Entity(), forgot_gui);
+			forgot_con = new ForgotPassword_Controller(new ForgotPassword_Entity(), forgot_gui);
+			Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+			forgot_gui.setLocation(dim.width/2-forgot_gui.getSize().width/2, dim.height/2-forgot_gui.getSize().height/2);
 			forgot_con.control();
 			
 		} catch (Exception e) {
@@ -48,23 +53,26 @@ public class LogIn_Controller {
 	}
 	
 	public void control(){
+		MainClient.clien.setCurrController(this);
 		
 		view.getBtnLogin().addActionListener(new ActionListener() {	
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				if(view.getTxtUserName().getText().equals("eyal")) 
-					{
-					JOptionPane.showMessageDialog(view.getContentPane(),  "Login OK!.");
-					//redirect to systemfileview
-		        	view.settxtOneOrMoreVisible(false);
-					}
-				else {
-					JOptionPane.showMessageDialog(view.getContentPane(),  "Login Failed!."+view.getTxtUserName().getText()+ view.getPasswordField().getText());
-					if(view.getPasswordField().getText().equals("password") || view.getTxtUserName().getText().equals("UserName"))
-					view.settxtOneOrMoreVisible(true);
-					else view.settxtOneOrMoreVisible(false);
+			if(view.getPasswordField().getText().equals("password") || view.getTxtUserName().getText().equals("UserName"))
+				{
+				view.settxtOneOrMoreVisible(true);
 				}
+			else view.settxtOneOrMoreVisible(false);
+				
+			try{
+				model.setUsername(view.getTxtUserName().getText());
+				model.setPassword(view.getPasswordField().getText());
+				sendToServer(model);
+			}
+			catch (Exception eee){
+				
+			}
 			}
 		});
 		
@@ -117,10 +125,22 @@ public class LogIn_Controller {
 	    });
 	    
 		
+			
 		
-		
-		
-		
+	}//end control
+
+
+
+	public void ErrorLogin() {
+		JOptionPane.showMessageDialog(view.getContentPane(),  "Login Failed!."+view.getTxtUserName().getText()+ view.getPasswordField().getText());
+
+	}
+
+	public void MakeLogin() {
+		view.dispose();
+		if(MainClient.clien.getCurrUser().isAdmin()) 
+			MainAdmin.main(null);
+		else Main.main(null);
 	}
 	
 	

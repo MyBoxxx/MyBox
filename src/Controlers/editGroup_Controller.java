@@ -14,7 +14,7 @@ import javax.swing.JOptionPane;
 import Entity.*;
 import GUI_final.*;
 
-public class editGroup_Controller {
+public class editGroup_Controller extends AbstractTransfer{
 
 	private static  Group_Entity model ;
 	private static  EditGroup view;

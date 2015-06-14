@@ -5,7 +5,9 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.io.File;
+import java.sql.Date;
 
+import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JCheckBoxMenuItem;
@@ -13,6 +15,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JRadioButton;
@@ -24,23 +27,24 @@ import javax.swing.JToolBar;
 import javax.swing.JTree;
 import javax.swing.filechooser.FileSystemView;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
 import javax.swing.JMenuBar;
 
 import java.awt.BorderLayout;
+
 import javax.swing.border.EmptyBorder;
 import javax.swing.tree.TreeModel;
 
-public class View extends JFrame{
+import Client.MainClient;
+import Client.myBoxClient;
+import Controlers.LogIn_Controller;
+import Entity.User_Entity;
+import GUI_final.AbstractGUI;
+
+public class View extends AbstractGUI{
 
     /** Title of the application */
      static final String APP_TITLE = "MyBox";
-
-    /** Provides nice icons and names for files. */
-     FileSystemView fileSystemView;
-
-    /** currently selected File. */
-     File currentFile;
-
 
 	/** Main GUI container */
      static JPanel gui;
@@ -49,6 +53,7 @@ public class View extends JFrame{
 
 	/** File-system tree. Built Lazily */
      JTree tree;
+     private DefaultTreeModel treeModel;
      JPanel fileView;
     
     /** Directory listing */
@@ -109,25 +114,12 @@ public class View extends JFrame{
 	JMenuItem mntmCreateNewFolder;
 	JMenuItem mntmUploadfile;
 	JMenuItem mntmAboutUs;
+	private JMenuBar menuBar;
 	
 	public View() {
 		      		getGui();
-		            fileSystemView = FileSystemView.getFileSystemView();
-		           // show the file system roots.
-		            File[] roots = fileSystemView.getRoots();
-		            for (File fileSystemRoot : roots) {
-		                DefaultMutableTreeNode node = new DefaultMutableTreeNode(fileSystemRoot);
-		                //root.add( node );
-		                //showChildren(node);
-		                //
-		                File[] files = fileSystemView.getFiles(fileSystemRoot, true);
-		                for (File file : files) {
-		                    if (file.isDirectory()) {
-		                        node.add(new DefaultMutableTreeNode(file));
-		                    }
-		                }
-		                //
-		            }
+		           
+		            // show the file system roots.
 		            Dimension widePreferred = new Dimension(200,150);
 		            
 		            simpleOutput = new JPanel(new BorderLayout(3,3));
@@ -136,27 +128,23 @@ public class View extends JFrame{
 		            progressBar.setVisible(false);
 		    		    		                        
 		    		detailView = new JPanel(new BorderLayout(3,3));
-		    		    		                                   // fileTableModel = new FileTableModel();
-		            
-		            //table.getSelectionModel().addListSelectionListener(listSelectionListener);
 		            JScrollPane tableScroll = new JScrollPane(table);
 		            Dimension d = tableScroll.getPreferredSize();
 		            tableScroll.setPreferredSize(new Dimension((int)d.getWidth(), (int)d.getHeight()/2));
 		            detailView.add(tableScroll, BorderLayout.CENTER);
 		            
-		            tree = new JTree((TreeModel) null);
+		             tree = new JTree(treeModel);
+		            //tree = new JTree();
 		            tree.setVisibleRowCount(15);
 		            tree.setRootVisible(false);
-		            tree.setSize(d);
+		            tree.setBounds(0, 0, 200, 150);
+		            tree.setSize(new Dimension(200, 150));
 
-		           // tree = new JTree(treeModel);
 		            tree.setRootVisible(false);
-		           //tree.addTreeSelectionListener(treeSelectionListener);
 		            tree.setCellRenderer(new FileTreeCellRenderer());
 		            tree.expandRow(0);
 		            JScrollPane treeScroll = new JScrollPane(tree);
 		            
-		            // as per trashgod tip
 		            tree.setVisibleRowCount(15);
 		            
 		            treeScroll.setColumnHeaderView(tree);
@@ -223,10 +211,6 @@ public class View extends JFrame{
 		gui.add(splitPane, BorderLayout.CENTER);
 		
 		gui.add(simpleOutput, BorderLayout.SOUTH);
-
-	JMenuBar menuBar = new JMenuBar();
-	gui.add(menuBar, BorderLayout.NORTH);
-	initMenuBar(menuBar);
 	
    }
 
@@ -281,26 +265,103 @@ public class View extends JFrame{
 		
 	}
 
+	
+
+	public JPanel getGui() {
+		  if (gui==null) {
+	            gui = new JPanel(new BorderLayout(3,3));
+	            gui.setBorder(new EmptyBorder(5,5,5,5));
+	            setBounds(100, 100, 800	, 600);
+	            
+	            menuBar = new JMenuBar();
+	            setJMenuBar(menuBar);
+	            
+	            JMenu mnMybox = new JMenu("MyBox");
+	            menuBar.add(mnMybox);
+	            
+	             mntmSettings = new JMenuItem("Settings");
+	             mnMybox.add(mntmSettings);
+	             
+	              mntmLogOut = new JMenuItem("Log Out");
+	              mnMybox.add(mntmLogOut);
+	              
+	              JMenu mnFile = new JMenu("File");
+	              menuBar.add(mnFile);
+	              
+	               mntmCreateNewFolder = new JMenuItem("Create File / Folder");
+	               
+	               mnFile.add(mntmCreateNewFolder);
+	               
+	                mntmUploadfile = new JMenuItem("UploadFile");
+	                
+	                
+	                mnFile.add(mntmUploadfile);
+	                
+	                 mntmSearch = new JMenuItem("Search");
+	                 mnFile.add(mntmSearch);
+	                 
+	                 JMenu mnGroup = new JMenu("Group");
+	                 menuBar.add(mnGroup);
+	                 
+	                  mntmCreateNewGroup = new JMenuItem("Create New Group");
+	                  mnGroup.add(mntmCreateNewGroup);
+	                  
+	                   mntmAskToJoin = new JMenuItem("Ask to Join");
+	                   mnGroup.add(mntmAskToJoin);
+	                   
+	                   JMenu mnEdit = new JMenu("Edit");
+	                   menuBar.add(mnEdit);
+	                   
+	                    mntmMove = new JMenuItem("Move");
+	                    
+	                    mnEdit.add(mntmMove);
+	                    
+	                    
+	                     mntmDelete = new JMenuItem("Delete");
+	                     mnEdit.add(mntmDelete);
+	                     
+	                      mntmRename = new JMenuItem("ReName");
+	                      mnEdit.add(mntmRename);
+	                      
+	                      JMenu mnView = new JMenu("Go");
+	                      menuBar.add(mnView);
+	                      
+	                      JCheckBoxMenuItem chckbxmntmMyFiles_1 = new JCheckBoxMenuItem("My Files");
+	                      mnView.add(chckbxmntmMyFiles_1);
+	                      
+	                       chckbxmntmSharedWithMe = new JCheckBoxMenuItem("Shared With Me");
+	                       mnView.add(chckbxmntmSharedWithMe);
+	                       
+	                        mntmTrash = new JMenuItem("Trash");
+	                        mnView.add(mntmTrash);
+	                        
+	                        JMenu mnHelp_1 = new JMenu("Help");
+	                        menuBar.add(mnHelp_1);
+	                        
+	                         mntmAboutUs = new JMenuItem("About Us");
+	                         mnHelp_1.add(mntmAboutUs);
+	                         
+	                          mntmHelp = new JMenuItem("Help");
+	                          mnHelp_1.add(mntmHelp);
+	                          
+	                          JMenuItem mntmNewMenuItem = new JMenuItem("                    ");
+	                          menuBar.add(mntmNewMenuItem);
+	                          
+	                           lblLogInAs = new JLabel("Log in as : " + MainClient.clien.getCurrUser().getUsername());
+	                           menuBar.add(lblLogInAs);
+	                           
+	                            btnNotifications = new JButton("notifications");
+	                            menuBar.add(btnNotifications);
+	            gui.setBounds(100, 100, 800	, 600);
+	            setContentPane(gui);
+		  }
+		return gui;
+	}
 	public JButton getOpenFile() {
 		// TODO Auto-generated method stub
 		return openFile;
 	}
 	
-	public FileSystemView getFileSystemView() {
-		return fileSystemView;
-	}
-
-	public void setFileSystemView(FileSystemView fileSystemView) {
-		this.fileSystemView = fileSystemView;
-	}
-
-	public File getCurrentFile() {
-		return currentFile;
-	}
-
-	public void setCurrentFile(File currentFile) {
-		this.currentFile = currentFile;
-	}
 
 	public JTree getTree() {
 		return tree;
@@ -318,88 +379,6 @@ public class View extends JFrame{
             table.setShowVerticalLines(false);
 		}
 		return table;
-	}
-public JMenuBar initMenuBar(JMenuBar menuBar)
-	{
-
-JMenu mnMybox = new JMenu("MyBox");
-menuBar.add(mnMybox);
-
- mntmSettings = new JMenuItem("Settings");
-mnMybox.add(mntmSettings);
-
- mntmLogOut = new JMenuItem("Log Out");
-mnMybox.add(mntmLogOut);
-
-JMenu mnFile = new JMenu("File");
-menuBar.add(mnFile);
-
- mntmCreateNewFolder = new JMenuItem("Create New Folder");
-
-mnFile.add(mntmCreateNewFolder);
-
- mntmUploadfile = new JMenuItem("UploadFile");
-
-
-mnFile.add(mntmUploadfile);
-
- mntmSearch = new JMenuItem("Search");
-mnFile.add(mntmSearch);
-
-JMenu mnGroup = new JMenu("Group");
-menuBar.add(mnGroup);
-
- mntmCreateNewGroup = new JMenuItem("Create New Group");
-mnGroup.add(mntmCreateNewGroup);
-
- mntmAskToJoin = new JMenuItem("Ask to Join");
-mnGroup.add(mntmAskToJoin);
-
-JMenu mnEdit = new JMenu("Edit");
-menuBar.add(mnEdit);
-
- mntmMove = new JMenuItem("Move");
-
-mnEdit.add(mntmMove);
-
-
- mntmDelete = new JMenuItem("Delete");
-mnEdit.add(mntmDelete);
-
- mntmRename = new JMenuItem("ReName");
-mnEdit.add(mntmRename);
-
-JMenu mnView = new JMenu("Go");
-menuBar.add(mnView);
-
-JCheckBoxMenuItem chckbxmntmMyFiles = new JCheckBoxMenuItem("My Files");
-mnView.add(chckbxmntmMyFiles);
-
- chckbxmntmSharedWithMe = new JCheckBoxMenuItem("Shared With Me");
-mnView.add(chckbxmntmSharedWithMe);
-
- mntmTrash = new JMenuItem("Trash");
-mnView.add(mntmTrash);
-
-JMenu mnHelp_1 = new JMenu("Help");
-menuBar.add(mnHelp_1);
-
- mntmAboutUs = new JMenuItem("About Us");
-mnHelp_1.add(mntmAboutUs);
-
- mntmHelp = new JMenuItem("Help");
-mnHelp_1.add(mntmHelp);
-
-JMenuItem mntmNewMenuItem = new JMenuItem("                    ");
-menuBar.add(mntmNewMenuItem);
-
- lblLogInAs = new JLabel("Log in as : Eyalpano@gmail.com");
-menuBar.add(lblLogInAs);
-
- btnNotifications = new JButton("notifications");
-menuBar.add(btnNotifications);
-return menuBar;
-
 	}
 	
  	public void setTable(JTable table) {
@@ -626,8 +605,8 @@ return menuBar;
 		return lblLogInAs;
 	}
 
-	public void setLblLogInAs(JLabel lblLogInAs) {
-		this.lblLogInAs = lblLogInAs;
+	public void setLblLogInAs(String lblLogInAs) {
+		this.lblLogInAs.setText("login as : " + lblLogInAs);
 	}
 
 	public JMenuItem getMntmHelp() {
@@ -754,16 +733,6 @@ return menuBar;
 		return APP_TITLE;
 	}
 	
-	public JPanel getGui() {
-		  if (gui==null) {
-	            gui = new JPanel(new BorderLayout(3,3));
-	            gui.setBorder(new EmptyBorder(5,5,5,5));
-	            setBounds(100, 100, 800	, 600);
-	            gui.setBounds(100, 100, 800	, 600);
-	            setContentPane(gui);
-		  }
-		return gui;
-	}
 }
 
 

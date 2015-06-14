@@ -19,9 +19,8 @@ import javax.swing.event.ListSelectionListener;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class RequestToDeleteGroup {
+public class RequestToDeleteGroup extends AbstractGUI{
 
-	private JFrame frame;
 	private JList list;
 	private JButton b1Ok;
 	private JButton b1Beck;
@@ -33,21 +32,6 @@ public class RequestToDeleteGroup {
 	private String s;
 	private JLabel lgroup;
 
-	/**
-	 * Launch the application.
-	 */
-/*	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					RequestToDeleteGroup window = new RequestToDeleteGroup();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}*/
 
 	/**
 	 * Create the application.
@@ -57,16 +41,14 @@ public class RequestToDeleteGroup {
 	}
 
 	/**
-	 * Initialize the contents of the frame.
+	 * Initialize the contents of the  
 	 */
 	private void initialize() {
-		frame = new JFrame();
-		frame.setBounds(100, 100, 459, 345);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(new CardLayout(0, 0));
+		 setBounds(100, 100, 459, 345);
+		 getContentPane().setLayout(new CardLayout(0, 0));
 		
 		AskTo = new JPanel();
-		frame.getContentPane().add(AskTo, "name_1433270169848162000");
+		 getContentPane().add(AskTo, "name_1433270169848162000");
 		AskTo.setLayout(null);
 		
 		JLabel lblDeletGroupWindow = new JLabel("Delet Group Window");
@@ -101,7 +83,7 @@ public class RequestToDeleteGroup {
 		panelbutton.add(b1Beck);
 		
 		AreUSure = new JPanel();
-		frame.getContentPane().add(AreUSure, "name_1433270172032557000");
+		 getContentPane().add(AreUSure, "name_1433270172032557000");
 		AreUSure.setLayout(null);
 		
 		JLabel lbSure = new JLabel("Are You Sure You Want To Delete The Group ");
@@ -142,13 +124,6 @@ public class RequestToDeleteGroup {
 		}
 	---------------------------------------------- */
 
-	public JFrame getFrame() {
-		return frame;
-	}
-
-	public void setFrame(JFrame frame) {
-		this.frame = frame;
-	}
 
 	public JList getList() {
 		return list;

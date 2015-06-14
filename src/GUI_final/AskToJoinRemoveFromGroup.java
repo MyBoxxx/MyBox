@@ -22,9 +22,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.SystemColor;
 
-public class AskToJoinRemoveFromGroup {
+public class AskToJoinRemoveFromGroup extends AbstractGUI{
 
-	private JFrame frame;
 	private JLabel lblAskToJoin;
 	private JList listGroup;
 	private JButton btRequest;
@@ -32,21 +31,7 @@ public class AskToJoinRemoveFromGroup {
 	private JLabel chooseGroup;
 	private Choice choiceGroup;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					AskToJoinRemoveFromGroup window = new AskToJoinRemoveFromGroup();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+
 
 	/**
 	 * Create the application.
@@ -59,31 +44,31 @@ public class AskToJoinRemoveFromGroup {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
-		frame.getContentPane().setBackground(Color.WHITE);
-		frame.setBounds(100, 100, 598, 499);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
+		
+		getContentPane().setBackground(Color.WHITE);
+		setBounds(100, 100, 598, 499);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		getContentPane().setLayout(null);
 	
 		
 		btRequest = new JButton();
 		btRequest.setIcon(new ImageIcon("src/GUI_final/sendReuqest.PNG"));
 		btRequest.setBounds(10, 390, 187, 60);
-		frame.getContentPane().add(btRequest);
+		getContentPane().add(btRequest);
 		
 		btCacel = new JButton();
 		btCacel.setIcon(new ImageIcon("src/GUI_final/cancelButton.jpg"));
 		btCacel.setBounds(355, 390, 217, 60);
-		frame.getContentPane().add(btCacel);
+		getContentPane().add(btCacel);
 		
 		chooseGroup = new JLabel();
 		chooseGroup.setBounds(10, 11, 173, 146);
-		frame.getContentPane().add(chooseGroup);
+		getContentPane().add(chooseGroup);
 		chooseGroup.setIcon(new ImageIcon("src/GUI_final/thechoosegroup.png"));
 		
 		lblAskToJoin = new JLabel();
 		lblAskToJoin.setBounds(247, -21, 325, 418);
-		frame.getContentPane().add(lblAskToJoin);
+		getContentPane().add(lblAskToJoin);
 		lblAskToJoin.setForeground(SystemColor.textHighlightText);
 		lblAskToJoin.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		lblAskToJoin.setIcon(new ImageIcon("src/GUI_final/ask.png"));
@@ -94,7 +79,7 @@ public class AskToJoinRemoveFromGroup {
 		choiceGroup.add("100");
 		choiceGroup.add("ein ma");
 		choiceGroup.add("peter");
-		frame.getContentPane().add(choiceGroup);
+		getContentPane().add(choiceGroup);
 	}
 
 	public JLabel getLblAskToJoin() {

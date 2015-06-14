@@ -9,7 +9,11 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
+import Entity.Login_Entity;
+import Entity.SystemAdminReequestScreen_Entity;
+import Entity.SystemAdminRequestScree_List;
 import ocsf.server.AbstractServer;
 import ocsf.server.ConnectionToClient;
 
@@ -121,6 +125,36 @@ public class MyBoxServer extends AbstractServer
 	        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/mybox","root","Braude");
 	        //Connection conn = DriverManager.getConnection("jdbc:mysql://192.168.3.68/test","root","Root");
 	        System.out.println("SQL connection succeed");
+	        if(msg instanceof Login_Entity){
+	        	System.out.println("Try To Coneect as "+ ((Login_Entity)msg).getUsername());
+	        	if(checkUserPassword(conn,(Login_Entity)msg)){
+	        	
+	        	try {
+						client.sendToClient(msg);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+	        	} else
+				try {
+					client.sendToClient("Login failed");
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+	        	}
+	        		
+	        	
+	        if(msg instanceof SystemAdminRequestScree_List){
+	        	SystemAdminRequestScree_List_getList(conn,(SystemAdminRequestScree_List)msg);
+	        	try{
+	        		client.sendToClient(msg);
+	        	}
+	        	catch (IOException e){
+	        		e.printStackTrace();
+	        	}
+	        }
+	        
 	        if(msg instanceof String){
 	        	try {
 		        if(msg.toString().startsWith("login")){
@@ -128,7 +162,7 @@ public class MyBoxServer extends AbstractServer
 			    	String delims = " ";
 			    	String[] tokens = temp.split(delims);
 			    	if(tokens.length == 3){
-			    	if(checkUserPassword(conn,tokens[1],tokens[2]))
+			    	if(checkUserPassword(conn,(Login_Entity)msg))
 							client.sendToClient("Login Ok");
 						
 					else client.sendToClient("Login failed");
@@ -228,7 +262,29 @@ public class MyBoxServer extends AbstractServer
 	  }
 
     
- /**
+ private void SystemAdminRequestScree_List_getList(Connection conn,
+		SystemAdminRequestScree_List msg) {
+	 Statement stmt;
+		try 
+		{
+			stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM AdminRequsts ORDER BY status;");
+			ArrayList<SystemAdminReequestScreen_Entity> ListFromServer = new ArrayList<SystemAdminReequestScreen_Entity>();
+			while (rs.next()) {
+				ListFromServer.add(new SystemAdminReequestScreen_Entity(rs.getInt("requestID"), rs.getInt("theRequest"), rs.getInt("status") , rs.getString("name")));
+			}
+			msg.setListFromServer(ListFromServer);
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+	 
+	
+}
+
+
+
+/**
   *   This method return all option commands
  * @return String of all option list with commands 
  */
@@ -416,19 +472,22 @@ private String deleteFile(Connection con, String fileName, String path) {
  * @param pass - Password to check
  * @return Boolean - True if user + pass in DB or False 
  */
-private Boolean checkUserPassword(Connection con, String user,String pass){
+private Boolean checkUserPassword(Connection con, Login_Entity log){
 	
 	Statement stmt;
 	try 
 	{
 		stmt = con.createStatement();
-		ResultSet rs = stmt.executeQuery("SELECT * FROM Users where UserName ='"+ user + "' AND Password = '"+pass +"' ;");
+		ResultSet rs = stmt.executeQuery("SELECT * FROM Users where UserName ='"+ log.getUsername() + "' AND Password = '"+log.getPassword() +"' ;");
 		
-		if(rs.next()) return true;
-		else return false;
-
-		
-		//stmt.executeUpdate("UPDATE course SET semestr=\"W08\" WHERE num=61309");
+		if(rs.next()) {
+			if(rs.getString("isAdmin").equals("1")) log.setAdmin(true);
+			if(rs.getInt("isLogin")==1) log.setAdmin(true);
+			log.setUser(true);
+			return true;
+		}
+		log.setUser(false);
+		return false;
 	} catch (SQLException e) {e.printStackTrace();
 	return null;
 	}
