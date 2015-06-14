@@ -29,10 +29,7 @@ public class ForgotPassword_GUI extends JFrame {
 	private JButton sumbit;
 
 
-	/**
-	 * Launch the application.
-	 */
-	public void fpScreen() {
+	public static  void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -44,6 +41,11 @@ public class ForgotPassword_GUI extends JFrame {
 			}
 		});
 	}
+	
+	
+	/**
+	 * Launch the application.
+	 */
 
 	/**
 	 * Create the frame.
@@ -53,7 +55,7 @@ public class ForgotPassword_GUI extends JFrame {
 		setBackground(Color.WHITE);
 		setTitle("Forgot Password\r\n");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 618, 434);
+		setBounds(100, 100, 800, 600);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -61,7 +63,7 @@ public class ForgotPassword_GUI extends JFrame {
 		contentPane.setLayout(null);
 		    JLabel ForgotPass = new JLabel(new ImageIcon(ForgotPassword_GUI.class.getResource("/images_icons/forgot-password_top.gif")));
 		   
-		    ForgotPass.setBounds(10, 11, 360, 267);
+		    ForgotPass.setBounds(226, 6, 360, 267);
 		    ForgotPass.setBackground(Color.WHITE);
 		 	
 		    contentPane.setLayout(null);
@@ -71,7 +73,7 @@ public class ForgotPassword_GUI extends JFrame {
 		    sumbit.setContentAreaFilled(false); 
 		    sumbit.setFocusPainted(false); 
 		    sumbit.setOpaque(false);
-		    sumbit.setBounds(396, 255, 196, 141);
+		    sumbit.setBounds(598, 256, 196, 141);
 		    sumbit.setBackground(Color.WHITE);
 		    contentPane.setLayout(null);
 		    contentPane.add(sumbit);
@@ -80,7 +82,7 @@ public class ForgotPassword_GUI extends JFrame {
 		    txtEnterYourEmail.setBackground(Color.WHITE);
 		    txtEnterYourEmail.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		    txtEnterYourEmail.setText("Enter your email address to show your password");
-		    txtEnterYourEmail.setBounds(10, 309, 360, 20);
+		    txtEnterYourEmail.setBounds(226, 308, 360, 20);
 		    txtEnterYourEmail.setBorder(javax.swing.BorderFactory.createEmptyBorder());
 		    contentPane.add(txtEnterYourEmail);
 		    
@@ -89,7 +91,7 @@ public class ForgotPassword_GUI extends JFrame {
 		    
 		   
 		    txtEmail.setText("E-mail");
-		    txtEmail.setBounds(10, 350, 360, 20);
+		    txtEmail.setBounds(226, 353, 360, 20);
 		    contentPane.add(txtEmail);
 		    txtEmail.setColumns(10);
 	}

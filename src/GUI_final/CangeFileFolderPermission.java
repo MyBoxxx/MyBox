@@ -49,6 +49,20 @@ public class CangeFileFolderPermission extends AbstractGUI{
 	 * Create the application.
 	 */
     
+    public static  void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					CangeFileFolderPermission frame = new CangeFileFolderPermission();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+    
+    
 	public CangeFileFolderPermission() {
 		initialize();
 	}
@@ -66,13 +80,13 @@ public class CangeFileFolderPermission extends AbstractGUI{
 		
 		
 		buttonSend = new JButton();
-		buttonSend.setBounds(547, 501, 187, 41);
+		buttonSend.setBounds(27, 501, 187, 41);
 		 getContentPane().add(buttonSend);
 		buttonSend.setIcon(new ImageIcon("src/GUI_final/sendReuqest.PNG"));
 		
 		
 		buttonCancel = new JButton();
-		buttonCancel.setBounds(23, 501, 198, 41);
+		buttonCancel.setBounds(554, 501, 198, 41);
 		 getContentPane().add(buttonCancel);
 		buttonCancel.setIcon(new ImageIcon("src/GUI_final/cancelButton.jpg"));
 		
@@ -88,12 +102,12 @@ public class CangeFileFolderPermission extends AbstractGUI{
 		
 		All = new JRadioButton("All");
 		All.setBackground(Color.WHITE);
-		All.setBounds(0, 393, 72, 23);
+		All.setBounds(6, 393, 72, 23);
 		 getContentPane().add(All);
 		
 		Group = new JRadioButton("Group");
 		Group.setBackground(Color.WHITE);
-		Group.setBounds(0, 307, 72, 23);
+		Group.setBounds(6, 307, 72, 23);
 		 getContentPane().add(Group);
 		
 		list = new JList();

@@ -36,7 +36,6 @@ public class AskToJoinRemoveFromGroup extends AbstractGUI{
 	/**
 	 * Create the application.
 	 */
-
 	
 	public AskToJoinRemoveFromGroup() {
 		initialize();
