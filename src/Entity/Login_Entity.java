@@ -4,6 +4,7 @@ public class Login_Entity extends User_Entity {
 	
 	
 	boolean isUser;
+	
 	public boolean isUser() {
 		return isUser;
 	}
@@ -11,7 +12,7 @@ public class Login_Entity extends User_Entity {
 		this.isUser = isUser;
 	}
 	public Login_Entity(){
-		
+		this.isUser = false;
 	}
 	
 

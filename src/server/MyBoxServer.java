@@ -7,9 +7,18 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Vector;
+
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+
+import net.proteanit.sql.DbUtils;
+
+import com.mysql.jdbc.PreparedStatement;
 
 import Entity.Login_Entity;
 import Entity.SystemAdminReequestScreen_Entity;
@@ -127,26 +136,20 @@ public class MyBoxServer extends AbstractServer
 	        System.out.println("SQL connection succeed");
 	        if(msg instanceof Login_Entity){
 	        	System.out.println("Try To Coneect as "+ ((Login_Entity)msg).getUsername());
-	        	if(checkUserPassword(conn,(Login_Entity)msg)){
-	        	
+	        	if(checkUserPassword(conn,(Login_Entity)msg)) System.out.println("Login Succsed");
+	        	else System.out.println("Login Failed");
 	        	try {
 						client.sendToClient(msg);
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-	        	} else
-				try {
-					client.sendToClient("Login failed");
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-	        	}
+	        	 
+	        }
 	        		
 	        	
 	        if(msg instanceof SystemAdminRequestScree_List){
-	        	SystemAdminRequestScree_List_getList(conn,(SystemAdminRequestScree_List)msg);
+	        	TableFromDatabase(((SystemAdminRequestScree_List) msg).getListFromServer(),"SELECT * FROM mybox.Users ; ",conn); 
 	        	try{
 	        		client.sendToClient(msg);
 	        	}
@@ -261,7 +264,7 @@ public class MyBoxServer extends AbstractServer
 	  	//client.sendToClient(msg);
 	  }
 
-    
+    /*
  private void SystemAdminRequestScree_List_getList(Connection conn,
 		SystemAdminRequestScree_List msg) {
 	 Statement stmt;
@@ -281,7 +284,7 @@ public class MyBoxServer extends AbstractServer
 	 
 	
 }
-
+*/
 
 
 /**
@@ -479,8 +482,7 @@ private Boolean checkUserPassword(Connection con, Login_Entity log){
 	{
 		stmt = con.createStatement();
 		ResultSet rs = stmt.executeQuery("SELECT * FROM Users where UserName ='"+ log.getUsername() + "' AND Password = '"+log.getPassword() +"' ;");
-		
-		if(rs.next()) {
+		if(rs.next()) { //if user exist
 			if(rs.getString("isAdmin").equals("1")) log.setAdmin(true);
 			if(rs.getInt("isLogin")==1) log.setAdmin(true);
 			log.setUser(true);
@@ -561,5 +563,36 @@ private String createNewFile(Connection con, String fileName, String path) {
 		 }
 }
 
+
+public void TableFromDatabase(JTable table, String Query,Connection conn)
+	{
+	    try
+	    {
+	        Statement stat = conn.createStatement();
+	        ResultSet rs = stat.executeQuery(Query);
+	        //To remove previously added rows
+	        while(table.getRowCount() > 0) 
+	        {
+	            ((DefaultTableModel) table.getModel()).removeRow(0);
+	        }
+	        int columns = rs.getMetaData().getColumnCount();
+	        while(rs.next())
+	        {  
+	            Object[] row = new Object[columns];
+	            for (int i = 1; i <= columns; i++)
+	            {  
+	                row[i - 1] = rs.getObject(i);
+	            }
+	            ((DefaultTableModel) table.getModel()).insertRow(rs.getRow()-1,row);
+	        }
+
+	        rs.close();
+	        stat.close();
+	    }
+	    catch(SQLException e)
+	    {
+	    }
+	    
+	}
 
 }

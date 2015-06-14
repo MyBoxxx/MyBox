@@ -19,7 +19,6 @@ public User_Entity(String IDuser, String Username,String Password, int Status, b
 		this.Password = Password;
 		this.isLogedin = isLogedin;
 		this.isAdmin = isadmin;
-		
 	}
 
 public User_Entity() {

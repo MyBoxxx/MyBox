@@ -64,18 +64,19 @@ public class myBoxClient extends ObservableClient {
 		try {
 
 			if (message instanceof Login_Entity){ // user name and password is found ( 1.setCurrUser that is using application, 2.set status to 1)
-				if(((Login_Entity) message).isUser()  == true)
-				{
+				if(((Login_Entity) message).isUser() == true){
 					this.currUser = (User_Entity) message;
 					((LogIn_Controller) currController).MakeLogin();
 				}
 				else {
+					System.out.println("zao");
 					((LogIn_Controller) currController).ErrorLogin();	
 				}
 			}
 			
 			if(message instanceof SystemAdminRequestScree_List)
 			{
+				System.out.println(message.toString());
 				( (SystemAdminRequestsScreen_Controller) currController).refreshList();
 			}
 			
