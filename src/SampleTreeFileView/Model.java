@@ -24,8 +24,11 @@ import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 import GUI_final.CreateFolderScreen;
 
+=======
+>>>>>>> refs/heads/master
 =======
 >>>>>>> refs/heads/master
 import Entity.Abstract_Entity;
@@ -48,7 +51,10 @@ public class Model extends Abstract_Entity{
     private TableColumn tableColumn;
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> refs/heads/master
 =======
 >>>>>>> refs/heads/master
     
@@ -73,6 +79,9 @@ public File getNewFile() {
 		UserID = userID;
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> refs/heads/master
+=======
 >>>>>>> refs/heads/master
 =======
 >>>>>>> refs/heads/master

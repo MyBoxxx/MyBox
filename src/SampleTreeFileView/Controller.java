@@ -15,6 +15,11 @@ import javax.swing.tree.DefaultMutableTreeNode;
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+import Client.MainClient;
+import Client.myBoxClient;
+>>>>>>> refs/heads/master
 =======
 import Client.MainClient;
 import Client.myBoxClient;
@@ -59,8 +64,11 @@ public class Controller extends AbstractTransfer{
     private TreeSelectionListener treeSelectionListener;
     
 <<<<<<< HEAD
+<<<<<<< HEAD
     private TreeSelectionListener treeSelectionListener;
     
+=======
+>>>>>>> refs/heads/master
 =======
 >>>>>>> refs/heads/master
     
