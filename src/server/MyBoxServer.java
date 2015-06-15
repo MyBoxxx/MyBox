@@ -621,9 +621,6 @@ public  TableModel buildTableModel(Connection con,String stat)
 				
 			}
 			return null;
+
 	}
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> refs/heads/master
