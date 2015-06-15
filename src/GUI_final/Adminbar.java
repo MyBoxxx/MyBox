@@ -84,10 +84,17 @@ public class Adminbar extends AbstractGUI {
 		btnChangeFms.setToolTipText("Chnage FMS");
 		btnChangeFms.setIcon(new ImageIcon("src/GUI_final/changeFMS.png"));
 <<<<<<< HEAD
+<<<<<<< HEAD
 		//btnChangeFms.setBackground(Color.WHITE);
 		btnChangeFms.setOpaque(false);
 		//btnChangeFms.setContentAreaFilled(false);
 		//btnChangeFms.setBorderPainted(false);
+=======
+		btnChangeFms.setBorderPainted(false); 
+		btnChangeFms.setContentAreaFilled(false); 
+		btnChangeFms.setFocusPainted(false); 
+		btnChangeFms.setOpaque(false);
+>>>>>>> refs/heads/master
 =======
 		btnChangeFms.setBorderPainted(false); 
 		btnChangeFms.setContentAreaFilled(false); 
@@ -102,6 +109,13 @@ public class Adminbar extends AbstractGUI {
 		btnQuit.setBackground(new Color(41,91,150));
 		btnQuit.setBounds(6, 434, 148, 138);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+		btnQuit.setBorderPainted(false); 
+		btnQuit.setContentAreaFilled(false); 
+		btnQuit.setFocusPainted(false); 
+		btnQuit.setOpaque(false);
+>>>>>>> refs/heads/master
 =======
 		btnQuit.setBorderPainted(false); 
 		btnQuit.setContentAreaFilled(false); 
@@ -122,6 +136,9 @@ public class Adminbar extends AbstractGUI {
 		contentPane.add(Cover);		
 		
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> refs/heads/master
 	}
 	
 	public JLabel getLblNotificationCenter() {
@@ -194,6 +211,7 @@ public class Adminbar extends AbstractGUI {
 	
 	public void QuitLitsner(ActionListener listenForQuitButton){
 		btnQuit.addActionListener(listenForQuitButton);
+<<<<<<< HEAD
 =======
 >>>>>>> refs/heads/master
 	}
@@ -270,3 +288,7 @@ public class Adminbar extends AbstractGUI {
 		btnQuit.addActionListener(listenForQuitButton);
 	}
 }
+=======
+	}
+}
+>>>>>>> refs/heads/master

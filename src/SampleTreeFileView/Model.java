@@ -23,8 +23,11 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 
+<<<<<<< HEAD
 import GUI_final.CreateFolderScreen;
 
+=======
+>>>>>>> refs/heads/master
 import Entity.Abstract_Entity;
 import GUI_final.CreateFolderScreen;
 
@@ -44,7 +47,10 @@ public class Model extends Abstract_Entity{
     private JTable table;
     private TableColumn tableColumn;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> refs/heads/master
     
     //file
     private File newFile;
@@ -66,6 +72,9 @@ public File getNewFile() {
 	public void setUserID(int userID) {
 		UserID = userID;
 	}
+<<<<<<< HEAD
+>>>>>>> refs/heads/master
+=======
 >>>>>>> refs/heads/master
 
 public void showRootFile() {

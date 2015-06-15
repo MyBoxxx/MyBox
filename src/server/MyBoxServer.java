@@ -18,6 +18,7 @@ import java.util.Vector;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 import net.proteanit.sql.DbUtils;
 
@@ -26,6 +27,14 @@ import com.mysql.jdbc.PreparedStatement;
 import Entity.Login_Entity;
 import Entity.SystemAdminReequestScreen_Entity;
 import Entity.SystemAdminRequestScree_List;
+=======
+import javax.swing.table.TableModel;
+
+import net.proteanit.sql.DbUtils;
+import Entity.Login_Entity;
+import Entity.SystemAdminReequestScreen_Entity;
+import SampleTreeFileView.Model;
+>>>>>>> refs/heads/master
 =======
 import javax.swing.table.TableModel;
 
@@ -160,6 +169,7 @@ public class MyBoxServer extends AbstractServer
 	        		
 	        	
 <<<<<<< HEAD
+<<<<<<< HEAD
 	        if(msg instanceof SystemAdminRequestScree_List){
 	        	((SystemAdminRequestScree_List) msg).setListFromServer(buildTableModel(conn,"SELECT * FROM mybox.Users ; ")); 
 	        	try{
@@ -169,6 +179,31 @@ public class MyBoxServer extends AbstractServer
 	        		e.printStackTrace();
 	        	}
 	        }
+=======
+	        if(msg instanceof SystemAdminReequestScreen_Entity){
+	        	((SystemAdminReequestScreen_Entity) msg).setTablemodel(buildTableModel(conn,"SELECT requestID,RequestType,status,AdminRequsts.UserId , UserName FROM AdminRequsts , Users Where Users.UserID = AdminRequsts.UserId; ")); 
+	        	try{
+	        		client.sendToClient(msg);
+	        	}
+	        	catch (IOException e){
+	        		e.printStackTrace();
+	        	}
+	        }
+	        if(msg instanceof Model){
+	    		File temp =  new File("U_"+((Model)msg).getUserID());
+	    		//if(!temp.exists()) temp.mkdir();
+	    		//((Model) msg).getNewFile()
+	    		try{
+	    			org.apache.commons.io.FileUtils.copyFileToDirectory(((Model)msg).getNewFile() , temp );
+		    		System.out.println("path : "+ temp.getPath()  + "isDir = " + temp.isDirectory());
+
+	    		}
+	    		catch (IOException e){
+	    			e.printStackTrace();
+	    			}
+	    	}
+	        
+>>>>>>> refs/heads/master
 =======
 	        if(msg instanceof SystemAdminReequestScreen_Entity){
 	        	((SystemAdminReequestScreen_Entity) msg).setTablemodel(buildTableModel(conn,"SELECT requestID,RequestType,status,AdminRequsts.UserId , UserName FROM AdminRequsts , Users Where Users.UserID = AdminRequsts.UserId; ")); 
@@ -521,6 +556,10 @@ private Boolean checkUserPassword(Connection con, Login_Entity log){
 		ResultSet rs = stmt.executeQuery("SELECT * FROM Users where UserName ='"+ log.getUsername() + "' AND Password = '"+log.getPassword() +"' ;");
 		if(rs.next()) { //if user exist
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+			log.setIDuser(rs.getInt("UserID"));
+>>>>>>> refs/heads/master
 =======
 			log.setIDuser(rs.getInt("UserID"));
 >>>>>>> refs/heads/master
@@ -636,6 +675,7 @@ public void TableFromDatabase(JTable table, String Query,Connection conn)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 public static JTable buildTableModel(Connection con,String stat)
 	{
 		  Statement stmt;
@@ -708,3 +748,23 @@ public  TableModel buildTableModel(Connection con,String stat)
 >>>>>>> refs/heads/master
 	}
 }
+=======
+public  TableModel buildTableModel(Connection con,String stat)
+	{
+	
+		  	Statement stmt;
+			try 
+			{
+			stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery(stat);
+			return DbUtils.resultSetToTableModel(rs);
+			
+			
+			}
+			catch (Exception e){
+				
+			}
+			return null;
+	}
+}
+>>>>>>> refs/heads/master

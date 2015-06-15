@@ -6,37 +6,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.net.MalformedURLException;
-<<<<<<< HEAD
-
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-
-import Entity.*;
-import GUI_final.*;
-
-public class AdminBar_Controller {
-
-	private  Adminbar_model model ;
-	private  Adminbar view;
-	
-	AdminBar_Controller(Adminbar_model model,Adminbar view){
-		this.model = model;
-		this.view = view;
-	}
-	public void control(){
-		this.view.ChangeFMSLitsner(new ChangeFMSLitsner());
-		this.view.NotifcationYesLitsner(new NotificationYesLitsner());
-		this.view.NotifcationNoLitsner(new NotificationNoLitsner());
-		this.view.QuitLitsner(new QuitLitsner());
-	}
-	
-	class ChangeFMSLitsner implements ActionListener{
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			view.getBtnChangeFms().addMouseListener(new MouseAdapter() {
-				public void mouseClicked(MouseEvent e) {
-=======
 import java.util.jar.JarOutputStream;
 
 import javax.swing.JFrame;
@@ -71,7 +40,6 @@ public class AdminBar_Controller {
 				public void mouseClicked(MouseEvent e) {
 					view.setVisible(false);
 					testtyaron.main(null);
->>>>>>> refs/heads/master
 					JOptionPane.showMessageDialog(null,"FMS button pressed");
 				}				
 			});			
