@@ -86,8 +86,8 @@ public class Limitpeopleingroup extends JPanel {
 		add(txtpnCurrentNumberOf);
 		
 		CuurenttextField = new JTextField();
-		CuurenttextField.setBackground(Color.WHITE);
 		CuurenttextField.setEditable(false);
+		CuurenttextField.setBackground(Color.WHITE);
 		CuurenttextField.setBounds(272, 272, 86, 20);
 		add(CuurenttextField);
 		CuurenttextField.setColumns(10);
@@ -125,6 +125,70 @@ public class Limitpeopleingroup extends JPanel {
 		add(limitLabel);
 		
 		
+	}
+
+	public JTextField getCuurenttextField() {
+		return CuurenttextField;
+	}
+
+	public void setCuurenttextField(JTextField cuurenttextField) {
+		CuurenttextField = cuurenttextField;
+	}
+
+	public JTextField getNewAmounText() {
+		return newAmounText;
+	}
+
+	public void setNewAmounText(JTextField newAmounText) {
+		this.newAmounText = newAmounText;
+	}
+
+	public Choice getChoice() {
+		return choice;
+	}
+
+	public void setChoice(Choice choice) {
+		this.choice = choice;
+	}
+
+	public JTextPane getTxtpnCurrentNumberOf() {
+		return txtpnCurrentNumberOf;
+	}
+
+	public void setTxtpnCurrentNumberOf(JTextPane txtpnCurrentNumberOf) {
+		this.txtpnCurrentNumberOf = txtpnCurrentNumberOf;
+	}
+
+	public JTextPane getTxtpnWriteNewNumber() {
+		return txtpnWriteNewNumber;
+	}
+
+	public void setTxtpnWriteNewNumber(JTextPane txtpnWriteNewNumber) {
+		this.txtpnWriteNewNumber = txtpnWriteNewNumber;
+	}
+
+	public JButton getBtnOk() {
+		return btnOk;
+	}
+
+	public void setBtnOk(JButton btnOk) {
+		this.btnOk = btnOk;
+	}
+
+	public JButton getBtnCancel() {
+		return btnCancel;
+	}
+
+	public void setBtnCancel(JButton btnCancel) {
+		this.btnCancel = btnCancel;
+	}
+
+	public JLabel getLimitLabel() {
+		return limitLabel;
+	}
+
+	public void setLimitLabel(JLabel limitLabel) {
+		this.limitLabel = limitLabel;
 	}
 
 
