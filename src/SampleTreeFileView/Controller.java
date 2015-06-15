@@ -13,21 +13,8 @@ import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 import Client.MainClient;
 import Client.myBoxClient;
->>>>>>> refs/heads/master
-=======
-import Client.MainClient;
-import Client.myBoxClient;
->>>>>>> refs/heads/master
-=======
-import Client.MainClient;
-import Client.myBoxClient;
->>>>>>> refs/heads/master
 import Controlers.*;
 import Entity.Folder_Entity;
 import GUI_final.*;
@@ -63,14 +50,6 @@ public class Controller extends AbstractTransfer{
     
     private TreeSelectionListener treeSelectionListener;
     
-<<<<<<< HEAD
-<<<<<<< HEAD
-    private TreeSelectionListener treeSelectionListener;
-    
-=======
->>>>>>> refs/heads/master
-=======
->>>>>>> refs/heads/master
     
     public Controller(Model model, View view){
         this.model = model;

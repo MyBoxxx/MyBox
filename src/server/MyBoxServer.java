@@ -8,50 +8,17 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Vector;
 
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-import net.proteanit.sql.DbUtils;
-
-import com.mysql.jdbc.PreparedStatement;
-
-import Entity.Login_Entity;
-import Entity.SystemAdminReequestScreen_Entity;
-import Entity.SystemAdminRequestScree_List;
-=======
 import javax.swing.table.TableModel;
 
 import net.proteanit.sql.DbUtils;
 import Entity.Login_Entity;
 import Entity.SystemAdminReequestScreen_Entity;
 import SampleTreeFileView.Model;
->>>>>>> refs/heads/master
-=======
-import javax.swing.table.TableModel;
-
-import net.proteanit.sql.DbUtils;
-import Entity.Login_Entity;
-import Entity.SystemAdminReequestScreen_Entity;
-import SampleTreeFileView.Model;
->>>>>>> refs/heads/master
-=======
-import javax.swing.table.TableModel;
-
-import net.proteanit.sql.DbUtils;
-import Entity.Login_Entity;
-import Entity.SystemAdminReequestScreen_Entity;
-import SampleTreeFileView.Model;
->>>>>>> refs/heads/master
 import ocsf.server.AbstractServer;
 import ocsf.server.ConnectionToClient;
 
@@ -177,19 +144,6 @@ public class MyBoxServer extends AbstractServer
 	        }
 	        		
 	        	
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-	        if(msg instanceof SystemAdminRequestScree_List){
-	        	((SystemAdminRequestScree_List) msg).setListFromServer(buildTableModel(conn,"SELECT * FROM mybox.Users ; ")); 
-	        	try{
-	        		client.sendToClient(msg);
-	        	}
-	        	catch (IOException e){
-	        		e.printStackTrace();
-	        	}
-	        }
-=======
 	        if(msg instanceof SystemAdminReequestScreen_Entity){
 	        	((SystemAdminReequestScreen_Entity) msg).setTablemodel(buildTableModel(conn,"SELECT requestID,RequestType,status,AdminRequsts.UserId , UserName FROM AdminRequsts , Users Where Users.UserID = AdminRequsts.UserId; ")); 
 	        	try{
@@ -213,57 +167,6 @@ public class MyBoxServer extends AbstractServer
 	    			}
 	    	}
 	        
->>>>>>> refs/heads/master
-=======
-	        if(msg instanceof SystemAdminReequestScreen_Entity){
-	        	((SystemAdminReequestScreen_Entity) msg).setTablemodel(buildTableModel(conn,"SELECT requestID,RequestType,status,AdminRequsts.UserId , UserName FROM AdminRequsts , Users Where Users.UserID = AdminRequsts.UserId; ")); 
-	        	try{
-	        		client.sendToClient(msg);
-	        	}
-	        	catch (IOException e){
-	        		e.printStackTrace();
-	        	}
-	        }
-	        if(msg instanceof Model){
-	    		File temp =  new File("U_"+((Model)msg).getUserID());
-	    		//if(!temp.exists()) temp.mkdir();
-	    		//((Model) msg).getNewFile()
-	    		try{
-	    			org.apache.commons.io.FileUtils.copyFileToDirectory(((Model)msg).getNewFile() , temp );
-		    		System.out.println("path : "+ temp.getPath()  + "isDir = " + temp.isDirectory());
-
-	    		}
-	    		catch (IOException e){
-	    			e.printStackTrace();
-	    			}
-	    	}
-	        
->>>>>>> refs/heads/master
-=======
-	        if(msg instanceof SystemAdminReequestScreen_Entity){
-	        	((SystemAdminReequestScreen_Entity) msg).setTablemodel(buildTableModel(conn,"SELECT requestID,RequestType,status,AdminRequsts.UserId , UserName FROM AdminRequsts , Users Where Users.UserID = AdminRequsts.UserId; ")); 
-	        	try{
-	        		client.sendToClient(msg);
-	        	}
-	        	catch (IOException e){
-	        		e.printStackTrace();
-	        	}
-	        }
-	        if(msg instanceof Model){
-	    		File temp =  new File("U_"+((Model)msg).getUserID());
-	    		//if(!temp.exists()) temp.mkdir();
-	    		//((Model) msg).getNewFile()
-	    		try{
-	    			org.apache.commons.io.FileUtils.copyFileToDirectory(((Model)msg).getNewFile() , temp );
-		    		System.out.println("path : "+ temp.getPath()  + "isDir = " + temp.isDirectory());
-
-	    		}
-	    		catch (IOException e){
-	    			e.printStackTrace();
-	    			}
-	    	}
-	        
->>>>>>> refs/heads/master
 	        
 	        if(msg instanceof String){
 	        	try {
@@ -590,18 +493,7 @@ private Boolean checkUserPassword(Connection con, Login_Entity log){
 		stmt = con.createStatement();
 		ResultSet rs = stmt.executeQuery("SELECT * FROM Users where UserName ='"+ log.getUsername() + "' AND Password = '"+log.getPassword() +"' ;");
 		if(rs.next()) { //if user exist
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 			log.setIDuser(rs.getInt("UserID"));
->>>>>>> refs/heads/master
-=======
-			log.setIDuser(rs.getInt("UserID"));
->>>>>>> refs/heads/master
-=======
-			log.setIDuser(rs.getInt("UserID"));
->>>>>>> refs/heads/master
 			if(rs.getString("isAdmin").equals("1")) log.setAdmin(true);
 			if(rs.getInt("isLogin")==1) log.setAdmin(true);
 			log.setUser(true);
@@ -713,82 +605,6 @@ public void TableFromDatabase(JTable table, String Query,Connection conn)
 	    }
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-public static JTable buildTableModel(Connection con,String stat)
-	{
-		  Statement stmt;
-			try 
-			{
-			stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery(stat);
-			String[] s = null;
-	        List<Object> l = new ArrayList<Object>();
-	        Object[][] data1 = null;
-	 
-	        ResultSetMetaData metaData = rs.getMetaData();
-	 
-	        // names of columns
-	        // List<String> columnNamesList = new ArrayList<String>();
-	 
-	        // int columnCount = columnNames.size();
-	        int columnCount = metaData.getColumnCount();
-	        for (int column = 0; column <= columnCount; column++) {
-	            s = new String[columnCount];
-	            s[column] = metaData.getColumnName(column);
-	            // columnNames.add(metaData.getColumnName(column));
-	 
-	        }
-	 
-	        // data of the table
-	        // Vector<Vector<Object>> data = new Vector<Vector<Object>>();
-	        while (rs.next()) {
-	            // Vector<Object> vector = new Vector<Object>();
-	 
-	            for (int columnIndex = 1; columnIndex <= columnCount; columnIndex++) {
-	                l.add(rs.getObject(columnIndex));
-	 
-	                // vector.add(rs.getObject(columnIndex));
-	 
-	                // values.toArray(new Object[][] {})
-	            }
-	            data1 = l.toArray(new Object[][] {});
-	            // data.add(vector);
-	        }
-	 
-	        DefaultTableModel t_model = new DefaultTableModel(data1, s);
-	        JTable table = new JTable(t_model);
-	 
-	        return table;
-	 
-	    }
-		catch (Exception e ){
-				
-		}
-		return null;
-	
-=======
-public  TableModel buildTableModel(Connection con,String stat)
-	{
-	
-		  	Statement stmt;
-			try 
-			{
-			stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery(stat);
-			return DbUtils.resultSetToTableModel(rs);
-			
-			
-			}
-			catch (Exception e){
-				
-			}
-			return null;
->>>>>>> refs/heads/master
-	}
-}
-=======
 public  TableModel buildTableModel(Connection con,String stat)
 	{
 	
@@ -807,24 +623,3 @@ public  TableModel buildTableModel(Connection con,String stat)
 			return null;
 	}
 }
->>>>>>> refs/heads/master
-=======
-public  TableModel buildTableModel(Connection con,String stat)
-	{
-	
-		  	Statement stmt;
-			try 
-			{
-			stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery(stat);
-			return DbUtils.resultSetToTableModel(rs);
-			
-			
-			}
-			catch (Exception e){
-				
-			}
-			return null;
-	}
-}
->>>>>>> refs/heads/master
