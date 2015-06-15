@@ -111,6 +111,81 @@ public class Adminbar extends AbstractGUI {
 		Cover.setBounds(0, 0, 800, 600);
 		contentPane.add(Cover);		
 		
+<<<<<<< HEAD
+=======
+	}
+	
+	public JLabel getLblNotificationCenter() {
+		return lblNotificationCenter;
+	}
+
+	public void setLblNotificationCenter(JLabel lblNotificationCenter) {
+		this.lblNotificationCenter = lblNotificationCenter;
+	}
+
+	public JButton getNotifcationNo() {
+		return NotifcationNo;
+	}
+
+	public void setNotifcationNo(JButton notifcationNo) {
+		NotifcationNo = notifcationNo;
+	}
+
+	public JButton getNotifcationYes() {
+		return NotifcationYes;
+	}
+
+	public void setNotifcationYes(JButton notifcationYes) {
+		NotifcationYes = notifcationYes;
+	}
+
+	public JButton getBtnChangeFms() {
+		return btnChangeFms;
+	}
+
+	public void setBtnChangeFms(JButton btnChangeFms) {
+		this.btnChangeFms = btnChangeFms;
+	}
+
+	public JButton getBtnQuit() {
+		return btnQuit;
+	}
+
+	public void setBtnQuit(JButton btnQuit) {
+		this.btnQuit = btnQuit;
+	}
+
+	public JLabel getLblSystemAdminWindow() {
+		return lblSystemAdminWindow;
+	}
+
+	public void setLblSystemAdminWindow(JLabel lblSystemAdminWindow) {
+		this.lblSystemAdminWindow = lblSystemAdminWindow;
+	}
+
+	public JLabel getCover() {
+		return Cover;
+	}
+
+	public void setCover(JLabel cover) {
+		Cover = cover;
+	}
+
+	public void ChangeFMSLitsner(ActionListener listenForChnageFMSButton){
+		 btnChangeFms.addActionListener(listenForChnageFMSButton);
+	}
+	
+	public void NotifcationYesLitsner(ActionListener listenForNotifcationYesButton){
+		NotifcationYes.addActionListener(listenForNotifcationYesButton);
+	}
+	
+	public void NotifcationNoLitsner(ActionListener listenForNotifcationNoButton){
+		NotifcationYes.addActionListener(listenForNotifcationNoButton);
+	}
+	
+	public void QuitLitsner(ActionListener listenForQuitButton){
+		btnQuit.addActionListener(listenForQuitButton);
+>>>>>>> refs/remotes/origin/eyal
 	}
 	
 	public JLabel getLblNotificationCenter() {
