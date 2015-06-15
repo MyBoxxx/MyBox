@@ -7,10 +7,23 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Vector;
+
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+
+import net.proteanit.sql.DbUtils;
+
+import com.mysql.jdbc.PreparedStatement;
 
 import Entity.Login_Entity;
+import Entity.SystemAdminReequestScreen_Entity;
+import Entity.SystemAdminRequestScree_List;
 import ocsf.server.AbstractServer;
 import ocsf.server.ConnectionToClient;
 
@@ -123,26 +136,29 @@ public class MyBoxServer extends AbstractServer
 	        //Connection conn = DriverManager.getConnection("jdbc:mysql://192.168.3.68/test","root","Root");
 	        System.out.println("SQL connection succeed");
 	        if(msg instanceof Login_Entity){
-<<<<<<< HEAD
-	        	checkUserPassword(conn,(Login_Entity)msg);
-=======
 	        	System.out.println("Try To Coneect as "+ ((Login_Entity)msg).getUsername());
-	        	if(checkUserPassword(conn,(Login_Entity)msg));
->>>>>>> refs/heads/master
-	        		try {
+	        	if(checkUserPassword(conn,(Login_Entity)msg)) System.out.println("Login Succsed");
+	        	else System.out.println("Login Failed");
+	        	try {
 						client.sendToClient(msg);
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-	        } else
-				try {
-					client.sendToClient("Login failed");
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+	        	 
+	        }
+	        		
 	        	
+	        if(msg instanceof SystemAdminRequestScree_List){
+	        	((SystemAdminRequestScree_List) msg).setListFromServer(buildTableModel(conn,"SELECT * FROM mybox.Users ; ")); 
+	        	try{
+	        		client.sendToClient(msg);
+	        	}
+	        	catch (IOException e){
+	        		e.printStackTrace();
+	        	}
+	        }
+	        
 	        if(msg instanceof String){
 	        	try {
 		        if(msg.toString().startsWith("login")){
@@ -249,8 +265,30 @@ public class MyBoxServer extends AbstractServer
 	  	//client.sendToClient(msg);
 	  }
 
-    
- /**
+    /*
+ private void SystemAdminRequestScree_List_getList(Connection conn,
+		SystemAdminRequestScree_List msg) {
+	 Statement stmt;
+		try 
+		{
+			stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM AdminRequsts ORDER BY status;");
+			ArrayList<SystemAdminReequestScreen_Entity> ListFromServer = new ArrayList<SystemAdminReequestScreen_Entity>();
+			while (rs.next()) {
+				ListFromServer.add(new SystemAdminReequestScreen_Entity(rs.getInt("requestID"), rs.getInt("theRequest"), rs.getInt("status") , rs.getString("name")));
+			}
+			msg.setListFromServer(ListFromServer);
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+	 
+	
+}
+*/
+
+
+/**
   *   This method return all option commands
  * @return String of all option list with commands 
  */
@@ -444,30 +482,15 @@ private Boolean checkUserPassword(Connection con, Login_Entity log){
 	try 
 	{
 		stmt = con.createStatement();
-<<<<<<< HEAD
-		ResultSet rs = stmt.executeQuery("SELECT * FROM Users where UserName ='"+ log.getUser() + "' AND Password = '"+log.getPassword() +"' ;");
-=======
 		ResultSet rs = stmt.executeQuery("SELECT * FROM Users where UserName ='"+ log.getUsername() + "' AND Password = '"+log.getPassword() +"' ;");
->>>>>>> refs/heads/master
-		
-<<<<<<< HEAD
-		if(rs.next()) log.setStatus(rs.getInt("Status"));
-		return true;
-		
-=======
-		if(rs.next()) {
-			log.setStatus(rs.getInt("Status"));
-			log.setIDuser(rs.getString("IDuser"));
-			log.setLogedin(true);
-			log.setStatus(0);
-			if(rs.getInt("isAdmin")==1) log.setAdmin(true);
-			else log.setAdmin(false);
+		if(rs.next()) { //if user exist
+			if(rs.getString("isAdmin").equals("1")) log.setAdmin(true);
+			if(rs.getInt("isLogin")==1) log.setAdmin(true);
+			log.setUser(true);
 			return true;
 		}
-		log.setStatus(-1);
+		log.setUser(false);
 		return false;
->>>>>>> refs/heads/master
-		//stmt.executeUpdate("UPDATE course SET semestr=\"W08\" WHERE num=61309");
 	} catch (SQLException e) {e.printStackTrace();
 	return null;
 	}
@@ -542,4 +565,87 @@ private String createNewFile(Connection con, String fileName, String path) {
 }
 
 
+public void TableFromDatabase(JTable table, String Query,Connection conn)
+	{
+	    try
+	    {
+	        Statement stat = conn.createStatement();
+	        ResultSet rs = stat.executeQuery(Query);
+	        //To remove previously added rows
+	        while(table.getRowCount() > 0) 
+	        {
+	            ((DefaultTableModel) table.getModel()).removeRow(0);
+	        }
+	        int columns = rs.getMetaData().getColumnCount();
+	        while(rs.next())
+	        {  
+	            Object[] row = new Object[columns];
+	            for (int i = 1; i <= columns; i++)
+	            {  
+	                row[i - 1] = rs.getObject(i);
+	            }
+	            ((DefaultTableModel) table.getModel()).insertRow(rs.getRow()-1,row);
+	        }
+
+	        rs.close();
+	        stat.close();
+	    }
+	    catch(SQLException e)
+	    {
+	    }
+	}
+
+public static JTable buildTableModel(Connection con,String stat)
+	{
+		  Statement stmt;
+			try 
+			{
+			stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery(stat);
+			String[] s = null;
+	        List<Object> l = new ArrayList<Object>();
+	        Object[][] data1 = null;
+	 
+	        ResultSetMetaData metaData = rs.getMetaData();
+	 
+	        // names of columns
+	        // List<String> columnNamesList = new ArrayList<String>();
+	 
+	        // int columnCount = columnNames.size();
+	        int columnCount = metaData.getColumnCount();
+	        for (int column = 0; column <= columnCount; column++) {
+	            s = new String[columnCount];
+	            s[column] = metaData.getColumnName(column);
+	            // columnNames.add(metaData.getColumnName(column));
+	 
+	        }
+	 
+	        // data of the table
+	        // Vector<Vector<Object>> data = new Vector<Vector<Object>>();
+	        while (rs.next()) {
+	            // Vector<Object> vector = new Vector<Object>();
+	 
+	            for (int columnIndex = 1; columnIndex <= columnCount; columnIndex++) {
+	                l.add(rs.getObject(columnIndex));
+	 
+	                // vector.add(rs.getObject(columnIndex));
+	 
+	                // values.toArray(new Object[][] {})
+	            }
+	            data1 = l.toArray(new Object[][] {});
+	            // data.add(vector);
+	        }
+	 
+	        DefaultTableModel t_model = new DefaultTableModel(data1, s);
+	        JTable table = new JTable(t_model);
+	 
+	        return table;
+	 
+	    }
+		catch (Exception e ){
+				
+		}
+		return null;
+	
+	}
 }

@@ -62,31 +62,6 @@ public class LogIn_Controller extends AbstractTransfer{
 			if(view.getPasswordField().getText().equals("password") || view.getTxtUserName().getText().equals("UserName"))
 				{
 				view.settxtOneOrMoreVisible(true);
-<<<<<<< HEAD
-				}
-			else view.settxtOneOrMoreVisible(false);
-				
-			try{
-				model.setUser(view.getTxtUserName().getText());
-				model.setPassword(view.getPasswordField().getText());
-				sendToServer(model);
-				
-			}
-			catch (Exception eee){
-				
-			}
-			
-			if(view.getTxtUserName().getText().equals("eyal")) 
-					{
-					//JOptionPane.showMessageDialog(view.getContentPane(),  "Login OK!.");
-					//redirect to systemfileview
-		        	view.settxtOneOrMoreVisible(false);
-		        
-					}
-				else {
-
-=======
->>>>>>> refs/heads/master
 				}
 			else view.settxtOneOrMoreVisible(false);
 				
@@ -95,13 +70,10 @@ public class LogIn_Controller extends AbstractTransfer{
 				model.setPassword(view.getPasswordField().getText());
 				sendToServer(model);
 			}
-<<<<<<< HEAD
-=======
 			catch (Exception eee){
 				
 			}
 			}
->>>>>>> refs/heads/master
 		});
 		
 		
@@ -153,12 +125,6 @@ public class LogIn_Controller extends AbstractTransfer{
 	    });
 	    
 		
-<<<<<<< HEAD
-		
-		
-		
-		
-=======
 			
 		
 	}//end control
@@ -167,24 +133,14 @@ public class LogIn_Controller extends AbstractTransfer{
 
 	public void ErrorLogin() {
 		JOptionPane.showMessageDialog(view.getContentPane(),  "Login Failed!."+view.getTxtUserName().getText()+ view.getPasswordField().getText());
-
 	}
 
 	public void MakeLogin() {
-
 		view.dispose();
-		Main.main();
->>>>>>> refs/heads/master
-	}
-
-	public void MakeLogin() {
-		String []User = {model.getUser(),model.getPassword()};
-    	Main.main(User);
-	}
-
-	public void ErrorLogin() {
-		JOptionPane.showMessageDialog(view.getContentPane(),  "Login Failed!."+view.getTxtUserName().getText()+ view.getPasswordField().getText());
-
+		if(MainClient.clien.getCurrUser().isAdmin()) 
+			testtyaron.main(null);
+			//MainAdmin.main(null);
+		else Main.main(null);
 	}
 	
 	

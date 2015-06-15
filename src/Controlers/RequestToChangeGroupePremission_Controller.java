@@ -1,21 +1,22 @@
 package Controlers;
-
-
+import GUI_final.RequestToChangeGroupPermission;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import GUI_final.RequesrToChangeGroupPermission;
+
 
 public class RequestToChangeGroupePremission_Controller {
 
-	private RequesrToChangeGroupPermission theview;
+	private RequestToChangeGroupPermission theview;
 	
-	public RequestToChangeGroupePremission_Controller(RequesrToChangeGroupPermission theview)
+	public RequestToChangeGroupePremission_Controller(RequestToChangeGroupPermission theview)
 	{
 		this.theview=theview;
-		this.theview.ButtonPressedActionlistiner(new ButtonPressedActionlistiner());
+		this.theview.ButtonPressedActionlistinersend(new ButtonPressedActionlistinersend());
+		this.theview.ButtonPressedActionlistinercancel(new ButtonPressedActionlistinercancel());
 	}
-	public class ButtonPressedActionlistiner implements ActionListener{
+	
+	public class ButtonPressedActionlistinersend implements ActionListener{
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -24,6 +25,17 @@ public class RequestToChangeGroupePremission_Controller {
 		}
 		
 	}
+	
+	public class ButtonPressedActionlistinercancel implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			System.out.println("ein ma");
+		}
+		
+	}
+	
 	
 }
 

@@ -7,20 +7,27 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import Entity.SystemadminReequestScreen_Entity;
+import javax.swing.JTable;
+
+import Client.MainClient;
+import Entity.SystemAdminReequestScreen_Entity;
+import Entity.SystemAdminRequestScree_List;
 import GUI_final.SysAdminRequesrScreen;
 
 
 public class SystemAdminRequestsScreen_Controller extends AbstractTransfer {
-	static SystemadminReequestScreen_Entity model ;
+	static SystemAdminReequestScreen_Entity model ;
 	static SysAdminRequesrScreen view;
+	
+	static SystemAdminRequestScree_List List_entity;
 	
 	ActionListener loginActionListener ;
 	ActionListener forgotActionListener ;
 	
-	SystemAdminRequestsScreen_Controller(SystemadminReequestScreen_Entity model,SysAdminRequesrScreen view){
+	SystemAdminRequestsScreen_Controller(SystemAdminReequestScreen_Entity model,SysAdminRequesrScreen view){
 		this.model = model;
 		this.view = view;
+		view.getTable().setVisible(true);
 		view.setBounds(100, 100, 800, 600);
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		view.setLocation(dim.width/2-view.getSize().width/2, dim.height/2-view.getSize().height/2);
@@ -28,6 +35,10 @@ public class SystemAdminRequestsScreen_Controller extends AbstractTransfer {
 	}
 	
 	public void control(){
+		MainClient.clien.setCurrController(this); // Set The Current Controller to this
+		view.setTable(new JTable());
+		SendRefreshList(); 	
+		//request the list
 		
 		view.getBtnReset().addActionListener(new ActionListener() {	
 			@Override
@@ -87,8 +98,15 @@ public class SystemAdminRequestsScreen_Controller extends AbstractTransfer {
 		});
 		
 		}
-		
-		
+
+	private void SendRefreshList() {
+		List_entity = new  SystemAdminRequestScree_List();
+		sendToServer(List_entity);
+	}
+	
+	public void refreshList(){
+		view.setTable(List_entity.getListFromServer());
+	}	
 		
 	}
 

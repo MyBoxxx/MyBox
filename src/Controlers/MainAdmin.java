@@ -1,25 +1,26 @@
 package Controlers;
 
-import GUI_final.*;
-
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.net.MalformedURLException;
 
-import Entity.*;
+import Entity.Adminbar_model;
+import Entity.Login_Entity;
+import GUI_final.Adminbar;
+import GUI_final.Login_GUI;
 
-public class testtyaron {
-	static SystemAdminReequestScreen_Entity model ;
+public class MainAdmin {
+	static Adminbar_model model ;
 	
-	static SysAdminRequesrScreen view;
+	static Adminbar view;
 	
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		try {
-			view = new SysAdminRequesrScreen();
-			model = new SystemAdminReequestScreen_Entity();
-			SystemAdminRequestsScreen_Controller controler = new SystemAdminRequestsScreen_Controller(model, view);
+			 view = new Adminbar();
+			 model = new Adminbar_model();
+			AdminBar_Controller controler = new AdminBar_Controller(model, view);
 			view.setBounds(100, 100, 800, 600);
 			controler.control();
 			Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();

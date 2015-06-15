@@ -60,6 +60,11 @@ public class SysAdminRequesrScreen extends AbstractGUI {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
+		table = new JTable();
+		table.setBounds(63, 50, 434, 173);
+		contentPane.add(table);
+		table.setVisible(true);
+		
 		lblRequest = new JLabel("System Admin Requests");
 		lblRequest.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
 		lblRequest.setForeground(Color.BLACK);
@@ -87,10 +92,6 @@ public class SysAdminRequesrScreen extends AbstractGUI {
 		btnReset = new JButton("reset");
 		btnReset.setBounds(63, 304, 81, 29);
 		contentPane.add(btnReset);
-		
-		table = new JTable();
-		table.setBounds(63, 50, 434, 173);
-		contentPane.add(table);
 		
 	}
 
