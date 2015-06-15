@@ -17,11 +17,8 @@ public class MainClient {
         public static void main(String[] args) 
         {
         	try{
-<<<<<<< HEAD
         		clien = new myBoxClient("192.168.10.101", 5555);
-=======
         		clien = new myBoxClient("localhost", 5555);
->>>>>>> refs/remotes/origin/eyal
         		 Splash.main();
         	}catch (Exception ee){
         		System.out.println("ERRRROOOORR");
