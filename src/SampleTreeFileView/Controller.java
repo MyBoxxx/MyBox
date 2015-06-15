@@ -13,11 +13,16 @@ import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 
+<<<<<<< HEAD
+=======
+import Client.MainClient;
+import Client.myBoxClient;
+>>>>>>> refs/heads/master
 import Controlers.*;
 import Entity.Folder_Entity;
 import GUI_final.*;
 
-public class Controller {
+public class Controller extends AbstractTransfer{
     private Model model;
     private View view;
     
@@ -48,10 +53,13 @@ public class Controller {
     
     private TreeSelectionListener treeSelectionListener;
     
+    private TreeSelectionListener treeSelectionListener;
+    
     
     public Controller(Model model, View view){
         this.model = model;
-        this.view = view;      
+        this.model.setUserID(myBoxClient.getCurrUser().getIDuser());
+        this.view = view; 
         view.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
     
@@ -125,8 +133,8 @@ public class Controller {
 					JFileChooser fileChooser = new JFileChooser();
 					int returnValue = fileChooser.showOpenDialog(view.getGui());
 					if (returnValue == JFileChooser.APPROVE_OPTION) {
-						File selectedFile = fileChooser.getSelectedFile();
-						System.out.println(selectedFile.getName());
+						model.setNewFile(fileChooser.getSelectedFile());
+						sendToServer(model);
 					}
     			} catch(Throwable t) {
     				//showThrowable(t);
@@ -180,7 +188,6 @@ public class Controller {
     		public void actionPerformed(ActionEvent e) {
     			// TODO Auto-generated method stub
     			try {
-    				model.deleteFile(view.getGui());
     			} catch(Throwable t) {
     				//showThrowable(t);
     			}

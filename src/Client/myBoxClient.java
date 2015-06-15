@@ -30,7 +30,11 @@ public class myBoxClient extends ObservableClient {
 	 */
 	
 	private  Object currController;
+<<<<<<< HEAD
 	private  User_Entity currUser;
+=======
+	private  static User_Entity currUser;
+>>>>>>> refs/heads/master
 
 
 
@@ -69,14 +73,23 @@ public class myBoxClient extends ObservableClient {
 					((LogIn_Controller) currController).MakeLogin();
 				}
 				else {
+<<<<<<< HEAD
 					System.out.println("zao");
+=======
+>>>>>>> refs/heads/master
 					((LogIn_Controller) currController).ErrorLogin();	
 				}
 			}
 			
+<<<<<<< HEAD
 			if(message instanceof SystemAdminRequestScree_List)
 			{
 				System.out.println(message.toString());
+=======
+			if(message instanceof SystemAdminReequestScreen_Entity)
+			{
+				( (SystemAdminRequestsScreen_Controller) currController).setModel((SystemAdminReequestScreen_Entity) message);
+>>>>>>> refs/heads/master
 				( (SystemAdminRequestsScreen_Controller) currController).refreshList();
 			}
 			
@@ -90,7 +103,22 @@ public class myBoxClient extends ObservableClient {
 		notify();
 	}
 
+<<<<<<< HEAD
+=======
 
+	public static User_Entity getCurrUser() {
+		return myBoxClient.currUser;
+	}
+
+	public static void setCurrUser(User_Entity currUser) {
+		myBoxClient.currUser = currUser;
+	}
+	public   Object getCurrController() {
+		return currController;
+	}
+>>>>>>> refs/heads/master
+
+<<<<<<< HEAD
 	public  User_Entity getCurrUser() {
 		return currUser;
 	}
@@ -102,6 +130,8 @@ public class myBoxClient extends ObservableClient {
 		return currController;
 	}
 
+=======
+>>>>>>> refs/heads/master
 
 	public void setCurrController(Object currController) {
 		this.currController = currController;
