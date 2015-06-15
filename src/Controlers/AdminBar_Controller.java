@@ -11,6 +11,8 @@ import java.util.jar.JarOutputStream;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+import view.Login_GUI;
+import view.MainWindow_GUI;
 import Client.myBoxClient;
 import Entity.*;
 import GUI_final.*;
@@ -75,7 +77,10 @@ public class AdminBar_Controller {
 		public void actionPerformed(ActionEvent e) {
 			view.getBtnQuit().addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent e) {
-					JOptionPane.showMessageDialog(null,"logout pressed");
+					view.dispose();
+					LoginMain.main(null);
+					//JOptionPane.showMessageDialog(null,"logout pressed");
+					
 				}				
 			});			
 		}		
