@@ -3,7 +3,11 @@ package server;
 // "Object Oriented Software Engineering" and is issued under the open-source
 // license found at www.lloseng.com 
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -15,9 +19,10 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
+import org.apache.commons.io.FileUtils;
+
 import net.proteanit.sql.DbUtils;
-import Entity.Login_Entity;
-import Entity.SystemAdminReequestScreen_Entity;
+import Entity.*;
 import SampleTreeFileView.Model;
 import ocsf.server.AbstractServer;
 import ocsf.server.ConnectionToClient;
@@ -127,7 +132,7 @@ public class MyBoxServer extends AbstractServer
 	    
 	  try 
 	    {
-	        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/mybox","root","");
+	        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/mybox","root","Braude");
 	        //Connection conn = DriverManager.getConnection("jdbc:mysql://192.168.3.68/test","root","Root");
 	        System.out.println("SQL connection succeed");
 	        if(msg instanceof Login_Entity){
@@ -154,12 +159,15 @@ public class MyBoxServer extends AbstractServer
 	        	}
 	        }
 	        if(msg instanceof Model){
-	    		File temp =  new File("U_"+((Model)msg).getUserID());
-	    		//if(!temp.exists()) temp.mkdir();
-	    		//((Model) msg).getNewFile()
-	    		try{
-	    			org.apache.commons.io.FileUtils.copyFileToDirectory(((Model)msg).getNewFile() , temp );
-		    		System.out.println("path : "+ temp.getPath()  + "isDir = " + temp.isDirectory());
+	       	try{
+	    			  String path = "U_"+((Model)msg).getUserID() + "/"+((Model)msg).getNewFile().theFile.getName() ;
+		    		  System.out.println("Try To send");
+		    		 // File newFile = new File ("U_"+((Model)msg).getUserID() + "/"+((Model)msg).getNewFile().getName());
+		    		  FileUtils.writeByteArrayToFile(new File (path),((Model)msg).getNewFile().getMybytearray());
+		    			    
+		    			    
+	    			//org.apache.commons.io.FileUtils.copyFileToDirectory(((Model)msg).getNewFile() , temp );
+		    		//System.out.println("path : "+ newFile.getPath() +  " Add ");
 
 	    		}
 	    		catch (IOException e){
@@ -621,6 +629,5 @@ public  TableModel buildTableModel(Connection con,String stat)
 				
 			}
 			return null;
-
 	}
 }
