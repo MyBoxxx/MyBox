@@ -83,10 +83,10 @@ public class Adminbar extends AbstractGUI {
 		btnChangeFms = new JButton();		
 		btnChangeFms.setToolTipText("Chnage FMS");
 		btnChangeFms.setIcon(new ImageIcon("src/GUI_final/changeFMS.png"));
-		//btnChangeFms.setBackground(Color.WHITE);
+		btnChangeFms.setBorderPainted(false); 
+		btnChangeFms.setContentAreaFilled(false); 
+		btnChangeFms.setFocusPainted(false); 
 		btnChangeFms.setOpaque(false);
-		//btnChangeFms.setContentAreaFilled(false);
-		//btnChangeFms.setBorderPainted(false);
 		btnChangeFms.setBounds(6, 221, 230, 170);
 		contentPane.add(btnChangeFms);
 		
@@ -94,6 +94,10 @@ public class Adminbar extends AbstractGUI {
 		btnQuit.setIcon(new ImageIcon("src/GUI_final/logout_button.png"));
 		btnQuit.setBackground(new Color(41,91,150));
 		btnQuit.setBounds(6, 434, 148, 138);
+		btnQuit.setBorderPainted(false); 
+		btnQuit.setContentAreaFilled(false); 
+		btnQuit.setFocusPainted(false); 
+		btnQuit.setOpaque(false);
 		contentPane.add(btnQuit);
 		
 		lblSystemAdminWindow = new JLabel();

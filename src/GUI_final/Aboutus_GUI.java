@@ -1,18 +1,16 @@
 package GUI_final;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.net.MalformedURLException;
-import java.net.URL;
-
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
 import java.awt.Color;
 
+@SuppressWarnings("serial")
 public class Aboutus_GUI extends JFrame {
 
 	private JPanel contentPane;

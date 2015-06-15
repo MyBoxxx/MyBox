@@ -16,8 +16,8 @@ import GUI_final.SysAdminRequesrScreen;
 
 
 public class SystemAdminRequestsScreen_Controller extends AbstractTransfer {
-	static SystemAdminReequestScreen_Entity model ;
-	static SysAdminRequesrScreen view;
+	 SystemAdminReequestScreen_Entity model ;
+	 SysAdminRequesrScreen view;
 	
 	ActionListener loginActionListener ;
 	ActionListener forgotActionListener ;
@@ -36,13 +36,10 @@ public class SystemAdminRequestsScreen_Controller extends AbstractTransfer {
 		MainClient.clien.setCurrController(this); // Set The Current Controller to this	
 		SendRefreshList();
 		//request the list
+		
 		view.getBtnLoad().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				sendToServer(model);
-				view.getTable().setModel(model.getTablemodel());
-				System.out.println(view.getTable().getValueAt(0,0).toString());
-				view.getTable().repaint();
-				
+				SendRefreshList();		
 			}
 		});
 		view.getBtnReset().addActionListener(new ActionListener() {	
@@ -115,24 +112,13 @@ public class SystemAdminRequestsScreen_Controller extends AbstractTransfer {
 	public void refreshList(){
 		view.getTable().setModel(model.getTablemodel());
 		view.getTable().repaint();
-		view.repaint();
-		}	
+		}
+
+	public void setModel(SystemAdminReequestScreen_Entity message) {
+		// TODO Auto-generated method stub
+		this.model = message;
+	}	
 	
-	public static SystemAdminReequestScreen_Entity getModel() {
-		return model;
-	}
-
-	public void setModel(SystemAdminReequestScreen_Entity model) {
-		SystemAdminRequestsScreen_Controller.model = model;
-	}
-
-	public static SysAdminRequesrScreen getView() {
-		return view;
-	}
-
-	public static void setView(SysAdminRequesrScreen view) {
-		SystemAdminRequestsScreen_Controller.view = view;
-	}
 
 		
 	}
