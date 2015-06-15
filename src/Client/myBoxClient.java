@@ -30,7 +30,7 @@ public class myBoxClient extends ObservableClient {
 	 */
 	
 	private  Object currController;
-	private  User_Entity currUser;
+	private  static User_Entity currUser;
 
 
 
@@ -90,14 +90,14 @@ public class myBoxClient extends ObservableClient {
 	}
 
 
-	public  User_Entity getCurrUser() {
-		return currUser;
+	public static User_Entity getCurrUser() {
+		return myBoxClient.currUser;
 	}
 
-	public void setCurrUser(User_Entity currUser) {
-		this.currUser = currUser;
+	public static void setCurrUser(User_Entity currUser) {
+		myBoxClient.currUser = currUser;
 	}
-	public  Object getCurrController() {
+	public   Object getCurrController() {
 		return currController;
 	}
 

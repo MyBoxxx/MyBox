@@ -10,11 +10,12 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
-import net.proteanit.sql.DbUtils;
 
+import net.proteanit.sql.DbUtils;
 import Entity.Login_Entity;
 import Entity.SystemAdminReequestScreen_Entity;
 import SampleTreeFileView.Model;
@@ -153,17 +154,19 @@ public class MyBoxServer extends AbstractServer
 	        	}
 	        }
 	        if(msg instanceof Model){
-	        	File temp =  new File("/temp/");
-	    	
-	        	//((Model) msg).getNewFile()
-	        	try{
-	        		org.apache.commons.io.FileUtils.copyFileToDirectory(((Model)msg).getNewFile() , temp );
-	        		client.sendToClient(msg);
-	        	}
-	        	catch (IOException e){
-	        		e.printStackTrace();
-	        	}
-	        }
+	    		File temp =  new File("U_"+((Model)msg).getUserID());
+	    		//if(!temp.exists()) temp.mkdir();
+	    		//((Model) msg).getNewFile()
+	    		try{
+	    			org.apache.commons.io.FileUtils.copyFileToDirectory(((Model)msg).getNewFile() , temp );
+		    		System.out.println("path : "+ temp.getPath()  + "isDir = " + temp.isDirectory());
+
+	    		}
+	    		catch (IOException e){
+	    			e.printStackTrace();
+	    			}
+	    	}
+	        
 	        
 	        if(msg instanceof String){
 	        	try {
@@ -490,6 +493,7 @@ private Boolean checkUserPassword(Connection con, Login_Entity log){
 		stmt = con.createStatement();
 		ResultSet rs = stmt.executeQuery("SELECT * FROM Users where UserName ='"+ log.getUsername() + "' AND Password = '"+log.getPassword() +"' ;");
 		if(rs.next()) { //if user exist
+			log.setIDuser(rs.getInt("UserID"));
 			if(rs.getString("isAdmin").equals("1")) log.setAdmin(true);
 			if(rs.getInt("isLogin")==1) log.setAdmin(true);
 			log.setUser(true);

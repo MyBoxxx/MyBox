@@ -13,6 +13,8 @@ import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 
+import Client.MainClient;
+import Client.myBoxClient;
 import Controlers.*;
 import Entity.Folder_Entity;
 import GUI_final.*;
@@ -51,7 +53,8 @@ public class Controller extends AbstractTransfer{
     
     public Controller(Model model, View view){
         this.model = model;
-        this.view = view;      
+        this.model.setUserID(myBoxClient.getCurrUser().getIDuser());
+        this.view = view; 
         view.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
     
@@ -180,7 +183,6 @@ public class Controller extends AbstractTransfer{
     		public void actionPerformed(ActionEvent e) {
     			// TODO Auto-generated method stub
     			try {
-    				model.deleteFile(view.getGui());
     			} catch(Throwable t) {
     				//showThrowable(t);
     			}
