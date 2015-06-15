@@ -1,59 +1,46 @@
 package GUI_final;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
 
-import javax.naming.ldap.Rdn;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.border.TitledBorder;
-import javax.swing.JRadioButton;
-import javax.swing.JTree;
-import javax.swing.AbstractAction;
-
-import java.awt.event.ActionEvent;
-
-import javax.swing.Action;
-import javax.swing.JButton;
-
-import java.awt.event.ActionListener;
-
+import javax.swing.border.EmptyBorder;
 import javax.swing.ImageIcon;
-import javax.swing.JRadioButtonMenuItem;
+import javax.swing.JTextPane;
 import javax.swing.JList;
 import javax.swing.JComboBox;
-import javax.swing.DefaultComboBoxModel;
-import java.awt.Color;
+import javax.swing.JButton;
+import javax.swing.JSpinner;
+import javax.swing.JTextArea;
+import javax.swing.JLabel;
+import java.awt.Font;
+import java.awt.SystemColor;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 
-public class CangeFileFolderPermission extends AbstractGUI{
+public class Adminbar extends AbstractGUI {
 
-	private final Action action = new SwingAction();
-	private JButton buttonSend;
-	private JButton buttonCancel;
-	private JLabel lblChageFilefolderPermission;
-    private JRadioButton Private;
-    private JRadioButton All;
-    private JRadioButton Group;
-    private JList list;
-    private JRadioButton readAll;
-    private JRadioButton writeGroup;
-    private JComboBox comboBox;
-    private JRadioButton ReadGroup ;
-    private JRadioButton writeAll;
-    private JLabel ChooseType ;
-    private JLabel ReadWrite ;
-    private JLabel Permission ;
+	private JPanel contentPane;
+	private JLabel lblNotificationCenter;
+	private JButton NotifcationNo;	
+	private JButton NotifcationYes;	
+	private JButton btnChangeFms;
+	private JButton btnQuit;
+	private JLabel lblSystemAdminWindow;
+	private JLabel Cover;
 	
 
 	/**
-	 * Create the application.
+	 * Launch the application.
 	 */
-    
-    public static  void main(String[] args) {
+	public void Initialize(){//*static  void main(String[] args) {**//
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					CangeFileFolderPermission frame = new CangeFileFolderPermission();
+					Adminbar frame = new Adminbar();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -61,235 +48,140 @@ public class CangeFileFolderPermission extends AbstractGUI{
 			}
 		});
 	}
-    
-    
-	public CangeFileFolderPermission() {
-		initialize();
-	}
 
 	/**
-	 * Initialize the contents of the frame.
+	 * Create the frame.
 	 */
-	private void initialize() {
+	public Adminbar() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 800, 600);
+		contentPane = new JPanel();
+		contentPane.setBackground(Color.WHITE);
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setBackground(new Color(2,98,158));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
 		
-		 getContentPane().setBackground(Color.WHITE);
-		 setTitle("My Box");
-		 setBounds(100, 100, 800, 600);
-		 setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		 getContentPane().setLayout(null);
+		lblNotificationCenter = new JLabel();
+		lblNotificationCenter.setIcon(new ImageIcon("src/GUI_final/noti.png"));
+		lblNotificationCenter.setBackground(new Color(41,91,150));
+		lblNotificationCenter.setBounds(6, 113, 336, 52);
+		contentPane.add(lblNotificationCenter);
 		
+		NotifcationNo = new JButton();
+		NotifcationNo.setIcon(new ImageIcon("src/GUI_final/notification_no.png"));
+		NotifcationNo.setBounds(434, 113, 50, 52);
+		NotifcationNo.setBackground(new Color(41,91,150));
+		contentPane.add(NotifcationNo);
 		
-		buttonSend = new JButton();
-		buttonSend.setBounds(27, 501, 187, 41);
-		 getContentPane().add(buttonSend);
-		buttonSend.setIcon(new ImageIcon("src/GUI_final/sendReuqest.PNG"));
+		NotifcationYes = new JButton();
+		NotifcationYes.setIcon(new ImageIcon("src/GUI_final/notification_yes.png"));
+		NotifcationYes.setBackground(new Color(41,91,150));
+		NotifcationYes.setBounds(354, 113, 52, 52);
+		contentPane.add(NotifcationYes);
 		
+		btnChangeFms = new JButton();		
+		btnChangeFms.setToolTipText("Chnage FMS");
+		btnChangeFms.setIcon(new ImageIcon("src/GUI_final/changeFMS.png"));
+		btnChangeFms.setBorderPainted(false); 
+		btnChangeFms.setContentAreaFilled(false); 
+		btnChangeFms.setFocusPainted(false); 
+		btnChangeFms.setOpaque(false);
+		btnChangeFms.setBounds(6, 221, 230, 170);
+		contentPane.add(btnChangeFms);
 		
-		buttonCancel = new JButton();
-		buttonCancel.setBounds(554, 501, 198, 41);
-		 getContentPane().add(buttonCancel);
-		buttonCancel.setIcon(new ImageIcon("src/GUI_final/cancelButton.jpg"));
+		btnQuit = new JButton();
+		btnQuit.setIcon(new ImageIcon("src/GUI_final/logout_button.png"));
+		btnQuit.setBackground(new Color(41,91,150));
+		btnQuit.setBounds(6, 434, 148, 138);
+		btnQuit.setBorderPainted(false); 
+		btnQuit.setContentAreaFilled(false); 
+		btnQuit.setFocusPainted(false); 
+		btnQuit.setOpaque(false);
+		contentPane.add(btnQuit);
 		
-	    lblChageFilefolderPermission = new JLabel();
-		lblChageFilefolderPermission.setIcon(new ImageIcon("src/GUI_final/changePermission.png"));
-		lblChageFilefolderPermission.setBounds(285, 6, 229, 128);
-		 getContentPane().add(lblChageFilefolderPermission);
+		lblSystemAdminWindow = new JLabel();
+		lblSystemAdminWindow.setBounds(290, 11, 800, 114);
+		lblSystemAdminWindow.setIcon(new ImageIcon("src/GUI_final/admin.png"));
+		lblSystemAdminWindow.setBackground(null);
+		contentPane.add(lblSystemAdminWindow);
 		
-		Private = new JRadioButton("Private");
-		Private.setBackground(Color.WHITE);
-		Private.setBounds(6, 225, 84, 23);
-		 getContentPane().add(Private);
+	    Cover = new JLabel();
+		Cover.setIcon(new ImageIcon("src/GUI_final/admin2.jpg"));
+		Cover.setBounds(0, 0, 800, 600);
+		contentPane.add(Cover);		
 		
-		All = new JRadioButton("All");
-		All.setBackground(Color.WHITE);
-		All.setBounds(6, 393, 72, 23);
-		 getContentPane().add(All);
-		
-		Group = new JRadioButton("Group");
-		Group.setBackground(Color.WHITE);
-		Group.setBounds(6, 307, 72, 23);
-		 getContentPane().add(Group);
-		
-		list = new JList();
-		list.setBounds(0, 0, -19, -38);
-		 getContentPane().add(list);
-		
-		readAll = new JRadioButton("Read");
-		readAll.setBackground(Color.WHITE);
-		readAll.setBounds(176, 393, 96, 23);
-		 getContentPane().add(readAll);
-		readAll.setEnabled(false);
-		
-		writeGroup = new JRadioButton("Write");
-		writeGroup.setBackground(Color.WHITE);
-		writeGroup.setBounds(176, 332, 96, 23);
-		 getContentPane().add(writeGroup);
-		writeGroup.setEnabled(false);
-		
-		comboBox = new JComboBox();
-		comboBox.setBackground(Color.WHITE);
-		comboBox.setBounds(535, 270, 141, 60);
-		 getContentPane().add(comboBox);
-		comboBox.setMaximumRowCount(100);
-		comboBox.setEnabled(false);
-		
-		ReadGroup = new JRadioButton("Read");
-		ReadGroup.setBackground(Color.WHITE);
-		ReadGroup.setBounds(176, 297, 121, 23);
-		 getContentPane().add(ReadGroup);
-		ReadGroup.setEnabled(false);
-		
-		writeAll = new JRadioButton("Write");
-		writeAll.setBackground(Color.WHITE);
-		writeAll.setBounds(176, 418, 114, 23);
-		 getContentPane().add(writeAll);
-		writeAll.setEnabled(false);
-		
-		ChooseType = new JLabel();
-		ChooseType.setIcon(new ImageIcon("src/GUI_final/thechoosegroup.png"));
-		ChooseType.setBounds(539, 147, 137, 86);
-		 getContentPane().add(ChooseType);
-		
-		ReadWrite = new JLabel();
-		ReadWrite.setIcon(new ImageIcon("src/GUI_final/readWrite.png"));
-		ReadWrite.setBounds(188, 167, 180, 27);
-		 getContentPane().add(ReadWrite);
-		
-		Permission = new JLabel();
-		Permission.setIcon(new ImageIcon("src/GUI_final/permission.png"));
-		Permission.setBounds(6, 167, 137, 27);
-		 getContentPane().add(Permission);
+	}
 	
-	}
-	public JButton getButtonSend() {
-		return buttonSend;
-	}
-
-	public void setButtonSend(JButton buttonSend) {
-		this.buttonSend = buttonSend;
+	public JLabel getLblNotificationCenter() {
+		return lblNotificationCenter;
 	}
 
-	public JButton getButtonCancel() {
-		return buttonCancel;
+	public void setLblNotificationCenter(JLabel lblNotificationCenter) {
+		this.lblNotificationCenter = lblNotificationCenter;
 	}
 
-	public void setButtonCancel(JButton buttonCancel) {
-		this.buttonCancel = buttonCancel;
+	public JButton getNotifcationNo() {
+		return NotifcationNo;
 	}
 
-	public JLabel getLblChageFilefolderPermission() {
-		return lblChageFilefolderPermission;
+	public void setNotifcationNo(JButton notifcationNo) {
+		NotifcationNo = notifcationNo;
 	}
 
-	public void setLblChageFilefolderPermission(JLabel lblChageFilefolderPermission) {
-		this.lblChageFilefolderPermission = lblChageFilefolderPermission;
+	public JButton getNotifcationYes() {
+		return NotifcationYes;
 	}
 
-	public JRadioButton getPrivate() {
-		return Private;
+	public void setNotifcationYes(JButton notifcationYes) {
+		NotifcationYes = notifcationYes;
 	}
 
-	public void setPrivate(JRadioButton private1) {
-		Private = private1;
+	public JButton getBtnChangeFms() {
+		return btnChangeFms;
 	}
 
-	public JRadioButton getAll() {
-		return All;
+	public void setBtnChangeFms(JButton btnChangeFms) {
+		this.btnChangeFms = btnChangeFms;
 	}
 
-	public void setAll(JRadioButton all) {
-		All = all;
+	public JButton getBtnQuit() {
+		return btnQuit;
 	}
 
-	public JRadioButton getGroup() {
-		return Group;
+	public void setBtnQuit(JButton btnQuit) {
+		this.btnQuit = btnQuit;
 	}
 
-	public void setGroup(JRadioButton group) {
-		Group = group;
+	public JLabel getLblSystemAdminWindow() {
+		return lblSystemAdminWindow;
 	}
 
-	public JList getList() {
-		return list;
+	public void setLblSystemAdminWindow(JLabel lblSystemAdminWindow) {
+		this.lblSystemAdminWindow = lblSystemAdminWindow;
 	}
 
-	public void setList(JList list) {
-		this.list = list;
+	public JLabel getCover() {
+		return Cover;
 	}
 
-	public JRadioButton getReadAll() {
-		return readAll;
+	public void setCover(JLabel cover) {
+		Cover = cover;
 	}
 
-	public void setReadAll(JRadioButton readAll) {
-		this.readAll = readAll;
+	public void ChangeFMSLitsner(ActionListener listenForChnageFMSButton){
+		 btnChangeFms.addActionListener(listenForChnageFMSButton);
 	}
-
-	public JRadioButton getWriteGroup() {
-		return writeGroup;
+	
+	public void NotifcationYesLitsner(ActionListener listenForNotifcationYesButton){
+		NotifcationYes.addActionListener(listenForNotifcationYesButton);
 	}
-
-	public void setWriteGroup(JRadioButton writeGroup) {
-		this.writeGroup = writeGroup;
+	
+	public void NotifcationNoLitsner(ActionListener listenForNotifcationNoButton){
+		NotifcationYes.addActionListener(listenForNotifcationNoButton);
 	}
-
-	public JComboBox getComboBox() {
-		return comboBox;
-	}
-
-	public void setComboBox(JComboBox comboBox) {
-		this.comboBox = comboBox;
-	}
-
-	public JRadioButton getReadGroup() {
-		return ReadGroup;
-	}
-
-	public void setReadGroup(JRadioButton readGroup) {
-		ReadGroup = readGroup;
-	}
-
-	public JRadioButton getWriteAll() {
-		return writeAll;
-	}
-
-	public void setWriteAll(JRadioButton writeAll) {
-		this.writeAll = writeAll;
-	}
-
-	public JLabel getChooseType() {
-		return ChooseType;
-	}
-
-	public void setChooseType(JLabel chooseType) {
-		ChooseType = chooseType;
-	}
-
-	public JLabel getReadWrite() {
-		return ReadWrite;
-	}
-
-	public void setReadWrite(JLabel readWrite) {
-		ReadWrite = readWrite;
-	}
-
-	public JLabel getPermission() {
-		return Permission;
-	}
-
-	public void setPermission(JLabel permission) {
-		Permission = permission;
-	}
-
-	public Action getAction() {
-		return action;
-	}
-	private class SwingAction extends AbstractAction {
-		public SwingAction() {
-			putValue(NAME, "SwingAction");
-			putValue(SHORT_DESCRIPTION, "Some short description");
-		}
-		public void actionPerformed(ActionEvent e) {
-		}
+	
+	public void QuitLitsner(ActionListener listenForQuitButton){
+		btnQuit.addActionListener(listenForQuitButton);
 	}
 }
