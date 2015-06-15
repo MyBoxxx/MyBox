@@ -30,7 +30,7 @@ public class myBoxClient extends ObservableClient {
 	 */
 	
 	private  Object currController;
-	private  User_Entity currUser;
+	private  static User_Entity currUser;
 
 
 
@@ -64,8 +64,7 @@ public class myBoxClient extends ObservableClient {
 		try {
 
 			if (message instanceof Login_Entity){ // user name and password is found ( 1.setCurrUser that is using application, 2.set status to 1)
-				if(((Login_Entity) message).isUser()  == true)
-				{
+				if(((Login_Entity) message).isUser() == true){
 					this.currUser = (User_Entity) message;
 					((LogIn_Controller) currController).MakeLogin();
 				}
@@ -74,8 +73,9 @@ public class myBoxClient extends ObservableClient {
 				}
 			}
 			
-			if(message instanceof SystemAdminRequestScree_List)
+			if(message instanceof SystemAdminReequestScreen_Entity)
 			{
+				( (SystemAdminRequestsScreen_Controller) currController).setModel((SystemAdminReequestScreen_Entity) message);
 				( (SystemAdminRequestsScreen_Controller) currController).refreshList();
 			}
 			
@@ -90,14 +90,14 @@ public class myBoxClient extends ObservableClient {
 	}
 
 
-	public  User_Entity getCurrUser() {
-		return currUser;
+	public static User_Entity getCurrUser() {
+		return myBoxClient.currUser;
 	}
 
-	public void setCurrUser(User_Entity currUser) {
-		this.currUser = currUser;
+	public static void setCurrUser(User_Entity currUser) {
+		myBoxClient.currUser = currUser;
 	}
-	public  Object getCurrController() {
+	public   Object getCurrController() {
 		return currController;
 	}
 

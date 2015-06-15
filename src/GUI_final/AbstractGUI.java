@@ -3,20 +3,15 @@ package GUI_final;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-import java.io.IOException;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-
-import Client.MainClient;
-import Entity.*;
-import Client.*;
 /**
  * this class is Abstract Gui  that extends JFrame
  * @author jacob
  *
  */
+@SuppressWarnings("serial")
 public abstract class AbstractGUI extends JFrame
 {
 	protected JButton backButton=null;

@@ -133,13 +133,13 @@ public class LogIn_Controller extends AbstractTransfer{
 
 	public void ErrorLogin() {
 		JOptionPane.showMessageDialog(view.getContentPane(),  "Login Failed!."+view.getTxtUserName().getText()+ view.getPasswordField().getText());
-
 	}
 
 	public void MakeLogin() {
 		view.dispose();
 		if(MainClient.clien.getCurrUser().isAdmin()) 
 			MainAdmin.main(null);
+			//testtyaron.main(null);
 		else Main.main(null);
 	}
 	

@@ -6,10 +6,12 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.net.MalformedURLException;
+import java.util.jar.JarOutputStream;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+import Client.myBoxClient;
 import Entity.*;
 import GUI_final.*;
 
@@ -23,6 +25,7 @@ public class AdminBar_Controller {
 		this.view = view;
 	}
 	public void control(){
+		
 		this.view.ChangeFMSLitsner(new ChangeFMSLitsner());
 		this.view.NotifcationYesLitsner(new NotificationYesLitsner());
 		this.view.NotifcationNoLitsner(new NotificationNoLitsner());
@@ -35,6 +38,8 @@ public class AdminBar_Controller {
 		public void actionPerformed(ActionEvent e) {
 			view.getBtnChangeFms().addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent e) {
+					view.setVisible(false);
+					testtyaron.main(null);
 					JOptionPane.showMessageDialog(null,"FMS button pressed");
 				}				
 			});			
