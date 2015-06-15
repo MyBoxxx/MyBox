@@ -4,7 +4,9 @@ import java.awt.Desktop;
 import java.awt.Window.Type;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileInputStream;
 
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -13,10 +15,13 @@ import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 
+import org.apache.commons.io.FileUtils;
+
 import Client.MainClient;
 import Client.myBoxClient;
 import Controlers.*;
 import Entity.Folder_Entity;
+import Entity.MyFile;
 import GUI_final.*;
 
 public class Controller extends AbstractTransfer{
@@ -128,11 +133,20 @@ public class Controller extends AbstractTransfer{
 					JFileChooser fileChooser = new JFileChooser();
 					int returnValue = fileChooser.showOpenDialog(view.getGui());
 					if (returnValue == JFileChooser.APPROVE_OPTION) {
-						model.setNewFile(fileChooser.getSelectedFile());
+						fileChooser.getSelectedFile();
+						MyFile newFile = new MyFile(fileChooser.getSelectedFile());
+		      		      
+					      newFile.mybytearray = FileUtils.readFileToByteArray(fileChooser.getSelectedFile());
+					      model.setNewFile(newFile);
+						
+						
+						
+						//model.setNewFile(fileChooser.getSelectedFile());
 						sendToServer(model);
 					}
     			} catch(Throwable t) {
-    				//showThrowable(t);
+    				System.out.println("Error Send!!");
+    				t.printStackTrace();
     			}
     			
     		}

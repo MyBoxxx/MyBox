@@ -24,6 +24,7 @@ import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 
 import Entity.Abstract_Entity;
+import Entity.MyFile;
 import GUI_final.CreateFolderScreen;
 
 public class Model extends Abstract_Entity{
@@ -43,15 +44,16 @@ public class Model extends Abstract_Entity{
     private TableColumn tableColumn;
     
     //file
-    private File newFile;
+    private MyFile newFile;
     
     
-public File getNewFile() {
+public MyFile getNewFile() {
 		return newFile;
 	}
 
-	public void setNewFile(File newFile) {
+	public void setNewFile(MyFile newFile) {
 		this.newFile = newFile;
+		
 	}
 	
 	
