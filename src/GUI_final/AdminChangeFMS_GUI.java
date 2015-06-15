@@ -14,6 +14,10 @@ import java.awt.Color;
 import javax.swing.JTabbedPane;
 import javax.swing.JButton;
 
+import GUI_final.AdminAddPeopleToGroup;
+import GUI_final.AdminDeletePeopleToGroup;
+import GUI_final.Limitpeopleingroup;
+
 public class AdminChangeFMS_GUI extends JFrame {
 
 	private JPanel contentPane;
