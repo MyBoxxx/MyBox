@@ -3,29 +3,21 @@ package server;
 // "Object Oriented Software Engineering" and is issued under the open-source
 // license found at www.lloseng.com 
 
+import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Vector;
-
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
-import javax.swing.text.TabableView;
-
 import net.proteanit.sql.DbUtils;
-
-import com.mysql.jdbc.PreparedStatement;
 
 import Entity.Login_Entity;
 import Entity.SystemAdminReequestScreen_Entity;
-import Entity.SystemAdminRequestScree_List;
+import SampleTreeFileView.Model;
 import ocsf.server.AbstractServer;
 import ocsf.server.ConnectionToClient;
 
@@ -154,6 +146,18 @@ public class MyBoxServer extends AbstractServer
 	        if(msg instanceof SystemAdminReequestScreen_Entity){
 	        	((SystemAdminReequestScreen_Entity) msg).setTablemodel(buildTableModel(conn,"SELECT requestID,RequestType,status,AdminRequsts.UserId , UserName FROM AdminRequsts , Users Where Users.UserID = AdminRequsts.UserId; ")); 
 	        	try{
+	        		client.sendToClient(msg);
+	        	}
+	        	catch (IOException e){
+	        		e.printStackTrace();
+	        	}
+	        }
+	        if(msg instanceof Model){
+	        	File temp =  new File("/temp/");
+	    	
+	        	//((Model) msg).getNewFile()
+	        	try{
+	        		org.apache.commons.io.FileUtils.copyFileToDirectory(((Model)msg).getNewFile() , temp );
 	        		client.sendToClient(msg);
 	        	}
 	        	catch (IOException e){

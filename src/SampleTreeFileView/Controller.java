@@ -17,7 +17,7 @@ import Controlers.*;
 import Entity.Folder_Entity;
 import GUI_final.*;
 
-public class Controller {
+public class Controller extends AbstractTransfer{
     private Model model;
     private View view;
     
@@ -125,8 +125,8 @@ public class Controller {
 					JFileChooser fileChooser = new JFileChooser();
 					int returnValue = fileChooser.showOpenDialog(view.getGui());
 					if (returnValue == JFileChooser.APPROVE_OPTION) {
-						File selectedFile = fileChooser.getSelectedFile();
-						System.out.println(selectedFile.getName());
+						model.setNewFile(fileChooser.getSelectedFile());
+						sendToServer(model);
 					}
     			} catch(Throwable t) {
     				//showThrowable(t);

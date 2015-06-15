@@ -23,9 +23,10 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 
+import Entity.Abstract_Entity;
 import GUI_final.CreateFolderScreen;
 
-public class Model {
+public class Model extends Abstract_Entity{
 	
 	/** File-system tree. Built Lazily */
 	private JTree tree;
@@ -38,6 +39,18 @@ public class Model {
     private Desktop desktop;
     private JTable table;
     private TableColumn tableColumn;
+    
+    //file
+    private File newFile;
+    
+    
+public File getNewFile() {
+		return newFile;
+	}
+
+	public void setNewFile(File newFile) {
+		this.newFile = newFile;
+	}
 
 public void showRootFile() {
     // ensure the main files are displayed
