@@ -23,6 +23,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+
 import java.awt.event.ActionEvent;
 
 
@@ -39,6 +40,9 @@ public class AdminAddPeopleToGroup extends JPanel {
 	private JTextPane txtpnChooseGroup;
 	private Choice choiceGroup;
 	private JLabel joinLabel;
+	
+
+
 	private JLabel askLabel;
 	
 
@@ -128,12 +132,12 @@ public class AdminAddPeopleToGroup extends JPanel {
 		
 		JButton okbutton = new JButton("");
 		okbutton.setIcon(new ImageIcon("src/GUI_final/okButton.jpg"));
-		okbutton.setBounds(28, 450, 159, 53);
+		okbutton.setBounds(28, 415, 159, 53);
 		add(okbutton);
 		
 		JButton cancelbutton = new JButton("");
 		cancelbutton.setIcon(new ImageIcon("src/GUI_final/cancelButton.jpg"));
-		cancelbutton.setBounds(457, 450, 236, 53);
+		cancelbutton.setBounds(452, 415, 236, 53);
 		add(cancelbutton);
 		
 		askLabel = new JLabel("");
@@ -141,4 +145,113 @@ public class AdminAddPeopleToGroup extends JPanel {
 		askLabel.setBounds(10, 11, 720, 33);
 		add(askLabel);
 	}
+	public JLabel getJoin() {
+		return join;
+	}
+
+
+	public void setJoin(JLabel join) {
+		this.join = join;
+	}
+
+
+	public JButton getCancelButton() {
+		return cancelButton;
+	}
+
+
+	public void setCancelButton(JButton cancelButton) {
+		this.cancelButton = cancelButton;
+	}
+
+
+	public JButton getOkButton() {
+		return OkButton;
+	}
+
+
+	public void setOkButton(JButton okButton) {
+		OkButton = okButton;
+	}
+
+
+	public TextField getTextField() {
+		return textField;
+	}
+
+
+	public void setTextField(TextField textField) {
+		this.textField = textField;
+	}
+
+
+	public JTextPane getTextPane() {
+		return textPane;
+	}
+
+
+	public void setTextPane(JTextPane textPane) {
+		this.textPane = textPane;
+	}
+
+
+	public Choice getChoose_user() {
+		return choose_user;
+	}
+
+
+	public void setChoose_user(Choice choose_user) {
+		this.choose_user = choose_user;
+	}
+
+
+	public JTextPane getTxtpnChooseUser_1() {
+		return txtpnChooseUser_1;
+	}
+
+
+	public void setTxtpnChooseUser_1(JTextPane txtpnChooseUser_1) {
+		this.txtpnChooseUser_1 = txtpnChooseUser_1;
+	}
+
+
+	public JTextPane getTxtpnChooseGroup() {
+		return txtpnChooseGroup;
+	}
+
+
+	public void setTxtpnChooseGroup(JTextPane txtpnChooseGroup) {
+		this.txtpnChooseGroup = txtpnChooseGroup;
+	}
+
+
+	public Choice getChoiceGroup() {
+		return choiceGroup;
+	}
+
+
+	public void setChoiceGroup(Choice choiceGroup) {
+		this.choiceGroup = choiceGroup;
+	}
+
+
+	public JLabel getJoinLabel() {
+		return joinLabel;
+	}
+
+
+	public void setJoinLabel(JLabel joinLabel) {
+		this.joinLabel = joinLabel;
+	}
+
+
+	public JLabel getAskLabel() {
+		return askLabel;
+	}
+
+
+	public void setAskLabel(JLabel askLabel) {
+		this.askLabel = askLabel;
+	}
+	
 }

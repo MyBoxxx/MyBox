@@ -28,9 +28,14 @@ import java.awt.SystemColor;
 public class Limitpeopleingroup extends JPanel {
 
 	private JPanel contentPane;
-	private JTextField textField;
-	private JTextField textField_1;
-	Choice choice = new Choice();
+	private JTextField CuurenttextField;
+	private JTextField newAmounText;
+	private Choice choice;
+	private JTextPane txtpnCurrentNumberOf;
+	private JTextPane txtpnWriteNewNumber;
+	private JButton btnOk;
+	private JButton btnCancel;
+	private JLabel limitLabel;
 	
 	/**
 	 * Launch the application.
@@ -52,7 +57,7 @@ public class Limitpeopleingroup extends JPanel {
 	 * Create the frame.
 	 */
 	public Limitpeopleingroup() {
-		setBackground(Color.WHITE);
+		setBackground(SystemColor.textHighlight);
 		/*setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 643, 300);
 		contentPane = new JPanel();
@@ -60,63 +65,67 @@ public class Limitpeopleingroup extends JPanel {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null); */
-		setLayout(null);
+		//setLayout(null);
+		
+		
+		choice = new Choice();
 		choice.setFont(new Font("Dialog", Font.PLAIN, 16));
-		
-		
-		choice.setBounds(272, 398, 111, 17);
+		choice.setBounds(433, 270, 86, 22);
 		choice.add("");
 		choice.add("100");
 		choice.add("ein");
 		choice.add("ma");
+		setLayout(null);
 		add(choice);
 		
-		JTextPane txtpnCurrentNumberOf = new JTextPane();
+		txtpnCurrentNumberOf = new JTextPane();
 		txtpnCurrentNumberOf.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		txtpnCurrentNumberOf.setBackground(SystemColor.textHighlight);
 		txtpnCurrentNumberOf.setText("Current Amount\r\n");
-		txtpnCurrentNumberOf.setBounds(272, 191, 121, 34);
+		txtpnCurrentNumberOf.setBounds(141, 272, 121, 28);
 		add(txtpnCurrentNumberOf);
 		
-		textField = new JTextField();
-		textField.setBackground(Color.WHITE);
-		textField.setEditable(false);
-		textField.setBounds(423, 203, 86, 20);
-		add(textField);
-		textField.setColumns(10);
+		CuurenttextField = new JTextField();
+		CuurenttextField.setBackground(Color.WHITE);
+		CuurenttextField.setEditable(false);
+		CuurenttextField.setBounds(272, 272, 86, 20);
+		add(CuurenttextField);
+		CuurenttextField.setColumns(10);
 		
-		JTextPane txtpnWriteNewNumber = new JTextPane();
+		txtpnWriteNewNumber = new JTextPane();
 		txtpnWriteNewNumber.setBackground(SystemColor.textHighlight);
 		txtpnWriteNewNumber.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		txtpnWriteNewNumber.setText("New amount\r\n");
-		txtpnWriteNewNumber.setBounds(272, 229, 99, 34);
+		txtpnWriteNewNumber.setBounds(142, 311, 96, 22);
 		add(txtpnWriteNewNumber);
 		
-		JButton btnOk = new JButton("");
+		btnOk = new JButton("");
 		btnOk.setIcon(new ImageIcon("src/GUI_final/okButton.jpg"));
-		btnOk.setBounds(0, 465, 159, 53);
+		btnOk.setBounds(10, 436, 159, 53);
 		add(btnOk);
 		
-		JButton btnCancel = new JButton("");
+		btnCancel = new JButton("");
 		btnCancel.setIcon(new ImageIcon("src/GUI_final/cancelButton.jpg"));
-		btnCancel.setBounds(448, 465, 236, 53);
+		btnCancel.setBounds(433, 436, 273, 53);
 		add(btnCancel);
 		
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
-		textField_1.setBounds(423, 243, 86, 20);
-		add(textField_1);
+		newAmounText = new JTextField();
+		newAmounText.setColumns(10);
+		newAmounText.setBounds(272, 311, 86, 20);
+		add(newAmounText);
 		
-		JLabel chooseGrouplabel = new JLabel("");
-		chooseGrouplabel .setIcon(new ImageIcon("src/GUI_final/thechoosegroup.png"));
-		chooseGrouplabel.setBounds(275, 288, 137, 86);
-		add(chooseGrouplabel);
+		JLabel chooseLabel = new JLabel();
+		chooseLabel .setIcon(new ImageIcon("src/GUI_final/thechoosegroup.png"));
+		chooseLabel.setBounds(414, 162, 137, 86);
+		add(chooseLabel);
 		
-		JLabel Limit = new JLabel("");
-		Limit  .setIcon(new ImageIcon("src/GUI_final/limit.png"));
-		Limit.setBounds(128, 11, 411, 130);
-		add(Limit);
+		limitLabel = new JLabel();
+		limitLabel .setIcon(new ImageIcon("src/GUI_final/limit.png"));
+		limitLabel.setBounds(165, 29, 411, 130);
+		add(limitLabel);
 		
 		
 	}
+
+
 }
