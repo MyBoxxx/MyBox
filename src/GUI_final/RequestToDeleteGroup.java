@@ -19,6 +19,7 @@ import javax.swing.event.ListSelectionListener;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
+import java.awt.Color;
 
 public class RequestToDeleteGroup extends AbstractGUI{
 
@@ -51,11 +52,13 @@ public class RequestToDeleteGroup extends AbstractGUI{
 		 getContentPane().setLayout(new CardLayout(0, 0));
 		
 		AskTo = new JPanel();
+		AskTo.setBackground(new Color(59, 89, 151));
 		 getContentPane().add(AskTo, "name_1433270169848162000");
 		AskTo.setLayout(null);
 		
-		JLabel lblDeletGroupWindow = new JLabel("Delet Group Window");
-		lblDeletGroupWindow.setBounds(315, 36, 141, 44);
+		JLabel lblDeletGroupWindow = new JLabel("");
+		lblDeletGroupWindow.setIcon(new ImageIcon(RequestToDeleteGroup.class.getResource("/GUI_final/Delete-Group.png")));
+		lblDeletGroupWindow.setBounds(138, 39, 487, 101);
 		AskTo.add(lblDeletGroupWindow);
 		
 		list = new JList();
@@ -79,15 +82,18 @@ public class RequestToDeleteGroup extends AbstractGUI{
 		panelbutton.setLayout(null);
 		
 		b1Ok = new JButton("Ok");
-		b1Ok.setBounds(22, 16, 137, 50);
+		b1Ok.setIcon(new ImageIcon(RequestToDeleteGroup.class.getResource("/GUI_final/sendReuqest.PNG")));
+		b1Ok.setBounds(22, 16, 180, 50);
 		panelbutton.add(b1Ok);
 		
-		b1Beck = new JButton("Beck");
-		b1Beck.setBounds(499, 16, 137, 50);
+		b1Beck = new JButton("");
+		b1Beck.setIcon(new ImageIcon(RequestToDeleteGroup.class.getResource("/GUI_final/cancelButton.jpg")));
+		b1Beck.setBounds(424, 16, 227, 50);
 		panelbutton.add(b1Beck);
 		
 		lblSelectGroup = new JLabel("Select Group");
-		lblSelectGroup.setBounds(57, 203, 94, 25);
+		lblSelectGroup.setForeground(Color.ORANGE);
+		lblSelectGroup.setBounds(35, 203, 116, 25);
 		AskTo.add(lblSelectGroup);
 		
 		lblNewLabel = new JLabel("");

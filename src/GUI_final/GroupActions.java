@@ -6,17 +6,20 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import java.awt.Color;
 import javax.swing.JButton;
+import javax.swing.ImageIcon;
+import java.awt.Font;
 
 public class GroupActions extends AbstractGUI {
 
 	private JFrame frame;
-	private JLabel label;
+	private JLabel lblGroupActions;
 	private JButton creategroup;
 	private JButton ask;
 	private JButton edit;
 	private JButton requestchang;
 	private JButton requ2;
 	private JButton back;
+	private JLabel lblNewLabel;
 
 	/**
 	 * Launch the application.
@@ -33,39 +36,47 @@ public class GroupActions extends AbstractGUI {
 	 * Initialize the contents of the frame.
 	 */
 	public GroupActions(){
+		getContentPane().setBackground(new Color(59, 89, 151));
 		frame = new JFrame();
 		getContentPane().setForeground(Color.WHITE);
 		setBounds(100, 100, 800, 600);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		getContentPane().setLayout(null);
 		
-		label = new JLabel("GroupActions");
-		label.setBounds(331, 25, 164, 16);
-		getContentPane().add(label);
+		lblGroupActions = new JLabel("");
+		lblGroupActions.setIcon(new ImageIcon(GroupActions.class.getResource("/GUI_final/Group-Action.png")));
+		lblGroupActions.setFont(new Font("Lucida Grande", Font.PLAIN, 16));
+		lblGroupActions.setBounds(104, 40, 679, 83);
+		getContentPane().add(lblGroupActions);
 		
 		creategroup = new JButton("create ");
-		creategroup.setBounds(94, 83, 117, 29);
+		creategroup.setBounds(104, 184, 200, 29);
 		getContentPane().add(creategroup);
 		
-		ask = new JButton("askto");
-		ask.setBounds(94, 156, 117, 29);
+		ask = new JButton("Ask To Join Remove");
+		ask.setBounds(94, 276, 210, 29);
 		getContentPane().add(ask);
 		
-		edit = new JButton("editgroup");
-		edit.setBounds(412, 83, 117, 29);
+		edit = new JButton("Edit group");
+		edit.setBounds(545, 184, 183, 29);
 		getContentPane().add(edit);
 		
-		requestchang = new JButton("requesttochange");
-		requestchang.setBounds(412, 156, 117, 29);
+		requestchang = new JButton("Change Permission");
+		requestchang.setBounds(545, 276, 183, 29);
 		getContentPane().add(requestchang);
 		
-		requ2 = new JButton("requesttodelete");
-		requ2.setBounds(94, 207, 117, 29);
+		requ2 = new JButton("Request To Delete Group");
+		requ2.setBounds(104, 406, 200, 29);
 		getContentPane().add(requ2);
 		
 		back = new JButton("back");
-		back.setBounds(130, 290, 117, 29);
+		back.setBounds(382, 474, 117, 29);
 		getContentPane().add(back);
+		
+		lblNewLabel = new JLabel("");
+		lblNewLabel.setIcon(new ImageIcon(GroupActions.class.getResource("/GUI_final/EditGroupPic.png")));
+		lblNewLabel.setBounds(187, -20, 822, 592);
+		getContentPane().add(lblNewLabel);
 	}
 
 	

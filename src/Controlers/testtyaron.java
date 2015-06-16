@@ -18,9 +18,9 @@ public class testtyaron
             @Override
             public void run() {                                           
                 User_Entity model = new User_Entity();
-                RequestToChangeGroupPermission view = new RequestToChangeGroupPermission(); 
-                RequestToChangeGroupePremission_Controller controller = new RequestToChangeGroupePremission_Controller(model,view);
-                controller.control();
+                GroupActions view = new GroupActions(); 
+                GroupAction_controller controller = new GroupAction_controller(model,view);
+                controller.contol();
                 view.setVisible(true);
                 view.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             }
