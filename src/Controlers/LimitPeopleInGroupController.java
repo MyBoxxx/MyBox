@@ -34,7 +34,7 @@ public class LimitPeopleInGroupController {
 		
 		MainClient.clien.setCurrController(this);
 		view.getBtnOk().setEnabled(false);
-		if ( !view.getCuurenttextField().equals("") && !view.getNewAmounText().equals("") && !view.getChoice().getSelectedItem().equals("")){
+		if ( /*!view.getCuurenttextField().equals("") && */!view.getNewAmounText().equals("") && !view.getChoice().getSelectedItem().equals("")){
 			view.getBtnOk().setEnabled(true);
 			view.getBtnOk().addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent e){
