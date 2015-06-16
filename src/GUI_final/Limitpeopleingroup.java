@@ -23,14 +23,15 @@ import java.awt.Color;
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.SystemColor;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 
 public class Limitpeopleingroup extends JPanel {
 
-	private JPanel contentPane;
 	private JTextField CuurenttextField;
 	private JTextField newAmounText;
-	private Choice choice;
+	private  JComboBox choice;
 	private JTextPane txtpnCurrentNumberOf;
 	private JTextPane txtpnWriteNewNumber;
 	private JButton btnOk;
@@ -67,14 +68,12 @@ public class Limitpeopleingroup extends JPanel {
 		contentPane.setLayout(null); */
 		//setLayout(null);
 		
-		
-		choice = new Choice();
+		String[] petStrings = { "","Bird", "Cat", "Dog", "Rabbit", "Pig","" };
+		choice = new  JComboBox(petStrings);
 		choice.setFont(new Font("Dialog", Font.PLAIN, 16));
 		choice.setBounds(433, 270, 86, 22);
-		choice.add("");
-		choice.add("100");
-		choice.add("ein");
-		choice.add("ma");
+	
+		choice.setSelectedIndex(6);
 		setLayout(null);
 		add(choice);
 		
@@ -99,7 +98,7 @@ public class Limitpeopleingroup extends JPanel {
 		txtpnWriteNewNumber.setBounds(142, 311, 96, 22);
 		add(txtpnWriteNewNumber);
 		
-		btnOk = new JButton("");
+		btnOk = new JButton("");			
 		btnOk.setIcon(new ImageIcon("src/GUI_final/okButton.jpg"));
 		btnOk.setBounds(10, 436, 159, 53);
 		add(btnOk);
@@ -143,11 +142,12 @@ public class Limitpeopleingroup extends JPanel {
 		this.newAmounText = newAmounText;
 	}
 
-	public Choice getChoice() {
+
+	public JComboBox getChoice() {
 		return choice;
 	}
 
-	public void setChoice(Choice choice) {
+	public void setChoice(JComboBox choice) {
 		this.choice = choice;
 	}
 

@@ -18,37 +18,20 @@ import GUI_final.AdminAddPeopleToGroup;
 import GUI_final.AdminDeletePeopleToGroup;
 import GUI_final.Limitpeopleingroup;
 
-public class AdminChangeFMS_GUI extends JFrame {
+public class AdminChangeFMS_GUI extends AbstractGUI {
 
-	private JPanel contentPane;
+	public JPanel contentPane;
 	private JTabbedPane tabbedPane ;
 	private Limitpeopleingroup limit;
 	private AdminAddPeopleToGroup add;
 	private AdminDeletePeopleToGroup delete;
 	private JButton HomeButton;	
-
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					AdminChangeFMS_GUI frame = new AdminChangeFMS_GUI();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
+		
 	/**
 	 * Create the frame.
 	 */
 	public AdminChangeFMS_GUI() {
-		
+		super();
 		limit = new Limitpeopleingroup();
 		add = new AdminAddPeopleToGroup();
 		delete = new AdminDeletePeopleToGroup();
@@ -68,6 +51,7 @@ public class AdminChangeFMS_GUI extends JFrame {
 		
 			
 			limit.setBackground(SystemColor.textHighlight);
+			
 			tabbedPane.addTab("Limit", limit);
 			limit.setLayout(null);
 		

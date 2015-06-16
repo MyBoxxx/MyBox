@@ -32,7 +32,7 @@ public class LimitPeopleInGroupController {
 	
 	public void control(){
 		
-		MainClient.clien.setCurrController(this);
+		//MainClient.clien.setCurrController(this);
 		view.getBtnOk().setEnabled(false);
 		if ( /*!view.getCuurenttextField().equals("") && */!view.getNewAmounText().equals("") && !view.getChoice().getSelectedItem().equals("")){
 			view.getBtnOk().setEnabled(true);

@@ -1,58 +1,112 @@
 package Controlers;
 
-import java.awt.Dimension;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.HierarchyEvent;
+import java.awt.event.HierarchyListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
-import Client.MainClient;
-import Entity.ForgotPassword_Entity;
+
+
+
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+
 import Entity.User_Entity;
 import GUI_final.AdminChangeFMS_GUI;
-import GUI_final.ForgotPassword_GUI;
+import GUI_final.Adminbar;
+import GUI_final.Limitpeopleingroup;
+
+
 
 public class AdminChangeFMSController extends AbstractTransfer {
 	
-	static User_Entity model;
-	static AdminChangeFMS_GUI view;
+	 User_Entity model;
+	 AdminChangeFMS_GUI view;
+	 Adminbar admin;
+	 Limitpeopleingroup limit_view;
+	 
 	
-	static ForgotPassword_Controller forgot_con;
-	static ForgotPassword_GUI forgot_gui;
+	
 	
 	//ActionListener Home;
 	
 	AdminChangeFMSController(User_Entity model, AdminChangeFMS_GUI view){
 		this.model = model;
 		this.view = view;
-		view.setBounds(100, 100, 800, 600);
-		view.setVisible(true);
-		/*try {
-			forgot_gui = new ForgotPassword_GUI();
-			forgot_con = new ForgotPassword_Controller(new ForgotPassword_Entity(), forgot_gui);
-			Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-			forgot_gui.setLocation(dim.width/2-forgot_gui.getSize().width/2, dim.height/2-forgot_gui.getSize().height/2);
-			forgot_con.control();
-			
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-		}*/
-	}		
-	
+		admin = new Adminbar();
+		limit_view = view.getLimit();
+	}	
 	
 	public void control(){
-		MainClient.clien.setCurrController(this);
-		view.getHomeButton().addMouseListener(new MouseAdapter() {
+		//MainClient.clien.setCurrController(this);
+		limit_view.getBtnOk().setEnabled(false);
+	
+		limit_view.getNewAmounText().getDocument().addDocumentListener(new DocumentListener() {		
 
-			public void mouseClicked(MouseEvent e){
-				JOptionPane.showInputDialog("10000");
-				System.out.println("sgsfgfsgs");
+			@Override
+			public void changedUpdate(DocumentEvent arg0) {
+				// TODO Auto-generated method stub
+				changed();
+			}
+
+			@Override
+			public void insertUpdate(DocumentEvent arg0) {
+				// TODO Auto-generated method stub
+				changed();
+			}
+
+			@Override
+			public void removeUpdate(DocumentEvent arg0) {
+				// TODO Auto-generated method stub
+				changed();
+			}
+		}); 
+		
+		limit_view.getChoice().addActionListener(new ActionListener() {
 			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				 String selectedItem = (String) limit_view.getChoice().getSelectedItem();
+				if ( !selectedItem.equals("")){					
+					if(!limit_view.getNewAmounText().getText().equals(""))
+						limit_view.getBtnOk().setEnabled(true);
+					else
+						limit_view.getBtnOk().setEnabled(false);
+				}
+				
+					
 			}
 		});
+		
+		view.getHomeButton().addActionListener(new ActionListener() {			
+			@Override
+			public void actionPerformed(ActionEvent e) {				
+				view.setVisible(false);
+				admin.setVisible(true);				
+				
+			}
+		});						
+		
 	}
+	 public void changed() {
+		 String selectedItem = (String) limit_view.getChoice().getSelectedItem();
+	     if (limit_view.getNewAmounText().getText().equals("")){
+	    	 
+	       if (!selectedItem.equals(""))	 
+	    	   limit_view.getBtnOk().setEnabled(true);
+	       else 
+		    	 limit_view.getBtnOk().setEnabled(false);
+	     }
+	   
+
+	  }
+	
 	
 }	
