@@ -40,6 +40,7 @@ import Client.myBoxClient;
 import Controlers.LogIn_Controller;
 import Entity.User_Entity;
 import GUI_final.AbstractGUI;
+import javax.swing.ListSelectionModel;
 
 public class View extends AbstractGUI{
 
@@ -48,7 +49,7 @@ public class View extends AbstractGUI{
 
 	/** Main GUI container */
      static JPanel gui;
-
+     
 
 
 	/** File-system tree. Built Lazily */
@@ -91,7 +92,8 @@ public class View extends AbstractGUI{
 	JPanel southRadio;
 	JRadioButton newTypeDirectory;
 	JLabel label;
-	
+	 public FileSystemView fileSystemView;
+	 public int rowIconPadding = 6;
 	JPanel detailView;
 	JPanel fileMainDetails;
 	 
@@ -118,7 +120,7 @@ public class View extends AbstractGUI{
 	
 	public View() {
 		      		getGui();
-		           
+		            getTable();
 		            // show the file system roots.
 		            Dimension widePreferred = new Dimension(200,150);
 		            
@@ -187,6 +189,8 @@ public class View extends AbstractGUI{
 		fileDetailsValues.add(flags);
 
 		int count = fileDetailsLabels.getComponentCount();
+		
+		
 		            
 		JToolBar toolBar = new JToolBar();
 		// mnemonics stop working in a floated toolbar
@@ -347,7 +351,7 @@ public class View extends AbstractGUI{
 	                          JMenuItem mntmNewMenuItem = new JMenuItem("                    ");
 	                          menuBar.add(mntmNewMenuItem);
 	                          
-	                           lblLogInAs = new JLabel("Log in as : " + MainClient.clien.getCurrUser().getUsername());
+	                           lblLogInAs = new JLabel("Log in as : " + MainClient.clien.currUser.getUsername());
 	                           menuBar.add(lblLogInAs);
 	                           
 	                            btnNotifications = new JButton("notifications");
