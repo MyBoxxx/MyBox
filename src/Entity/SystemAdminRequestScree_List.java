@@ -1,5 +1,7 @@
 package Entity;
 
+import java.util.ArrayList;
+
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 
@@ -74,6 +76,8 @@ public class SystemAdminRequestScree_List extends Abstract_Entity {
 			}
 		};
 	}
+
+
 	
 	
 	

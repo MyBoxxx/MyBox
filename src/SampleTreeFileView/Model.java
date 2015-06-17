@@ -20,6 +20,7 @@ import javax.swing.JTree;
 import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 import javax.swing.table.TableColumn;
+import javax.swing.table.TableModel;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeModel;
@@ -37,6 +38,16 @@ public class Model extends Abstract_Entity implements Serializable{
 	private JTree tree;
 	private DefaultMutableTreeNode treeModel;
 	private FileTableModel fileTableModel;
+	private TableModel tablemodel;
+	public TableModel getTablemodel() {
+		return tablemodel;
+	}
+
+	public void setTablemodel(TableModel tablemodel) {
+		this.tablemodel = tablemodel;
+	}
+
+
 	public boolean cellSizesSet = false; 
 	/** currently selected File. */
     private File currentFile;

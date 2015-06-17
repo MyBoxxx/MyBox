@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Vector;
@@ -154,7 +155,7 @@ public class MyBoxServer extends AbstractServer
 	        }
 	        		
 	        	
-	        if(msg instanceof SystemAdminReequestScreen_Entity){
+	        if(msg instanceof SystemAdminReequestScreen_Entity){ 
 	        	((SystemAdminReequestScreen_Entity) msg).setTablemodel(buildTableModel(conn,"SELECT requestID,RequestType,status,AdminRequsts.UserId , UserName FROM AdminRequsts , Users Where Users.UserID = AdminRequsts.UserId; ")); 
 	        	try{
 	        		client.sendToClient(msg);
@@ -201,11 +202,11 @@ public class MyBoxServer extends AbstractServer
 	        	}
 	        }
 	        if(msg instanceof FileTable){
-	        	JTable bla = new JTable();
-	        	TableFromDatabase(bla, "SELECT * FROM Files WHERE Owner = '"+((FileTable) msg).getUser().getIDuser() +"';", conn);
-	        	((FileTable) msg).setTable(bla);
+	        	
+	        	((SystemAdminReequestScreen_Entity) msg).setTablemodel(buildTableModel(conn,"SELECT * FROM  Files WHERE Owner = '" + ((FileTable)msg).getUser().getIDuser() +"'; ")); 
+	        
 	        	try {
-					client.sendToClient((FileTable) msg);
+					client.sendToClient(msg);
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -226,7 +227,7 @@ public class MyBoxServer extends AbstractServer
 	  	//client.sendToClient(msg);
 	  }
 
-    /*
+   /* 
  private void SystemAdminRequestScree_List_getList(Connection conn,
 		SystemAdminRequestScree_List msg) {
 	 Statement stmt;
@@ -246,8 +247,8 @@ public class MyBoxServer extends AbstractServer
 	 
 	
 }
-*/
 
+*/
 
 private String createDirectory(Connection con, CreateDirectory msg) {
 	MyFile file =   msg;

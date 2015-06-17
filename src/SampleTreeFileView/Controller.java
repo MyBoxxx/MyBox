@@ -12,6 +12,7 @@ import javax.swing.Icon;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.JTree;
 import javax.swing.SwingUtilities;
 import javax.swing.event.TreeSelectionEvent;
@@ -21,6 +22,7 @@ import javax.swing.tree.TreeModel;
 
 import org.apache.commons.io.FileUtils;
 
+import server.FileTable;
 import Client.MainClient;
 import Client.myBoxClient;
 import Controlers.*;
@@ -28,10 +30,12 @@ import Entity.FileTreeUpdate;
 import Entity.Folder_Entity;
 import Entity.MyFile;
 import Entity.UpLoadFile;
+import Entity.User_Entity;
 import GUI_final.*;
 
 public class Controller extends AbstractTransfer{
     private Model model;
+    
     public void setModel(Model model) {
 		this.model = model;
 	}
@@ -209,7 +213,9 @@ public class Controller extends AbstractTransfer{
     		public void actionPerformed(ActionEvent e) {
     			// TODO Auto-generated method stub
     			try {
-    				sendToServer(model);
+    				FileTable bla = new FileTable();
+    				bla.setUser(MainClient.clien.currUser);
+    				sendToServer(bla);
     			} catch(Throwable t) {
     				//showThrowable(t);
     			}
@@ -319,6 +325,12 @@ public class Controller extends AbstractTransfer{
 		view.repaint();
 		
 	}
+	
+	public void refreseList(){
+		view.getTable().setModel(model.getFileTableModel());
+		view.getTable().repaint();
+	}
+	
 	public void UpdateTree()
 	{
 		System.out.println(model.getTreeModel().toString());
@@ -334,7 +346,12 @@ public class Controller extends AbstractTransfer{
 		view.getTree().repaint();
 		view.repaint();
 	}
-       
+     public void updateFileTable(JTable bla)
+     {
+    	 view.setTable(bla);
+    	 view.getTable().repaint();
+    	 view.repaint();
+     }
 	
 	
     public void setTableData() {

@@ -10,6 +10,9 @@ import Controlers.SystemAdminRequestsScreen_Controller;
 import Entity.*;
 
 import java.io.*;
+
+import Entity.*;
+
 import java.lang.reflect.Array;
 import java.util.Enumeration;
 
@@ -19,6 +22,7 @@ import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreeNode;
 
+import server.FileTable;
 import Entity.*;
 import SampleTreeFileView.Controller;
 import SampleTreeFileView.Model;
@@ -103,7 +107,10 @@ public class myBoxClient extends ObservableClient {
 				( (Controller) currController).setModel((Model)message);
 				( (Controller) currController).setTableData();
 			}
-			
+			if(message instanceof FileTable){
+				((Controller) currController).getModel().setTablemodel(((FileTable) message).getTablemodel());
+				((Controller) currController).refreseList();
+			}
 			
 			
 		
@@ -116,6 +123,13 @@ public class myBoxClient extends ObservableClient {
 	}
 
 
+	public  User_Entity getCurrUser() {
+		return currUser;
+	}
+
+	public  void setCurrUser(User_Entity currUser) {
+		currUser = currUser;
+	}
 	public   Object getCurrController() {
 		return currController;
 	}
