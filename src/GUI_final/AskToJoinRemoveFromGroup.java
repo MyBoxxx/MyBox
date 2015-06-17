@@ -36,6 +36,7 @@ public class AskToJoinRemoveFromGroup extends AbstractGUI{
 	/**
 	 * Create the application.
 	 */
+	
 	public AskToJoinRemoveFromGroup() {
 		initialize();
 	}
@@ -46,19 +47,19 @@ public class AskToJoinRemoveFromGroup extends AbstractGUI{
 	private void initialize() {
 		
 		getContentPane().setBackground(Color.WHITE);
-		setBounds(100, 100, 598, 499);
+		setBounds(100, 100, 800, 600);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		getContentPane().setLayout(null);
 	
 		
 		btRequest = new JButton();
 		btRequest.setIcon(new ImageIcon("src/GUI_final/sendReuqest.PNG"));
-		btRequest.setBounds(10, 390, 187, 60);
+		btRequest.setBounds(6, 495, 187, 60);
 		getContentPane().add(btRequest);
 		
 		btCacel = new JButton();
 		btCacel.setIcon(new ImageIcon("src/GUI_final/cancelButton.jpg"));
-		btCacel.setBounds(355, 390, 217, 60);
+		btCacel.setBounds(554, 495, 217, 60);
 		getContentPane().add(btCacel);
 		
 		chooseGroup = new JLabel();
@@ -74,12 +75,20 @@ public class AskToJoinRemoveFromGroup extends AbstractGUI{
 		lblAskToJoin.setIcon(new ImageIcon("src/GUI_final/ask.png"));
 		
 		Choice choiceGroup = new Choice();
-		choiceGroup.setBounds(10, 173, 185, 20);
+		choiceGroup.setBounds(6, 208, 185, 20);
 		choiceGroup.add("");
 		choiceGroup.add("100");
 		choiceGroup.add("ein ma");
 		choiceGroup.add("peter");
 		getContentPane().add(choiceGroup);
+		
+		JRadioButton rbRemove = new JRadioButton("Join");
+		rbRemove.setBounds(26, 285, 141, 23);
+		getContentPane().add(rbRemove);
+		
+		JRadioButton rbJoin = new JRadioButton("Remove");
+		rbJoin.setBounds(26, 320, 141, 23);
+		getContentPane().add(rbJoin);
 	}
 
 	public JLabel getLblAskToJoin() {

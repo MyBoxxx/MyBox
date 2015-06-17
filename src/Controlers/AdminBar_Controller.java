@@ -6,15 +6,20 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.net.MalformedURLException;
+import java.util.jar.JarOutputStream;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+import view.Login_GUI;
+import view.MainWindow_GUI;
+import Client.myBoxClient;
 import Entity.*;
 import GUI_final.*;
 
 public class AdminBar_Controller {
 
+<<<<<<< HEAD
 
 
 	private  Adminbar_model model ;
@@ -23,16 +28,28 @@ public class AdminBar_Controller {
 
 
 
+=======
+	private  Adminbar_model model ;
+	private  Adminbar view;
+>>>>>>> refs/heads/master
 	
+<<<<<<< HEAD
 
 
 	AdminBar_Controller(Adminbar_model model,AdminMainWindow view){
 
 
+=======
+	AdminBar_Controller(Adminbar_model model,Adminbar view){
+>>>>>>> refs/heads/master
 		this.model = model;
 		this.view = view;
 	}
 	public void control(){
+<<<<<<< HEAD
+=======
+		
+>>>>>>> refs/heads/master
 		this.view.ChangeFMSLitsner(new ChangeFMSLitsner());
 		this.view.NotifcationYesLitsner(new NotificationYesLitsner());
 		this.view.NotifcationNoLitsner(new NotificationNoLitsner());
@@ -45,6 +62,8 @@ public class AdminBar_Controller {
 		public void actionPerformed(ActionEvent e) {
 			view.getBtnChangeFms().addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent e) {
+					view.setVisible(false);
+					testtyaron.main(null);
 					JOptionPane.showMessageDialog(null,"FMS button pressed");
 				}				
 			});			
@@ -80,7 +99,10 @@ public class AdminBar_Controller {
 		public void actionPerformed(ActionEvent e) {
 			view.getBtnQuit().addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent e) {
-					JOptionPane.showMessageDialog(null,"logout pressed");
+					view.dispose();
+					LoginMain.main(null);
+					//JOptionPane.showMessageDialog(null,"logout pressed");
+					
 				}				
 			});			
 		}		

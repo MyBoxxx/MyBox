@@ -5,21 +5,24 @@ import java.util.List;
 @SuppressWarnings("serial")
 public class User_Entity extends Abstract_Entity{
 	
+<<<<<<< HEAD
 	private String IDuser; //Not NUll Auto Increment
+=======
+	private int IDuser; //Not NUll Auto Increment
+>>>>>>> refs/heads/master
 	private String Username; 
 	private String Password;
 	private boolean isLogedin ; // status of login - > true = in the system
 	private boolean isAdmin ;	// status of user -> true = is admin
 	
 	
-public User_Entity(String IDuser, String Username,String Password, int Status, boolean isLogedin, boolean isadmin){
+public User_Entity(int IDuser, String Username,String Password, int Status, boolean isLogedin, boolean isadmin){
 	
 		this.IDuser = IDuser;
 		this.Username = Username;
 		this.Password = Password;
 		this.isLogedin = isLogedin;
 		this.isAdmin = isadmin;
-		
 	}
 
 public User_Entity() {
@@ -32,11 +35,11 @@ public User_Entity() {
 
 
 
-	public String getIDuser() {
+	public int getIDuser() {
 		return IDuser;
 	}
 
-	public void setIDuser(String iDuser) {
+	public void setIDuser(int iDuser) {
 		IDuser = iDuser;
 	}
 

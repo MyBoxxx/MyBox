@@ -23,9 +23,13 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 
+import Entity.Abstract_Entity;
+import Entity.MyFile;
 import GUI_final.CreateFolderScreen;
 
-public class Model {
+public class Model extends Abstract_Entity{
+	
+	private int UserID;
 	
 	/** File-system tree. Built Lazily */
 	private JTree tree;
@@ -38,27 +42,35 @@ public class Model {
     private Desktop desktop;
     private JTable table;
     private TableColumn tableColumn;
+    
+    //file
+    private MyFile newFile;
+    
+    
+public MyFile getNewFile() {
+		return newFile;
+	}
+
+	public void setNewFile(MyFile newFile) {
+		this.newFile = newFile;
+		
+	}
+	
+	
+	public int getUserID() {
+		return UserID;
+	}
+
+	public void setUserID(int userID) {
+		UserID = userID;
+	}
 
 public void showRootFile() {
     // ensure the main files are displayed
     tree.setSelectionInterval(0,0);
 }
 
-private TreePath findTreePath(File find) {
-    for (int ii=0; ii<tree.getRowCount(); ii++) {
-        TreePath treePath = tree.getPathForRow(ii);
-        Object object = treePath.getLastPathComponent();
-        DefaultMutableTreeNode node = (DefaultMutableTreeNode)object;
-        File nodeFile = (File)node.getUserObject();
-
-        if (nodeFile==find) {
-            return treePath;
-        }
-    }
-    // not found!
-    return null;
-}
-
+/*
 void deleteFile(JPanel gui) {
     if (currentFile==null) {
         showErrorMessage("No file selected for deletion.","Select File",gui);

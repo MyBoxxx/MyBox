@@ -3,6 +3,11 @@ package server;
 // "Object Oriented Software Engineering" and is issued under the open-source
 // license found at www.lloseng.com 
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -11,9 +16,21 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+<<<<<<< HEAD
 import Entity.Login_Entity;
 import Entity.SystemAdminReequestScreen_Entity;
 import Entity.SystemAdminRequestScree_List;
+=======
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+
+import org.apache.commons.io.FileUtils;
+
+import net.proteanit.sql.DbUtils;
+import Entity.*;
+import SampleTreeFileView.Model;
+>>>>>>> refs/heads/master
 import ocsf.server.AbstractServer;
 import ocsf.server.ConnectionToClient;
 
@@ -127,14 +144,20 @@ public class MyBoxServer extends AbstractServer
 	        System.out.println("SQL connection succeed");
 	        if(msg instanceof Login_Entity){
 	        	System.out.println("Try To Coneect as "+ ((Login_Entity)msg).getUsername());
+<<<<<<< HEAD
 	        	if(checkUserPassword(conn,(Login_Entity)msg)){
 	        	
+=======
+	        	if(checkUserPassword(conn,(Login_Entity)msg)) System.out.println("Login Succsed");
+	        	else System.out.println("Login Failed");
+>>>>>>> refs/heads/master
 	        	try {
 						client.sendToClient(msg);
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
+<<<<<<< HEAD
 	        	} else
 				try {
 					client.sendToClient("Login failed");
@@ -143,8 +166,13 @@ public class MyBoxServer extends AbstractServer
 					e1.printStackTrace();
 				}
 	        	}
+=======
+	        	 
+	        }
+>>>>>>> refs/heads/master
 	        		
 	        	
+<<<<<<< HEAD
 	        if(msg instanceof SystemAdminRequestScree_List){
 	        	SystemAdminRequestScree_List_getList(conn,(SystemAdminRequestScree_List)msg);
 	        	try{
@@ -154,6 +182,34 @@ public class MyBoxServer extends AbstractServer
 	        		e.printStackTrace();
 	        	}
 	        }
+=======
+	        if(msg instanceof SystemAdminReequestScreen_Entity){
+	        	((SystemAdminReequestScreen_Entity) msg).setTablemodel(buildTableModel(conn,"SELECT requestID,RequestType,status,AdminRequsts.UserId , UserName FROM AdminRequsts , Users Where Users.UserID = AdminRequsts.UserId; ")); 
+	        	try{
+	        		client.sendToClient(msg);
+	        	}
+	        	catch (IOException e){
+	        		e.printStackTrace();
+	        	}
+	        }
+	        if(msg instanceof Model){
+	       	try{
+	    			  String path = "U_"+((Model)msg).getUserID() + "/"+((Model)msg).getNewFile().theFile.getName() ;
+		    		  System.out.println("Try To send");
+		    		 // File newFile = new File ("U_"+((Model)msg).getUserID() + "/"+((Model)msg).getNewFile().getName());
+		    		  FileUtils.writeByteArrayToFile(new File (path),((Model)msg).getNewFile().getMybytearray());
+		    			    
+		    			    
+	    			//org.apache.commons.io.FileUtils.copyFileToDirectory(((Model)msg).getNewFile() , temp );
+		    		//System.out.println("path : "+ newFile.getPath() +  " Add ");
+
+	    		}
+	    		catch (IOException e){
+	    			e.printStackTrace();
+	    			}
+	    	}
+	        
+>>>>>>> refs/heads/master
 	        
 	        if(msg instanceof String){
 	        	try {
@@ -261,6 +317,7 @@ public class MyBoxServer extends AbstractServer
 	  	//client.sendToClient(msg);
 	  }
 
+<<<<<<< HEAD
     
  private void SystemAdminRequestScree_List_getList(Connection conn,
 		SystemAdminRequestScree_List msg) {
@@ -282,6 +339,29 @@ public class MyBoxServer extends AbstractServer
 	
 }
 
+=======
+    /*
+ private void SystemAdminRequestScree_List_getList(Connection conn,
+		SystemAdminRequestScree_List msg) {
+	 Statement stmt;
+		try 
+		{
+			stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM AdminRequsts ORDER BY status;");
+			ArrayList<SystemAdminReequestScreen_Entity> ListFromServer = new ArrayList<SystemAdminReequestScreen_Entity>();
+			while (rs.next()) {
+				ListFromServer.add(new SystemAdminReequestScreen_Entity(rs.getInt("requestID"), rs.getInt("theRequest"), rs.getInt("status") , rs.getString("name")));
+			}
+			msg.setListFromServer(ListFromServer);
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+	 
+	
+}
+*/
+>>>>>>> refs/heads/master
 
 
 /**
@@ -479,8 +559,13 @@ private Boolean checkUserPassword(Connection con, Login_Entity log){
 	{
 		stmt = con.createStatement();
 		ResultSet rs = stmt.executeQuery("SELECT * FROM Users where UserName ='"+ log.getUsername() + "' AND Password = '"+log.getPassword() +"' ;");
+<<<<<<< HEAD
 		
 		if(rs.next()) {
+=======
+		if(rs.next()) { //if user exist
+			log.setIDuser(rs.getInt("UserID"));
+>>>>>>> refs/heads/master
 			if(rs.getString("isAdmin").equals("1")) log.setAdmin(true);
 			if(rs.getInt("isLogin")==1) log.setAdmin(true);
 			log.setUser(true);
@@ -562,4 +647,51 @@ private String createNewFile(Connection con, String fileName, String path) {
 }
 
 
+public void TableFromDatabase(JTable table, String Query,Connection conn)
+	{
+	    try
+	    {
+	        Statement stat = conn.createStatement();
+	        ResultSet rs = stat.executeQuery(Query);
+	        //To remove previously added rows
+	        while(table.getRowCount() > 0) 
+	        {
+	            ((DefaultTableModel) table.getModel()).removeRow(0);
+	        }
+	        int columns = rs.getMetaData().getColumnCount();
+	        while(rs.next())
+	        {  
+	            Object[] row = new Object[columns];
+	            for (int i = 1; i <= columns; i++)
+	            {  
+	                row[i - 1] = rs.getObject(i);
+	            }
+	            ((DefaultTableModel) table.getModel()).insertRow(rs.getRow()-1,row);
+	        }
+
+	        rs.close();
+	        stat.close();
+	    }
+	    catch(SQLException e)
+	    {
+	    }
+	}
+
+public  TableModel buildTableModel(Connection con,String stat)
+	{
+	
+		  	Statement stmt;
+			try 
+			{
+			stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery(stat);
+			return DbUtils.resultSetToTableModel(rs);
+			
+			
+			}
+			catch (Exception e){
+				
+			}
+			return null;
+	}
 }
