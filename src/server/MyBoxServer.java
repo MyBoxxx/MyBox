@@ -3,23 +3,44 @@ package server;
 // "Object Oriented Software Engineering" and is issued under the open-source
 // license found at www.lloseng.com 
 
+<<<<<<< HEAD
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+=======
+import java.io.File;
+>>>>>>> refs/heads/master
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.Collections;
+import java.util.List;
+import java.util.Vector;
 
 import javax.swing.JTable;
+<<<<<<< HEAD
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
 import org.apache.commons.io.FileUtils;
+=======
+import javax.swing.JTree;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
+
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.filefilter.IOFileFilter;
+import org.apache.commons.io.filefilter.TrueFileFilter;
+>>>>>>> refs/heads/master
 
 import net.proteanit.sql.DbUtils;
 import Entity.*;
@@ -57,8 +78,6 @@ public class MyBoxServer extends AbstractServer
   {
     super(port);
   }
-
-
 
 /**
    * This method overrides the one in the superclass.  Called
@@ -127,9 +146,10 @@ public class MyBoxServer extends AbstractServer
   {
 	  try 
 		{
-	        Class.forName("com.mysql.jdbc.Driver").newInstance();
-	    } catch (Exception ex) {/* handle the error*/}
+	     Class.forName("com.mysql.jdbc.Driver").newInstance();
+	    }catch (Exception ex) {/* handle the error*/}
 	    
+	  System.out.println("Message received: " + msg + " from " + client);
 	  try 
 	    {
 	        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/mybox","root","Braude");
@@ -139,6 +159,7 @@ public class MyBoxServer extends AbstractServer
 	        	System.out.println("Try To Coneect as "+ ((Login_Entity)msg).getUsername());
 	        	if(checkUserPassword(conn,(Login_Entity)msg)) System.out.println("Login Succsed");
 	        	else System.out.println("Login Failed");
+<<<<<<< HEAD
 	        	try {
 						client.sendToClient(msg);
 					} catch (IOException e) {
@@ -177,7 +198,10 @@ public class MyBoxServer extends AbstractServer
 	        
 	        
 	        if(msg instanceof String){
+=======
+>>>>>>> refs/heads/master
 	        	try {
+<<<<<<< HEAD
 		        if(msg.toString().startsWith("login")){
 			    	String temp = msg.toString();
 			    	String delims = " ";
@@ -257,27 +281,74 @@ public class MyBoxServer extends AbstractServer
 		        	client.sendToClient(helpPrint());
 		        }
 		        else client.sendToClient("Command not Found");
+=======
+						client.sendToClient(msg);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+	        	 
+	        }
+	        		
+>>>>>>> refs/heads/master
 	        	
-	        	} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-	     } else
-				try {
-					client.sendToClient("This is not a String");
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+	        if(msg instanceof SystemAdminReequestScreen_Entity){
+	        	((SystemAdminReequestScreen_Entity) msg).setTablemodel(buildTableModel(conn,"SELECT requestID,RequestType,status,AdminRequsts.UserId , UserName FROM AdminRequsts , Users Where Users.UserID = AdminRequsts.UserId; ")); 
+	        	try{
+	        		client.sendToClient(msg);
+	        	}
+	        	catch (IOException e){
+	        		e.printStackTrace();
+	        	}
+	        }
 	        
-	 	}
-	    catch (SQLException ex) 
+	        if(msg instanceof UpLoadFile){
+	        	//fileTransfer
+	        	
+	        		try{
+	        			client.sendToClient(createNewFile(conn,(UpLoadFile) msg));
+		        	}
+		        	catch (IOException e){
+		        		e.printStackTrace();
+		        	}
+	    	}
+	        if(msg instanceof FileTreeUpdate){
+	        	
+	        	try{
+        			client.sendToClient(createTreeFiles(conn,(FileTreeUpdate) msg));
+	        	}
+	        	catch (IOException e){
+	        		e.printStackTrace();
+	        	}
+	        }
+	        if(msg instanceof CreateDirectory){
+	        	try{
+	        		client.sendToClient(createDirectory(conn, (CreateDirectory) msg));
+	        	}
+	        	catch(IOException e){
+	        		e.printStackTrace();
+	        	}
+	        }
+	        if(msg instanceof Model){
+	        	((Model) msg).getFileTableModel().setFiles(FileUtils.convertFileCollectionToFileArray(FileUtils.listFiles(new File("Users_Files/U_1/"), TrueFileFilter.INSTANCE, TrueFileFilter.INSTANCE)));
+	        	try{
+	        		client.sendToClient(msg);
+	        	}
+	        	catch(IOException e){
+	        		e.printStackTrace();
+	        	}
+	        }
+	        
+	        
+	        
+
+	    }catch (SQLException ex) 
 	 	    {/* handle any errors*/
 	        System.out.println("SQLException: " + ex.getMessage());
 	        System.out.println("SQLState: " + ex.getSQLState());
 	        System.out.println("VendorError: " + ex.getErrorCode());
 	        }
-	  	System.out.println("Message received: " + msg + " from " + client);
+	  	
 	    
 	  	//client.sendToClient(msg);
 	  }
@@ -305,6 +376,66 @@ public class MyBoxServer extends AbstractServer
 */
 
 
+<<<<<<< HEAD
+=======
+private String createDirectory(Connection con, CreateDirectory msg) {
+	MyFile file =   msg;
+	String path = "UsersFiles/U_"+ msg.getUser().getIDuser() + "/"+ msg.getTheFile().getName() ;
+	Statement stmt;
+		try 
+		{
+			stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM Files where FileName ='"+ file.getTheFile().getName()+ "' AND FilePath ='"+path+"';");// AND FilePath = '"+ file.getTheFile().getAbsolutePath() +"' ;");
+			if(rs.next()){
+				System.out.println("file is in the User Dir");
+					return "file is in the User Dir";
+					}
+					else {
+						System.out.println("insert to sql");
+						String insertTableSQL = "INSERT INTO Files"
+								+ "(FileName,FilePath,isDirectory) VALUES"
+								+ "(?,?,?)";
+		    			
+						//CreatedTime,Modified,Permission,Owner,IsDeleted,Description,isDirectory
+						java.sql.PreparedStatement preparedStatement = con.prepareStatement(insertTableSQL);
+						preparedStatement.setString(1, file.getTheFile().getName());
+						preparedStatement.setString(2, path);
+						preparedStatement.setInt(3, 1);
+						preparedStatement.executeUpdate();
+						//java.sql.Date bla = new Date(date)
+						//preparedStatement.setDate(3, new java.sql.Date((new Date(System.currentTimeMillis())).getTime()));
+						//preparedStatement.setDate(4, new java.sql.Date((new Date(System.currentTimeMillis())).getTime()));
+						//preparedStatement.setString(5, "0777");
+						//preparedStatement.setInt(6, msg.getUserID());
+						//preparedStatement.setInt(7, 0);
+					//	preparedStatement.setString(8, msg.getNewFile().getDescription());
+						//if(msg.getNewFile().getTheFile().isDirectory()) preparedStatement.setInt(9, 1);
+						//else preparedStatement.setInt(9,0 );
+						
+			    		System.out.println("converting file");
+			    		File bla = new File(path);
+			    		bla.mkdirs();
+			    		//FileUtils.mkdir_p(path);		    			    		    		  
+
+						// execute insert SQL stetement
+						return "Upload Sucseeded";
+					}
+	    }
+		 catch (SQLException e) {e.printStackTrace();
+		 return "Error";
+		 }
+}
+
+private FileTreeUpdate createTreeFiles(Connection conn, FileTreeUpdate msg) {
+	String path = "UsersFiles/U_"+ msg.getUser().getIDuser() + "/";
+	File temp = new File(path);
+	
+	List<File> files = (List<File>) FileUtils.listFilesAndDirs(temp, TrueFileFilter.INSTANCE, TrueFileFilter.INSTANCE);
+	msg.setFiles(files);
+	return msg;
+}
+
+>>>>>>> refs/heads/master
 /**
   *   This method return all option commands
  * @return String of all option list with commands 
@@ -363,7 +494,8 @@ private String searchPath(Connection con, String path) {
  * @param npath - new place (path) to the file
  * @return - OK with file name and new path OR File '\' path NOT Exists 
  */
-private String moveFile(Connection con,String fileName, String path, String npath) {
+/*
+private String moveFile(Connection con,MoveFile file) {
 	  Statement stmt;
 		try 
 		{
@@ -545,7 +677,6 @@ private String searchFile(Connection con, String file)
 	} catch (SQLException e) {e.printStackTrace();
 	}
 	return file;
-
 }
 
 /**
@@ -555,31 +686,53 @@ private String searchFile(Connection con, String file)
  * @param path - Path 
  * @return String "OK File:  < file Name >  <path> Add" OR "File Already Exists"
  */
-private String createNewFile(Connection con, String fileName, String path) {
-	  Statement stmt;
+private String createNewFile(Connection con, UpLoadFile msg) {
+	MyFile file =   msg;
+	String path = "UsersFiles/U_"+ msg.getUser().getIDuser() + "/"+ msg.getTheFile().getName() ;
+	Statement stmt;
 		try 
 		{
 			stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM Files where FileName ='"+ fileName+ "' AND FilePath = '"+path +"' ;");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM Files where FileName ='"+ file.getTheFile().getName()+ "' AND FilePath ='"+path+"';");// AND FilePath = '"+ file.getTheFile().getAbsolutePath() +"' ;");
 			if(rs.next()){
-					return "File Already Exists";
+				System.out.println("file is in the User Dir");
+					return "file is in the User Dir";
 					}
 					else {
+						System.out.println("insert to sql");
 						String insertTableSQL = "INSERT INTO Files"
 								+ "(FileName,FilePath) VALUES"
 								+ "(?,?)";
+		    			
+						//CreatedTime,Modified,Permission,Owner,IsDeleted,Description,isDirectory
 						java.sql.PreparedStatement preparedStatement = con.prepareStatement(insertTableSQL);
-						preparedStatement.setString(1, fileName);
+						preparedStatement.setString(1, file.getTheFile().getName());
 						preparedStatement.setString(2, path);
-						// execute insert SQL stetement
-						preparedStatement .executeUpdate();
+						preparedStatement.executeUpdate();
+						//java.sql.Date bla = new Date(date)
+						//preparedStatement.setDate(3, new java.sql.Date((new Date(System.currentTimeMillis())).getTime()));
+						//preparedStatement.setDate(4, new java.sql.Date((new Date(System.currentTimeMillis())).getTime()));
+						//preparedStatement.setString(5, "0777");
+						//preparedStatement.setInt(6, msg.getUserID());
+						//preparedStatement.setInt(7, 0);
+					//	preparedStatement.setString(8, msg.getNewFile().getDescription());
+						//if(msg.getNewFile().getTheFile().isDirectory()) preparedStatement.setInt(9, 1);
+						//else preparedStatement.setInt(9,0 );
+						
+			    		System.out.println("converting file");
+			    		FileUtils.writeByteArrayToFile(new File (path), msg.getMybytearray());		    			    		    		  
 
-						return "OK File: " + fileName + path + "Add";
+						// execute insert SQL stetement
+						return "Upload Sucseeded";
 					}
 	    }
 		 catch (SQLException e) {e.printStackTrace();
-		 return "problem execute Create";
-		 }
+		 return "Error";
+		 } catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return "Errror";
 }
 
 
@@ -630,4 +783,137 @@ public  TableModel buildTableModel(Connection con,String stat)
 			}
 			return null;
 	}
+<<<<<<< HEAD
 }
+=======
+public DefaultMutableTreeNode addNodes(DefaultMutableTreeNode curTop, File dir) {
+    String curPath = dir.getPath();
+    DefaultMutableTreeNode curDir = new DefaultMutableTreeNode(curPath);
+    if (curTop != null) { // should only be null at root
+      curTop.add(curDir);
+    }
+    Vector ol = new Vector();
+    String[] tmp = dir.list();
+    for (int i = 0; i < tmp.length; i++)
+      ol.addElement(tmp[i]);
+    Collections.sort(ol, String.CASE_INSENSITIVE_ORDER);
+    File f;
+    Vector files = new Vector();
+    // Make two passes, one for Dirs and one for Files. This is #1.
+    for (int i = 0; i < ol.size(); i++) {
+      String thisObject = (String) ol.elementAt(i);
+      String newPath;
+      if (curPath.equals("."))
+        newPath = thisObject;
+      else
+        newPath = curPath + File.separator + thisObject;
+      if ((f = new File(newPath)).isDirectory()) // add Directory
+        addNodes(curDir, f);
+      //else //addfiles 
+        //files.addElement(thisObject);
+    }
+    // Pass two: for files.
+    for (int fnum = 0; fnum < files.size(); fnum++)
+      curDir.add(new DefaultMutableTreeNode(files.elementAt(fnum)));
+    return curDir;
+  }
+
+
+}
+/* OLD
+if(msg instanceof String){
+	try {
+    if(msg.toString().startsWith("login")){
+    	String temp = msg.toString();
+    	String delims = " ";
+    	String[] tokens = temp.split(delims);
+    	if(tokens.length == 3){
+    	if(checkUserPassword(conn,(Login_Entity)msg))
+				client.sendToClient("Login Ok");
+			
+		else client.sendToClient("Login failed");
+    	}
+    	else client.sendToClient("Not enough parametes");
+    }
+    else if(msg.toString().startsWith("search")){
+    	String temp = msg.toString();
+    	String delims = " ";
+    	String[] tokens = temp.split(delims);
+    	if(tokens.length == 2){
+    	client.sendToClient(searchFile(conn,tokens[1]));
+     	}
+    	else client.sendToClient("Not enough parametes");
+    	
+    }
+    else if(msg.toString().startsWith("pathsearch")){
+    	String temp = msg.toString();
+    	String delims = " ";
+    	String[] tokens = temp.split(delims);
+    	if(tokens.length == 2){
+    	client.sendToClient(searchPath(conn,tokens[1]));
+     	}
+    	else client.sendToClient("Not enough parametes");
+    	
+    }
+    else if(msg.toString().startsWith("create")){
+      	String temp = msg.toString();
+    	String delims = " ";
+    	String[] tokens = temp.split(delims);
+    	if(tokens.length == 3){
+	   
+    		client.sendToClient(createNewFile(conn,tokens[1],tokens[2]));
+	     	}
+	    	else client.sendToClient("Not enough parametes");
+    }
+    else if(msg.toString().startsWith("delete")){
+      	String temp = msg.toString();
+    	String delims = " ";
+    	String[] tokens = temp.split(delims);
+    	if(tokens.length == 3){
+	    	client.sendToClient(deleteFile(conn,tokens[1],tokens[2]));
+	     	}
+	    	else client.sendToClient("Not enough parametes");
+    }
+    else if(msg.toString().startsWith("rename")){
+      	String temp = msg.toString();
+    	String delims = " ";
+    	String[] tokens = temp.split(delims);
+    	if(tokens.length == 4){
+	    	
+    		client.sendToClient(renameFile(conn,tokens[1],tokens[2],tokens[3]));
+	     	}
+	    	else client.sendToClient("Not enough parametes");
+    }	
+    else if(msg.toString().startsWith("move")){
+      	String temp = msg.toString();
+    	String delims = " ";
+    	String[] tokens = temp.split(delims);
+    	if(tokens.length == 4){
+	    	
+    		client.sendToClient(moveFile(conn,tokens[1],tokens[2],tokens[3]));
+	     }
+	    else client.sendToClient("Not enough parametes");
+    }	
+    else if(msg.toString().startsWith("getallfiles")){
+    	client.sendToClient(getallfiles(conn));
+    }
+    else if(msg.toString().startsWith("help"))
+    {
+    	client.sendToClient(helpPrint());
+    }
+    else client.sendToClient("Command not Found");
+	
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+} else
+	try {
+		client.sendToClient("This is not a String");
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+
+} */
+>>>>>>> refs/heads/master

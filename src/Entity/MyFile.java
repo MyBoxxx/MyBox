@@ -10,6 +10,17 @@ public class MyFile implements Serializable {
 	public  byte[] mybytearray;
 	public File theFile = new File("");
 	
+<<<<<<< HEAD
+=======
+	public File getTheFile() {
+		return theFile;
+	}
+
+	public void setTheFile(File theFile) {
+		this.theFile = theFile;
+	}
+
+>>>>>>> refs/heads/master
 	public void initArray(int size)
 	{
 		mybytearray = new byte [size];	

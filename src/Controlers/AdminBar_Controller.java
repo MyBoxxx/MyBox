@@ -19,6 +19,7 @@ import GUI_final.*;
 
 public class AdminBar_Controller {
 
+<<<<<<< HEAD
 	private  Adminbar_model model ;
 	private  Adminbar view;
 	
@@ -28,6 +29,17 @@ public class AdminBar_Controller {
 	}
 	public void control(){
 		
+=======
+
+	private  Adminbar_model model ;
+	private  Adminbar view;
+
+	public AdminBar_Controller(Adminbar_model model,Adminbar view){
+		this.model = model;
+		this.view = view;
+	}
+	public void control(){
+>>>>>>> refs/heads/master
 		this.view.ChangeFMSLitsner(new ChangeFMSLitsner());
 		this.view.NotifcationYesLitsner(new NotificationYesLitsner());
 		this.view.NotifcationNoLitsner(new NotificationNoLitsner());

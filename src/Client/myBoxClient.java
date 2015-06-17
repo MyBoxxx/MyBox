@@ -10,8 +10,23 @@ import Controlers.SystemAdminRequestsScreen_Controller;
 import Entity.*;
 
 import java.io.*;
+<<<<<<< HEAD
 
 import Entity.*;
+=======
+import java.lang.reflect.Array;
+import java.util.Enumeration;
+
+import javax.swing.JTree;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.MutableTreeNode;
+import javax.swing.tree.TreeNode;
+
+import Entity.*;
+import SampleTreeFileView.Controller;
+import SampleTreeFileView.Model;
+>>>>>>> refs/heads/master
 
 /**
  * This class overrides some of the methods defined in the abstract superclass
@@ -30,7 +45,11 @@ public class myBoxClient extends ObservableClient {
 	 */
 	
 	private  Object currController;
+<<<<<<< HEAD
 	private  static User_Entity currUser;
+=======
+	public  User_Entity currUser;
+>>>>>>> refs/heads/master
 
 
 
@@ -60,7 +79,7 @@ public class myBoxClient extends ObservableClient {
 	 *            The message from the server.
 	 */
 	public synchronized void handleMessageFromServer(Object message) {
-
+		System.out.println("Message received: " + message + " from Server");
 		try {
 
 			if (message instanceof Login_Entity){ // user name and password is found ( 1.setCurrUser that is using application, 2.set status to 1)
@@ -79,17 +98,37 @@ public class myBoxClient extends ObservableClient {
 				( (SystemAdminRequestsScreen_Controller) currController).refreshList();
 			}
 			
+<<<<<<< HEAD
+=======
+			if(message instanceof FileTreeUpdate){
+				
+				DefaultMutableTreeNode bla1 = new DefaultMutableTreeNode();
+				for (File file : ((FileTreeUpdate)message).getFiles() ) {
+					if(file.isDirectory()) 
+						System.out.println("file: " + file.getCanonicalPath());
+				}	
+				JTree bla = new JTree(bla1);
+			}
+			if(message instanceof Model){
+				
+				( (Controller) currController).setModel((Model)message);
+				( (Controller) currController).setTableData();
+			}
+			
+			
+>>>>>>> refs/heads/master
 			
 		
 
 		} catch (Exception e) {
 			System.out.println(e + "mybox client");
 		}
-
+		
 		notify();
 	}
 
 
+<<<<<<< HEAD
 	public static User_Entity getCurrUser() {
 		return myBoxClient.currUser;
 	}
@@ -97,6 +136,8 @@ public class myBoxClient extends ObservableClient {
 	public static void setCurrUser(User_Entity currUser) {
 		myBoxClient.currUser = currUser;
 	}
+=======
+>>>>>>> refs/heads/master
 	public   Object getCurrController() {
 		return currController;
 	}

@@ -1,5 +1,6 @@
 package SampleTreeFileView;
 import java.io.File;
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.swing.ImageIcon;
@@ -7,10 +8,12 @@ import javax.swing.filechooser.FileSystemView;
 import javax.swing.table.AbstractTableModel;
 
 /** A TableModel to hold File[]. */
-class FileTableModel extends AbstractTableModel {
+public class FileTableModel extends AbstractTableModel implements Serializable {
 
     private File[] files;
-    private FileSystemView fileSystemView = FileSystemView.getFileSystemView();
+
+
+	private FileSystemView fileSystemView = FileSystemView.getFileSystemView();
     private String[] columns = {
         "Icon",
         "File",
@@ -94,7 +97,9 @@ class FileTableModel extends AbstractTableModel {
     public File getFile(int row) {
         return files[row];
     }
-
+    public File[] getFiles() {
+		return files;
+	}
     public void setFiles(File[] files) {
         this.files = files;
         fireTableDataChanged();

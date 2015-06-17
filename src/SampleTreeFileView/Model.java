@@ -21,6 +21,7 @@ import javax.swing.SwingWorker;
 import javax.swing.table.TableColumn;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
 
 import Entity.Abstract_Entity;
@@ -33,9 +34,10 @@ public class Model extends Abstract_Entity{
 	
 	/** File-system tree. Built Lazily */
 	private JTree tree;
-	private DefaultTreeModel treeModel;
-
-    /** currently selected File. */
+	private DefaultMutableTreeNode treeModel;
+	private FileTableModel fileTableModel;
+	public boolean cellSizesSet = false; 
+	/** currently selected File. */
     private File currentFile;
     
     /** Used to open/edit/print files. */
@@ -45,7 +47,27 @@ public class Model extends Abstract_Entity{
     
     //file
     private MyFile newFile;
+<<<<<<< HEAD
     
+=======
+
+    public FileTableModel getFileTableModel() {
+		return fileTableModel;
+	}
+
+	public void setFileTableModel(FileTableModel fileTableModel) {
+		this.fileTableModel = fileTableModel;
+	}
+
+	public DefaultMutableTreeNode getTreeModel() {
+		return treeModel;
+	}
+
+	public void setTreeModel(DefaultMutableTreeNode treeModel) {
+		this.treeModel = treeModel;
+	}
+
+>>>>>>> refs/heads/master
     
 public MyFile getNewFile() {
 		return newFile;
