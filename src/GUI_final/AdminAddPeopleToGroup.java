@@ -5,6 +5,7 @@ import java.awt.EventQueue;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -22,8 +23,6 @@ import java.awt.SystemColor;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
-
 import java.awt.event.ActionEvent;
 
 
@@ -35,10 +34,10 @@ public class AdminAddPeopleToGroup extends JPanel {
 	private JButton OkButton;
 	private TextField textField;
 	private JTextPane textPane;
-	private Choice choose_user;
+	private JComboBox choiceGroup;
+	private JComboBox Choose_user;
 	private JTextPane txtpnChooseUser_1;
 	private JTextPane txtpnChooseGroup;
-	private Choice choiceGroup;
 	private JLabel joinLabel;
 	
 
@@ -76,13 +75,10 @@ public class AdminAddPeopleToGroup extends JPanel {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);*/
 		setLayout(null);
-		
-		choiceGroup = new Choice();
-		choiceGroup.setBounds(429, 97, 185, 20);
-		choiceGroup.add("");
-		choiceGroup.add("100");
-		choiceGroup.add("ein ma");
-		choiceGroup.add("peter");
+		String[] petStrings = { "","Bird", "Cat", "Dog", "Rabbit", "Pig","" };
+		choiceGroup = new  JComboBox(petStrings);
+		choiceGroup.setSelectedIndex(6);
+		choiceGroup.setBounds(429, 97, 185, 20);		
 		add(choiceGroup);
 		
 		txtpnChooseGroup = new JTextPane();
@@ -101,13 +97,7 @@ public class AdminAddPeopleToGroup extends JPanel {
 		txtpnChooseUser_1.setBounds(211, 128, 185, 20);
 		add(txtpnChooseUser_1);
 		
-		choose_user = new Choice();
-		choose_user.add("");
-		choose_user.add("100");
-		choose_user.add("ein ma");
-		choose_user.add("peter");
-		choose_user.setBounds(429, 128, 185, 20);
-		add(choose_user);
+		
 		
 		textPane = new JTextPane();
 		textPane.setForeground(SystemColor.textHighlightText);
@@ -144,7 +134,14 @@ public class AdminAddPeopleToGroup extends JPanel {
 		askLabel.setIcon(new ImageIcon("src/GUI_final/addPeople.png"));
 		askLabel.setBounds(10, 11, 720, 33);
 		add(askLabel);
+		
+	    Choose_user = new JComboBox(petStrings);
+		Choose_user.setSelectedIndex(6);
+		Choose_user.setBounds(429, 128, 185, 20);
+		add(Choose_user);
 	}
+
+
 	public JLabel getJoin() {
 		return join;
 	}
@@ -195,13 +192,23 @@ public class AdminAddPeopleToGroup extends JPanel {
 	}
 
 
-	public Choice getChoose_user() {
-		return choose_user;
+	public JComboBox getChoiceGroup() {
+		return choiceGroup;
 	}
 
 
-	public void setChoose_user(Choice choose_user) {
-		this.choose_user = choose_user;
+	public void setChoiceGroup(JComboBox choiceGroup) {
+		this.choiceGroup = choiceGroup;
+	}
+
+
+	public JComboBox getChoose_user() {
+		return Choose_user;
+	}
+
+
+	public void setChoose_user(JComboBox choose_user) {
+		Choose_user = choose_user;
 	}
 
 
@@ -225,16 +232,6 @@ public class AdminAddPeopleToGroup extends JPanel {
 	}
 
 
-	public Choice getChoiceGroup() {
-		return choiceGroup;
-	}
-
-
-	public void setChoiceGroup(Choice choiceGroup) {
-		this.choiceGroup = choiceGroup;
-	}
-
-
 	public JLabel getJoinLabel() {
 		return joinLabel;
 	}
@@ -254,4 +251,4 @@ public class AdminAddPeopleToGroup extends JPanel {
 		this.askLabel = askLabel;
 	}
 	
-}
+}	
