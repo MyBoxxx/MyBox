@@ -1,9 +1,10 @@
-package Controlers;
+package Client;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.net.MalformedURLException;
 
+import Controlers.AdminBar_Controller;
 import Entity.Adminbar_model;
 import Entity.Login_Entity;
 import GUI_final.Adminbar;
@@ -18,8 +19,8 @@ public class MainAdmin {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		try {
-			 view = new Adminbar();
-			 model = new Adminbar_model();
+			view = new Adminbar();
+			model = new Adminbar_model();
 			AdminBar_Controller controler = new AdminBar_Controller(model, view);
 			view.setBounds(100, 100, 800, 600);
 			controler.control();
