@@ -77,7 +77,10 @@ public class AdminBar_Controller {
 		public void actionPerformed(ActionEvent e) {
 			view.getBtnQuit().addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent e) {
-					JOptionPane.showMessageDialog(null,"logout pressed");
+					view.dispose();
+					LoginMain.main(null);
+					//JOptionPane.showMessageDialog(null,"logout pressed");
+					
 				}				
 			});			
 		}		

@@ -112,7 +112,7 @@ public class Adminbar extends AbstractGUI {
 		contentPane.add(Cover);		
 		
 	}
-
+	
 	public JLabel getLblNotificationCenter() {
 		return lblNotificationCenter;
 	}
@@ -169,4 +169,19 @@ public class Adminbar extends AbstractGUI {
 		Cover = cover;
 	}
 
+	public void ChangeFMSLitsner(ActionListener listenForChnageFMSButton){
+		 btnChangeFms.addActionListener(listenForChnageFMSButton);
+	}
+	
+	public void NotifcationYesLitsner(ActionListener listenForNotifcationYesButton){
+		NotifcationYes.addActionListener(listenForNotifcationYesButton);
+	}
+	
+	public void NotifcationNoLitsner(ActionListener listenForNotifcationNoButton){
+		NotifcationYes.addActionListener(listenForNotifcationNoButton);
+	}
+	
+	public void QuitLitsner(ActionListener listenForQuitButton){
+		btnQuit.addActionListener(listenForQuitButton);
+	}
 }
