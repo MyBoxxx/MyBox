@@ -8,25 +8,38 @@ import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 
+import javax.swing.Icon;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JTree;
+import javax.swing.SwingUtilities;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.TreeModel;
 
 import org.apache.commons.io.FileUtils;
 
 import Client.MainClient;
 import Client.myBoxClient;
 import Controlers.*;
+import Entity.FileTreeUpdate;
 import Entity.Folder_Entity;
 import Entity.MyFile;
+import Entity.UpLoadFile;
 import GUI_final.*;
 
 public class Controller extends AbstractTransfer{
     private Model model;
-    private View view;
+    public void setModel(Model model) {
+		this.model = model;
+	}
+
+	public Model getModel() {
+		return model;
+	}
+	private View view;
     
     //private ActionListener actionListener;
     private ActionListener openFileActionListener;
@@ -58,23 +71,22 @@ public class Controller extends AbstractTransfer{
     
     public Controller(Model model, View view){
         this.model = model;
-        this.model.setUserID(myBoxClient.getCurrUser().getIDuser());
         this.view = view; 
         view.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
     
-    public void contol(){        
+    public void contol(){   
+    	System.out.println("MainControlerEnable");
+		MainClient.clien.setCurrController(this); // Set The Current Controller to this	
         //TO-DO
     	openFileActionListener = new ActionListener() {
     		
     		@Override
     		public void actionPerformed(ActionEvent e) {
+    			FileTreeUpdate filetree = new FileTreeUpdate();
+    			filetree.setUser(MainClient.clien.currUser);
+    			sendToServer(filetree);
     			// TODO Auto-generated method stub
-    			try {
-    				//((Desktop) model.getDesktop()).open(view.getCurrentFile());
-    			} catch(Throwable t) {
-    				//showThrowable(t);
-    			}
     			
     		}
     	};
@@ -133,16 +145,16 @@ public class Controller extends AbstractTransfer{
 					JFileChooser fileChooser = new JFileChooser();
 					int returnValue = fileChooser.showOpenDialog(view.getGui());
 					if (returnValue == JFileChooser.APPROVE_OPTION) {
-						fileChooser.getSelectedFile();
-						MyFile newFile = new MyFile(fileChooser.getSelectedFile());
-		      		      
+						UpLoadFile newFile = new UpLoadFile(fileChooser.getSelectedFile());
+		      		     
 					      newFile.mybytearray = FileUtils.readFileToByteArray(fileChooser.getSelectedFile());
-					      model.setNewFile(newFile);
-						
+					      //model.setNewFile(newFile);
+					      
+					      newFile.setUser(MainClient.clien.currUser);
 						
 						
 						//model.setNewFile(fileChooser.getSelectedFile());
-						sendToServer(model);
+						sendToServer(newFile);
 					}
     			} catch(Throwable t) {
     				System.out.println("Error Send!!");
@@ -184,7 +196,7 @@ public class Controller extends AbstractTransfer{
     		public void actionPerformed(ActionEvent e) {
     			// TODO Auto-generated method stub
     			try {
-    				
+    				sendToServer(model);
     			} catch(Throwable t) {
     				//showThrowable(t);
     			}
@@ -197,6 +209,7 @@ public class Controller extends AbstractTransfer{
     		public void actionPerformed(ActionEvent e) {
     			// TODO Auto-generated method stub
     			try {
+    				sendToServer(model);
     			} catch(Throwable t) {
     				//showThrowable(t);
     			}
@@ -301,6 +314,61 @@ public class Controller extends AbstractTransfer{
 	public void setVisible(boolean b) {
 	 view.setVisible(b);
 	}
+
+	public void repaint() {
+		view.repaint();
+		
+	}
+	public void UpdateTree()
+	{
+		System.out.println(model.getTreeModel().toString());
+		
+		view.getTree().setModel((TreeModel) model.getTreeModel());
+		//
+		
+		
+		
+		
+		
+		//new JTree(model.getTreeModel()));
+		view.getTree().repaint();
+		view.repaint();
+	}
        
+	
+	
+    public void setTableData() {
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                if (model.getFileTableModel()==null) {
+                    model.setFileTableModel(new FileTableModel());
+                    view.getTable().setModel(model.getFileTableModel());
+                }
+                //view.getTable().getSelectionModel().removeListSelectionListener(listSelectionListener);
+                model.getFileTableModel().setFiles(model.getFileTableModel().getFiles());
+                //table.getSelectionModel().addListSelectionListener(listSelectionListener);
+                if (!model.cellSizesSet) {
+                    Icon icon = view.fileSystemView.getSystemIcon(model.getFileTableModel().getFile(0));
+
+                    // size adjustment to better account for icons
+                    view.getTable().setRowHeight( icon.getIconHeight()+view.rowIconPadding );
+
+                    /*setColumnWidth(0,-1);
+                    setColumnWidth(3,60);
+                    table.getColumnModel().getColumn(3).setMaxWidth(120);
+                    setColumnWidth(4,-1);
+                    setColumnWidth(5,-1);
+                    setColumnWidth(6,-1);
+                    setColumnWidth(7,-1);
+                    setColumnWidth(8,-1);
+                    setColumnWidth(9,-1);
+                     */
+                    model.cellSizesSet = true;
+                    view.getTable().repaint();
+                    repaint();
+                }
+            }
+        });
+    }
 }
     
