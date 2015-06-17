@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Desktop;
 import java.awt.GridLayout;
 import java.io.File;
+import java.io.Serializable;
 
 import javax.swing.ButtonGroup;
 import javax.swing.Icon;
@@ -28,7 +29,7 @@ import Entity.Abstract_Entity;
 import Entity.MyFile;
 import GUI_final.CreateFolderScreen;
 
-public class Model extends Abstract_Entity{
+public class Model extends Abstract_Entity implements Serializable{
 	
 	private int UserID;
 	

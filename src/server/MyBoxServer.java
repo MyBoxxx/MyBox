@@ -200,6 +200,17 @@ public class MyBoxServer extends AbstractServer
 	        		e.printStackTrace();
 	        	}
 	        }
+	        if(msg instanceof FileTable){
+	        	JTable bla = new JTable();
+	        	TableFromDatabase(bla, "SELECT * FROM Files WHERE Owner = '"+((FileTable) msg).getUser().getIDuser() +"';", conn);
+	        	((FileTable) msg).setTable(bla);
+	        	try {
+					client.sendToClient((FileTable) msg);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+	        }
 	        
 	        
 	        
@@ -560,14 +571,15 @@ private String createNewFile(Connection con, UpLoadFile msg) {
 					else {
 						System.out.println("insert to sql");
 						String insertTableSQL = "INSERT INTO Files"
-								+ "(FileName,FilePath) VALUES"
-								+ "(?,?)";
+								+ "(FileName,FilePath,Owner) VALUES"
+								+ "(?,?,?)";
 		    			
 						//CreatedTime,Modified,Permission,Owner,IsDeleted,Description,isDirectory
 						java.sql.PreparedStatement preparedStatement = con.prepareStatement(insertTableSQL);
 						preparedStatement.setString(1, file.getTheFile().getName());
 						preparedStatement.setString(2, path);
-						preparedStatement.executeUpdate();
+						preparedStatement.setInt(3,1);
+
 						//java.sql.Date bla = new Date(date)
 						//preparedStatement.setDate(3, new java.sql.Date((new Date(System.currentTimeMillis())).getTime()));
 						//preparedStatement.setDate(4, new java.sql.Date((new Date(System.currentTimeMillis())).getTime()));
@@ -578,6 +590,7 @@ private String createNewFile(Connection con, UpLoadFile msg) {
 						//if(msg.getNewFile().getTheFile().isDirectory()) preparedStatement.setInt(9, 1);
 						//else preparedStatement.setInt(9,0 );
 						
+						preparedStatement.executeUpdate();
 			    		System.out.println("converting file");
 			    		FileUtils.writeByteArrayToFile(new File (path), msg.getMybytearray());		    			    		    		  
 
