@@ -31,7 +31,11 @@ public class myBoxClient extends ObservableClient {
 	
 	private  Object currController;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	private  User_Entity currUser;
+=======
+	private  static User_Entity currUser;
+>>>>>>> refs/heads/master
 =======
 	private  static User_Entity currUser;
 >>>>>>> refs/heads/master
@@ -69,8 +73,12 @@ public class myBoxClient extends ObservableClient {
 
 			if (message instanceof Login_Entity){ // user name and password is found ( 1.setCurrUser that is using application, 2.set status to 1)
 <<<<<<< HEAD
+<<<<<<< HEAD
 				if(((Login_Entity) message).isUser()  == true)
 				{
+=======
+				if(((Login_Entity) message).isUser() == true){
+>>>>>>> refs/heads/master
 =======
 				if(((Login_Entity) message).isUser() == true){
 >>>>>>> refs/heads/master
@@ -83,8 +91,14 @@ public class myBoxClient extends ObservableClient {
 			}
 			
 <<<<<<< HEAD
+<<<<<<< HEAD
 			if(message instanceof SystemAdminRequestScree_List)
 			{
+=======
+			if(message instanceof SystemAdminReequestScreen_Entity)
+			{
+				( (SystemAdminRequestsScreen_Controller) currController).setModel((SystemAdminReequestScreen_Entity) message);
+>>>>>>> refs/heads/master
 =======
 			if(message instanceof SystemAdminReequestScreen_Entity)
 			{
@@ -104,7 +118,10 @@ public class myBoxClient extends ObservableClient {
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> refs/heads/master
 
 	public static User_Entity getCurrUser() {
 		return myBoxClient.currUser;
@@ -119,6 +136,7 @@ public class myBoxClient extends ObservableClient {
 >>>>>>> refs/heads/master
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	public  User_Entity getCurrUser() {
 		return currUser;
 	}
@@ -130,6 +148,8 @@ public class myBoxClient extends ObservableClient {
 		return currController;
 	}
 
+=======
+>>>>>>> refs/heads/master
 =======
 >>>>>>> refs/heads/master
 

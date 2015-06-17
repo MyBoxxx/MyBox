@@ -37,8 +37,11 @@ public class Adminbar extends AbstractGUI {
 	 * Launch the application.
 	 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
+=======
+>>>>>>> refs/heads/master
 	public void Initialize(){//*static  void main(String[] args) {**//
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -61,7 +64,11 @@ public class Adminbar extends AbstractGUI {
 		setBounds(100, 100, 800, 600);
 		contentPane = new JPanel();
 <<<<<<< HEAD
+<<<<<<< HEAD
 		setBackground(Color.WHITE);
+=======
+		contentPane.setBackground(Color.WHITE);
+>>>>>>> refs/heads/master
 =======
 		contentPane.setBackground(Color.WHITE);
 >>>>>>> refs/heads/master
@@ -75,8 +82,11 @@ public class Adminbar extends AbstractGUI {
 		lblNotificationCenter.setBackground(new Color(41,91,150));
 		lblNotificationCenter.setBounds(6, 113, 336, 52);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		add(lblNotificationCenter);
 =======
+=======
+>>>>>>> refs/heads/master
 		contentPane.add(lblNotificationCenter);
 >>>>>>> refs/heads/master
 		
@@ -91,8 +101,11 @@ public class Adminbar extends AbstractGUI {
 		NotifcationYes.setBackground(new Color(41,91,150));
 		NotifcationYes.setBounds(354, 113, 52, 52);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		add(NotifcationYes);
 =======
+=======
+>>>>>>> refs/heads/master
 		contentPane.add(NotifcationYes);
 >>>>>>> refs/heads/master
 		
@@ -105,8 +118,11 @@ public class Adminbar extends AbstractGUI {
 		btnChangeFms.setOpaque(false);
 		btnChangeFms.setBounds(6, 221, 230, 170);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		add(btnChangeFms);
 =======
+=======
+>>>>>>> refs/heads/master
 		contentPane.add(btnChangeFms);
 >>>>>>> refs/heads/master
 		
@@ -119,8 +135,11 @@ public class Adminbar extends AbstractGUI {
 		btnQuit.setFocusPainted(false); 
 		btnQuit.setOpaque(false);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		add(btnQuit);
 =======
+=======
+>>>>>>> refs/heads/master
 		contentPane.add(btnQuit);
 >>>>>>> refs/heads/master
 		
@@ -134,8 +153,11 @@ public class Adminbar extends AbstractGUI {
 		Cover.setIcon(new ImageIcon("src/GUI_final/admin2.jpg"));
 		Cover.setBounds(0, 0, 800, 600);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		add(Cover);		
 =======
+=======
+>>>>>>> refs/heads/master
 		contentPane.add(Cover);		
 >>>>>>> refs/heads/master
 		
@@ -212,4 +234,8 @@ public class Adminbar extends AbstractGUI {
 	public void QuitLitsner(ActionListener listenForQuitButton){
 		btnQuit.addActionListener(listenForQuitButton);
 	}
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> refs/heads/master

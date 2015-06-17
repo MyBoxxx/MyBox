@@ -17,9 +17,21 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 import Entity.Login_Entity;
 import Entity.SystemAdminReequestScreen_Entity;
 import Entity.SystemAdminRequestScree_List;
+=======
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+
+import org.apache.commons.io.FileUtils;
+
+import net.proteanit.sql.DbUtils;
+import Entity.*;
+import SampleTreeFileView.Model;
+>>>>>>> refs/heads/master
 =======
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -145,8 +157,13 @@ public class MyBoxServer extends AbstractServer
 	        if(msg instanceof Login_Entity){
 	        	System.out.println("Try To Coneect as "+ ((Login_Entity)msg).getUsername());
 <<<<<<< HEAD
+<<<<<<< HEAD
 	        	if(checkUserPassword(conn,(Login_Entity)msg)){
 	        	
+=======
+	        	if(checkUserPassword(conn,(Login_Entity)msg)) System.out.println("Login Succsed");
+	        	else System.out.println("Login Failed");
+>>>>>>> refs/heads/master
 =======
 	        	if(checkUserPassword(conn,(Login_Entity)msg)) System.out.println("Login Succsed");
 	        	else System.out.println("Login Failed");
@@ -157,6 +174,7 @@ public class MyBoxServer extends AbstractServer
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
+<<<<<<< HEAD
 <<<<<<< HEAD
 	        	} else
 				try {
@@ -170,8 +188,13 @@ public class MyBoxServer extends AbstractServer
 	        	 
 	        }
 >>>>>>> refs/heads/master
+=======
+	        	 
+	        }
+>>>>>>> refs/heads/master
 	        		
 	        	
+<<<<<<< HEAD
 <<<<<<< HEAD
 	        if(msg instanceof SystemAdminRequestScree_List){
 	        	SystemAdminRequestScree_List_getList(conn,(SystemAdminRequestScree_List)msg);
@@ -182,6 +205,34 @@ public class MyBoxServer extends AbstractServer
 	        		e.printStackTrace();
 	        	}
 	        }
+=======
+	        if(msg instanceof SystemAdminReequestScreen_Entity){
+	        	((SystemAdminReequestScreen_Entity) msg).setTablemodel(buildTableModel(conn,"SELECT requestID,RequestType,status,AdminRequsts.UserId , UserName FROM AdminRequsts , Users Where Users.UserID = AdminRequsts.UserId; ")); 
+	        	try{
+	        		client.sendToClient(msg);
+	        	}
+	        	catch (IOException e){
+	        		e.printStackTrace();
+	        	}
+	        }
+	        if(msg instanceof Model){
+	       	try{
+	    			  String path = "U_"+((Model)msg).getUserID() + "/"+((Model)msg).getNewFile().theFile.getName() ;
+		    		  System.out.println("Try To send");
+		    		 // File newFile = new File ("U_"+((Model)msg).getUserID() + "/"+((Model)msg).getNewFile().getName());
+		    		  FileUtils.writeByteArrayToFile(new File (path),((Model)msg).getNewFile().getMybytearray());
+		    			    
+		    			    
+	    			//org.apache.commons.io.FileUtils.copyFileToDirectory(((Model)msg).getNewFile() , temp );
+		    		//System.out.println("path : "+ newFile.getPath() +  " Add ");
+
+	    		}
+	    		catch (IOException e){
+	    			e.printStackTrace();
+	    			}
+	    	}
+	        
+>>>>>>> refs/heads/master
 =======
 	        if(msg instanceof SystemAdminReequestScreen_Entity){
 	        	((SystemAdminReequestScreen_Entity) msg).setTablemodel(buildTableModel(conn,"SELECT requestID,RequestType,status,AdminRequsts.UserId , UserName FROM AdminRequsts , Users Where Users.UserID = AdminRequsts.UserId; ")); 
@@ -318,6 +369,7 @@ public class MyBoxServer extends AbstractServer
 	  }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     
  private void SystemAdminRequestScree_List_getList(Connection conn,
 		SystemAdminRequestScree_List msg) {
@@ -339,6 +391,29 @@ public class MyBoxServer extends AbstractServer
 	
 }
 
+=======
+    /*
+ private void SystemAdminRequestScree_List_getList(Connection conn,
+		SystemAdminRequestScree_List msg) {
+	 Statement stmt;
+		try 
+		{
+			stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM AdminRequsts ORDER BY status;");
+			ArrayList<SystemAdminReequestScreen_Entity> ListFromServer = new ArrayList<SystemAdminReequestScreen_Entity>();
+			while (rs.next()) {
+				ListFromServer.add(new SystemAdminReequestScreen_Entity(rs.getInt("requestID"), rs.getInt("theRequest"), rs.getInt("status") , rs.getString("name")));
+			}
+			msg.setListFromServer(ListFromServer);
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+	 
+	
+}
+*/
+>>>>>>> refs/heads/master
 =======
     /*
  private void SystemAdminRequestScree_List_getList(Connection conn,
@@ -560,8 +635,13 @@ private Boolean checkUserPassword(Connection con, Login_Entity log){
 		stmt = con.createStatement();
 		ResultSet rs = stmt.executeQuery("SELECT * FROM Users where UserName ='"+ log.getUsername() + "' AND Password = '"+log.getPassword() +"' ;");
 <<<<<<< HEAD
+<<<<<<< HEAD
 		
 		if(rs.next()) {
+=======
+		if(rs.next()) { //if user exist
+			log.setIDuser(rs.getInt("UserID"));
+>>>>>>> refs/heads/master
 =======
 		if(rs.next()) { //if user exist
 			log.setIDuser(rs.getInt("UserID"));
@@ -694,4 +774,8 @@ public  TableModel buildTableModel(Connection con,String stat)
 			}
 			return null;
 	}
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> refs/heads/master

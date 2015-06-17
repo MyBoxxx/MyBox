@@ -20,6 +20,7 @@ import GUI_final.*;
 public class AdminBar_Controller {
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 
 	private  Adminbar_model model ;
@@ -29,10 +30,13 @@ public class AdminBar_Controller {
 
 
 =======
+=======
+>>>>>>> refs/heads/master
 	private  Adminbar_model model ;
 	private  Adminbar view;
 >>>>>>> refs/heads/master
 	
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 
@@ -42,12 +46,18 @@ public class AdminBar_Controller {
 =======
 	AdminBar_Controller(Adminbar_model model,Adminbar view){
 >>>>>>> refs/heads/master
+=======
+	AdminBar_Controller(Adminbar_model model,Adminbar view){
+>>>>>>> refs/heads/master
 		this.model = model;
 		this.view = view;
 	}
 	public void control(){
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> refs/heads/master
 		
 >>>>>>> refs/heads/master
 		this.view.ChangeFMSLitsner(new ChangeFMSLitsner());

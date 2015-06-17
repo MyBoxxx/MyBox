@@ -6,7 +6,11 @@ import java.util.List;
 public class User_Entity extends Abstract_Entity{
 	
 <<<<<<< HEAD
+<<<<<<< HEAD
 	private String IDuser; //Not NUll Auto Increment
+=======
+	private int IDuser; //Not NUll Auto Increment
+>>>>>>> refs/heads/master
 =======
 	private int IDuser; //Not NUll Auto Increment
 >>>>>>> refs/heads/master
