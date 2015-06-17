@@ -23,7 +23,7 @@ import java.awt.event.ActionEvent;
 
 public class Adminbar extends AbstractGUI {
 
-	 JPanel contentPane;
+	private JPanel contentPane;
 	private JLabel lblNotificationCenter;
 	private JButton NotifcationNo;	
 	private JButton NotifcationYes;	
@@ -36,12 +36,6 @@ public class Adminbar extends AbstractGUI {
 	/**
 	 * Launch the application.
 	 */
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-=======
-=======
->>>>>>> refs/heads/master
 	public void Initialize(){//*static  void main(String[] args) {**//
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -54,7 +48,6 @@ public class Adminbar extends AbstractGUI {
 			}
 		});
 	}
->>>>>>> refs/heads/master
 
 	/**
 	 * Create the frame.
@@ -63,51 +56,29 @@ public class Adminbar extends AbstractGUI {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 800, 600);
 		contentPane = new JPanel();
-<<<<<<< HEAD
-<<<<<<< HEAD
-		setBackground(Color.WHITE);
-=======
 		contentPane.setBackground(Color.WHITE);
->>>>>>> refs/heads/master
-=======
-		contentPane.setBackground(Color.WHITE);
->>>>>>> refs/heads/master
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setBackground(new Color(2,98,158));
-		
+		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
 		lblNotificationCenter = new JLabel();
 		lblNotificationCenter.setIcon(new ImageIcon("src/GUI_final/noti.png"));
 		lblNotificationCenter.setBackground(new Color(41,91,150));
 		lblNotificationCenter.setBounds(6, 113, 336, 52);
-<<<<<<< HEAD
-<<<<<<< HEAD
-		add(lblNotificationCenter);
-=======
-=======
->>>>>>> refs/heads/master
 		contentPane.add(lblNotificationCenter);
->>>>>>> refs/heads/master
 		
 		NotifcationNo = new JButton();
 		NotifcationNo.setIcon(new ImageIcon("src/GUI_final/notification_no.png"));
 		NotifcationNo.setBounds(434, 113, 50, 52);
 		NotifcationNo.setBackground(new Color(41,91,150));
-		add(NotifcationNo);
+		contentPane.add(NotifcationNo);
 		
 		NotifcationYes = new JButton();
 		NotifcationYes.setIcon(new ImageIcon("src/GUI_final/notification_yes.png"));
 		NotifcationYes.setBackground(new Color(41,91,150));
 		NotifcationYes.setBounds(354, 113, 52, 52);
-<<<<<<< HEAD
-<<<<<<< HEAD
-		add(NotifcationYes);
-=======
-=======
->>>>>>> refs/heads/master
 		contentPane.add(NotifcationYes);
->>>>>>> refs/heads/master
 		
 		btnChangeFms = new JButton();		
 		btnChangeFms.setToolTipText("Chnage FMS");
@@ -117,14 +88,7 @@ public class Adminbar extends AbstractGUI {
 		btnChangeFms.setFocusPainted(false); 
 		btnChangeFms.setOpaque(false);
 		btnChangeFms.setBounds(6, 221, 230, 170);
-<<<<<<< HEAD
-<<<<<<< HEAD
-		add(btnChangeFms);
-=======
-=======
->>>>>>> refs/heads/master
 		contentPane.add(btnChangeFms);
->>>>>>> refs/heads/master
 		
 		btnQuit = new JButton();
 		btnQuit.setIcon(new ImageIcon("src/GUI_final/logout_button.png"));
@@ -134,32 +98,18 @@ public class Adminbar extends AbstractGUI {
 		btnQuit.setContentAreaFilled(false); 
 		btnQuit.setFocusPainted(false); 
 		btnQuit.setOpaque(false);
-<<<<<<< HEAD
-<<<<<<< HEAD
-		add(btnQuit);
-=======
-=======
->>>>>>> refs/heads/master
 		contentPane.add(btnQuit);
->>>>>>> refs/heads/master
 		
 		lblSystemAdminWindow = new JLabel();
 		lblSystemAdminWindow.setBounds(290, 11, 800, 114);
 		lblSystemAdminWindow.setIcon(new ImageIcon("src/GUI_final/admin.png"));
 		lblSystemAdminWindow.setBackground(null);
-		add(lblSystemAdminWindow);
+		contentPane.add(lblSystemAdminWindow);
 		
 	    Cover = new JLabel();
 		Cover.setIcon(new ImageIcon("src/GUI_final/admin2.jpg"));
 		Cover.setBounds(0, 0, 800, 600);
-<<<<<<< HEAD
-<<<<<<< HEAD
-		add(Cover);		
-=======
-=======
->>>>>>> refs/heads/master
 		contentPane.add(Cover);		
->>>>>>> refs/heads/master
 		
 	}
 	
@@ -234,8 +184,4 @@ public class Adminbar extends AbstractGUI {
 	public void QuitLitsner(ActionListener listenForQuitButton){
 		btnQuit.addActionListener(listenForQuitButton);
 	}
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> refs/heads/master

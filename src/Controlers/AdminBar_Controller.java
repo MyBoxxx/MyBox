@@ -19,47 +19,15 @@ import GUI_final.*;
 
 public class AdminBar_Controller {
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-
-	private  Adminbar_model model ;
-	private  AdminMainWindow view;
-
-
-
-
-=======
-=======
->>>>>>> refs/heads/master
 	private  Adminbar_model model ;
 	private  Adminbar view;
->>>>>>> refs/heads/master
 	
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-
-	AdminBar_Controller(Adminbar_model model,AdminMainWindow view){
-
-
-=======
 	AdminBar_Controller(Adminbar_model model,Adminbar view){
->>>>>>> refs/heads/master
-=======
-	AdminBar_Controller(Adminbar_model model,Adminbar view){
->>>>>>> refs/heads/master
 		this.model = model;
 		this.view = view;
 	}
 	public void control(){
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> refs/heads/master
 		
->>>>>>> refs/heads/master
 		this.view.ChangeFMSLitsner(new ChangeFMSLitsner());
 		this.view.NotifcationYesLitsner(new NotificationYesLitsner());
 		this.view.NotifcationNoLitsner(new NotificationNoLitsner());

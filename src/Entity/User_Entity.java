@@ -5,15 +5,7 @@ import java.util.List;
 @SuppressWarnings("serial")
 public class User_Entity extends Abstract_Entity{
 	
-<<<<<<< HEAD
-<<<<<<< HEAD
-	private String IDuser; //Not NUll Auto Increment
-=======
 	private int IDuser; //Not NUll Auto Increment
->>>>>>> refs/heads/master
-=======
-	private int IDuser; //Not NUll Auto Increment
->>>>>>> refs/heads/master
 	private String Username; 
 	private String Password;
 	private boolean isLogedin ; // status of login - > true = in the system
