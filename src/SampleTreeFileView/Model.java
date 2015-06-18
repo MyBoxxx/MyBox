@@ -5,6 +5,7 @@ import java.awt.Desktop;
 import java.awt.GridLayout;
 import java.io.File;
 import java.io.Serializable;
+import java.util.ArrayList;
 
 import javax.swing.ButtonGroup;
 import javax.swing.Icon;
@@ -39,6 +40,7 @@ public class Model extends Abstract_Entity implements Serializable{
 	private DefaultMutableTreeNode treeModel;
 	private FileTableModel fileTableModel;
 	private TableModel tablemodel;
+	private ArrayList<String> bla;
 	public TableModel getTablemodel() {
 		return tablemodel;
 	}
