@@ -12,40 +12,33 @@ import javax.swing.Icon;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-<<<<<<< HEAD
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
-=======
 import javax.swing.JTree;
 import javax.swing.SwingUtilities;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeModel;
->>>>>>> refs/heads/master
 
 import org.apache.commons.io.FileUtils;
 
 import Client.MainClient;
 import Client.myBoxClient;
 import Controlers.*;
-<<<<<<< HEAD
 import Entity.Folder_Entity;
 import Entity.MyFile;
-=======
 import Entity.FileTreeUpdate;
 import Entity.Folder_Entity;
 import Entity.MyFile;
 import Entity.UpLoadFile;
->>>>>>> refs/heads/master
 import GUI_final.*;
 
 public class Controller extends AbstractTransfer{
     private Model model;
-<<<<<<< HEAD
     private View view;
-=======
+    
     public void setModel(Model model) {
 		this.model = model;
 	}
@@ -54,7 +47,6 @@ public class Controller extends AbstractTransfer{
 		return model;
 	}
 	private View view;
->>>>>>> refs/heads/master
     
     //private ActionListener actionListener;
     private ActionListener openFileActionListener;
@@ -86,10 +78,7 @@ public class Controller extends AbstractTransfer{
     
     public Controller(Model model, View view){
         this.model = model;
-<<<<<<< HEAD
         this.model.setUserID(myBoxClient.getCurrUser().getIDuser());
-=======
->>>>>>> refs/heads/master
         this.view = view; 
         view.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
@@ -106,14 +95,11 @@ public class Controller extends AbstractTransfer{
     			filetree.setUser(MainClient.clien.currUser);
     			sendToServer(filetree);
     			// TODO Auto-generated method stub
-<<<<<<< HEAD
     			try {
     				//((Desktop) model.getDesktop()).open(view.getCurrentFile());
     			} catch(Throwable t) {
     				//showThrowable(t);
     			}
-=======
->>>>>>> refs/heads/master
     			
     		}
     	};
@@ -172,7 +158,6 @@ public class Controller extends AbstractTransfer{
 					JFileChooser fileChooser = new JFileChooser();
 					int returnValue = fileChooser.showOpenDialog(view.getGui());
 					if (returnValue == JFileChooser.APPROVE_OPTION) {
-<<<<<<< HEAD
 						fileChooser.getSelectedFile();
 						MyFile newFile = new MyFile(fileChooser.getSelectedFile());
 		      		      
@@ -183,7 +168,6 @@ public class Controller extends AbstractTransfer{
 						
 						//model.setNewFile(fileChooser.getSelectedFile());
 						sendToServer(model);
-=======
 						UpLoadFile newFile = new UpLoadFile(fileChooser.getSelectedFile());
 		      		     
 					      newFile.mybytearray = FileUtils.readFileToByteArray(fileChooser.getSelectedFile());
@@ -194,7 +178,6 @@ public class Controller extends AbstractTransfer{
 						
 						//model.setNewFile(fileChooser.getSelectedFile());
 						sendToServer(newFile);
->>>>>>> refs/heads/master
 					}
     			} catch(Throwable t) {
     				System.out.println("Error Send!!");

@@ -9,9 +9,6 @@ public class MyFile implements Serializable {
 	private int Fsize=0;
 	public  byte[] mybytearray;
 	public File theFile = new File("");
-	
-<<<<<<< HEAD
-=======
 	public File getTheFile() {
 		return theFile;
 	}
@@ -20,7 +17,6 @@ public class MyFile implements Serializable {
 		this.theFile = theFile;
 	}
 
->>>>>>> refs/heads/master
 	public void initArray(int size)
 	{
 		mybytearray = new byte [size];	

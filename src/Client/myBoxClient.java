@@ -10,10 +10,8 @@ import Controlers.SystemAdminRequestsScreen_Controller;
 import Entity.*;
 
 import java.io.*;
-<<<<<<< HEAD
 
 import Entity.*;
-=======
 import java.lang.reflect.Array;
 import java.util.Enumeration;
 
@@ -26,7 +24,6 @@ import javax.swing.tree.TreeNode;
 import Entity.*;
 import SampleTreeFileView.Controller;
 import SampleTreeFileView.Model;
->>>>>>> refs/heads/master
 
 /**
  * This class overrides some of the methods defined in the abstract superclass
@@ -45,11 +42,7 @@ public class myBoxClient extends ObservableClient {
 	 */
 	
 	private  Object currController;
-<<<<<<< HEAD
 	private  static User_Entity currUser;
-=======
-	public  User_Entity currUser;
->>>>>>> refs/heads/master
 
 
 
@@ -98,8 +91,6 @@ public class myBoxClient extends ObservableClient {
 				( (SystemAdminRequestsScreen_Controller) currController).refreshList();
 			}
 			
-<<<<<<< HEAD
-=======
 			if(message instanceof FileTreeUpdate){
 				
 				DefaultMutableTreeNode bla1 = new DefaultMutableTreeNode();
@@ -116,7 +107,6 @@ public class myBoxClient extends ObservableClient {
 			}
 			
 			
->>>>>>> refs/heads/master
 			
 		
 
@@ -128,7 +118,6 @@ public class myBoxClient extends ObservableClient {
 	}
 
 
-<<<<<<< HEAD
 	public static User_Entity getCurrUser() {
 		return myBoxClient.currUser;
 	}
@@ -136,8 +125,6 @@ public class myBoxClient extends ObservableClient {
 	public static void setCurrUser(User_Entity currUser) {
 		myBoxClient.currUser = currUser;
 	}
-=======
->>>>>>> refs/heads/master
 	public   Object getCurrController() {
 		return currController;
 	}

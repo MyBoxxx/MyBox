@@ -47,9 +47,6 @@ public class Model extends Abstract_Entity{
     
     //file
     private MyFile newFile;
-<<<<<<< HEAD
-    
-=======
 
     public FileTableModel getFileTableModel() {
 		return fileTableModel;
@@ -67,7 +64,6 @@ public class Model extends Abstract_Entity{
 		this.treeModel = treeModel;
 	}
 
->>>>>>> refs/heads/master
     
 public MyFile getNewFile() {
 		return newFile;

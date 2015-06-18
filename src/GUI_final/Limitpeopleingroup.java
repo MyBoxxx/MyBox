@@ -27,11 +27,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 
-<<<<<<< HEAD
 public class Limitpeopleingroup extends AbstractGUI {
-=======
-public class Limitpeopleingroup extends JPanel {
->>>>>>> refs/heads/master
 
 	private JTextField CuurenttextField;
 	private JTextField newAmounText;
