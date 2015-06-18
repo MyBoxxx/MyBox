@@ -252,7 +252,7 @@ public class MyBoxServer extends AbstractServer
 
 private String createDirectory(Connection con, CreateDirectory msg) {
 	MyFile file =   msg;
-	String path = "UsersFiles/U_"+ msg.getUser().getIDuser() + "/"+ msg.getTheFile().getName() ;
+	String path = "UsersFiles/U_"+ msg.getUser().getIDuser() + "/" ;
 	Statement stmt;
 		try 
 		{
@@ -263,6 +263,7 @@ private String createDirectory(Connection con, CreateDirectory msg) {
 					return "file is in the User Dir";
 					}
 					else {
+						/* 
 						System.out.println("insert to sql");
 						String insertTableSQL = "INSERT INTO Files"
 								+ "(FileName,FilePath,isDirectory) VALUES"
@@ -283,7 +284,7 @@ private String createDirectory(Connection con, CreateDirectory msg) {
 					//	preparedStatement.setString(8, msg.getNewFile().getDescription());
 						//if(msg.getNewFile().getTheFile().isDirectory()) preparedStatement.setInt(9, 1);
 						//else preparedStatement.setInt(9,0 );
-						
+						*/
 			    		System.out.println("converting file");
 			    		File bla = new File(path);
 			    		bla.mkdirs();
@@ -594,7 +595,7 @@ private String createNewFile(Connection con, UpLoadFile msg) {
 						preparedStatement.executeUpdate();
 			    		System.out.println("converting file");
 			    		FileUtils.writeByteArrayToFile(new File (path), msg.getMybytearray());		    			    		    		  
-
+			    		
 						// execute insert SQL stetement
 						return "Upload Sucseeded";
 					}
@@ -687,8 +688,36 @@ public DefaultMutableTreeNode addNodes(DefaultMutableTreeNode curTop, File dir) 
       curDir.add(new DefaultMutableTreeNode(files.elementAt(fnum)));
     return curDir;
   }
+/*
+public TreeNode buildTree(){
+    String[] names = new String[]; // fill this with the names of your plugins
 
+    TreeNode tree;
 
+    // for each plugin name...
+    for (int i=0;i<names.length;i++){
+        String currentName = names[i];
+        String[] splitName = currentName.split(".");
+
+        // loop over the split name and see if the nodes exist in the tree. If not, create them
+        TreeNode parent = tree;
+        for (int n=0;n<splitName.length;n++){
+            if (parent.hasChild(splitName[n])){
+                // the parent node exists, so it doesn't need to be created. Store the node as 'parent' to use in the next loop run
+                parent = parent.getChild(splitName[n]);
+            }
+            else {
+                // the node doesn't exist, so create it. Then set it as 'parent' for use by the next loop run
+                TreeNode child = new TreeNode(splitName[n]);
+                parent.addChild(child);
+                parent = child;
+            }
+        }
+
+return tree;
+}
+
+*/
 }
 /* OLD
 if(msg instanceof String){
