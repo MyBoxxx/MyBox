@@ -7,19 +7,20 @@ import java.net.MalformedURLException;
 import Controlers.AdminBar_Controller;
 import Entity.Adminbar_model;
 import Entity.Login_Entity;
+import GUI_final.AdminMainWindow;
 import GUI_final.Adminbar;
 import GUI_final.Login_GUI;
 
 public class MainAdmin {
 	static Adminbar_model model ;
 	
-	static Adminbar view;
+	static AdminMainWindow view;
 	
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		try {
-			view = new Adminbar();
+			view = new AdminMainWindow();
 			model = new Adminbar_model();
 			AdminBar_Controller controler = new AdminBar_Controller(model, view);
 			view.setBounds(100, 100, 800, 600);
