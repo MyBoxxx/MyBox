@@ -40,7 +40,6 @@ public class Model extends Abstract_Entity implements Serializable{
 	private DefaultMutableTreeNode treeModel;
 	private FileTableModel fileTableModel;
 	private TableModel tablemodel;
-	private ArrayList<String> bla;
 	public TableModel getTablemodel() {
 		return tablemodel;
 	}
