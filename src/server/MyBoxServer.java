@@ -31,6 +31,7 @@ import org.apache.commons.io.filefilter.TrueFileFilter;
 import net.proteanit.sql.DbUtils;
 import Entity.*;
 import SampleTreeFileView.DirectoryTreeModel;
+import SampleTreeFileView.FileModel;
 import SampleTreeFileView.Model;
 import ocsf.server.AbstractServer;
 import ocsf.server.ConnectionToClient;
@@ -221,7 +222,17 @@ public class MyBoxServer extends AbstractServer
 	        	catch (IOException e){
 	        		e.printStackTrace();
 	        	}
-	        	
+	        }
+	        if(msg instanceof FileModel){
+	         	((FileModel) msg).setFileTable(buildTableModel(conn,"SELECT  *"+
+	            		" FROM files, mybox.users"+
+	            		" where isDirectory = 0  and UserID = " + ((FileModel) msg).getUser().getIDuser() + "isDeleted = 0;")); 
+	        	try{
+	        		client.sendToClient(msg);
+	        	}
+	        	catch (IOException e){
+	        		e.printStackTrace();
+	        	}
 	        }
 	        
 	        
@@ -261,6 +272,11 @@ public class MyBoxServer extends AbstractServer
 }
 
 */
+
+private void CreateFileModel(Connection conn, FileModel msg) {
+	// TODO Auto-generated method stub
+	
+}
 
 private void CreateDefaultTreeModel(Connection conn,DirectoryTreeModel msg) {
 	Statement stmt;

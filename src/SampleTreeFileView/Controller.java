@@ -87,6 +87,7 @@ public class Controller extends AbstractTransfer{
 		MainClient.clien.setCurrController(this); // Set The Current Controller to this	
         //TO-DO
 		sendToServer(new DirectoryTreeModel(MainClient.clien.currUser));
+		sendToServer(new FileModel("bla/", MainClient.clien.currUser));
 		
     	openFileActionListener = new ActionListener() {
     		
@@ -336,71 +337,24 @@ public class Controller extends AbstractTransfer{
 	public void UpdateTree()
 	{
 		System.out.println(view.getTreeModel().toString());
-		
 		view.getTree().setModel((TreeModel) view.getTreeModel());
-		//
-		
-		
-		
-		
-		
-		//new JTree(model.getTreeModel()));
 		view.getTree().repaint();
 		view.repaint();
 	}
-     public void updateFileTable(JTable bla)
+     public void updateFileTable(FileModel filetable)
      {
-    	 view.setTable(bla);
+    	 view.getTable().setModel(filetable.getFileTable());
     	 view.getTable().repaint();
-    	 view.repaint();
      }
 	
 	
-    public void setTableData() {
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                if (model.getFileTableModel()==null) {
-                    model.setFileTableModel(new FileTableModel());
-                    view.getTable().setModel(model.getFileTableModel());
-                }
-                //view.getTable().getSelectionModel().removeListSelectionListener(listSelectionListener);
-                model.getFileTableModel().setFiles(model.getFileTableModel().getFiles());
-                //table.getSelectionModel().addListSelectionListener(listSelectionListener);
-                if (!model.cellSizesSet) {
-                    Icon icon = view.fileSystemView.getSystemIcon(model.getFileTableModel().getFile(0));
-
-                    // size adjustment to better account for icons
-                    view.getTable().setRowHeight( icon.getIconHeight()+view.rowIconPadding );
-
-                    /*setColumnWidth(0,-1);
-                    setColumnWidth(3,60);
-                    table.getColumnModel().getColumn(3).setMaxWidth(120);
-                    setColumnWidth(4,-1);
-                    setColumnWidth(5,-1);
-                    setColumnWidth(6,-1);
-                    setColumnWidth(7,-1);
-                    setColumnWidth(8,-1);
-                    setColumnWidth(9,-1);
-                     */
-                    model.cellSizesSet = true;
-                    view.getTable().repaint();
-                    repaint();
-                }
-            }
-        });
-    }
 
 	public void setTree(ArrayList<String> dir, ArrayList<String> shared) {
-		System.out.println("bla");
-		System.out.println("bla");
-		System.out.println("bla");
-		
+	
 		for (String string : dir) {
-			System.out.println(string);
 			buildTreeFromString(view.getModel(), string);
 		}
 		
-		System.out.println("bla1");
 		
 		if (view.getChckbxmntmSharedWithMe().isEnabled())
 		{
@@ -408,10 +362,7 @@ public class Controller extends AbstractTransfer{
 				buildTreeFromString(view.getModel(), string);
 			}
 		}
-		
-		//view.getTree().setModel(view.getModel());
-		//view.getTree().repaint();
-		//view.repaint();
+	
 		view.getTree().setRootVisible(true);
 		view.getTree().invalidate();
 		view.getTree().validate();
@@ -419,7 +370,6 @@ public class Controller extends AbstractTransfer{
 		view.getTree().setVisible(true);
 		
 		
-		System.out.println(view.getModel());
 	}
 	
 

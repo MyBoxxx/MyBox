@@ -52,12 +52,11 @@ public class View extends AbstractGUI{
  	private static DefaultMutableTreeNode root;
  	private static DefaultTreeModel model;
  	private JTree tree;
+ 	private JMenuBar menuBar;
+ 	private JTable table;
    
 
 	JPanel fileView;
-    
-    /** Directory listing */
-     JTable table;
      JProgressBar progressBar;
     
 
@@ -115,12 +114,11 @@ public class View extends AbstractGUI{
 	JMenuItem mntmCreateNewFolder;
 	JMenuItem mntmUploadfile;
 	JMenuItem mntmAboutUs;
-	private JMenuBar menuBar;
+	
 	
 	
 	public View() {
 		      		getGui();
-		            getTable();
 		            // show the file system roots.
 		            Dimension widePreferred = new Dimension(200,150);
 		            
@@ -130,10 +128,14 @@ public class View extends AbstractGUI{
 		            progressBar.setVisible(false);
 		    		    		                        
 		    		detailView = new JPanel(new BorderLayout(3,3));
-		            JScrollPane tableScroll = new JScrollPane(table);
+		            JScrollPane tableScroll = new JScrollPane();
 		            Dimension d = tableScroll.getPreferredSize();
 		            tableScroll.setPreferredSize(new Dimension((int)d.getWidth(), (int)d.getHeight()/2));
 		            detailView.add(tableScroll, BorderLayout.CENTER);
+		            
+		            table = new JTable();
+		            tableScroll.setViewportView(table);
+		    		table.setVisible(true);
 		            JScrollPane treeScroll = new JScrollPane();
 		            treeScroll.setEnabled(false);
 		            Dimension preferredSize = treeScroll.getPreferredSize();
@@ -212,6 +214,10 @@ public class View extends AbstractGUI{
 		gui.add(simpleOutput, BorderLayout.SOUTH);
 	
    }
+
+	public JTable getTable() {
+		return table;
+	}
 
 	private void toolBarInit(JToolBar toolBar) {
 		toolBar.add(openFile);
@@ -359,17 +365,6 @@ public class View extends AbstractGUI{
 	public JButton getOpenFile() {
 		// TODO Auto-generated method stub
 		return openFile;
-	}
-	
-
-	public JTable getTable() {
-		if(table == null ){
-    		table = new JTable();
-    		//table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-    		table.setAutoCreateRowSorter(true);
-            table.setShowVerticalLines(false);
-		}
-		return table;
 	}
 	
  	public void setTable(JTable table) {

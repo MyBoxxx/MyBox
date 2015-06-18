@@ -87,42 +87,42 @@ public MyFile getNewFile() {
 		tree.setSelectionInterval(0,0);
 	}
 
-public String getCurrFile() {
-	return currFile;
-}
+	public String getCurrFile() {
+		return currFile;
+	}
 
-public void setCurrFile(String currFile) {
-	this.currFile = currFile;
-}
+	public void setCurrFile(String currFile) {
+		this.currFile = currFile;
+	}
 
-public String getCurrPath() {
-	return currPath;
-}
+	public String getCurrPath() {
+		return currPath;
+	}
 
-public void setCurrPath(String currPath) {
-	this.currPath = currPath;
-}
+	public void setCurrPath(String currPath) {
+		this.currPath = currPath;
+	}
 
-public TableModel getTablemodel() {
-	return tablemodel;
-}
+	public TableModel getTablemodel() {
+		return tablemodel;
+	}
 
-public void setTablemodel(TableModel tablemodel) {
-	this.tablemodel = tablemodel;
-}
-
-
+	public void setTablemodel(TableModel tablemodel) {
+		this.tablemodel = tablemodel;
+	}
 
 
 
-private void showErrorMessage(String errorMessage, String errorTitle,JPanel gui) {
-    JOptionPane.showMessageDialog(
-        gui,
-        errorMessage,
-        errorTitle,
-        JOptionPane.ERROR_MESSAGE
-        );
-}
+
+
+	private void showErrorMessage(String errorMessage, String errorTitle,JPanel gui) {
+		JOptionPane.showMessageDialog(
+				gui,
+				errorMessage,
+				errorTitle,
+				JOptionPane.ERROR_MESSAGE
+				);
+	}
 
 
 /** Update the table on the EDT */

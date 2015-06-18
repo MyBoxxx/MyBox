@@ -1,17 +1,37 @@
 package SampleTreeFileView;
 
+import java.io.File;
+import java.nio.file.Files;
+
 import javax.swing.JTable;
 import javax.swing.event.TableModelListener;
+import javax.swing.filechooser.FileSystemView;
 import javax.swing.table.TableModel;
 
 import Entity.Abstract_Entity;
+import Entity.MyFile;
+import Entity.User_Entity;
 
 public class FileModel extends Abstract_Entity {
-	private TableModel fileTable;
-	private String path;
 	
-	public FileModel(String path) {
+
+	private TableModel fileTable;
+	private User_Entity user;
+	private String path;
+	//private FileSystemView fileSystemView = FileSystemView.getFileSystemView();
+	private String[] columns = {
+	        "File",
+	        "Last Modified",
+	        "R",
+	        "W",
+	    };
+
+	
+	public FileModel(String path,User_Entity user) {
 		super();
+		this.path = path;
+		this.user = user;
+		
 		fileTable = new TableModel() {
 			
 			@Override
@@ -68,20 +88,46 @@ public class FileModel extends Abstract_Entity {
 				
 			}
 		};
-		this.path = path;
+		
 	}
-	
-	public TableModel getfileTable() {
+	public TableModel getFileTable() {
 		return fileTable;
 	}
-	public void setfileTable(TableModel fileTable) {
+
+
+	public void setFileTable(TableModel fileTable) {
 		this.fileTable = fileTable;
 	}
+
+
+	public User_Entity getUser() {
+		return user;
+	}
+
+
+	public void setUser(User_Entity user) {
+		this.user = user;
+	}
+
+
 	public String getPath() {
 		return path;
 	}
+
+
 	public void setPath(String path) {
 		this.path = path;
 	}
-	
+
+
+	public String[] getColumns() {
+		return columns;
+	}
+
+
+	public void setColumns(String[] columns) {
+		this.columns = columns;
+	}
+
+
 }
