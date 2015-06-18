@@ -13,6 +13,20 @@ import java.io.*;
 
 import Entity.*;
 
+import java.lang.reflect.Array;
+import java.util.Enumeration;
+
+import javax.swing.JTree;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.MutableTreeNode;
+import javax.swing.tree.TreeNode;
+
+import server.FileTable;
+import Entity.*;
+import SampleTreeFileView.Controller;
+import SampleTreeFileView.Model;
+
 /**
  * This class overrides some of the methods defined in the abstract superclass
  * in order to give more functionality to the client.
@@ -30,7 +44,7 @@ public class myBoxClient extends ObservableClient {
 	 */
 	
 	private  Object currController;
-	private  static User_Entity currUser;
+	public  User_Entity currUser;
 
 
 
@@ -60,7 +74,7 @@ public class myBoxClient extends ObservableClient {
 	 *            The message from the server.
 	 */
 	public synchronized void handleMessageFromServer(Object message) {
-
+		System.out.println("Message received: " + message + " from Server");
 		try {
 
 			if (message instanceof Login_Entity){ // user name and password is found ( 1.setCurrUser that is using application, 2.set status to 1)
@@ -79,23 +93,42 @@ public class myBoxClient extends ObservableClient {
 				( (SystemAdminRequestsScreen_Controller) currController).refreshList();
 			}
 			
+			if(message instanceof FileTreeUpdate){
+				
+				DefaultMutableTreeNode bla1 = new DefaultMutableTreeNode();
+				for (File file : ((FileTreeUpdate)message).getFiles() ) {
+					if(file.isDirectory()) 
+						System.out.println("file: " + file.getCanonicalPath());
+				}	
+				JTree bla = new JTree(bla1);
+			}
+			if(message instanceof Model){
+				
+				( (Controller) currController).setModel((Model)message);
+				( (Controller) currController).setTableData();
+			}
+			if(message instanceof FileTable){
+				((Controller) currController).getModel().setTablemodel(((FileTable) message).getTablemodel());
+				((Controller) currController).refreseList();
+			}
+			
 			
 		
 
 		} catch (Exception e) {
 			System.out.println(e + "mybox client");
 		}
-
+		
 		notify();
 	}
 
 
-	public static User_Entity getCurrUser() {
-		return myBoxClient.currUser;
+	public  User_Entity getCurrUser() {
+		return currUser;
 	}
 
-	public static void setCurrUser(User_Entity currUser) {
-		myBoxClient.currUser = currUser;
+	public  void setCurrUser(User_Entity currUser) {
+		currUser = currUser;
 	}
 	public   Object getCurrController() {
 		return currController;

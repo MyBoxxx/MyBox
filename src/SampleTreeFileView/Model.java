@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Desktop;
 import java.awt.GridLayout;
 import java.io.File;
+import java.io.Serializable;
 
 import javax.swing.ButtonGroup;
 import javax.swing.Icon;
@@ -19,22 +20,36 @@ import javax.swing.JTree;
 import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 import javax.swing.table.TableColumn;
+import javax.swing.table.TableModel;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
 
 import Entity.Abstract_Entity;
+import Entity.MyFile;
 import GUI_final.CreateFolderScreen;
 
-public class Model extends Abstract_Entity{
+public class Model extends Abstract_Entity implements Serializable{
 	
 	private int UserID;
 	
 	/** File-system tree. Built Lazily */
 	private JTree tree;
-	private DefaultTreeModel treeModel;
+	private DefaultMutableTreeNode treeModel;
+	private FileTableModel fileTableModel;
+	private TableModel tablemodel;
+	public TableModel getTablemodel() {
+		return tablemodel;
+	}
 
-    /** currently selected File. */
+	public void setTablemodel(TableModel tablemodel) {
+		this.tablemodel = tablemodel;
+	}
+
+
+	public boolean cellSizesSet = false; 
+	/** currently selected File. */
     private File currentFile;
     
     /** Used to open/edit/print files. */
@@ -43,15 +58,32 @@ public class Model extends Abstract_Entity{
     private TableColumn tableColumn;
     
     //file
-    private File newFile;
+    private MyFile newFile;
+
+    public FileTableModel getFileTableModel() {
+		return fileTableModel;
+	}
+
+	public void setFileTableModel(FileTableModel fileTableModel) {
+		this.fileTableModel = fileTableModel;
+	}
+
+	public DefaultMutableTreeNode getTreeModel() {
+		return treeModel;
+	}
+
+	public void setTreeModel(DefaultMutableTreeNode treeModel) {
+		this.treeModel = treeModel;
+	}
+
     
-    
-public File getNewFile() {
+public MyFile getNewFile() {
 		return newFile;
 	}
 
-	public void setNewFile(File newFile) {
+	public void setNewFile(MyFile newFile) {
 		this.newFile = newFile;
+		
 	}
 	
 	
