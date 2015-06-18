@@ -13,6 +13,7 @@ import javax.swing.JButton;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JEditorPane;
 import javax.swing.ImageIcon;
+import java.awt.Color;
 
 public class EditGroup extends AbstractGUI {
 
@@ -40,23 +41,24 @@ public class EditGroup extends AbstractGUI {
 	 * Create the application.
 	 */
 	public EditGroup() {
+		getContentPane().setBackground(new Color(59, 89, 151));
 		 panel = new JPanel();
 		 setBounds(6, 6, 800, 600);
-		 setLayout(null);
+		 getContentPane().setLayout(null);
 		 setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		JLabel lEdit = new JLabel("Request To Edit name /Description Group");
 		lEdit.setBounds(271, 21, 307, 28);
-		add(lEdit);
+		getContentPane().add(lEdit);
 		
 		JLabel lSelected = new JLabel("Select Group");
 		lSelected.setBounds(87, 73, 86, 16);
-		add(lSelected);
+		getContentPane().add(lSelected);
 		
 		comboBox = new JComboBox();
 		comboBox.setModel(new DefaultComboBoxModel(new String[] {"1", "2", "3", "4", "5"}));
 		comboBox.setMaximumRowCount(100);
 		comboBox.setBounds(313, 61, 117, 42);
-		add(comboBox);
+		getContentPane().add(comboBox);
 		comboBox.addActionListener(new ActionListener() {
 			
 			@Override
@@ -79,12 +81,12 @@ public class EditGroup extends AbstractGUI {
 		lblNewName = new JLabel("New Name");
 		lblNewName.setEnabled(false);
 		lblNewName.setBounds(87, 169, 86, 16);
-		add(lblNewName);
+		getContentPane().add(lblNewName);
 		
 		lblNewDescription = new JLabel("New Description");
 		lblNewDescription.setEnabled(false);
 		lblNewDescription.setBounds(87, 327, 128, 16);
-		add(lblNewDescription);
+		getContentPane().add(lblNewDescription);
 		
 		b1X = new JButton("X");
 		b1X.addActionListener(new ActionListener() {
@@ -94,7 +96,7 @@ public class EditGroup extends AbstractGUI {
 		});
 		b1X.setEnabled(false);
 		b1X.setBounds(514, 164, 20, 29);
-		add(b1X);
+		getContentPane().add(b1X);
 		
 		b2X = new JButton("X");
 		b2X.addActionListener(new ActionListener() {
@@ -104,7 +106,7 @@ public class EditGroup extends AbstractGUI {
 		});
 		b2X.setEnabled(false);
 		b2X.setBounds(514, 226, 20, 29);
-		add(b2X);
+		getContentPane().add(b2X);
 		
 		b2Place = new JButton("Place");
 		b2Place.addActionListener(new ActionListener() {
@@ -126,34 +128,34 @@ public class EditGroup extends AbstractGUI {
 		});
 		b3Place.setEnabled(false);
 		b3Place.setBounds(604, 226, 117, 29);
-		add(b3Place);
+		getContentPane().add(b3Place);
 		
 		editName = new JEditorPane();
 		editName.setEnabled(false);
 		editName.setBounds(271, 169, 176, 16);
-	add(editName);
+	getContentPane().add(editName);
 		
 		editDescription = new JEditorPane();
 		editDescription.setEnabled(false);
 		editDescription.setBounds(271, 327, 176, 66);
-		add(editDescription);
+		getContentPane().add(editDescription);
 		
 		b4Send = new JButton("Send Request");
 		b4Send.setEnabled(false);
 		b4Send.setIcon(new ImageIcon(EditGroup.class.getResource("/GUI_final/sendReuqest.png")));
 		b4Send.setBounds(49, 493, 185, 50);
-		add(b4Send);
+		getContentPane().add(b4Send);
 			
 			b5Cancel = new JButton("Cancel");
 			b5Cancel.setIcon(new ImageIcon(EditGroup.class.getResource("/GUI_final/cancelButton.jpg")));
 			b5Cancel.setBounds(535, 493, 214, 50);
-			add(b5Cancel);
+			getContentPane().add(b5Cancel);
 			getContentPane().add( panel);
 			
 			JLabel pic = new JLabel("");
 			pic.setIcon(new ImageIcon(EditGroup.class.getResource("/GUI_final/EditGroupPic.png")));
 			pic.setBounds(128, 6, 545, 566);
-			add(pic);
+			getContentPane().add(pic);
 	}
 	
 	public JButton getB1X() {
