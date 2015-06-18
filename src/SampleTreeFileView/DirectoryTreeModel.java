@@ -11,7 +11,7 @@ import Entity.User_Entity;
 public class DirectoryTreeModel extends Abstract_Entity {
 	private ArrayList<String> dir;
 	private ArrayList<String> shared;
-	private TableModel fileTable;
+	private transient TableModel fileTable;
 	private User_Entity user;
 	private String path;
 	//private FileSystemView fileSystemView = FileSystemView.getFileSystemView();

@@ -79,7 +79,8 @@ public class Controller extends AbstractTransfer{
     	System.out.println("MainControlerEnable");
 		MainClient.clien.setCurrController(this); // Set The Current Controller to this	
         //TO-DO
-		sendToServer(new DirectoryTreeModel(MainClient.clien.currUser,"bla/"));
+		String bla = "bla/"; 
+		sendToServer(new DirectoryTreeModel(MainClient.clien.currUser,bla));
 		//sendToServer(new FileModel("bla/", MainClient.clien.currUser));
 		
 		
