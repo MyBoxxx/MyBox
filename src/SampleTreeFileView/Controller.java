@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Enumeration;
 
@@ -38,16 +39,8 @@ import GUI_final.*;
 
 public class Controller extends AbstractTransfer{
     private Model model;
-    
-    public void setModel(Model model) {
-		this.model = model;
-	}
-
-	public Model getModel() {
-		return model;
-	}
-	private View view;
-    
+    private transient FileModel filemodel;
+    private View view; 
     //private ActionListener actionListener;
     private ActionListener openFileActionListener;
     
@@ -86,8 +79,9 @@ public class Controller extends AbstractTransfer{
     	System.out.println("MainControlerEnable");
 		MainClient.clien.setCurrController(this); // Set The Current Controller to this	
         //TO-DO
-		sendToServer(new DirectoryTreeModel(MainClient.clien.currUser));
-		sendToServer(new FileModel("bla/", MainClient.clien.currUser));
+		sendToServer(new DirectoryTreeModel(MainClient.clien.currUser,"bla/"));
+		//sendToServer(new FileModel("bla/", MainClient.clien.currUser));
+		
 		
     	openFileActionListener = new ActionListener() {
     		
@@ -105,9 +99,11 @@ public class Controller extends AbstractTransfer{
     		
     		@Override
     		public void actionPerformed(ActionEvent e) {
+    			
     			// TODO Auto-generated method stub
     			try {
     				//((Desktop) model.getDesktop()).open(view.getCurrentFile());
+    				
     			} catch(Throwable t) {
     				//showThrowable(t);
     			}
@@ -341,7 +337,7 @@ public class Controller extends AbstractTransfer{
 		view.getTree().repaint();
 		view.repaint();
 	}
-     public void updateFileTable(FileModel filetable)
+     public void updateFileTable(DirectoryTreeModel filetable)
      {
     	 view.getTable().setModel(filetable.getFileTable());
     	 view.getTable().repaint();
@@ -392,7 +388,6 @@ public class Controller extends AbstractTransfer{
         
         // Iterate of the string array
         for (String s: strings) {
-        	System.out.println(s);
             // Look for the index of a node at the current level that
             // has a value equal to the current string
             int index = childIndex(node, s);
@@ -438,5 +433,14 @@ public class Controller extends AbstractTransfer{
     public static void main(String[] args) {
         new PathTest();
     }
+    
+    public void setModel(Model model) {
+		this.model = model;
+	}
+
+	public Model getModel() {
+		return model;
+	}
+	
 }
     

@@ -216,20 +216,12 @@ public class MyBoxServer extends AbstractServer
 	        }
 	        if(msg instanceof DirectoryTreeModel){
 	        	CreateDefaultTreeModel(conn,(DirectoryTreeModel)msg);
+	        	((DirectoryTreeModel) msg).setFileTable(buildTableModel(conn,"SELECT  *"+
+	            		" FROM files, mybox.users"+
+	            		" where isDirectory = 0  and UserID = " + ((DirectoryTreeModel) msg).getUser().getIDuser() + "isDeleted = 0;")); 
 	    		try{
 	    			client.sendToClient(msg);
 	    		}
-	        	catch (IOException e){
-	        		e.printStackTrace();
-	        	}
-	        }
-	        if(msg instanceof FileModel){
-	         	((FileModel) msg).setFileTable(buildTableModel(conn,"SELECT  *"+
-	            		" FROM files, mybox.users"+
-	            		" where isDirectory = 0  and UserID = " + ((FileModel) msg).getUser().getIDuser() + "isDeleted = 0;")); 
-	        	try{
-	        		client.sendToClient(msg);
-	        	}
 	        	catch (IOException e){
 	        		e.printStackTrace();
 	        	}

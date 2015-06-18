@@ -54,6 +54,7 @@ public class View extends AbstractGUI{
  	private JTree tree;
  	private JMenuBar menuBar;
  	private JTable table;
+ 	private JScrollPane scrollPane;
    
 
 	JPanel fileView;
@@ -128,14 +129,15 @@ public class View extends AbstractGUI{
 		            progressBar.setVisible(false);
 		    		    		                        
 		    		detailView = new JPanel(new BorderLayout(3,3));
-		            JScrollPane tableScroll = new JScrollPane();
-		            Dimension d = tableScroll.getPreferredSize();
-		            tableScroll.setPreferredSize(new Dimension((int)d.getWidth(), (int)d.getHeight()/2));
-		            detailView.add(tableScroll, BorderLayout.CENTER);
+		            scrollPane = new JScrollPane();
+		            Dimension d = scrollPane.getPreferredSize();
+		            scrollPane.setPreferredSize(new Dimension((int)d.getWidth(), (int)d.getHeight()/2));
+		            detailView.add(scrollPane);
 		            
 		            table = new JTable();
-		            tableScroll.setViewportView(table);
+		            scrollPane.setViewportView(table);
 		    		table.setVisible(true);
+		    		
 		            JScrollPane treeScroll = new JScrollPane();
 		            treeScroll.setEnabled(false);
 		            Dimension preferredSize = treeScroll.getPreferredSize();

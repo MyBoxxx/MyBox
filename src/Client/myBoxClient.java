@@ -116,10 +116,7 @@ public class myBoxClient extends ObservableClient {
 			
 			if(message instanceof DirectoryTreeModel){	
 				((Controller) currController).setTree(((DirectoryTreeModel)message).getDir(),((DirectoryTreeModel)message).getShared());
-			}
-			
-			if(message instanceof FileModel){	
-				((Controller) currController).updateFileTable(((FileModel) message));
+				((Controller) currController).updateFileTable(((DirectoryTreeModel) message));
 			}
 			
 			
