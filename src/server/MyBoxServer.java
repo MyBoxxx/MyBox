@@ -283,7 +283,7 @@ private void CreateDefaultTreeModel(Connection conn,DirectoryTreeModel msg) {
 	try 
 	{
 		stmt = conn.createStatement();
-		ResultSet rs = stmt.executeQuery("SELECT * FROM Files WHERE Files.Owner=" +msg.getUser().getIDuser() + " AND File.isDirectory=1 AND File.isDeleted=0 ORDER BY FileName;");
+		ResultSet rs = stmt.executeQuery("SELECT * FROM Files WHERE Files.Owner=" +msg.getUser().getIDuser() + " AND Files.isDirectory=1 AND Files.isDeleted=0 ORDER BY FileName;");
 		while (rs.next()) {
             msg.getDir().add(rs.getString("FilePath"));       
 		}
