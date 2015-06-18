@@ -30,6 +30,7 @@ import org.apache.commons.io.filefilter.TrueFileFilter;
 
 import net.proteanit.sql.DbUtils;
 import Entity.*;
+import SampleTreeFileView.DirectoryTreeModel;
 import SampleTreeFileView.Model;
 import ocsf.server.AbstractServer;
 import ocsf.server.ConnectionToClient;
@@ -212,6 +213,17 @@ public class MyBoxServer extends AbstractServer
 					e.printStackTrace();
 				}
 	        }
+	        if(msg instanceof DirectoryTreeModel){
+	        	CreateDefaultTreeModel(conn,(DirectoryTreeModel)msg);
+	    		try{
+	    			client.sendToClient(msg);
+	    		}
+	        	catch (IOException e){
+	        		e.printStackTrace();
+	        	}
+	        	
+	        }
+	        
 	        
 	        
 	        
@@ -249,6 +261,21 @@ public class MyBoxServer extends AbstractServer
 }
 
 */
+
+private void CreateDefaultTreeModel(Connection conn,DirectoryTreeModel msg) {
+	Statement stmt;
+	try 
+	{
+		stmt = conn.createStatement();
+		ResultSet rs = stmt.executeQuery("SELECT * FROM Files WHERE Files.Owner=" +msg.getUser().getIDuser() + " AND File.isDirectory=1 AND File.isDeleted=0 ORDER BY FileName;");
+		while (rs.next()) {
+            msg.getDir().add(rs.getString("FilePath"));       
+		}
+	}
+			 catch (SQLException e) {
+				 e.printStackTrace();
+	}
+}
 
 private String createDirectory(Connection con, CreateDirectory msg) {
 	MyFile file =   msg;

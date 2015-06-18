@@ -3,13 +3,18 @@ package SampleTreeFileView;
 import java.util.ArrayList;
 
 import Entity.Abstract_Entity;
+import Entity.User_Entity;
 
 public class DirectoryTreeModel extends Abstract_Entity {
 	private ArrayList<String> dir;
 	private ArrayList<String> shared;
+	User_Entity user;
 	
-	public DirectoryTreeModel(ArrayList<String> dir) {
+
+
+	public DirectoryTreeModel(User_Entity user) {
 		super();
+		this.user=user;
 		this.dir = new ArrayList<String>();
 		this.shared = new ArrayList<String>();
 	}
@@ -30,7 +35,13 @@ public class DirectoryTreeModel extends Abstract_Entity {
 		this.shared = shared;
 	}
 
-	
+	public User_Entity getUser() {
+		return user;
+	}
+
+	public void setUser(User_Entity user) {
+		this.user = user;
+	}
 
 	
 }
