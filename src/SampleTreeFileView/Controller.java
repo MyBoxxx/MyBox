@@ -335,9 +335,9 @@ public class Controller extends AbstractTransfer{
 	
 	public void UpdateTree()
 	{
-		System.out.println(model.getTreeModel().toString());
+		System.out.println(view.getTreeModel().toString());
 		
-		view.getTree().setModel((TreeModel) model.getTreeModel());
+		view.getTree().setModel((TreeModel) view.getTreeModel());
 		//
 		
 		
@@ -391,21 +391,35 @@ public class Controller extends AbstractTransfer{
     }
 
 	public void setTree(ArrayList<String> dir, ArrayList<String> shared) {
-	
+		System.out.println("bla");
+		System.out.println("bla");
+		System.out.println("bla");
+		
 		for (String string : dir) {
-			buildTreeFromString(model.getModel(), string);
+			System.out.println(string);
+			buildTreeFromString(view.getModel(), string);
 		}
 		
+		System.out.println("bla1");
 		
 		if (view.getChckbxmntmSharedWithMe().isEnabled())
 		{
 			for (String string : shared) {
-				buildTreeFromString(model.getModel(), string);
+				buildTreeFromString(view.getModel(), string);
 			}
 		}
 		
-		view.tree.setModel(model.getModel());
-		view.tree.repaint();
+		//view.getTree().setModel(view.getModel());
+		//view.getTree().repaint();
+		//view.repaint();
+		view.getTree().setRootVisible(true);
+		view.getTree().invalidate();
+		view.getTree().validate();
+		view.getTree().repaint();
+		view.getTree().setVisible(true);
+		
+		
+		System.out.println(view.getModel());
 	}
 	
 
@@ -415,9 +429,9 @@ public class Controller extends AbstractTransfer{
      * @param model The tree model
      * @param str The string to build the tree from
      */
-    private void buildTreeFromString(final DefaultTreeModel model, final String str) {
+    private void buildTreeFromString(final DefaultTreeModel model1, final String str) {
         // Fetch the root node
-        DefaultMutableTreeNode root = (DefaultMutableTreeNode) model.getRoot();
+        DefaultMutableTreeNode root = (DefaultMutableTreeNode) model1.getRoot();
 
         // Split the string around the delimiter
         String [] strings = str.split("/");

@@ -1,5 +1,6 @@
 package SampleTreeFileView;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import Entity.Abstract_Entity;
@@ -10,8 +11,6 @@ public class DirectoryTreeModel extends Abstract_Entity {
 	private ArrayList<String> shared;
 	User_Entity user;
 	
-
-
 	public DirectoryTreeModel(User_Entity user) {
 		super();
 		this.user=user;

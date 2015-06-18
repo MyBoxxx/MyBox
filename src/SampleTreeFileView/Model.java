@@ -63,31 +63,6 @@ public class Model extends Abstract_Entity implements Serializable{
 	public void setFileTableModel(FileTableModel fileTableModel) {
 		this.fileTableModel = fileTableModel;
 	}
-
-	public DefaultMutableTreeNode getTreeModel() {
-		if (root==null)
-		{
-			root = new DefaultMutableTreeNode("U_"+MainClient.clien.getCurrUser().getIDuser());
-		}
-		return root;
-	}
-
-	public void setTreeModel(DefaultMutableTreeNode root) {
-		this.root = root;
-	}
-	
-	public DefaultTreeModel getModel() {
-		if (model==null)
-		{
-			model = new DefaultTreeModel(root);
-		}
-		return model;
-	}
-
-	public void setModel(DefaultTreeModel model) {
-		this.model = model;
-	}
-
     
 public MyFile getNewFile() {
 		return newFile;
@@ -111,18 +86,6 @@ public MyFile getNewFile() {
 		// ensure the main files are displayed
 		tree.setSelectionInterval(0,0);
 	}
-
-	public JTree getTree() {
-		if (tree==null)
-		{
-			tree = new JTree(model);
-		}
-		return tree;
-}
-
-public void setTree(JTree tree) {
-	this.tree = tree;
-}
 
 public String getCurrFile() {
 	return currFile;
