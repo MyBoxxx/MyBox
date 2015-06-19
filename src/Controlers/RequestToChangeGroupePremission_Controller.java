@@ -12,6 +12,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+import Client.MainClient;
 import Entity.*;
 import GUI_final.*;
 
@@ -20,7 +21,8 @@ public class RequestToChangeGroupePremission_Controller extends AbstractTransfer
 	private   User_Entity model ;
 	private  RequestToChangeGroupPermission view;
 
-	GroupActions groupw;
+	GroupActions groupA;
+	GroupAction_controller groupw;
 	
 	
 
@@ -28,7 +30,7 @@ public class RequestToChangeGroupePremission_Controller extends AbstractTransfer
 		this.model = model;
 		this.view = view;
 		
-		groupw =new GroupActions();
+		
 	
 
 	}
@@ -37,9 +39,12 @@ public class RequestToChangeGroupePremission_Controller extends AbstractTransfer
 				
 				@Override
 				public void actionPerformed(ActionEvent e) {
+					groupA =new GroupActions();
 					// TODO Auto-generated method stub
-					view.setVisible(false);
-					groupw.setVisible(true);
+					groupw = new GroupAction_controller(MainClient.clien.currUser,groupA);
+					view.dispose();
+					groupA.setVisible(true);
+					groupw.contol();
 				}
 			});
 		}

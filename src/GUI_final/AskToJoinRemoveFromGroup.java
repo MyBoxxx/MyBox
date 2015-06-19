@@ -142,12 +142,4 @@ public class AskToJoinRemoveFromGroup extends AbstractGUI{
 	public void setChooseGroup(JLabel chooseGroup) {
 		this.chooseGroup = chooseGroup;
 	}
-	
-	public void sendRequestListner(ActionListener listenForOkButton){
-		btRequest.addActionListener(listenForOkButton);
-	}
-	
-	public void cancelListner(ActionListener listenForCancelButton){
-		btCacel.addActionListener(listenForCancelButton);		
-	}
 }

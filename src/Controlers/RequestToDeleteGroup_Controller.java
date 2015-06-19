@@ -12,6 +12,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+import Client.MainClient;
 import Entity.*;
 import GUI_final.*;
 
@@ -20,28 +21,27 @@ public class RequestToDeleteGroup_Controller extends AbstractTransfer{
 	private   User_Entity model ;
 	private  RequestToDeleteGroup view;
 
-	GroupActions groupw;
+	GroupActions groupA;
+	
+	GroupAction_controller groupw;
 	
 	
 
 	public RequestToDeleteGroup_Controller(User_Entity model, RequestToDeleteGroup view){
 		this.model = model;
 		this.view =view;
-		
-		groupw =new GroupActions();
-	
-
 	}
 		public void control(){
-			view.getB2Beck().addActionListener(new ActionListener() {
-				
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					// TODO Auto-generated method stub
-					view.setVisible(false);
-					groupw.setVisible(true);
-				}
+			
+			view.getB1Cancel().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub=
+				groupA =new GroupActions();
+				groupw = new GroupAction_controller(MainClient.clien.currUser,groupA);
+				view.dispose();
+				groupA.setVisible(true);
+				groupw.contol();
+			}
 			});
 		}
-	  
 }
