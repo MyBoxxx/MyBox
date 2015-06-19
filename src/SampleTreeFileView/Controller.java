@@ -4,6 +4,8 @@ import java.awt.Desktop;
 import java.awt.Window.Type;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -17,6 +19,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTree;
 import javax.swing.SwingUtilities;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -277,7 +281,18 @@ public class Controller extends AbstractTransfer{
 			}
 		};
 		//top menu
-		
+		view.getTable().getSelectionModel().addListSelectionListener(new ListSelectionListener(){
+	        public void valueChanged(ListSelectionEvent event) {
+	            // do some actions here, for example
+	            // print first column value from selected row
+	            view.getFileName().setText(view.getTable().getValueAt(view.getTable().getSelectedRow(),1).toString());
+	            view.getPath().setText(view.getTable().getValueAt(view.getTable().getSelectedRow(),2).toString());
+				view.getDate().setText(view.getTable().getValueAt(view.getTable().getSelectedRow(),3).toString());
+				view.getfSize().setText(view.getTable().getValueAt(view.getTable().getSelectedRow(),4).toString());
+	        }
+	       
+	    });
+
 		view.getMntmSettings().addActionListener(settingsActionListener);
 		view.getMntmLogOut().addActionListener(logoutActionListener);
 		view.getMntmCreateNewFolder().addActionListener(createNewFolderActionListener);
@@ -301,9 +316,8 @@ public class Controller extends AbstractTransfer{
 		treeSelectionListener = new TreeSelectionListener() {
             public void valueChanged(TreeSelectionEvent tse){
             	model.setCurrPath(replaceTreePath(tse));
-               // DefaultMutableTreeNode node =(DefaultMutableTreeNode)tse.getPath().getLastPathComponent();
-               // model.showChildren(node);
-               // view.setFileDetails((File)node.getUserObject());
+            	System.out.println(model.getCurrPath());
+            	sendToServer(new FileModel(model.getCurrPath(), MainClient.clien.currUser));
             }
 
 			private String replaceTreePath(TreeSelectionEvent tse) {
@@ -313,16 +327,16 @@ public class Controller extends AbstractTransfer{
 			
         };
 
-		view.getTree().addTreeSelectionListener(treeSelectionListener);
+	view.getTree().addTreeSelectionListener(treeSelectionListener);
 		
     }
 	public void setVisible(boolean b) {
 	 view.setVisible(b);
 	}
+	
 
 	public void repaint() {
-		view.repaint();
-		
+		view.repaint();	
 	}
 	
 	public void refreseList(){
@@ -349,12 +363,7 @@ public class Controller extends AbstractTransfer{
     	 view.getTable().setModel(filetable.getFileTable());
     	 view.getTable().validate();
     	 view.getDetailView().repaint();
-//    	 
-//		 System.out.println("*****777777****" + view.getTable().getModel().getRowCount());
-//
-//    	 for (int i = 0; i < view.getTable().getModel().getRowCount(); i++) {
-//    		 System.out.println("**********" + view.getTable().getModel().getValueAt(i, 0));
-//		}
+
      }
 	
 	

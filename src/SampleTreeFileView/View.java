@@ -44,6 +44,8 @@ import Entity.User_Entity;
 import GUI_final.AbstractGUI;
 
 import javax.swing.ListSelectionModel;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class View extends AbstractGUI{
 
@@ -137,10 +139,16 @@ public class View extends AbstractGUI{
 		            
 		            //Detiails View (Files+ FilesDetail)
 		    		detailView = new JPanel(new BorderLayout(3,3));
-					table = new JTable();
+					table = new JTable(){
+						public boolean isCellEditable(int rowIndex, int colIndex) {
+					        return false;   //Disallow the editing of any cell
+					    }
+					};
 				    table.setVisible(true);
-			
+			    	 table.setRowSelectionAllowed(true);
+
 		            tableScroll = new JScrollPane(table);
+		            
 		            Dimension d = tableScroll.getPreferredSize();
 		            tableScroll.setPreferredSize(new Dimension((int)d.getWidth(), (int)d.getHeight()/2));
 		            detailView.add(tableScroll, BorderLayout.CENTER);	
@@ -172,17 +180,10 @@ public class View extends AbstractGUI{
 		fileDetailsLabels.add(new JLabel("File size", JLabel.TRAILING));
 		size = new JLabel();
 		fileDetailsValues.add(size);
-		fileDetailsLabels.add(new JLabel("Type", JLabel.TRAILING));
 
-		JPanel flags = new JPanel(new FlowLayout(FlowLayout.LEADING,4,0));
-		isDirectory = new JRadioButton("Directory");
-		isDirectory.setEnabled(false);
-		flags.add(isDirectory);
+		
 
-		isFile = new JRadioButton("File");
-		isFile.setEnabled(false);
-		flags.add(isFile);
-		fileDetailsValues.add(flags);
+		
 
 		int count = fileDetailsLabels.getComponentCount();
 		
@@ -223,6 +224,10 @@ public class View extends AbstractGUI{
 		gui.add(simpleOutput, BorderLayout.SOUTH);
 	
    }
+
+	public JLabel getfSize() {
+		return size;
+	}
 
 	public JTable getTable() {
 		return table;

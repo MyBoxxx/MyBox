@@ -224,9 +224,9 @@ public class MyBoxServer extends AbstractServer
 	        	}
 	        }
 	        if(msg instanceof FileModel){
-	         	((FileModel) msg).setFileTable(buildTableModel(conn,"SELECT  *"+
+	         	((FileModel) msg).setFileTable(buildTableModel(conn,"SELECT FileId,FileName,FilePath,FileSize,Modified,CreatedTime,Permission"+
 	            		" FROM files "+
-	            		" where isDirectory = '0'  AND Owner = '" + ((FileModel) msg).getUser().getIDuser() + "' AND isDeleted = '0';")); 
+	            		" where FilePath = '"+((FileModel) msg).getPath()+"' AND isDirectory = '0'  AND Owner = '" + ((FileModel) msg).getUser().getIDuser() + "' AND isDeleted = '0';")); 
 	        	try{
 	        		client.sendToClient(msg);
 	        	}
