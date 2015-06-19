@@ -23,6 +23,7 @@ import javax.swing.JList;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import java.awt.Color;
+import java.awt.Font;
 
 
 public class CangeFileFolderPermission extends AbstractGUI{
@@ -72,7 +73,7 @@ public class CangeFileFolderPermission extends AbstractGUI{
 	 */
 	private void initialize() {
 		
-		 getContentPane().setBackground(Color.WHITE);
+		 getContentPane().setBackground(new Color(59, 89, 151));
 		 setTitle("My Box");
 		 setBounds(100, 100, 800, 600);
 		 setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -91,21 +92,24 @@ public class CangeFileFolderPermission extends AbstractGUI{
 		buttonCancel.setIcon(new ImageIcon("src/GUI_final/cancelButton.jpg"));
 		
 	    lblChageFilefolderPermission = new JLabel();
-		lblChageFilefolderPermission.setIcon(new ImageIcon("src/GUI_final/changePermission.png"));
-		lblChageFilefolderPermission.setBounds(285, 6, 229, 128);
+		lblChageFilefolderPermission.setIcon(new ImageIcon(CangeFileFolderPermission.class.getResource("/GUI_final/Change-FileFolder-Permi.png")));
+		lblChageFilefolderPermission.setBounds(50, 20, 702, 86);
 		 getContentPane().add(lblChageFilefolderPermission);
 		
 		Private = new JRadioButton("Private");
+		Private.setForeground(Color.WHITE);
 		Private.setBackground(Color.WHITE);
 		Private.setBounds(6, 225, 84, 23);
 		 getContentPane().add(Private);
 		
 		All = new JRadioButton("All");
+		All.setForeground(Color.WHITE);
 		All.setBackground(Color.WHITE);
 		All.setBounds(6, 393, 72, 23);
 		 getContentPane().add(All);
 		
 		Group = new JRadioButton("Group");
+		Group.setForeground(Color.WHITE);
 		Group.setBackground(Color.WHITE);
 		Group.setBounds(6, 307, 72, 23);
 		 getContentPane().add(Group);
@@ -115,14 +119,16 @@ public class CangeFileFolderPermission extends AbstractGUI{
 		 getContentPane().add(list);
 		
 		readAll = new JRadioButton("Read");
+		readAll.setForeground(Color.WHITE);
 		readAll.setBackground(Color.WHITE);
-		readAll.setBounds(176, 393, 96, 23);
+		readAll.setBounds(231, 393, 96, 23);
 		 getContentPane().add(readAll);
 		readAll.setEnabled(false);
 		
 		writeGroup = new JRadioButton("Write");
+		writeGroup.setForeground(Color.WHITE);
 		writeGroup.setBackground(Color.WHITE);
-		writeGroup.setBounds(176, 332, 96, 23);
+		writeGroup.setBounds(231, 342, 96, 23);
 		 getContentPane().add(writeGroup);
 		writeGroup.setEnabled(false);
 		
@@ -134,29 +140,40 @@ public class CangeFileFolderPermission extends AbstractGUI{
 		comboBox.setEnabled(false);
 		
 		ReadGroup = new JRadioButton("Read");
+		ReadGroup.setForeground(Color.WHITE);
 		ReadGroup.setBackground(Color.WHITE);
-		ReadGroup.setBounds(176, 297, 121, 23);
+		ReadGroup.setBounds(231, 307, 121, 23);
 		 getContentPane().add(ReadGroup);
 		ReadGroup.setEnabled(false);
 		
 		writeAll = new JRadioButton("Write");
+		writeAll.setForeground(Color.WHITE);
 		writeAll.setBackground(Color.WHITE);
-		writeAll.setBounds(176, 418, 114, 23);
+		writeAll.setBounds(231, 427, 114, 23);
 		 getContentPane().add(writeAll);
 		writeAll.setEnabled(false);
 		
 		ChooseType = new JLabel();
-		ChooseType.setIcon(new ImageIcon("src/GUI_final/thechoosegroup.png"));
-		ChooseType.setBounds(539, 147, 137, 86);
+		ChooseType.setForeground(Color.ORANGE);
+		ChooseType.setFont(new Font("Lucida Grande", Font.PLAIN, 16));
+		ChooseType.setText("Select Group");
+		ChooseType.setIcon(null);
+		ChooseType.setBounds(535, 158, 137, 47);
 		 getContentPane().add(ChooseType);
 		
 		ReadWrite = new JLabel();
-		ReadWrite.setIcon(new ImageIcon("src/GUI_final/readWrite.png"));
-		ReadWrite.setBounds(188, 167, 180, 27);
+		ReadWrite.setForeground(Color.ORANGE);
+		ReadWrite.setText("Read/Write");
+		ReadWrite.setFont(new Font("Lucida Grande", Font.PLAIN, 16));
+		ReadWrite.setIcon(null);
+		ReadWrite.setBounds(231, 167, 104, 27);
 		 getContentPane().add(ReadWrite);
 		
 		Permission = new JLabel();
-		Permission.setIcon(new ImageIcon("src/GUI_final/permission.png"));
+		Permission.setForeground(Color.ORANGE);
+		Permission.setFont(new Font("Lucida Grande", Font.PLAIN, 16));
+		Permission.setText("Select Permission");
+		Permission.setIcon(null);
 		Permission.setBounds(6, 167, 137, 27);
 		 getContentPane().add(Permission);
 	

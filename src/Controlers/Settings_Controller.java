@@ -8,15 +8,16 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import Entity.Settings_Entity;
+import Entity.User_Entity;
 import GUI_final.Login_GUI;
 import GUI_final.Settings_GUI;
 
 public class Settings_Controller extends AbstractTransfer {
 	
-	private Settings_Entity model;
+	private User_Entity model;
 	private Settings_GUI view;
 	
-	public Settings_Controller(Settings_Entity model, Settings_GUI view) {
+	public Settings_Controller(User_Entity model, Settings_GUI view) {
 		super();
 		this.model = model;
 		this.view = view;

@@ -49,16 +49,15 @@ public class View extends AbstractGUI{
 
 	/** Main GUI container */
      static JPanel gui;
-     
+ 	private static DefaultMutableTreeNode root;
+ 	private static DefaultTreeModel model;
+ 	private JTree tree;
+ 	private JMenuBar menuBar;
+ 	private JTable table;
+ 	private JScrollPane scrollPane;
+   
 
-
-	/** File-system tree. Built Lazily */
-     JTree tree;
-     private DefaultTreeModel treeModel;
-     JPanel fileView;
-    
-    /** Directory listing */
-     JTable table;
+	JPanel fileView;
      JProgressBar progressBar;
     
 
@@ -108,50 +107,40 @@ public class View extends AbstractGUI{
 	JMenuItem mntmRename;
 	JMenuItem mntmDelete;
 	JMenuItem mntmMove;
-	JMenuItem mntmAskToJoin;
-	JMenuItem mntmCreateNewGroup;
+	JMenuItem mntmGroupActions;
 	JMenuItem mntmSearch;
 	JMenuItem mntmLogOut;
 	JMenuItem mntmSettings;
 	JMenuItem mntmCreateNewFolder;
 	JMenuItem mntmUploadfile;
 	JMenuItem mntmAboutUs;
-	private JMenuBar menuBar;
+	
+	
 	
 	public View() {
-		      		getGui();
-		            getTable();
-		            // show the file system roots.
-		            Dimension widePreferred = new Dimension(200,150);
+		getGui();
+		// show the file system roots.
+		Dimension widePreferred = new Dimension(200,150);
 		            
-		            simpleOutput = new JPanel(new BorderLayout(3,3));
-		            progressBar = new JProgressBar();
-		            simpleOutput.add(progressBar, BorderLayout.EAST);
-		            progressBar.setVisible(false);
+		simpleOutput = new JPanel(new BorderLayout(3,3));
+		progressBar = new JProgressBar();
+		simpleOutput.add(progressBar, BorderLayout.EAST);
+		progressBar.setVisible(false);
 		    		    		                        
-		    		detailView = new JPanel(new BorderLayout(3,3));
-		            JScrollPane tableScroll = new JScrollPane(table);
-		            Dimension d = tableScroll.getPreferredSize();
-		            tableScroll.setPreferredSize(new Dimension((int)d.getWidth(), (int)d.getHeight()/2));
-		            detailView.add(tableScroll, BorderLayout.CENTER);
+		detailView = new JPanel(new BorderLayout(3,3));
+		scrollPane = new JScrollPane();
+		Dimension d = scrollPane.getPreferredSize();
+		scrollPane.setPreferredSize(new Dimension((int)d.getWidth(), (int)d.getHeight()/2));
+		detailView.add(scrollPane);
 		            
-		             tree = new JTree(treeModel);
-		            //tree = new JTree();
-		            tree.setVisibleRowCount(15);
-		            tree.setRootVisible(false);
-		            tree.setBounds(0, 0, 200, 150);
-		            tree.setSize(new Dimension(200, 150));
-
-		            tree.setRootVisible(false);
-		            tree.setCellRenderer(new FileTreeCellRenderer());
-		            tree.expandRow(0);
-		            JScrollPane treeScroll = new JScrollPane(tree);
-		            
-		            tree.setVisibleRowCount(15);
-		            
-		            treeScroll.setColumnHeaderView(tree);
-		            Dimension preferredSize = treeScroll.getPreferredSize();
-		            treeScroll.setPreferredSize( widePreferred );
+		table = new JTable();
+		scrollPane.setViewportView(table);
+		table.setVisible(true);
+		    		
+		JScrollPane treeScroll = new JScrollPane();
+		treeScroll.setEnabled(false);
+		Dimension preferredSize = treeScroll.getPreferredSize();
+		treeScroll.setPreferredSize( widePreferred );
 		            
 		// details for a File
 		fileMainDetails = new JPanel(new BorderLayout(4,2));
@@ -212,11 +201,24 @@ public class View extends AbstractGUI{
 		JSplitPane.HORIZONTAL_SPLIT,
 		treeScroll,
 		detailView);
+		
+		tree = new JTree(new DefaultTreeModel(
+			new DefaultMutableTreeNode("U_" + MainClient.clien.getCurrUser().getIDuser()) {
+				{
+				}
+			}
+		));
+		tree.setModel(getModel());
+		treeScroll.setColumnHeaderView(tree);
 		gui.add(splitPane, BorderLayout.CENTER);
 		
 		gui.add(simpleOutput, BorderLayout.SOUTH);
 	
    }
+
+	public JTable getTable() {
+		return table;
+	}
 
 	private void toolBarInit(JToolBar toolBar) {
 		toolBar.add(openFile);
@@ -292,14 +294,14 @@ public class View extends AbstractGUI{
 	              JMenu mnFile = new JMenu("File");
 	              menuBar.add(mnFile);
 	              
-	               mntmCreateNewFolder = new JMenuItem("Create File / Folder");
+	              mntmCreateNewFolder = new JMenuItem("Create File / Folder");
 	               
-	               mnFile.add(mntmCreateNewFolder);
+	              mnFile.add(mntmCreateNewFolder);
 	               
-	                mntmUploadfile = new JMenuItem("UploadFile");
+	              mntmUploadfile = new JMenuItem("UploadFile");
 	                
 	                
-	                mnFile.add(mntmUploadfile);
+	              mnFile.add(mntmUploadfile);
 	                
 	                 mntmSearch = new JMenuItem("Search");
 	                 mnFile.add(mntmSearch);
@@ -307,11 +309,8 @@ public class View extends AbstractGUI{
 	                 JMenu mnGroup = new JMenu("Group");
 	                 menuBar.add(mnGroup);
 	                 
-	                  mntmCreateNewGroup = new JMenuItem("Create New Group");
-	                  mnGroup.add(mntmCreateNewGroup);
-	                  
-	                   mntmAskToJoin = new JMenuItem("Ask to Join");
-	                   mnGroup.add(mntmAskToJoin);
+	                  mntmGroupActions = new JMenuItem("Group Actions");
+	                  mnGroup.add(mntmGroupActions);
 	                   
 	                   JMenu mnEdit = new JMenu("Edit");
 	                   menuBar.add(mnEdit);
@@ -364,25 +363,6 @@ public class View extends AbstractGUI{
 	public JButton getOpenFile() {
 		// TODO Auto-generated method stub
 		return openFile;
-	}
-	
-
-	public JTree getTree() {
-		return tree;
-	}
-
-	public void setTree(JTree tree) {
-		this.tree = tree;
-	}
-
-	public JTable getTable() {
-		if(table == null ){
-    		table = new JTable();
-    		//table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-    		table.setAutoCreateRowSorter(true);
-            table.setShowVerticalLines(false);
-		}
-		return table;
 	}
 	
  	public void setTable(JTable table) {
@@ -669,20 +649,12 @@ public class View extends AbstractGUI{
 		this.mntmMove = mntmMove;
 	}
 
-	public JMenuItem getMntmAskToJoin() {
-		return mntmAskToJoin;
+	public JMenuItem getMntmGroupActions() {
+		return mntmGroupActions;
 	}
 
-	public void setMntmAskToJoin(JMenuItem mntmAskToJoin) {
-		this.mntmAskToJoin = mntmAskToJoin;
-	}
-
-	public JMenuItem getMntmCreateNewGroup() {
-		return mntmCreateNewGroup;
-	}
-
-	public void setMntmCreateNewGroup(JMenuItem mntmCreateNewGroup) {
-		this.mntmCreateNewGroup = mntmCreateNewGroup;
+	public void setMntmGroupActions(JMenuItem mntmGroupActions) {
+		this.mntmGroupActions = mntmGroupActions;
 	}
 
 	public JMenuItem getMntmSearch() {
@@ -735,6 +707,38 @@ public class View extends AbstractGUI{
 
 	public static String getAppTitle() {
 		return APP_TITLE;
+	}
+	
+	public DefaultMutableTreeNode getTreeModel() {
+		if (root==null)
+		{
+			root = new DefaultMutableTreeNode("U_"+MainClient.clien.getCurrUser().getIDuser());
+		}
+		return root;
+	}
+
+	public void setTreeModel(DefaultMutableTreeNode root) {
+		this.root = root;
+	}
+	
+	public DefaultTreeModel getModel() {
+		if (model==null)
+		{
+			model = new DefaultTreeModel(getTreeModel());
+		}
+		return model;
+	}
+
+	public void setModel(DefaultTreeModel model) {
+		this.model = model;
+	}
+
+public void setTree(JTree tree) {
+	this.tree = tree;
+}
+
+public JTree getTree() {
+		return tree;
 	}
 	
 }

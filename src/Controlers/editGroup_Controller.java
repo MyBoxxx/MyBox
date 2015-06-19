@@ -11,32 +11,35 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+import Client.MainClient;
 import Entity.*;
 import GUI_final.*;
 
 public class editGroup_Controller extends AbstractTransfer{
 
-	private static  Group_Entity model ;
+	private static  User_Entity model ;
 	private static  EditGroup view;
+	GroupActions groupw;
+	
+	//Controllers
+	GroupAction_controller groupA;
 
-	editGroup_Controller(Group_Entity model,EditGroup view){
+	editGroup_Controller(User_Entity model,EditGroup view){
 		this.model = model;
 		this.view = view;
+		
 	}
 	
 	public void control(){
+		
 		view.getB5Cancel().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				view.setVisible(false);
+				groupw=new GroupActions();
+				groupA = new GroupAction_controller(MainClient.clien.currUser,groupw);
+				view.dispose();
+				groupw.setVisible(true);
+				groupA.contol();
 			}
 		});
-		view.getB4Send().addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		
-		
 	}
-	
-	
 }

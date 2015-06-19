@@ -5,6 +5,7 @@ import java.awt.Desktop;
 import java.awt.GridLayout;
 import java.io.File;
 import java.io.Serializable;
+import java.util.ArrayList;
 
 import javax.swing.ButtonGroup;
 import javax.swing.Icon;
@@ -26,6 +27,7 @@ import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
 
+import Client.MainClient;
 import Entity.Abstract_Entity;
 import Entity.MyFile;
 import GUI_final.CreateFolderScreen;
@@ -36,18 +38,12 @@ public class Model extends Abstract_Entity implements Serializable{
 	
 	/** File-system tree. Built Lazily */
 	private JTree tree;
-	private DefaultMutableTreeNode treeModel;
+	private DefaultMutableTreeNode root;
+	private DefaultTreeModel model;
 	private FileTableModel fileTableModel;
 	private TableModel tablemodel;
-	public TableModel getTablemodel() {
-		return tablemodel;
-	}
-
-	public void setTablemodel(TableModel tablemodel) {
-		this.tablemodel = tablemodel;
-	}
-
-
+	private String currFile;
+	private String currPath;
 	public boolean cellSizesSet = false; 
 	/** currently selected File. */
     private File currentFile;
@@ -67,15 +63,6 @@ public class Model extends Abstract_Entity implements Serializable{
 	public void setFileTableModel(FileTableModel fileTableModel) {
 		this.fileTableModel = fileTableModel;
 	}
-
-	public DefaultMutableTreeNode getTreeModel() {
-		return treeModel;
-	}
-
-	public void setTreeModel(DefaultMutableTreeNode treeModel) {
-		this.treeModel = treeModel;
-	}
-
     
 public MyFile getNewFile() {
 		return newFile;
@@ -95,10 +82,73 @@ public MyFile getNewFile() {
 		UserID = userID;
 	}
 
-public void showRootFile() {
-    // ensure the main files are displayed
-    tree.setSelectionInterval(0,0);
+	public void showRootFile() {
+		// ensure the main files are displayed
+		tree.setSelectionInterval(0,0);
+	}
+
+	public String getCurrFile() {
+		return currFile;
+	}
+
+	public void setCurrFile(String currFile) {
+		this.currFile = currFile;
+	}
+
+	public String getCurrPath() {
+		return currPath;
+	}
+
+	public void setCurrPath(String currPath) {
+		this.currPath = currPath;
+	}
+
+	public TableModel getTablemodel() {
+		return tablemodel;
+	}
+
+	public void setTablemodel(TableModel tablemodel) {
+		this.tablemodel = tablemodel;
+	}
+
+
+
+
+
+	private void showErrorMessage(String errorMessage, String errorTitle,JPanel gui) {
+		JOptionPane.showMessageDialog(
+				gui,
+				errorMessage,
+				errorTitle,
+				JOptionPane.ERROR_MESSAGE
+				);
+	}
+
+
+/** Update the table on the EDT */
+
+
+
+public Object getDesktop() {
+	// TODO Auto-generated method stub
+	return null;
 }
+/*
+public void setDesktop(Desktop desktop){
+	this.desktop = desktop;
+}
+
+
+*/
+
+}
+
+
+
+
+
+
+
 
 /*
 void deleteFile(JPanel gui) {
@@ -282,34 +332,3 @@ public boolean MoveFile() throws IOException {
 }
 
 /** Update the File details view with the details of this File. */
-
-
-
-
-private void showErrorMessage(String errorMessage, String errorTitle,JPanel gui) {
-    JOptionPane.showMessageDialog(
-        gui,
-        errorMessage,
-        errorTitle,
-        JOptionPane.ERROR_MESSAGE
-        );
-}
-
-
-/** Update the table on the EDT */
-
-
-
-public Object getDesktop() {
-	// TODO Auto-generated method stub
-	return null;
-}
-/*
-public void setDesktop(Desktop desktop){
-	this.desktop = desktop;
-}
-
-
-*/
-
-}

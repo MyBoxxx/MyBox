@@ -1,89 +1,47 @@
 package Controlers;
 
+import java.awt.Window.Type;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.File;
+import java.net.MalformedURLException;
 
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
-import Entity.Group_Entity;
-import GUI_final.RequestToDeleteGroup;
+import Client.MainClient;
+import Entity.*;
+import GUI_final.*;
 
-public class RequestToDeleteGroup_Controller {
+public class RequestToDeleteGroup_Controller extends AbstractTransfer{
 
-	private RequestToDeleteGroup theview;
-	private Group_Entity themodel;
+	private   User_Entity model ;
+	private  RequestToDeleteGroup view;
+
+	GroupActions groupA;
 	
-	public RequestToDeleteGroup_Controller(RequestToDeleteGroup theview/*,Group_Entity themodel*/) {
-		this.theview = theview;
-		//this.themodel = themodel;
-		this.theview.ButtonPressedActionlistinerOk(new ButtonPressedActionlistinerOk());
-		this.theview.ButtonPressedActionlistinerNextBeck(new ButtonPressedActionlistinerNextBeck());
-		this.theview.ButtonPressedActionlistinerBeck(new ButtonPressedActionlistinerBeck());
-		//this.theview.ButtonPressedActionlistinersend(new ButtonPressedActionlistinersend());
-		this.theview.isselected(new isselected());
+	GroupAction_controller groupw;
+	
+	
+
+	public RequestToDeleteGroup_Controller(User_Entity model, RequestToDeleteGroup view){
+		this.model = model;
+		this.view =view;
+	}
+		public void control(){
 			
-	
+			view.getB1Cancel().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub=
+				groupA =new GroupActions();
+				groupw = new GroupAction_controller(MainClient.clien.currUser,groupA);
+				view.dispose();
+				groupA.setVisible(true);
+				groupw.contol();
+			}
+			});
 		}
-	
-	public class ButtonPressedActionlistinerOk implements ActionListener{
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-			theview.getAskTo().setVisible(false);
-			theview.getPanelbutton().setVisible(false);
-			theview.getAreUSure().setVisible(true);
-			theview.getLgroup().setText(theview.getS()+" ?");
-		}
-		
-	}
-	
-	public class ButtonPressedActionlistinerNextBeck implements ActionListener{
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-			theview.getAreUSure().setVisible(false);
-			theview.getAskTo().setVisible(true);
-			theview.getPanelbutton().setVisible(true);
-			
-		}	
-	}
-	
-	public class isselected implements ListSelectionListener
-	{
-		@Override
-		public void valueChanged(ListSelectionEvent e) {
-			// TODO Auto-generated method stub
-			theview.setS(theview.getList().getSelectedValue().toString());
-		}
-	}
-
-	public class ButtonPressedActionlistinerBeck implements ActionListener{
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-			theview.getAreUSure().setVisible(false);
-			theview.getAskTo().setVisible(true);
-			theview.getPanelbutton().setVisible(true);
-			
-		}
-	}
-	/*++++++++++++++++++++++++++++++++++++++++++++++++++
-	 * public class ButtonPressedActionlistinersend implements ActionListener{
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-			theview.getAreUSure().setVisible(false);
-			theview.getAskTo().setVisible(true);
-			theview.getPanelbutton().setVisible(true);
-			
-		}
-	}
-	 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
-	
-	
 }

@@ -10,6 +10,8 @@ public class User_Entity extends Abstract_Entity{
 	private String Password;
 	private boolean isLogedin ; // status of login - > true = in the system
 	private boolean isAdmin ;	// status of user -> true = is admin
+	private String oldPassword;
+	private String newPassword;
 	
 	
 public User_Entity(int IDuser, String Username,String Password, int Status, boolean isLogedin, boolean isadmin){
@@ -70,5 +72,14 @@ public User_Entity() {
 	public void setAdmin(boolean isAdmin) {
 		this.isAdmin = isAdmin;
 	}
+
+	public void setOldPassword(String text) {
+		this.oldPassword = text;
+	}
+
+	public void setNewPassword(String text) {
+		this.newPassword = text;
+	}
+	
 	
 }

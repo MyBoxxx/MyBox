@@ -25,6 +25,8 @@ import javax.swing.tree.TreeNode;
 import server.FileTable;
 import Entity.*;
 import SampleTreeFileView.Controller;
+import SampleTreeFileView.DirectoryTreeModel;
+import SampleTreeFileView.FileModel;
 import SampleTreeFileView.Model;
 
 /**
@@ -105,11 +107,16 @@ public class myBoxClient extends ObservableClient {
 			if(message instanceof Model){
 				
 				( (Controller) currController).setModel((Model)message);
-				( (Controller) currController).setTableData();
+
 			}
 			if(message instanceof FileTable){
 				((Controller) currController).getModel().setTablemodel(((FileTable) message).getTablemodel());
 				((Controller) currController).refreseList();
+			}
+			
+			if(message instanceof DirectoryTreeModel){	
+				((Controller) currController).setTree(((DirectoryTreeModel)message).getDir(),((DirectoryTreeModel)message).getShared());
+				((Controller) currController).updateFileTable(((DirectoryTreeModel) message));
 			}
 			
 			

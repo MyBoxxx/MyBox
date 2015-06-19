@@ -50,10 +50,10 @@ public class AdminChangeFMS_GUI extends AbstractGUI {
 		contentPane.add(tabbedPane);
 		
 			
-			limit.setBackground(SystemColor.textHighlight);
+		limit.setBackground(SystemColor.textHighlight);
 			
-			tabbedPane.addTab("Limit", limit);
-			limit.setLayout(null);
+		tabbedPane.addTab("Limit", limit);
+		limit.setLayout(null);
 		
 		
 		add.setBackground(SystemColor.textHighlight);

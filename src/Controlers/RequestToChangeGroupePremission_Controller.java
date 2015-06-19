@@ -1,41 +1,52 @@
 package Controlers;
-import GUI_final.RequestToChangeGroupPermission;
+
+import java.awt.Window.Type;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.File;
+import java.net.MalformedURLException;
 
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
+import Client.MainClient;
+import Entity.*;
+import GUI_final.*;
 
-public class RequestToChangeGroupePremission_Controller {
+public class RequestToChangeGroupePremission_Controller extends AbstractTransfer{
 
-	private RequestToChangeGroupPermission theview;
+	private   User_Entity model ;
+	private  RequestToChangeGroupPermission view;
+
+	GroupActions groupA;
+	GroupAction_controller groupw;
 	
-	public RequestToChangeGroupePremission_Controller(RequestToChangeGroupPermission theview)
-	{
-		this.theview=theview;
-		this.theview.ButtonPressedActionlistinersend(new ButtonPressedActionlistinersend());
-		this.theview.ButtonPressedActionlistinercancel(new ButtonPressedActionlistinercancel());
-	}
 	
-	public class ButtonPressedActionlistinersend implements ActionListener{
 
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-			System.out.println("100");
-		}
+	public RequestToChangeGroupePremission_Controller(User_Entity model, RequestToChangeGroupPermission view){
+		this.model = model;
+		this.view = view;
 		
-	}
-	
-	public class ButtonPressedActionlistinercancel implements ActionListener{
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-			System.out.println("ein ma");
-		}
 		
+	
+
 	}
-	
-	
+		public void control(){
+			view.getButtonCancel().addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					groupA =new GroupActions();
+					// TODO Auto-generated method stub
+					groupw = new GroupAction_controller(MainClient.clien.currUser,groupA);
+					view.dispose();
+					groupA.setVisible(true);
+					groupw.contol();
+				}
+			});
+		}
+	  
 }
-
