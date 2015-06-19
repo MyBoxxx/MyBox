@@ -18,22 +18,23 @@ public class editGroup_Controller extends AbstractTransfer{
 
 	private static  Group_Entity model ;
 	private static  EditGroup view;
+	GroupActions groupw;
 
 	editGroup_Controller(Group_Entity model,EditGroup view){
 		this.model = model;
 		this.view = view;
+		groupw=new GroupActions();
 	}
 	
 	public void control(){
+		
 		view.getB5Cancel().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				view.setVisible(false);
+				groupw.setVisible(true);
 			}
 		});
-		view.getB4Send().addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
+	
 		
 		
 	}
