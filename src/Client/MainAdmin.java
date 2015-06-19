@@ -14,13 +14,13 @@ import GUI_final.Login_GUI;
 public class MainAdmin {
 	static Adminbar_model model ;
 	
-	static AdminMainWindow view;
+	static Adminbar view;
 	
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		try {
-			view = new AdminMainWindow();
+			view = new Adminbar();
 			model = new Adminbar_model();
 			AdminBar_Controller controler = new AdminBar_Controller(model, view);
 			view.setBounds(100, 100, 800, 600);
