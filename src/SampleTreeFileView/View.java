@@ -107,8 +107,7 @@ public class View extends AbstractGUI{
 	JMenuItem mntmRename;
 	JMenuItem mntmDelete;
 	JMenuItem mntmMove;
-	JMenuItem mntmAskToJoin;
-	JMenuItem mntmCreateNewGroup;
+	JMenuItem mntmGroupActions;
 	JMenuItem mntmSearch;
 	JMenuItem mntmLogOut;
 	JMenuItem mntmSettings;
@@ -295,14 +294,14 @@ public class View extends AbstractGUI{
 	              JMenu mnFile = new JMenu("File");
 	              menuBar.add(mnFile);
 	              
-	               mntmCreateNewFolder = new JMenuItem("Create File / Folder");
+	              mntmCreateNewFolder = new JMenuItem("Create File / Folder");
 	               
-	               mnFile.add(mntmCreateNewFolder);
+	              mnFile.add(mntmCreateNewFolder);
 	               
-	                mntmUploadfile = new JMenuItem("UploadFile");
+	              mntmUploadfile = new JMenuItem("UploadFile");
 	                
 	                
-	                mnFile.add(mntmUploadfile);
+	              mnFile.add(mntmUploadfile);
 	                
 	                 mntmSearch = new JMenuItem("Search");
 	                 mnFile.add(mntmSearch);
@@ -310,11 +309,8 @@ public class View extends AbstractGUI{
 	                 JMenu mnGroup = new JMenu("Group");
 	                 menuBar.add(mnGroup);
 	                 
-	                  mntmCreateNewGroup = new JMenuItem("Create New Group");
-	                  mnGroup.add(mntmCreateNewGroup);
-	                  
-	                   mntmAskToJoin = new JMenuItem("Ask to Join");
-	                   mnGroup.add(mntmAskToJoin);
+	                  mntmGroupActions = new JMenuItem("Group Actions");
+	                  mnGroup.add(mntmGroupActions);
 	                   
 	                   JMenu mnEdit = new JMenu("Edit");
 	                   menuBar.add(mnEdit);
@@ -653,20 +649,12 @@ public class View extends AbstractGUI{
 		this.mntmMove = mntmMove;
 	}
 
-	public JMenuItem getMntmAskToJoin() {
-		return mntmAskToJoin;
+	public JMenuItem getMntmGroupActions() {
+		return mntmGroupActions;
 	}
 
-	public void setMntmAskToJoin(JMenuItem mntmAskToJoin) {
-		this.mntmAskToJoin = mntmAskToJoin;
-	}
-
-	public JMenuItem getMntmCreateNewGroup() {
-		return mntmCreateNewGroup;
-	}
-
-	public void setMntmCreateNewGroup(JMenuItem mntmCreateNewGroup) {
-		this.mntmCreateNewGroup = mntmCreateNewGroup;
+	public void setMntmGroupActions(JMenuItem mntmGroupActions) {
+		this.mntmGroupActions = mntmGroupActions;
 	}
 
 	public JMenuItem getMntmSearch() {

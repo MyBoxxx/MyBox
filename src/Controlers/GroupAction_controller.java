@@ -36,11 +36,12 @@ public class GroupAction_controller extends AbstractTransfer{
 	public GroupAction_controller(User_Entity model,GroupActions view){
 		this.model = model;
 		this.view = view;
-	groupc =new EditGroup();
-	changepremission = new RequestToChangeGroupPermission();
-	ask =new AskToJoinRemoveFromGroup();
-	delete = new RequestToDeleteGroup();
+		groupc =new EditGroup();
+		changepremission = new RequestToChangeGroupPermission();
+		ask =new AskToJoinRemoveFromGroup();
+		delete = new RequestToDeleteGroup();
 	}
+	
 	public void setvisible()
 	{
 		this.view.setVisible(true);

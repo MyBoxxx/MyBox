@@ -36,6 +36,7 @@ import Entity.MyFile;
 import Entity.UpLoadFile;
 import Entity.User_Entity;
 import GUI_final.*;
+import Controlers.*;
 
 public class Controller extends AbstractTransfer{
     private Model model;
@@ -51,8 +52,7 @@ public class Controller extends AbstractTransfer{
     private ActionListener uploadFileActionListener;
     private ActionListener searchActionListener;
     
-    private ActionListener createNewGroupActionListener;
-    private ActionListener askToJoinActionListener;
+    private ActionListener GroupActionsListener;
     
     private ActionListener moveActionListener;
     private ActionListener deleteActionListener;
@@ -62,6 +62,7 @@ public class Controller extends AbstractTransfer{
     private ActionListener sharedWithMeActionListener;
     private ActionListener trashActionListener;
     RecycleBinScreen recycle;
+    GroupActions group;
     
     private ActionListener aboutUsActionListener;
     private ActionListener helpActionListener;
@@ -184,13 +185,24 @@ public class Controller extends AbstractTransfer{
     		}
     	};
     	
-    	createNewGroupActionListener = new ActionListener() {
+    	GroupActionsListener = new ActionListener() {
     		
     		@Override
     		public void actionPerformed(ActionEvent e) {
     			// TODO Auto-generated method stub
     			try {
-    				//((Desktop) model.getDesktop()).open(view.getCurrentFile());
+    					if(group==null)
+    					{
+    						group = new GroupActions();
+    					GroupAction_controller bla = new GroupAction_controller(MainClient.clien.currUser,group);
+    					group.setType(Type.NORMAL);
+    					group.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+    					view.dispose();
+    					group.setVisible(true);
+    					bla.contol();
+    					}
+   
+    				else group.toFront();
     			} catch(Throwable t) {
     				//showThrowable(t);
     			}
@@ -284,8 +296,7 @@ public class Controller extends AbstractTransfer{
 		view.getMntmCreateNewFolder().addActionListener(createNewFolderActionListener);
 		view.getMntmUploadfile().addActionListener(uploadFileActionListener);
 		view.getMntmSearch().addActionListener(searchActionListener);
-		view.getMntmCreateNewGroup().addActionListener(createNewGroupActionListener);
-		view.getMntmAskToJoin().addActionListener(askToJoinActionListener);
+		view.getMntmGroupActions().addActionListener(GroupActionsListener);
 		view.getMntmTrash().addActionListener(trashActionListener);
 		view.getMntmMove().addActionListener(moveActionListener);
 		view.getMntmDelete().addActionListener(deleteActionListener);
