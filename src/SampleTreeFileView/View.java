@@ -118,29 +118,29 @@ public class View extends AbstractGUI{
 	
 	
 	public View() {
-		      		getGui();
-		            // show the file system roots.
-		            Dimension widePreferred = new Dimension(200,150);
+		getGui();
+		// show the file system roots.
+		Dimension widePreferred = new Dimension(200,150);
 		            
-		            simpleOutput = new JPanel(new BorderLayout(3,3));
-		            progressBar = new JProgressBar();
-		            simpleOutput.add(progressBar, BorderLayout.EAST);
-		            progressBar.setVisible(false);
+		simpleOutput = new JPanel(new BorderLayout(3,3));
+		progressBar = new JProgressBar();
+		simpleOutput.add(progressBar, BorderLayout.EAST);
+		progressBar.setVisible(false);
 		    		    		                        
-		    		detailView = new JPanel(new BorderLayout(3,3));
-		            scrollPane = new JScrollPane();
-		            Dimension d = scrollPane.getPreferredSize();
-		            scrollPane.setPreferredSize(new Dimension((int)d.getWidth(), (int)d.getHeight()/2));
-		            detailView.add(scrollPane);
+		detailView = new JPanel(new BorderLayout(3,3));
+		scrollPane = new JScrollPane();
+		Dimension d = scrollPane.getPreferredSize();
+		scrollPane.setPreferredSize(new Dimension((int)d.getWidth(), (int)d.getHeight()/2));
+		detailView.add(scrollPane);
 		            
-		            table = new JTable();
-		            scrollPane.setViewportView(table);
-		    		table.setVisible(true);
+		table = new JTable();
+		scrollPane.setViewportView(table);
+		table.setVisible(true);
 		    		
-		            JScrollPane treeScroll = new JScrollPane();
-		            treeScroll.setEnabled(false);
-		            Dimension preferredSize = treeScroll.getPreferredSize();
-		            treeScroll.setPreferredSize( widePreferred );
+		JScrollPane treeScroll = new JScrollPane();
+		treeScroll.setEnabled(false);
+		Dimension preferredSize = treeScroll.getPreferredSize();
+		treeScroll.setPreferredSize( widePreferred );
 		            
 		// details for a File
 		fileMainDetails = new JPanel(new BorderLayout(4,2));

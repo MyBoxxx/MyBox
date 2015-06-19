@@ -193,13 +193,13 @@ public class Controller extends AbstractTransfer{
     			try {
     					if(group==null)
     					{
-    						group = new GroupActions();
-    					GroupAction_controller bla = new GroupAction_controller(MainClient.clien.currUser,group);
+    					group = new GroupActions();
+    					GroupAction_controller GroupA = new GroupAction_controller(MainClient.clien.currUser,group);
     					group.setType(Type.NORMAL);
     					group.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     					view.dispose();
     					group.setVisible(true);
-    					bla.contol();
+    					GroupA.contol();
     					}
    
     				else group.toFront();

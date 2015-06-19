@@ -12,12 +12,16 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+import Client.MainClient;
 import Entity.*;
 import GUI_final.*;
+import SampleTreeFileView.Controller;
+import SampleTreeFileView.Model;
+import SampleTreeFileView.View;
 
 public class GroupAction_controller extends AbstractTransfer{
 
-	private   User_Entity model ;
+	private  User_Entity model ;
 	private  GroupActions view;
 
 	
@@ -30,6 +34,8 @@ public class GroupAction_controller extends AbstractTransfer{
 	RequestToChangeGroupPermission changepremission;
 	AskToJoinRemoveFromGroup ask;
 	RequestToDeleteGroup delete;
+	View treeView;
+	Model modelView;
 	
 	
 
@@ -54,7 +60,7 @@ public class GroupAction_controller extends AbstractTransfer{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				view.setVisible(false);
+				view.dispose();
 				groupc.setVisible(true);
 				
 			}
@@ -63,8 +69,8 @@ public class GroupAction_controller extends AbstractTransfer{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				view.setVisible(false);
+				// TODO Auto-generated method stub=
+				view.dispose();
 				changepremission.setVisible(true);
 			}
 		});
@@ -74,7 +80,7 @@ public class GroupAction_controller extends AbstractTransfer{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				view.setVisible(false);
+				view.dispose();
 				ask.setVisible(true);
 			}
 		});
@@ -84,8 +90,24 @@ public class GroupAction_controller extends AbstractTransfer{
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
-			view.setVisible(false);
+			view.dispose();
 			delete.setVisible(true);
+		}
+	});
+	
+	view.getBack().addActionListener(new ActionListener() {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			//view.dispose();
+			treeView = new View();
+			Controller bla = new Controller(modelView, treeView);
+			treeView.setType(Type.NORMAL);
+			treeView.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+			view.dispose();
+			treeView.setVisible(true);
+			//bla.contol();
 		}
 	});
 		

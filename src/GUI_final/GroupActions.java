@@ -13,7 +13,6 @@ public class GroupActions extends AbstractGUI {
 
 	private JFrame frame;
 	private JLabel lblGroupActions;
-	private JButton creategroup;
 	private JButton ask;
 	private JButton edit;
 	private JButton requestchang;
@@ -49,24 +48,20 @@ public class GroupActions extends AbstractGUI {
 		lblGroupActions.setBounds(104, 40, 679, 83);
 		getContentPane().add(lblGroupActions);
 		
-		creategroup = new JButton("create ");
-		creategroup.setBounds(104, 184, 200, 29);
-		getContentPane().add(creategroup);
-		
 		ask = new JButton("Ask To Join Remove");
-		ask.setBounds(94, 276, 210, 29);
+		ask.setBounds(175, 184, 200, 29);
 		getContentPane().add(ask);
 		
 		edit = new JButton("Edit group");
-		edit.setBounds(545, 184, 183, 29);
+		edit.setBounds(503, 184, 183, 29);
 		getContentPane().add(edit);
 		
 		requestchang = new JButton("Change Permission");
-		requestchang.setBounds(545, 276, 183, 29);
+		requestchang.setBounds(503, 276, 183, 29);
 		getContentPane().add(requestchang);
 		
 		requ2 = new JButton("Request To Delete Group");
-		requ2.setBounds(104, 406, 200, 29);
+		requ2.setBounds(175, 276, 200, 29);
 		getContentPane().add(requ2);
 		
 		back = new JButton("back");
@@ -79,15 +74,6 @@ public class GroupActions extends AbstractGUI {
 		getContentPane().add(lblNewLabel);
 	}
 
-	
-
-	public JButton getCreategroup() {
-		return creategroup;
-	}
-
-	public void setCreategroup(JButton creategroup) {
-		this.creategroup = creategroup;
-	}
 
 	public JButton getAsk() {
 		return ask;
