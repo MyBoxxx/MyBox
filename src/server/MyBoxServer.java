@@ -30,6 +30,11 @@ import org.apache.commons.io.filefilter.TrueFileFilter;
 
 import net.proteanit.sql.DbUtils;
 import Entity.*;
+<<<<<<< HEAD
+=======
+import SampleTreeFileView.DirectoryTreeModel;
+import SampleTreeFileView.FileModel;
+>>>>>>> refs/heads/master
 import SampleTreeFileView.Model;
 import ocsf.server.AbstractServer;
 import ocsf.server.ConnectionToClient;
@@ -138,7 +143,7 @@ public class MyBoxServer extends AbstractServer
 	  System.out.println("Message received: " + msg + " from " + client);
 	  try 
 	    {
-	        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/mybox","root","Braude");
+	        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/mybox","root","");
 	        //Connection conn = DriverManager.getConnection("jdbc:mysql://192.168.3.68/test","root","Root");
 	        System.out.println("SQL connection succeed");
 	        if(msg instanceof Login_Entity){
@@ -212,9 +217,28 @@ public class MyBoxServer extends AbstractServer
 					e.printStackTrace();
 				}
 	        }
+<<<<<<< HEAD
+=======
+	        if(msg instanceof DirectoryTreeModel){
+	        	CreateDefaultTreeModel(conn,(DirectoryTreeModel)msg);
+	        	((DirectoryTreeModel) msg).setFileTable(buildTableModel(conn,"SELECT  *"+
+	            		" FROM files, mybox.users"+
+	            		" where isDirectory = 0  and UserID = " + ((DirectoryTreeModel) msg).getUser().getIDuser() + "isDeleted = 0;")); 
+	    		try{
+	    			client.sendToClient(msg);
+	    		}
+	        	catch (IOException e){
+	        		e.printStackTrace();
+	        	}
+	        }
+>>>>>>> refs/heads/master
 	        
 	        
 	        
+<<<<<<< HEAD
+=======
+	        
+>>>>>>> refs/heads/master
 
 	    }catch (SQLException ex) 
 	 	    {/* handle any errors*/
@@ -250,6 +274,7 @@ public class MyBoxServer extends AbstractServer
 
 */
 
+<<<<<<< HEAD
 private String createDirectory(Connection con, CreateDirectory msg) {
 	MyFile file =   msg;
 	String path = "UsersFiles/U_"+ msg.getUser().getIDuser() + "/"+ msg.getTheFile().getName() ;
@@ -284,6 +309,63 @@ private String createDirectory(Connection con, CreateDirectory msg) {
 						//if(msg.getNewFile().getTheFile().isDirectory()) preparedStatement.setInt(9, 1);
 						//else preparedStatement.setInt(9,0 );
 						
+=======
+private void CreateFileModel(Connection conn, FileModel msg) {
+	// TODO Auto-generated method stub
+	
+}
+
+private void CreateDefaultTreeModel(Connection conn,DirectoryTreeModel msg) {
+	Statement stmt;
+	try 
+	{
+		stmt = conn.createStatement();
+		ResultSet rs = stmt.executeQuery("SELECT * FROM Files WHERE Files.Owner=" +msg.getUser().getIDuser() + " AND Files.isDirectory=1 AND Files.isDeleted=0 ORDER BY FileName;");
+		while (rs.next()) {
+            msg.getDir().add(rs.getString("FilePath"));       
+		}
+	}
+			 catch (SQLException e) {
+				 e.printStackTrace();
+	}
+}
+
+private String createDirectory(Connection con, CreateDirectory msg) {
+	MyFile file =   msg;
+	String path = "UsersFiles/U_"+ msg.getUser().getIDuser() + "/" ;
+	Statement stmt;
+		try 
+		{
+			stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM Files where FileName ='"+ file.getTheFile().getName()+ "' AND FilePath ='"+path+"';");// AND FilePath = '"+ file.getTheFile().getAbsolutePath() +"' ;");
+			if(rs.next()){
+				System.out.println("file is in the User Dir");
+					return "file is in the User Dir";
+					}
+					else {
+						/* 
+						System.out.println("insert to sql");
+						String insertTableSQL = "INSERT INTO Files"
+								+ "(FileName,FilePath,isDirectory) VALUES"
+								+ "(?,?,?)";
+		    			
+						//CreatedTime,Modified,Permission,Owner,IsDeleted,Description,isDirectory
+						java.sql.PreparedStatement preparedStatement = con.prepareStatement(insertTableSQL);
+						preparedStatement.setString(1, file.getTheFile().getName());
+						preparedStatement.setString(2, path);
+						preparedStatement.setInt(3, 1);
+						preparedStatement.executeUpdate();
+						//java.sql.Date bla = new Date(date)
+						//preparedStatement.setDate(3, new java.sql.Date((new Date(System.currentTimeMillis())).getTime()));
+						//preparedStatement.setDate(4, new java.sql.Date((new Date(System.currentTimeMillis())).getTime()));
+						//preparedStatement.setString(5, "0777");
+						//preparedStatement.setInt(6, msg.getUserID());
+						//preparedStatement.setInt(7, 0);
+					//	preparedStatement.setString(8, msg.getNewFile().getDescription());
+						//if(msg.getNewFile().getTheFile().isDirectory()) preparedStatement.setInt(9, 1);
+						//else preparedStatement.setInt(9,0 );
+						*/
+>>>>>>> refs/heads/master
 			    		System.out.println("converting file");
 			    		File bla = new File(path);
 			    		bla.mkdirs();
@@ -594,7 +676,11 @@ private String createNewFile(Connection con, UpLoadFile msg) {
 						preparedStatement.executeUpdate();
 			    		System.out.println("converting file");
 			    		FileUtils.writeByteArrayToFile(new File (path), msg.getMybytearray());		    			    		    		  
+<<<<<<< HEAD
 
+=======
+			    		
+>>>>>>> refs/heads/master
 						// execute insert SQL stetement
 						return "Upload Sucseeded";
 					}
@@ -687,8 +773,41 @@ public DefaultMutableTreeNode addNodes(DefaultMutableTreeNode curTop, File dir) 
       curDir.add(new DefaultMutableTreeNode(files.elementAt(fnum)));
     return curDir;
   }
+<<<<<<< HEAD
 
 
+=======
+/*
+public TreeNode buildTree(){
+    String[] names = new String[]; // fill this with the names of your plugins
+
+    TreeNode tree;
+
+    // for each plugin name...
+    for (int i=0;i<names.length;i++){
+        String currentName = names[i];
+        String[] splitName = currentName.split(".");
+
+        // loop over the split name and see if the nodes exist in the tree. If not, create them
+        TreeNode parent = tree;
+        for (int n=0;n<splitName.length;n++){
+            if (parent.hasChild(splitName[n])){
+                // the parent node exists, so it doesn't need to be created. Store the node as 'parent' to use in the next loop run
+                parent = parent.getChild(splitName[n]);
+            }
+            else {
+                // the node doesn't exist, so create it. Then set it as 'parent' for use by the next loop run
+                TreeNode child = new TreeNode(splitName[n]);
+                parent.addChild(child);
+                parent = child;
+            }
+        }
+
+return tree;
+}
+
+*/
+>>>>>>> refs/heads/master
 }
 /* OLD
 if(msg instanceof String){

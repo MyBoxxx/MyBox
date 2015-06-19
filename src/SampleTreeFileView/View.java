@@ -49,6 +49,7 @@ public class View extends AbstractGUI{
 
 	/** Main GUI container */
      static JPanel gui;
+<<<<<<< HEAD
      
 
 
@@ -59,6 +60,17 @@ public class View extends AbstractGUI{
     
     /** Directory listing */
      JTable table;
+=======
+ 	private static DefaultMutableTreeNode root;
+ 	private static DefaultTreeModel model;
+ 	private JTree tree;
+ 	private JMenuBar menuBar;
+ 	private JTable table;
+ 	private JScrollPane scrollPane;
+   
+
+	JPanel fileView;
+>>>>>>> refs/heads/master
      JProgressBar progressBar;
     
 
@@ -118,9 +130,14 @@ public class View extends AbstractGUI{
 	JMenuItem mntmAboutUs;
 	private JMenuBar menuBar;
 	
+	
+	
 	public View() {
 		      		getGui();
+<<<<<<< HEAD
 		            getTable();
+=======
+>>>>>>> refs/heads/master
 		            // show the file system roots.
 		            Dimension widePreferred = new Dimension(200,150);
 		            
@@ -130,6 +147,7 @@ public class View extends AbstractGUI{
 		            progressBar.setVisible(false);
 		    		    		                        
 		    		detailView = new JPanel(new BorderLayout(3,3));
+<<<<<<< HEAD
 		            JScrollPane tableScroll = new JScrollPane(table);
 		            Dimension d = tableScroll.getPreferredSize();
 		            tableScroll.setPreferredSize(new Dimension((int)d.getWidth(), (int)d.getHeight()/2));
@@ -150,6 +168,19 @@ public class View extends AbstractGUI{
 		            tree.setVisibleRowCount(15);
 		            
 		            treeScroll.setColumnHeaderView(tree);
+=======
+		            scrollPane = new JScrollPane();
+		            Dimension d = scrollPane.getPreferredSize();
+		            scrollPane.setPreferredSize(new Dimension((int)d.getWidth(), (int)d.getHeight()/2));
+		            detailView.add(scrollPane);
+		            
+		            table = new JTable();
+		            scrollPane.setViewportView(table);
+		    		table.setVisible(true);
+		    		
+		            JScrollPane treeScroll = new JScrollPane();
+		            treeScroll.setEnabled(false);
+>>>>>>> refs/heads/master
 		            Dimension preferredSize = treeScroll.getPreferredSize();
 		            treeScroll.setPreferredSize( widePreferred );
 		            
@@ -212,11 +243,24 @@ public class View extends AbstractGUI{
 		JSplitPane.HORIZONTAL_SPLIT,
 		treeScroll,
 		detailView);
+		
+		tree = new JTree(new DefaultTreeModel(
+			new DefaultMutableTreeNode("U_" + MainClient.clien.getCurrUser().getIDuser()) {
+				{
+				}
+			}
+		));
+		tree.setModel(getModel());
+		treeScroll.setColumnHeaderView(tree);
 		gui.add(splitPane, BorderLayout.CENTER);
 		
 		gui.add(simpleOutput, BorderLayout.SOUTH);
 	
    }
+
+	public JTable getTable() {
+		return table;
+	}
 
 	private void toolBarInit(JToolBar toolBar) {
 		toolBar.add(openFile);
@@ -364,6 +408,7 @@ public class View extends AbstractGUI{
 	public JButton getOpenFile() {
 		// TODO Auto-generated method stub
 		return openFile;
+<<<<<<< HEAD
 	}
 	
 
@@ -383,6 +428,8 @@ public class View extends AbstractGUI{
             table.setShowVerticalLines(false);
 		}
 		return table;
+=======
+>>>>>>> refs/heads/master
 	}
 	
  	public void setTable(JTable table) {
@@ -737,6 +784,41 @@ public class View extends AbstractGUI{
 		return APP_TITLE;
 	}
 	
+<<<<<<< HEAD
+=======
+	public DefaultMutableTreeNode getTreeModel() {
+		if (root==null)
+		{
+			root = new DefaultMutableTreeNode("U_"+MainClient.clien.getCurrUser().getIDuser());
+		}
+		return root;
+	}
+
+	public void setTreeModel(DefaultMutableTreeNode root) {
+		this.root = root;
+	}
+	
+	public DefaultTreeModel getModel() {
+		if (model==null)
+		{
+			model = new DefaultTreeModel(getTreeModel());
+		}
+		return model;
+	}
+
+	public void setModel(DefaultTreeModel model) {
+		this.model = model;
+	}
+
+public void setTree(JTree tree) {
+	this.tree = tree;
+}
+
+public JTree getTree() {
+		return tree;
+	}
+	
+>>>>>>> refs/heads/master
 }
 
 

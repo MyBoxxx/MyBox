@@ -5,6 +5,10 @@ import java.awt.Desktop;
 import java.awt.GridLayout;
 import java.io.File;
 import java.io.Serializable;
+<<<<<<< HEAD
+=======
+import java.util.ArrayList;
+>>>>>>> refs/heads/master
 
 import javax.swing.ButtonGroup;
 import javax.swing.Icon;
@@ -26,6 +30,10 @@ import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
 
+<<<<<<< HEAD
+=======
+import Client.MainClient;
+>>>>>>> refs/heads/master
 import Entity.Abstract_Entity;
 import Entity.MyFile;
 import GUI_final.CreateFolderScreen;
@@ -36,6 +44,7 @@ public class Model extends Abstract_Entity implements Serializable{
 	
 	/** File-system tree. Built Lazily */
 	private JTree tree;
+<<<<<<< HEAD
 	private DefaultMutableTreeNode treeModel;
 	private FileTableModel fileTableModel;
 	private TableModel tablemodel;
@@ -48,6 +57,14 @@ public class Model extends Abstract_Entity implements Serializable{
 	}
 
 
+=======
+	private DefaultMutableTreeNode root;
+	private DefaultTreeModel model;
+	private FileTableModel fileTableModel;
+	private TableModel tablemodel;
+	private String currFile;
+	private String currPath;
+>>>>>>> refs/heads/master
 	public boolean cellSizesSet = false; 
 	/** currently selected File. */
     private File currentFile;
@@ -67,6 +84,7 @@ public class Model extends Abstract_Entity implements Serializable{
 	public void setFileTableModel(FileTableModel fileTableModel) {
 		this.fileTableModel = fileTableModel;
 	}
+<<<<<<< HEAD
 
 	public DefaultMutableTreeNode getTreeModel() {
 		return treeModel;
@@ -76,6 +94,8 @@ public class Model extends Abstract_Entity implements Serializable{
 		this.treeModel = treeModel;
 	}
 
+=======
+>>>>>>> refs/heads/master
     
 public MyFile getNewFile() {
 		return newFile;
@@ -90,16 +110,89 @@ public MyFile getNewFile() {
 	public int getUserID() {
 		return UserID;
 	}
+<<<<<<< HEAD
+
+	public void setUserID(int userID) {
+		UserID = userID;
+	}
+=======
+>>>>>>> refs/heads/master
 
 	public void setUserID(int userID) {
 		UserID = userID;
 	}
 
-public void showRootFile() {
-    // ensure the main files are displayed
-    tree.setSelectionInterval(0,0);
+	public void showRootFile() {
+		// ensure the main files are displayed
+		tree.setSelectionInterval(0,0);
+	}
+
+	public String getCurrFile() {
+		return currFile;
+	}
+
+	public void setCurrFile(String currFile) {
+		this.currFile = currFile;
+	}
+
+	public String getCurrPath() {
+		return currPath;
+	}
+
+	public void setCurrPath(String currPath) {
+		this.currPath = currPath;
+	}
+
+	public TableModel getTablemodel() {
+		return tablemodel;
+	}
+
+	public void setTablemodel(TableModel tablemodel) {
+		this.tablemodel = tablemodel;
+	}
+
+
+
+
+
+	private void showErrorMessage(String errorMessage, String errorTitle,JPanel gui) {
+		JOptionPane.showMessageDialog(
+				gui,
+				errorMessage,
+				errorTitle,
+				JOptionPane.ERROR_MESSAGE
+				);
+	}
+
+
+/** Update the table on the EDT */
+
+
+
+public Object getDesktop() {
+	// TODO Auto-generated method stub
+	return null;
+}
+/*
+public void setDesktop(Desktop desktop){
+	this.desktop = desktop;
 }
 
+<<<<<<< HEAD
+=======
+
+*/
+
+}
+
+
+
+
+
+
+
+
+>>>>>>> refs/heads/master
 /*
 void deleteFile(JPanel gui) {
     if (currentFile==null) {
@@ -282,6 +375,7 @@ public boolean MoveFile() throws IOException {
 }
 
 /** Update the File details view with the details of this File. */
+<<<<<<< HEAD
 
 
 
@@ -313,3 +407,5 @@ public void setDesktop(Desktop desktop){
 */
 
 }
+=======
+>>>>>>> refs/heads/master

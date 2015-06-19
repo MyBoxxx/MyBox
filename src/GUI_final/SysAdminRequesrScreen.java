@@ -61,6 +61,7 @@ public class SysAdminRequesrScreen extends AbstractGUI {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 800, 600);
 		contentPane = new JPanel();
+<<<<<<< HEAD
 		contentPane.setBackground(Color.LIGHT_GRAY);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -96,6 +97,45 @@ public class SysAdminRequesrScreen extends AbstractGUI {
 		
 		Beckbutton = new JButton("back");
 		Beckbutton.setBounds(197, 522, 117, 29);
+=======
+		contentPane.setBackground(new Color(102, 205, 170));
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		scrollPane = new JScrollPane();
+		scrollPane.setBounds(63, 50, 683, 308);
+		contentPane.add(scrollPane);
+		
+		table = new JTable();
+		scrollPane.setViewportView(table);
+		table.setVisible(true);
+		
+		lblRequest = new JLabel("System Admin Requests");
+		lblRequest.setFont(new Font("BlairMdITC TT", Font.PLAIN, 15));
+		lblRequest.setForeground(Color.BLACK);
+		lblRequest.setBounds(190, 6, 291, 50);
+		contentPane.add(lblRequest);
+		
+		rbaccept = new JRadioButton("Accept");
+		rbaccept.setBackground(new Color(6,139,224)); 
+		rbaccept.setBounds(197, 370, 141, 23);
+		contentPane.add(rbaccept);
+		
+		rbreject = new JRadioButton("Reject");
+		rbreject.setBackground(new Color(6,139,224)); 
+		rbreject.setBounds(197, 405, 141, 23);
+		contentPane.add(rbreject);
+		
+		SendButton = new JButton("Send & Close");
+		SendButton.setIcon(new ImageIcon(SysAdminRequesrScreen.class.getResource("/GUI_final/okButton.jpg")));
+		SendButton.setBounds(166, 487, 199, 66);
+		contentPane.add(SendButton);
+		
+		Beckbutton = new JButton("back");
+		Beckbutton.setIcon(new ImageIcon(SysAdminRequesrScreen.class.getResource("/GUI_final/cancelButton.jpg")));
+		Beckbutton.setBounds(453, 487, 209, 66);
+>>>>>>> refs/heads/master
 		contentPane.add(Beckbutton);
 		
 		btnReset = new JButton("reset");
