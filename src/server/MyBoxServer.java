@@ -140,7 +140,7 @@ public class MyBoxServer extends AbstractServer
 	  System.out.println("Message received: " + msg + " from " + client);
 	  try 
 	    {
-	        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/mybox","root","Braude");
+	        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/mybox","root","");
 	        //Connection conn = DriverManager.getConnection("jdbc:mysql://192.168.3.68/test","root","Root");
 	        System.out.println("SQL connection succeed");
 	        if(msg instanceof Login_Entity){

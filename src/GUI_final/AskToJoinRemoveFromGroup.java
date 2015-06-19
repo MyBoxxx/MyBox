@@ -85,6 +85,9 @@ public class AskToJoinRemoveFromGroup extends AbstractGUI{
 		choiceGroup.add("peter");
 		getContentPane().add(choiceGroup);
 		
+		choiceGroup.getSelectedIndex();
+		select * from 
+		
 		JRadioButton rbRemove = new JRadioButton("Join");
 		rbRemove.setBounds(26, 285, 141, 23);
 		getContentPane().add(rbRemove);
