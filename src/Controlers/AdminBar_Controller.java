@@ -23,7 +23,7 @@ public class AdminBar_Controller {
 	private  Adminbar_model model ;
 	private  AdminMainWindow view;
 
-	public AdminBar_Controller(Adminbar_model model,Adminbar view){
+	public AdminBar_Controller(Adminbar_model model,AdminMainWindow view){
 		this.model = model;
 		this.view = view;
 	}

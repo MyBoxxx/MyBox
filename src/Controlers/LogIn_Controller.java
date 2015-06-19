@@ -138,8 +138,8 @@ public class LogIn_Controller extends AbstractTransfer{
 	public void MakeLogin() {
 		view.dispose();
 		if(MainClient.clien.currUser.isAdmin()) 
-			MainAdmin.main(null);
-			//testtyaron.main(null);
+			//MainAdmin.main(null);
+			testtyaron.main(null);
 		else Main.main(null);
 	}
 	

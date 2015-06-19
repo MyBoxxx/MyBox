@@ -7,6 +7,8 @@ import java.awt.event.ActionListener;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.util.ArrayList;
+import java.util.Enumeration;
 
 import javax.swing.Icon;
 import javax.swing.JFileChooser;
@@ -18,9 +20,12 @@ import javax.swing.SwingUtilities;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeModel;
+import javax.swing.tree.TreeSelectionModel;
 
 import org.apache.commons.io.FileUtils;
+import org.omg.CORBA.portable.OutputStream;
 
 import server.FileTable;
 import Client.MainClient;
@@ -35,14 +40,7 @@ import GUI_final.*;
 
 public class Controller extends AbstractTransfer{
     private Model model;
-    
-    public void setModel(Model model) {
-		this.model = model;
-	}
 
-	public Model getModel() {
-		return model;
-	}
 	private View view;
     
     //private ActionListener actionListener;
@@ -83,6 +81,10 @@ public class Controller extends AbstractTransfer{
     	System.out.println("MainControlerEnable");
 		MainClient.clien.setCurrController(this); // Set The Current Controller to this	
         //TO-DO
+		sendToServer(new DirectoryTreeModel(MainClient.clien.currUser));
+		FileModel bla = new FileModel("bla/", MainClient.clien.currUser);
+		sendToServer(bla);	
+		
     	openFileActionListener = new ActionListener() {
     		
     		@Override
@@ -278,40 +280,37 @@ public class Controller extends AbstractTransfer{
 		
 		view.getMntmSettings().addActionListener(settingsActionListener);
 		view.getMntmLogOut().addActionListener(logoutActionListener);
-		
 		view.getMntmCreateNewFolder().addActionListener(createNewFolderActionListener);
 		view.getMntmUploadfile().addActionListener(uploadFileActionListener);
 		view.getMntmSearch().addActionListener(searchActionListener);
-		
 		view.getMntmCreateNewGroup().addActionListener(createNewGroupActionListener);
 		view.getMntmAskToJoin().addActionListener(askToJoinActionListener);
-		
 		view.getMntmTrash().addActionListener(trashActionListener);
-		
 		view.getMntmMove().addActionListener(moveActionListener);
 		view.getMntmDelete().addActionListener(deleteActionListener);
 		view.getMntmRename().addActionListener(renameActionListener);
-		
 		view.getMntmAboutUs().addActionListener(aboutUsActionListener);
 		view.getMntmHelp().addActionListener(helpActionListener);
-		
 		view.getOpenFile().addActionListener(openFileActionListener);
 		view.getNewFile().addActionListener(createNewFolderActionListener);
 		view.getMoveFile().addActionListener(moveActionListener);
 		view.getRenameFile().addActionListener(renameActionListener);
 		view.getDeleteFile().addActionListener(deleteActionListener);
 		
-		
-		
-		
 		//tree
 		treeSelectionListener = new TreeSelectionListener() {
             public void valueChanged(TreeSelectionEvent tse){
-                DefaultMutableTreeNode node =
-                    (DefaultMutableTreeNode)tse.getPath().getLastPathComponent();
+            	model.setCurrPath(replaceTreePath(tse));
+               // DefaultMutableTreeNode node =(DefaultMutableTreeNode)tse.getPath().getLastPathComponent();
                // model.showChildren(node);
                // view.setFileDetails((File)node.getUserObject());
             }
+
+			private String replaceTreePath(TreeSelectionEvent tse) {
+				return tse.getPath().toString().substring(1, tse.getPath().toString().length()-1).replace(", ", "/");
+			}
+			
+			
         };
 
 		view.getTree().addTreeSelectionListener(treeSelectionListener);
@@ -330,62 +329,126 @@ public class Controller extends AbstractTransfer{
 		view.getTable().setModel(model.getFileTableModel());
 		view.getTable().repaint();
 	}
+    
+    public void setModel(Model model) {
+		this.model = model;
+	}
+
+	public Model getModel() {
+		return model;
+	} 
 	
 	public void UpdateTree()
 	{
-		System.out.println(model.getTreeModel().toString());
-		
-		view.getTree().setModel((TreeModel) model.getTreeModel());
-		//
-		
-		
-		
-		
-		
-		//new JTree(model.getTreeModel()));
+		view.getTree().setModel((TreeModel) view.getTreeModel());
 		view.getTree().repaint();
 		view.repaint();
 	}
-     public void updateFileTable(JTable bla)
+     public void updateFileTable(FileModel filetable)
      {
-    	 view.setTable(bla);
-    	 view.getTable().repaint();
-    	 view.repaint();
+    	 view.getTable().setModel(filetable.getFileTable());
+    	 view.getTable().validate();
+    	 view.getDetailView().repaint();
+//    	 
+//		 System.out.println("*****777777****" + view.getTable().getModel().getRowCount());
+//
+//    	 for (int i = 0; i < view.getTable().getModel().getRowCount(); i++) {
+//    		 System.out.println("**********" + view.getTable().getModel().getValueAt(i, 0));
+//		}
      }
 	
 	
-    public void setTableData() {
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                if (model.getFileTableModel()==null) {
-                    model.setFileTableModel(new FileTableModel());
-                    view.getTable().setModel(model.getFileTableModel());
-                }
-                //view.getTable().getSelectionModel().removeListSelectionListener(listSelectionListener);
-                model.getFileTableModel().setFiles(model.getFileTableModel().getFiles());
-                //table.getSelectionModel().addListSelectionListener(listSelectionListener);
-                if (!model.cellSizesSet) {
-                    Icon icon = view.fileSystemView.getSystemIcon(model.getFileTableModel().getFile(0));
 
-                    // size adjustment to better account for icons
-                    view.getTable().setRowHeight( icon.getIconHeight()+view.rowIconPadding );
+	public void setTree(ArrayList<String> dir, ArrayList<String> shared) {
+	
+		for (String string : dir) {
+			buildTreeFromString(view.getModel(), string);
+		}
+		
+		
+		if (view.getChckbxmntmSharedWithMe().isEnabled())
+		{
+			for (String string : shared) {
+				buildTreeFromString(view.getModel(), string);
+			}
+		}
 
-                    /*setColumnWidth(0,-1);
-                    setColumnWidth(3,60);
-                    table.getColumnModel().getColumn(3).setMaxWidth(120);
-                    setColumnWidth(4,-1);
-                    setColumnWidth(5,-1);
-                    setColumnWidth(6,-1);
-                    setColumnWidth(7,-1);
-                    setColumnWidth(8,-1);
-                    setColumnWidth(9,-1);
-                     */
-                    model.cellSizesSet = true;
-                    view.getTable().repaint();
-                    repaint();
-                }
+	      for (int i = 0; i < view.getTree().getRowCount(); i++) {
+	    	  view.getTree().expandRow(i);
+	    	 
+	        }
+	       
+		
+		view.getTree().getSelectionModel();
+		view.getTree().setRootVisible(true);
+		view.getTree().invalidate();
+		view.getTree().validate();
+		view.getTree().repaint();
+		view.getTree().setVisible(true);
+		
+		
+	}
+
+    /**
+     * Builds a tree from a given forward slash delimited string.
+     * 
+     * @param model The tree model
+     * @param str The string to build the tree from
+     */
+    private void buildTreeFromString(final DefaultTreeModel model1, final String str) {
+        // Fetch the root node
+        DefaultMutableTreeNode root = (DefaultMutableTreeNode) model1.getRoot();
+
+        // Split the string around the delimiter
+        String [] strings = str.split("/");
+        
+        // Create a node object to use for traversing down the tree as it 
+        // is being created
+        DefaultMutableTreeNode node = root;
+        
+        // Iterate of the string array
+        for (String s: strings) {
+            // Look for the index of a node at the current level that
+            // has a value equal to the current string
+            int index = childIndex(node, s);
+
+            // Index less than 0, this is a new node not currently present on the tree
+            if (index < 0) {
+                // Add the new node
+                DefaultMutableTreeNode newChild = new DefaultMutableTreeNode(s);
+                
+                node.insert(newChild, node.getChildCount());
+                node = newChild;
             }
-        });
+            // Else, existing node, skip to the next string
+            else {
+                node = (DefaultMutableTreeNode) node.getChildAt(index);
+            }
+        }
     }
+
+    /**
+     * Returns the index of a child of a given node, provided its string value.
+     * 
+     * @param node The node to search its children
+     * @param childValue The value of the child to compare with
+     * @return The index
+     */
+    private int childIndex(final DefaultMutableTreeNode node, final String childValue) {
+        Enumeration<DefaultMutableTreeNode> children = node.children();
+        DefaultMutableTreeNode child = null;
+        int index = -1;
+
+        while (children.hasMoreElements() && index < 0) {
+            child = children.nextElement();
+
+            if (child.getUserObject() != null && childValue.equals(child.getUserObject())) {
+                index = node.getIndex(child);
+            }
+        }
+
+        return index;
+    }
+
 }
     
