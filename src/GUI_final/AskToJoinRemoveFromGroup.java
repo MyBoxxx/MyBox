@@ -21,6 +21,7 @@ import java.awt.Choice;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.SystemColor;
+import javax.swing.UIManager;
 
 public class AskToJoinRemoveFromGroup extends AbstractGUI{
 
@@ -46,7 +47,7 @@ public class AskToJoinRemoveFromGroup extends AbstractGUI{
 	 */
 	private void initialize() {
 		
-		getContentPane().setBackground(Color.WHITE);
+		getContentPane().setBackground(new Color(59, 89, 151));
 		setBounds(100, 100, 800, 600);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		getContentPane().setLayout(null);
@@ -63,16 +64,18 @@ public class AskToJoinRemoveFromGroup extends AbstractGUI{
 		getContentPane().add(btCacel);
 		
 		chooseGroup = new JLabel();
-		chooseGroup.setBounds(10, 11, 173, 146);
+		chooseGroup.setFont(new Font("Lucida Grande", Font.PLAIN, 16));
+		chooseGroup.setText("Select Group");
+		chooseGroup.setBounds(26, 137, 141, 47);
 		getContentPane().add(chooseGroup);
-		chooseGroup.setIcon(new ImageIcon("src/GUI_final/thechoosegroup.png"));
+		chooseGroup.setIcon(null);
 		
 		lblAskToJoin = new JLabel();
-		lblAskToJoin.setBounds(247, -21, 325, 418);
+		lblAskToJoin.setBounds(89, 53, 682, 82);
 		getContentPane().add(lblAskToJoin);
 		lblAskToJoin.setForeground(SystemColor.textHighlightText);
 		lblAskToJoin.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblAskToJoin.setIcon(new ImageIcon("src/GUI_final/ask.png"));
+		lblAskToJoin.setIcon(new ImageIcon(AskToJoinRemoveFromGroup.class.getResource("/GUI_final/Ask-To-Join-Remove-From-.png")));
 		
 		Choice choiceGroup = new Choice();
 		choiceGroup.setBounds(6, 208, 185, 20);

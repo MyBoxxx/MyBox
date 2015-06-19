@@ -36,7 +36,7 @@ public class AdminAddPeopleToGroup extends AbstractGUI {
 	private JTextPane txtpnChooseUser_1;
 	private JTextPane txtpnChooseGroup;
 	private Choice choiceGroup;
-	private JTextPane txtpnAddPeopleTo;
+	private JLabel lblNewLabel;
 	
 
 	/**
@@ -66,14 +66,6 @@ public class AdminAddPeopleToGroup extends AbstractGUI {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
-		txtpnAddPeopleTo = new JTextPane();
-		txtpnAddPeopleTo.setForeground(SystemColor.textHighlightText);
-		txtpnAddPeopleTo.setBackground(new Color(59, 89, 151));
-		txtpnAddPeopleTo.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		txtpnAddPeopleTo.setText("Add People To Group");		
-		txtpnAddPeopleTo.setBounds(320, 33, 177, 42);
-		contentPane.add(txtpnAddPeopleTo);
 		
 		choiceGroup = new Choice();
 		choiceGroup.setBounds(430, 256, 185, 20);
@@ -133,6 +125,11 @@ public class AdminAddPeopleToGroup extends AbstractGUI {
 		join.setIcon(new ImageIcon("src/GUI_final/join.jpeg"));
 		join.setBounds(131, 167, 260	, 165);
 		contentPane.add(join);
+		
+		lblNewLabel = new JLabel("");
+		lblNewLabel.setIcon(new ImageIcon(AdminAddPeopleToGroup.class.getResource("/GUI_final/Add-People-To-Group.png")));
+		lblNewLabel.setBounds(146, 39, 479, 47);
+		contentPane.add(lblNewLabel);
 	}
 
 
@@ -216,11 +213,4 @@ public class AdminAddPeopleToGroup extends AbstractGUI {
 		this.choiceGroup = choiceGroup;
 	}
 
-	public JTextPane getTxtpnAddPeopleTo() {
-		return txtpnAddPeopleTo;
-	}
-
-	public void setTxtpnAddPeopleTo(JTextPane txtpnAddPeopleTo) {
-		this.txtpnAddPeopleTo = txtpnAddPeopleTo;
-	}
 }
