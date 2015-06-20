@@ -46,6 +46,13 @@ public class Controller extends AbstractTransfer{
     private View view; 
     
     
+    //GUIs
+    RecycleBinScreen recycle;
+    GroupActions group;
+    Settings_GUI settings;
+    
+    
+    
     //private ActionListener actionListener;
     private ActionListener openFileActionListener;
     private ActionListener settingsActionListener;
@@ -63,12 +70,7 @@ public class Controller extends AbstractTransfer{
     private ActionListener aboutUsActionListener;
     private ActionListener helpActionListener;
     private TreeSelectionListener treeSelectionListener;
-    
-    //GUIs
-    RecycleBinScreen recycle;
-    GroupActions group;
-    Settings_GUI settings;
-    
+
     
     public Controller(Model model, View view){
         this.model = model;

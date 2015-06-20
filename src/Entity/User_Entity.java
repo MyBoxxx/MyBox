@@ -1,4 +1,5 @@
 package Entity;
+import java.sql.Date;
 import java.util.List;
 
 
@@ -10,8 +11,7 @@ public class User_Entity extends Abstract_Entity{
 	private String Password;
 	private boolean isLogedin ; // status of login - > true = in the system
 	private boolean isAdmin ;	// status of user -> true = is admin
-	private String oldPassword;
-	private String newPassword;
+	private Date memberSiense;
 	
 	
 public User_Entity(int IDuser, String Username,String Password, int Status, boolean isLogedin, boolean isadmin){
@@ -26,60 +26,54 @@ public User_Entity(int IDuser, String Username,String Password, int Status, bool
 public User_Entity() {
 
 }
-	public User_Entity(String Username) {
-		this.Username = Username;
-	// TODO search in sql and complte
+
+public int getIDuser() {
+	return IDuser;
 }
 
+public void setIDuser(int iDuser) {
+	IDuser = iDuser;
+}
 
+public String getUsername() {
+	return Username;
+}
 
-	public int getIDuser() {
-		return IDuser;
-	}
+public void setUsername(String username) {
+	Username = username;
+}
 
-	public void setIDuser(int iDuser) {
-		IDuser = iDuser;
-	}
+public String getPassword() {
+	return Password;
+}
 
-	public String getUsername() {
-		return Username;
-	}
+public void setPassword(String password) {
+	Password = password;
+}
 
-	public void setUsername(String username) {
-		Username = username;
-	}
+public boolean isLogedin() {
+	return isLogedin;
+}
 
-	public String getPassword() {
-		return Password;
-	}
+public void setLogedin(boolean isLogedin) {
+	this.isLogedin = isLogedin;
+}
 
-	public void setPassword(String password) {
-		Password = password;
-	}
+public boolean isAdmin() {
+	return isAdmin;
+}
 
-	public boolean isLogedin() {
-		return isLogedin;
-	}
+public void setAdmin(boolean isAdmin) {
+	this.isAdmin = isAdmin;
+}
 
-	public void setLogedin(boolean isLogedin) {
-		this.isLogedin = isLogedin;
-	}
+public Date getMemberSiense() {
+	return memberSiense;
+}
 
-	public boolean isAdmin() {
-		return isAdmin;
-	}
+public void setMemberSiense(Date memberSiense) {
+	this.memberSiense = memberSiense;
+}
 
-	public void setAdmin(boolean isAdmin) {
-		this.isAdmin = isAdmin;
-	}
-
-	public void setOldPassword(String text) {
-		this.oldPassword = text;
-	}
-
-	public void setNewPassword(String text) {
-		this.newPassword = text;
-	}
-	
 	
 }

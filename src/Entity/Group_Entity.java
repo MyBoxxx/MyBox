@@ -3,39 +3,42 @@ package Entity;
 import java.util.ArrayList;
 
 @SuppressWarnings("serial")
-public class Group_Entity extends Object_Entity {
-	
-	private	ArrayList<String>	MembersInGroup;
-	private	int	HowManyInGroup;
-	private	ArrayList<String>	 SharedHistory;
-	public ArrayList<String> getMembersInGroup() {
-		return MembersInGroup;
+public class Group_Entity extends Abstract_Entity {
+	private int IDgroup;
+	private String groupName;
+	private int GroupAdmin;	
+	private String Description;
+	private int GroupLimit;
+	public int getIDgroup() {
+		return IDgroup;
 	}
-	public void setMembersInGroup(ArrayList<String> membersInGroup) {
-		MembersInGroup = membersInGroup;
+	public void setIDgroup(int iDgroup) {
+		IDgroup = iDgroup;
 	}
-	public int getHowManyInGroup() {
-		return HowManyInGroup;
+	public String getGroupName() {
+		return groupName;
 	}
-	public void setHowManyInGroup(int howManyInGroup) {
-		HowManyInGroup = howManyInGroup;
+	public void setGroupName(String groupName) {
+		this.groupName = groupName;
 	}
-	public ArrayList<String> getSharedHistory() {
-		return SharedHistory;
+	public int getGroupAdmin() {
+		return GroupAdmin;
 	}
-	public void setSharedHistory(ArrayList<String> sharedHistory) {
-		SharedHistory = sharedHistory;
+	public void setGroupAdmin(int groupAdmin) {
+		GroupAdmin = groupAdmin;
 	}
-	public Group_Entity(String fileName, String fileType, String modified,
-			int permission, String ownerId, String path, String description,
-			Boolean isDeleted, float size, String createDate,
-			ArrayList<String> membersInGroup, int howManyInGroup,
-			ArrayList<String> sharedHistory) {
-		super(fileName, fileType, modified, permission, ownerId, path,
-				description, isDeleted, size, createDate);
-		MembersInGroup = membersInGroup;
-		HowManyInGroup = howManyInGroup;
-		SharedHistory = sharedHistory;
+	public String getDescription() {
+		return Description;
 	}
+	public void setDescription(String description) {
+		Description = description;
+	}
+	public int getGroupLimit() {
+		return GroupLimit;
+	}
+	public void setGroupLimit(int groupLimit) {
+		GroupLimit = groupLimit;
+	}
+
 
 }
