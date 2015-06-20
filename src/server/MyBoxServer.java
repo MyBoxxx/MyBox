@@ -601,7 +601,7 @@ private String searchFile(Connection con, String file)
  * @return String "OK File:  < file Name >  <path> Add" OR "File Already Exists"
  */
 private String createNewFile(Connection con, UpLoadFile msg) {
-	MyFile file =   msg;
+	MyFile file =   msg.getTheFile();
 	String path = "UsersFiles/U_"+ msg.getUser().getIDuser() + "/"+ msg.getTheFile().getName() ;
 	Statement stmt;
 		try 

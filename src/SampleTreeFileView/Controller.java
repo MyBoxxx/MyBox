@@ -311,21 +311,31 @@ public class Controller extends AbstractTransfer{
 		view.getMoveFile().addActionListener(moveActionListener);
 		view.getRenameFile().addActionListener(renameActionListener);
 		view.getDeleteFile().addActionListener(deleteActionListener);
-		
+		//Table Of Files
+		view.getTable().getSelectionModel().addListSelectionListener(new ListSelectionListener(){
+	        public void valueChanged(ListSelectionEvent event) {
+	            // do some actions here, for example
+	            // print first column value from selected row
+	            view.getFileName().setText(view.getTable().getValueAt(view.getTable().getSelectedRow(),1).toString());
+	            view.getPath().setText(view.getTable().getValueAt(view.getTable().getSelectedRow(),2).toString());
+				view.getDate().setText(view.getTable().getValueAt(view.getTable().getSelectedRow(),3).toString());
+				view.getfSize().setText(view.getTable().getValueAt(view.getTable().getSelectedRow(),4).toString());
+	        }
+	       
+	    });
 		//tree
 		treeSelectionListener = new TreeSelectionListener() {
-            public void valueChanged(TreeSelectionEvent tse){
-            	model.setCurrPath(replaceTreePath(tse));
-            	System.out.println(model.getCurrPath());
-            	sendToServer(new FileModel(model.getCurrPath(), MainClient.clien.currUser));
-            }
+			public void valueChanged(TreeSelectionEvent tse){
+				model.setCurrPath(replaceTreePath(tse));
+				System.out.println(model.getCurrPath());
+				sendToServer(new FileModel(model.getCurrPath(), MainClient.clien.currUser));
+			}
 
 			private String replaceTreePath(TreeSelectionEvent tse) {
 				return tse.getPath().toString().substring(1, tse.getPath().toString().length()-1).replace(", ", "/");
 			}
-			
-			
-        };
+		};
+
 
 	view.getTree().addTreeSelectionListener(treeSelectionListener);
 		
@@ -368,35 +378,36 @@ public class Controller extends AbstractTransfer{
 	
 	
 
-	public void setTree(ArrayList<String> dir, ArrayList<String> shared) {
-	
-		for (String string : dir) {
-			buildTreeFromString(view.getModel(), string);
-		}
-		
-		
-		if (view.getChckbxmntmSharedWithMe().isEnabled())
-		{
-			for (String string : shared) {
-				buildTreeFromString(view.getModel(), string);
-			}
-		}
+ 	public void setTree(ArrayList<String> dir, ArrayList<String> shared) {
+ 	
+ 		for (String string : dir) {
+ 			buildTreeFromString(view.getModel(), string);
+ 		}
+ 		
+ 		
+ 		if (view.getChckbxmntmSharedWithMe().isEnabled())
+ 		{
+ 			for (String string : shared) {
+ 				buildTreeFromString(view.getModel(), string);
+ 			}
+ 		}
 
-	      for (int i = 0; i < view.getTree().getRowCount(); i++) {
-	    	  view.getTree().expandRow(i);
-	    	 
-	        }
-	       
-		
-		view.getTree().getSelectionModel();
-		view.getTree().setRootVisible(true);
-		view.getTree().invalidate();
-		view.getTree().validate();
-		view.getTree().repaint();
-		view.getTree().setVisible(true);
-		
-		
-	}
+ 	      for (int i = 0; i < view.getTree().getRowCount(); i++) {
+ 	    	  view.getTree().expandRow(i);
+ 	    	 
+ 	        }
+ 	       
+ 		
+ 		view.getTree().getSelectionModel();
+ 		view.getTree().setRootVisible(true);
+ 		view.getTree().invalidate();
+ 		view.getTree().validate();
+ 		view.getTree().repaint();
+ 		view.getTree().setVisible(true);
+ 		
+ 		
+ 	}
+
 
     /**
      * Builds a tree from a given forward slash delimited string.
