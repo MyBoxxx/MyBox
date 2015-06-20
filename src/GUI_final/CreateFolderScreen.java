@@ -81,19 +81,7 @@ public CreateFolderScreen() {
     ItemDescriptionField.setBounds(161, 459, 200, 23);
     contentPanel.add(ItemDescriptionField);
      bg = new ButtonGroup();
-    
-    JRadioButton rdbtnFile = new JRadioButton("File");
-    rdbtnFile.setFont(new Font("Tahoma", Font.BOLD, 11));
-    rdbtnFile.setBounds(141, 489, 109, 23);
-    contentPanel.add(rdbtnFile);
-    
-    JRadioButton rdbtnFolder = new JRadioButton("Folder");
-    rdbtnFolder.setFont(new Font("Tahoma", Font.BOLD, 11));
-    rdbtnFolder.setBounds(252, 489, 109, 23);
-    contentPanel.add(rdbtnFolder);
     setSize(460, 600);
-    bg.add(rdbtnFolder);
-    bg.add(rdbtnFile);
     
     JLabel lblLogo = new JLabel("Logo");
     lblLogo.setIcon(new ImageIcon(CreateFolderScreen.class.getResource("/images_icons/folder.jpg")));

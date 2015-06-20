@@ -110,7 +110,10 @@ public class myBoxClient extends ObservableClient {
 			if(message instanceof UpLoadFile){
 				((Controller) currController).ShowMessage(((UpLoadFile) message).getAnser());
 			}
-			
+			if(message instanceof CreateDirectory){
+				((Controller) currController).ShowMessage(((CreateDirectory) message).getAnser());
+				((Controller) currController).refreshListAndTree();
+			}
 			
 		
 

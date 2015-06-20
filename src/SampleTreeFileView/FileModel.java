@@ -58,7 +58,7 @@ public class FileModel extends Abstract_Entity{
 			@Override
 			public int getRowCount() {
 				// TODO Auto-generated method stub
-				return 0;
+				return 1;
 			}
 			
 			@Override

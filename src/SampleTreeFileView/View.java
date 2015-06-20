@@ -1,10 +1,12 @@
 package SampleTreeFileView;
 
+import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.io.File;
+import java.net.URL;
 import java.sql.Date;
 
 import javax.swing.Icon;
@@ -40,6 +42,7 @@ import Client.myBoxClient;
 import Controlers.LogIn_Controller;
 import Entity.User_Entity;
 import GUI_final.AbstractGUI;
+
 import javax.swing.ListSelectionModel;
 
 public class View extends AbstractGUI{
@@ -50,7 +53,6 @@ public class View extends AbstractGUI{
 	/** Main GUI container */
      static JPanel gui;
  	private static DefaultMutableTreeNode root;
- 	private static DefaultTreeModel model;
  	private JTree tree;
  	private JMenuBar menuBar;
  	private JTable table;
@@ -93,7 +95,8 @@ public class View extends AbstractGUI{
 	 public int rowIconPadding = 6;
 	JPanel detailView;
 	JPanel fileMainDetails;
-	 
+    private JRadioButton isDirectory;
+    private JRadioButton isFile;
 	
 	/*menu but*/
 	JButton btnNotifications;
@@ -167,6 +170,17 @@ public class View extends AbstractGUI{
 		fileDetailsLabels.add(new JLabel("File size", JLabel.TRAILING));
 		fsize = new JLabel();
 		fileDetailsValues.add(fsize);
+		fileDetailsLabels.add(new JLabel("Type", JLabel.TRAILING));
+
+		JPanel flags = new JPanel(new FlowLayout(FlowLayout.LEADING,4,0));
+		isDirectory = new JRadioButton("Directory");
+		isDirectory.setEnabled(false);
+		flags.add(isDirectory);
+
+		isFile = new JRadioButton("File");
+		isFile.setEnabled(false);
+		flags.add(isFile);
+		fileDetailsValues.add(flags);
 
 		int count = fileDetailsLabels.getComponentCount();
 		
@@ -192,20 +206,37 @@ public class View extends AbstractGUI{
 		JSplitPane.HORIZONTAL_SPLIT,
 		treeScroll,
 		detailView);
+		tree = new JTree();
+//		tree = new JTree(new DefaultTreeModel(
+//			new DefaultMutableTreeNode("U_" + MainClient.clien.getCurrUser().getIDuser()) {
+//				{
+//				}
+//			}
+//		));
+//		tree.setModel(getModel());
 		
-		tree = new JTree(new DefaultTreeModel(
-			new DefaultMutableTreeNode("U_" + MainClient.clien.getCurrUser().getIDuser()) {
-				{
-				}
-			}
-		));
-		tree.setModel(getModel());
 		treeScroll.setColumnHeaderView(tree);
 		gui.add(splitPane, BorderLayout.CENTER);
 		
 		gui.add(simpleOutput, BorderLayout.SOUTH);
 	
    }
+
+	public JRadioButton getIsDirectory() {
+		return isDirectory;
+	}
+
+	public void setIsDirectory(JRadioButton isDirectory) {
+		this.isDirectory = isDirectory;
+	}
+
+	public JRadioButton getIsFile() {
+		return isFile;
+	}
+
+	public void setIsFile(JRadioButton isFile) {
+		this.isFile = isFile;
+	}
 
 	public JTable getTable() {
 		return table;
@@ -693,29 +724,29 @@ public class View extends AbstractGUI{
 		return APP_TITLE;
 	}
 	
-	public DefaultMutableTreeNode getTreeModel() {
-		if (root==null)
-		{
-			root = new DefaultMutableTreeNode("U_"+MainClient.clien.getCurrUser().getIDuser());
-		}
-		return root;
-	}
-
-	public void setTreeModel(DefaultMutableTreeNode root) {
-		this.root = root;
-	}
-	
-	public DefaultTreeModel getModel() {
-		if (model==null)
-		{
-			model = new DefaultTreeModel(getTreeModel());
-		}
-		return model;
-	}
-
-	public void setModel(DefaultTreeModel model) {
-		this.model = model;
-	}
+//	public DefaultMutableTreeNode getTreeModel() {
+//		if (root==null)
+//		{
+//			root = new DefaultMutableTreeNode("U_"+MainClient.clien.getCurrUser().getIDuser());
+//		}
+//		return root;
+//	}
+//
+//	public void setTreeModel(DefaultMutableTreeNode root) {
+//		this.root = root;
+//	}
+//	
+//	public DefaultTreeModel getModel() {
+//		if (model==null)
+//		{
+//			model = new DefaultTreeModel(getTreeModel());
+//		}
+//		return model;
+//	}
+//
+//	public void setModel(DefaultTreeModel model) {
+//		this.model = model;
+//	}
 
 public void setTree(JTree tree) {
 	this.tree = tree;

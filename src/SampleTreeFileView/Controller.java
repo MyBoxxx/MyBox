@@ -32,6 +32,7 @@ import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeModel;
+import javax.swing.tree.TreeSelectionModel;
 
 import java.io.IOException;
 import java.nio.file.*;
@@ -86,27 +87,25 @@ public class Controller extends AbstractTransfer{
     public Controller(Model model, View view){
         this.model = model;
         this.view = view; 
-        view.setDefaultCloseOperation(systemexit());
+        view.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
     
-    private int systemexit() {
-		System.gc();
-		java.awt.Window win[] = java.awt.Window.getWindows(); 
-		for(int i=0;i<win.length;i++){ 
-		    win[i].dispose(); 
-		    win[i]=null;
-		} 
-		return 0;
-	}
+//    private int systemexit() {
+//		System.gc();
+//		java.awt.Window win[] = java.awt.Window.getWindows(); 
+//		for(int i=0;i<win.length;i++){ 
+//		    win[i].dispose(); 
+//		    win[i]=null;
+//		} 
+//		return 0;
+//	}
 
 	public void contol(){   
     	System.out.println("MainControlerEnable");
 		MainClient.clien.setCurrController(this); // Set The Current Controller to this	
 		model.setCurrPath("U_"+MainClient.clien.currUser.getIDuser()+"");
 		model.setGetroot("U_"+MainClient.clien.currUser.getIDuser()+"");
-		sendToServer(new DirectoryTreeModel(MainClient.clien.currUser));
-		sendToServer(new FileModel(model.getCurrPath(), MainClient.clien.currUser));
-		
+		refreshListAndTree();
 		
     	openFileActionListener = new ActionListener() {
     		
@@ -144,7 +143,7 @@ public class Controller extends AbstractTransfer{
     	logoutActionListener = new ActionListener() {
     		@Override
     		public void actionPerformed(ActionEvent e) {
-    			systemexit();
+    			view.dispose();
     			LoginMain.main(null);
     			}				
     		};					
@@ -156,7 +155,8 @@ public class Controller extends AbstractTransfer{
     		public void actionPerformed(ActionEvent e) {
     			// TODO Auto-generated method stub
     			try {
-    			File modelDir = new File("\\file.exe");
+    			MyFile modelDir = new MyFile();
+    			modelDir.setPath(model.getCurrPath());
     			CreateFolderScreen viewDir = new CreateFolderScreen();
     			CreateFolder_Controller controllerDir = new CreateFolder_Controller(modelDir,viewDir);
     			controllerDir.control();
@@ -336,9 +336,9 @@ public class Controller extends AbstractTransfer{
 		//tree
 		treeSelectionListener = new TreeSelectionListener() {
             public void valueChanged(TreeSelectionEvent tse){
+            		model.setCurrPath(replaceTreePath(tse));
+            		sendToServer(new FileModel(model.getCurrPath(), MainClient.clien.currUser));
             	
-            	model.setCurrPath(replaceTreePath(tse));
-            	sendToServer(new FileModel(model.getCurrPath(), MainClient.clien.currUser));
             }
 
 			private String replaceTreePath(TreeSelectionEvent tse) {
@@ -353,15 +353,34 @@ public class Controller extends AbstractTransfer{
 	        public void valueChanged(ListSelectionEvent event) {
 	            // do some actions here, for example
 	            // print first column value from selected row
-	            view.getFileName().setText(view.getTable().getValueAt(view.getTable().getSelectedRow(),1).toString());
-	            view.getPath().setText(view.getTable().getValueAt(view.getTable().getSelectedRow(),2).toString());
-				view.getDate().setText(view.getTable().getValueAt(view.getTable().getSelectedRow(),4).toString());
-				view.getFsize().setText(view.getTable().getValueAt(view.getTable().getSelectedRow(),3).toString());
+	        	if(event.getLastIndex()>0){
+		            view.getFileName().setText(view.getTable().getValueAt(view.getTable().getSelectedRow(),1).toString());
+		            view.getPath().setText(view.getTable().getValueAt(view.getTable().getSelectedRow(),2).toString());
+		            if(view.getTable().getValueAt(view.getTable().getSelectedRow(),3)!=null)
+					view.getFsize().setText(view.getTable().getValueAt(view.getTable().getSelectedRow(),3).toString());
+					view.getDate().setText(view.getTable().getValueAt(view.getTable().getSelectedRow(),4).toString());
+					
+					if(view.getTable().getValueAt(view.getTable().getSelectedRow(),7).toString().equals("1")){
+						view.getIsDirectory().setSelected(true);
+						view.getIsFile().setSelected(false);
+					}
+					else{
+						view.getIsDirectory().setSelected(false);
+						view.getIsFile().setSelected(true);
+					}
+	        	}
 	        }
 	       
 	    });		
     }
 
+	public void refreshListAndTree(){
+		
+		sendToServer(new DirectoryTreeModel(MainClient.clien.currUser));
+		sendToServer(new FileModel(model.getCurrPath(), MainClient.clien.currUser));
+
+	       
+	}
 
 	public void setVisible(boolean b) {
 	 view.setVisible(b);
@@ -373,18 +392,21 @@ public class Controller extends AbstractTransfer{
 	}
 	
 	public void refreseList(FileTable message){
+		
 		view.getTable().setModel(message.getTablemodel());
 		view.getTable().repaint();
 	}
 	
-	public void UpdateTree()
-	{
-		view.getTree().setModel((TreeModel) view.getTreeModel());
-		view.getTree().repaint();
-		view.repaint();
-	}
+//	public void UpdateTree()
+//	{
+//		view.getTree().setModel((TreeModel) view.g);
+//		view.getTree().repaint();
+//		view.repaint();
+//	}
+	
      public void updateFileTable(FileModel filetable)
      {
+    	 
     	 view.getTable().setModel(filetable.getFileTable());
     	 view.getTable().validate();
     	 view.getDetailView().repaint();
@@ -396,31 +418,33 @@ public class Controller extends AbstractTransfer{
 
 	public void setTree(ArrayList<String> dir, ArrayList<String> shared) {
 	
-		
+		DefaultMutableTreeNode root = new DefaultMutableTreeNode("U_"+MainClient.clien.getCurrUser().getIDuser());
+		DefaultTreeModel treemodel = new DefaultTreeModel(root);
 		for (String string : dir) {
-			buildTreeFromString(view.getModel(), string);
+			buildTreeFromString(treemodel, string);
 		}
 		
 		
 		if (view.getChckbxmntmSharedWithMe().isEnabled())
 		{
 			for (String string : shared) {
-				buildTreeFromString(view.getModel(), string);
+				buildTreeFromString(treemodel, string);
 			}
 		}
 
-	      for (int i = 0; i < view.getTree().getRowCount(); i++) {
-	    	  view.getTree().expandRow(i);
-	    	 
-	        }
-	       
-		
+	  
+	     
+		view.getTree().setModel(treemodel);
 		view.getTree().getSelectionModel();
-		view.getTree().setRootVisible(true);
+		view.getTree().setRootVisible(false);
+		view.getTree().getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
 		view.getTree().invalidate();
 		view.getTree().validate();
 		view.getTree().repaint();
-		view.getTree().setVisible(true);
+		for (int i = 0; i < view.getTree().getRowCount(); i++) {
+	    	  view.getTree().expandRow(i);
+	    	 
+	        }
 		
 	}
 	

@@ -42,7 +42,7 @@ public class Model extends Abstract_Entity implements Serializable{
 	private DefaultTreeModel model;
 	private FileTableModel fileTableModel;
 	private String currFile ;
-	private String currPath ;
+	private static String currPath ;
 	private String Getroot;
 	public String getGetroot() {
 		return Getroot;
