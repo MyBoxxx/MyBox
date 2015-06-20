@@ -17,6 +17,8 @@ import javax.swing.border.TitledBorder;
 import javax.swing.JScrollBar;
 import javax.swing.JButton;
 
+
+
 import java.awt.Choice;
 import java.awt.Color;
 import java.awt.Font;
@@ -37,16 +39,26 @@ public class AskToJoinRemoveFromGroup extends AbstractGUI{
 	 * Create the application.
 	 */
 	
-	public AskToJoinRemoveFromGroup() {
-		initialize();
+	public static void main(String [] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					AskToJoinRemoveFromGroup frame = new AskToJoinRemoveFromGroup();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
 	}
+	
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize() {
+	private AskToJoinRemoveFromGroup() {
 		
-		getContentPane().setBackground(Color.WHITE);
+		getContentPane().setBackground(SystemColor.textHighlight);
 		setBounds(100, 100, 800, 600);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		getContentPane().setLayout(null);
@@ -83,10 +95,14 @@ public class AskToJoinRemoveFromGroup extends AbstractGUI{
 		getContentPane().add(choiceGroup);
 		
 		JRadioButton rbRemove = new JRadioButton("Join");
+		rbRemove.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		rbRemove.setBackground(SystemColor.textHighlight);
 		rbRemove.setBounds(26, 285, 141, 23);
 		getContentPane().add(rbRemove);
 		
 		JRadioButton rbJoin = new JRadioButton("Remove");
+		rbJoin.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		rbJoin.setBackground(SystemColor.textHighlight);
 		rbJoin.setBounds(26, 320, 141, 23);
 		getContentPane().add(rbJoin);
 	}

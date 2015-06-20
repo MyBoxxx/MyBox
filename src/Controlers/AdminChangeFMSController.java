@@ -39,7 +39,7 @@ public class AdminChangeFMSController extends AbstractTransfer {
 	
 	//ActionListener Home;
 	
-	AdminChangeFMSController(User_Entity model, AdminChangeFMS_GUI view){
+	public AdminChangeFMSController(User_Entity model, AdminChangeFMS_GUI view){
 		this.model = model;
 		this.view = view;
 		admin = new Adminbar();

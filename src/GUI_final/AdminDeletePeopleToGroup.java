@@ -24,8 +24,10 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.ActionEvent;
 
+import javax.swing.JTextField;
 
-public class AdminDeletePeopleToGroup extends JPanel {
+
+public class AdminDeletePeopleToGroup extends AbstractGUI {
 
 	private JPanel contentPane;
 	private JLabel join;
@@ -33,50 +35,64 @@ public class AdminDeletePeopleToGroup extends JPanel {
 	private JButton DeleteButton;
 	private TextField textField;
 	private JTextPane textPane;
-	private Choice choose_user;
 	private JTextPane txtpnChooseUser_1;
 	private JTextPane txtpnChooseGroup;
-	private Choice choiceGroup;
 	private JLabel deleteLabel;
+	private JTextField UserTxt;
+	private JTextField groupTxt;
+	private String grp = new String();
+	private String usr = new String();
 	
+
+	public String getGrp() {
+		return grp;
+	}
+
+	public void setGrp(String grp) {
+		this.grp = grp;
+	}
+
+	public String getUsr() {
+		return usr;
+	}
+
+	public void setUsr(String usr) {
+		this.usr = usr;
+	}
 
 	/**
 	 * Launch the application.
 	 */
-	/*public static void main(String[] args) {
+	public void init(final String usr, final String grp) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					AdminDeletePeopleToGroup frame = new AdminDeletePeopleToGroup();
+					AdminDeletePeopleToGroup frame = new AdminDeletePeopleToGroup(usr ,grp);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 		});
-	}*/
+	}
 
 	/**
 	 * Create the frame.
 	 */
-	public AdminDeletePeopleToGroup() {
+	public AdminDeletePeopleToGroup(String usr, String grp) {
+		this.usr = usr;
+		this.grp = grp;
+		
+		getContentPane().setBackground(SystemColor.textHighlight);
 		setBackground(SystemColor.textHighlight);
-	/*	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 512, 300);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 800, 600);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(214, 20, 20));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		contentPane.setLayout(null);*/
-		setLayout(null);
-		
-		choiceGroup = new Choice();
-		choiceGroup.setBounds(354, 176, 100, 17);
-		choiceGroup.add("");
-		choiceGroup.add("100");
-		choiceGroup.add("ein ma");
-		choiceGroup.add("peter");
-		add(choiceGroup);
+		//setContentPane(contentPane);
+		contentPane.setLayout(null);
+		getContentPane().setLayout(null);
 		
 		txtpnChooseGroup = new JTextPane();
 		txtpnChooseGroup.setForeground(SystemColor.textHighlightText);
@@ -84,23 +100,15 @@ public class AdminDeletePeopleToGroup extends JPanel {
 		txtpnChooseGroup.setText("Choose Group");
 		txtpnChooseGroup.setBackground(new Color(214, 20, 20));
 		txtpnChooseGroup.setBounds(218, 241, 107, 26);
-	    add(txtpnChooseGroup);
+	    getContentPane().add(txtpnChooseGroup);
 		
 		txtpnChooseUser_1 = new JTextPane();
 		txtpnChooseUser_1.setForeground(SystemColor.textHighlightText);
 		txtpnChooseUser_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		txtpnChooseUser_1.setText("Choose User");
 		txtpnChooseUser_1.setBackground(new Color(214, 20, 20));
-		txtpnChooseUser_1.setBounds(218, 179, 107, 26);
-		add(txtpnChooseUser_1);
-		
-		choose_user = new Choice();
-		choose_user.add("");
-		choose_user.add("100");
-		choose_user.add("ein ma");
-		choose_user.add("peter");
-		choose_user.setBounds(354, 241, 100, 17);
-		add(choose_user);
+		txtpnChooseUser_1.setBounds(218, 171, 107, 26);
+		getContentPane().add(txtpnChooseUser_1);
 		
 		textPane = new JTextPane();
 		textPane.setForeground(SystemColor.textHighlightText);
@@ -108,33 +116,51 @@ public class AdminDeletePeopleToGroup extends JPanel {
 		textPane.setText("Reason");
 		textPane.setBackground(new Color(214, 20, 20));
 		textPane.setBounds(218, 306, 107, 26);
-		add(textPane);
+		getContentPane().add(textPane);
 		
 		textField = new TextField();
 		textField.setBounds(354, 313, 100, 19);
-		add(textField);
+		getContentPane().add(textField);
 		
 		DeleteButton = new JButton();		
 		DeleteButton.setIcon(new ImageIcon("src/GUI_final/remove.png"));
 		DeleteButton.setBounds(10, 419, 192, 63);
-		add(DeleteButton);
+		getContentPane().add(DeleteButton);
 		
 		cancelButton = new JButton();
 		cancelButton.setIcon(new ImageIcon("src/GUI_final/cancelgreen.jpg"));
 		cancelButton.setBounds(489, 408, 248, 74);
-		add(cancelButton);
+		getContentPane().add(cancelButton);
 		
 		join = new JLabel();
 		join.setIcon(new ImageIcon("src/GUI_final/deleteFromGroup.png"));
 		join.setBounds(325, 49, 0	, 0);
-		add(join);
+		getContentPane().add(join);
 		
 		deleteLabel = new JLabel();
 		deleteLabel.setIcon(new ImageIcon("src/GUI_final/deletePeople.png"));
 		deleteLabel.setBounds(37, 11, 700, 94);
-		add(deleteLabel);
+		getContentPane().add(deleteLabel);
+		
+		UserTxt = new JTextField();
+		UserTxt.setBounds(354, 171, 100, 19);
+		getContentPane().add(UserTxt);
+		UserTxt.setColumns(10);
+		
+		groupTxt = new JTextField();
+		groupTxt.setColumns(10);
+		groupTxt.setBounds(354, 241, 100, 19);
+		getContentPane().add(groupTxt);
 	}
 
+
+	public JLabel getDeleteLabel() {
+		return deleteLabel;
+	}
+
+	public void setDeleteLabel(JLabel deleteLabel) {
+		this.deleteLabel = deleteLabel;
+	}
 
 	public void deleteListner(ActionListener listenForDeleteButton){
 		DeleteButton.addActionListener(listenForDeleteButton);
@@ -192,13 +218,7 @@ public class AdminDeletePeopleToGroup extends JPanel {
 		this.textPane = textPane;
 	}
 
-	public Choice getChoose_user() {
-		return choose_user;
-	}
 
-	public void setChoose_user(Choice choose_user) {
-		this.choose_user = choose_user;
-	}
 
 	public JTextPane getTxtpnChooseUser_1() {
 		return txtpnChooseUser_1;
@@ -216,12 +236,20 @@ public class AdminDeletePeopleToGroup extends JPanel {
 		this.txtpnChooseGroup = txtpnChooseGroup;
 	}
 
-	public Choice getChoiceGroup() {
-		return choiceGroup;
+	public JTextField getUserTxt() {
+		return UserTxt;
 	}
 
-	public void setChoiceGroup(Choice choiceGroup) {
-		this.choiceGroup = choiceGroup;
+	public void setUserTxt(JTextField userTxt) {
+		UserTxt = userTxt;
+	}
+
+	public JTextField getGroupTxt() {
+		return groupTxt;
+	}
+
+	public void setGroupTxt(JTextField groupTxt) {
+		this.groupTxt = groupTxt;
 	}
 
 
