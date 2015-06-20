@@ -41,9 +41,18 @@ public class Model extends Abstract_Entity implements Serializable{
 	private DefaultMutableTreeNode root;
 	private DefaultTreeModel model;
 	private FileTableModel fileTableModel;
-	private TableModel tablemodel;
-	private String currFile;
-	private String currPath;
+	private String currFile ;
+	private String currPath ;
+	private String Getroot;
+	public String getGetroot() {
+		return Getroot;
+	}
+
+	public void setGetroot(String getroot) {
+		Getroot = getroot;
+	}
+
+
 	public boolean cellSizesSet = false; 
 	/** currently selected File. */
     private File currentFile;
@@ -102,16 +111,6 @@ public MyFile getNewFile() {
 	public void setCurrPath(String currPath) {
 		this.currPath = currPath;
 	}
-
-	public TableModel getTablemodel() {
-		return tablemodel;
-	}
-
-	public void setTablemodel(TableModel tablemodel) {
-		this.tablemodel = tablemodel;
-	}
-
-
 
 
 

@@ -14,6 +14,7 @@ public class MyFile implements Serializable {
 	private int owner;
 	private int isDeleted;
 	private int isDir;
+	
 	public int getId() {
 		return id;
 	}
@@ -27,25 +28,25 @@ public class MyFile implements Serializable {
 
 
 	public String getFileName() {
-		return FileName;
+		return this.FileName;
 	}
 
 
 
 	public void setFileName(String fileName) {
-		FileName = fileName;
+		this.FileName = fileName;
 	}
 
 
 
 	public String getPath() {
-		return Path;
+		return this.Path;
 	}
 
 
 
 	public void setPath(String path) {
-		Path = path;
+		this.Path = path;
 	}
 
 
@@ -57,7 +58,7 @@ public class MyFile implements Serializable {
 
 
 	public void setCreatedTime(Date createdTime) {
-		CreatedTime = createdTime;
+		this.CreatedTime = createdTime;
 	}
 
 

@@ -95,28 +95,20 @@ public class myBoxClient extends ObservableClient {
 				( (SystemAdminRequestsScreen_Controller) currController).refreshList();
 			}
 			
-			if(message instanceof FileTreeUpdate){
-				
-				DefaultMutableTreeNode bla1 = new DefaultMutableTreeNode();
-				for (File file : ((FileTreeUpdate)message).getFiles() ) {
-					if(file.isDirectory()) 
-						System.out.println("file: " + file.getCanonicalPath());
-				}	
-				JTree bla = new JTree(bla1);
-			}
-			if(message instanceof Model){
-				
-				( (Controller) currController).setModel((Model)message);
-
-			}
-			if(message instanceof FileTable){
-				((Controller) currController).getModel().setTablemodel(((FileTable) message).getTablemodel());
-				((Controller) currController).refreseList();
-			}
+//
+//			if(message instanceof FileTable){
+//				((Controller) currController).refreseList((FileTable) message);
+//			}
 			
 			if(message instanceof DirectoryTreeModel){	
 				((Controller) currController).setTree(((DirectoryTreeModel)message).getDir(),((DirectoryTreeModel)message).getShared());
-				((Controller) currController).updateFileTable(((DirectoryTreeModel) message));
+			}
+			if(message instanceof FileModel)
+			{
+				((Controller) currController).updateFileTable(((FileModel) message));
+			}
+			if(message instanceof UpLoadFile){
+				((Controller) currController).ShowMessage(((UpLoadFile) message).getAnser());
 			}
 			
 			

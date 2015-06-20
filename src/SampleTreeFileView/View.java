@@ -71,14 +71,12 @@ public class View extends AbstractGUI{
      JLabel fileName;
      JTextField path;
      JLabel date;
-     JLabel size;
+     JLabel fsize;
      JCheckBox readable;
      
 
 	JCheckBox writable;
      JCheckBox executable;
-     JRadioButton isDirectory;
-     JRadioButton isFile;
 
     /* GUI options/containers for new File/Directory creation.  Created lazily. */
      JPanel newFilePanel;
@@ -133,7 +131,11 @@ public class View extends AbstractGUI{
 		scrollPane.setPreferredSize(new Dimension((int)d.getWidth(), (int)d.getHeight()/2));
 		detailView.add(scrollPane);
 		            
-		table = new JTable();
+		table = new JTable(){
+			public boolean isCellEditable(int rowIndex,int colIndex) {
+				return false;
+			}
+		};
 		scrollPane.setViewportView(table);
 		table.setVisible(true);
 		    		
@@ -163,19 +165,8 @@ public class View extends AbstractGUI{
 		date = new JLabel();
 		fileDetailsValues.add(date);
 		fileDetailsLabels.add(new JLabel("File size", JLabel.TRAILING));
-		size = new JLabel();
-		fileDetailsValues.add(size);
-		fileDetailsLabels.add(new JLabel("Type", JLabel.TRAILING));
-
-		JPanel flags = new JPanel(new FlowLayout(FlowLayout.LEADING,4,0));
-		isDirectory = new JRadioButton("Directory");
-		isDirectory.setEnabled(false);
-		flags.add(isDirectory);
-
-		isFile = new JRadioButton("File");
-		isFile.setEnabled(false);
-		flags.add(isFile);
-		fileDetailsValues.add(flags);
+		fsize = new JLabel();
+		fileDetailsValues.add(fsize);
 
 		int count = fileDetailsLabels.getComponentCount();
 		
@@ -425,8 +416,16 @@ public class View extends AbstractGUI{
 		this.date = date;
 	}
 
-	public void setSize(JLabel size) {
-		this.size = size;
+	public void setfSize(JLabel size) {
+		this.fsize = size;
+	}
+
+	public JLabel getFsize() {
+		return fsize;
+	}
+
+	public void setFsize(JLabel fsize) {
+		this.fsize = fsize;
 	}
 
 	public JCheckBox getReadable() {
@@ -453,21 +452,6 @@ public class View extends AbstractGUI{
 		this.executable = executable;
 	}
 
-	public JRadioButton getIsDirectory() {
-		return isDirectory;
-	}
-
-	public void setIsDirectory(JRadioButton isDirectory) {
-		this.isDirectory = isDirectory;
-	}
-
-	public JRadioButton getIsFile() {
-		return isFile;
-	}
-
-	public void setIsFile(JRadioButton isFile) {
-		this.isFile = isFile;
-	}
 
 	public JPanel getNewFilePanel() {
 		return newFilePanel;

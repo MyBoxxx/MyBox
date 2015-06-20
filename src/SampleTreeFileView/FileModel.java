@@ -21,8 +21,6 @@ public class FileModel extends Abstract_Entity{
 	private String path;
 	//private FileSystemView fileSystemView = FileSystemView.getFileSystemView();
 	
-
-	
 	public FileModel(String path,User_Entity user) {
 		super();
 		this.path = path;

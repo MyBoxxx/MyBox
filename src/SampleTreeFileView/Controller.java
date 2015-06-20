@@ -25,6 +25,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTree;
 import javax.swing.SwingUtilities;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -84,21 +86,32 @@ public class Controller extends AbstractTransfer{
     public Controller(Model model, View view){
         this.model = model;
         this.view = view; 
-        view.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        view.setDefaultCloseOperation(systemexit());
     }
     
-    public void contol(){   
+    private int systemexit() {
+		System.gc();
+		java.awt.Window win[] = java.awt.Window.getWindows(); 
+		for(int i=0;i<win.length;i++){ 
+		    win[i].dispose(); 
+		    win[i]=null;
+		} 
+		return 0;
+	}
+
+	public void contol(){   
     	System.out.println("MainControlerEnable");
 		MainClient.clien.setCurrController(this); // Set The Current Controller to this	
+		model.setCurrPath("U_"+MainClient.clien.currUser.getIDuser()+"");
+		model.setGetroot("U_"+MainClient.clien.currUser.getIDuser()+"");
 		sendToServer(new DirectoryTreeModel(MainClient.clien.currUser));
-		sendToServer(new FileModel("U_"+MainClient.clien.currUser.getIDuser(), MainClient.clien.currUser));
+		sendToServer(new FileModel(model.getCurrPath(), MainClient.clien.currUser));
 		
 		
     	openFileActionListener = new ActionListener() {
     		
     		@Override
     		public void actionPerformed(ActionEvent e) {
-    		
     		}
     	};
 
@@ -131,9 +144,8 @@ public class Controller extends AbstractTransfer{
     	logoutActionListener = new ActionListener() {
     		@Override
     		public void actionPerformed(ActionEvent e) {
-    				//sendToServer(logout);
-    				view.dispose();
-    				LoginMain.main(null);
+    			systemexit();
+    			LoginMain.main(null);
     			}				
     		};					
     	
@@ -161,18 +173,18 @@ public class Controller extends AbstractTransfer{
     		public void actionPerformed(ActionEvent e) {
     			// TODO Auto-generated method stub
     			try {
-					JFileChooser fileChooser = new JFileChooser();
-					int returnValue = fileChooser.showOpenDialog(view.getGui());
+    				final JFileChooser fc = new JFileChooser();
+					int returnValue = fc.showOpenDialog(view.getGui());
 					if (returnValue == JFileChooser.APPROVE_OPTION) {
 						UpLoadFile newFile = new UpLoadFile();
-						File file= fileChooser.getSelectedFile();
+						File file= fc.getSelectedFile();
 						newFile.getMyfile().setFileName(file.getName());
 						newFile.getMyfile().setPath(model.getCurrPath());
 						newFile.getMyfile().setOwner(MainClient.clien.currUser.getIDuser());
 						newFile.getMyfile().setIsDeleted(0);
 						newFile.getMyfile().setIsDir(0);
 						newFile.getMyfile().setFSize(file.length());		      		    
-					    newFile.getMyfile().setMybytearray(FileUtils.readFileToByteArray(fileChooser.getSelectedFile()));
+					    newFile.getMyfile().mybytearray = FileUtils.readFileToByteArray(fc.getSelectedFile());
 					    newFile.setUser(MainClient.clien.currUser);				
 						sendToServer(newFile);
 					}
@@ -302,7 +314,7 @@ public class Controller extends AbstractTransfer{
 			}
 		};
 		//top menu
-		
+	
 		view.getMntmSettings().addActionListener(settingsActionListener);
 		view.getMntmLogOut().addActionListener(logoutActionListener);
 		view.getMntmCreateNewFolder().addActionListener(createNewFolderActionListener);
@@ -324,22 +336,33 @@ public class Controller extends AbstractTransfer{
 		//tree
 		treeSelectionListener = new TreeSelectionListener() {
             public void valueChanged(TreeSelectionEvent tse){
+            	
             	model.setCurrPath(replaceTreePath(tse));
-               // DefaultMutableTreeNode node =(DefaultMutableTreeNode)tse.getPath().getLastPathComponent();
-               // model.showChildren(node);
-               // view.setFileDetails((File)node.getUserObject());
+            	sendToServer(new FileModel(model.getCurrPath(), MainClient.clien.currUser));
             }
 
 			private String replaceTreePath(TreeSelectionEvent tse) {
-				return tse.getPath().toString().substring(1, tse.getPath().toString().length()-1).replace(", ", "/");
+				return tse.getPath().toString().substring(model.getGetroot().length()+3, tse.getPath().toString().length()-1).replace(", ", "/");
 			}
 			
 			
         };
 
 		view.getTree().addTreeSelectionListener(treeSelectionListener);
-		
+		view.getTable().getSelectionModel().addListSelectionListener(new ListSelectionListener(){
+	        public void valueChanged(ListSelectionEvent event) {
+	            // do some actions here, for example
+	            // print first column value from selected row
+	            view.getFileName().setText(view.getTable().getValueAt(view.getTable().getSelectedRow(),1).toString());
+	            view.getPath().setText(view.getTable().getValueAt(view.getTable().getSelectedRow(),2).toString());
+				view.getDate().setText(view.getTable().getValueAt(view.getTable().getSelectedRow(),4).toString());
+				view.getFsize().setText(view.getTable().getValueAt(view.getTable().getSelectedRow(),3).toString());
+	        }
+	       
+	    });		
     }
+
+
 	public void setVisible(boolean b) {
 	 view.setVisible(b);
 	}
@@ -349,8 +372,8 @@ public class Controller extends AbstractTransfer{
 		
 	}
 	
-	public void refreseList(){
-		view.getTable().setModel(model.getFileTableModel());
+	public void refreseList(FileTable message){
+		view.getTable().setModel(message.getTablemodel());
 		view.getTable().repaint();
 	}
 	
@@ -367,7 +390,9 @@ public class Controller extends AbstractTransfer{
     	 view.getDetailView().repaint();
      }
 	
-	
+     public void ShowMessage(String msg) {
+    	 JOptionPane.showMessageDialog(view, msg);
+	}
 
 	public void setTree(ArrayList<String> dir, ArrayList<String> shared) {
 	
@@ -462,13 +487,6 @@ public class Controller extends AbstractTransfer{
     }
 
     
-    public void setModel(Model model) {
-		this.model = model;
-	}
-
-	public Model getModel() {
-		return model;
-	}
 	
 }
     

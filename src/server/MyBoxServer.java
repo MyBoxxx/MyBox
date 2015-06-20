@@ -6,7 +6,6 @@ package server;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,6 +13,7 @@ import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Vector;
 
@@ -140,7 +140,7 @@ public class MyBoxServer extends AbstractServer
 	  System.out.println("Message received: " + msg + " from " + client);
 	  try 
 	    {
-	        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/mybox","root","");
+	        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/mybox","root","Braude");
 	        //Connection conn = DriverManager.getConnection("jdbc:mysql://192.168.3.68/test","root","Root");
 	        System.out.println("SQL connection succeed");
 	        if(msg instanceof Login_Entity){
@@ -171,7 +171,8 @@ public class MyBoxServer extends AbstractServer
 	        	//fileTransfer
 	        	
 	        		try{
-	        			client.sendToClient(createNewFile(conn,(UpLoadFile) msg));
+	        			((UpLoadFile) msg).setAnser(createNewFile(conn,(UpLoadFile) msg));
+	        			client.sendToClient(msg);
 		        	}
 		        	catch (IOException e){
 		        		e.printStackTrace();
@@ -202,7 +203,7 @@ public class MyBoxServer extends AbstractServer
 	        	catch(IOException e){
 	        		e.printStackTrace();
 	        	}
-	        }
+	        }/*
 	        if(msg instanceof FileTable){
 	        	
 	        	((SystemAdminReequestScreen_Entity) msg).setTablemodel(buildTableModel(conn,"SELECT * FROM  Files WHERE Owner = '" + ((FileTable)msg).getUser().getIDuser() +"'; ")); 
@@ -213,15 +214,23 @@ public class MyBoxServer extends AbstractServer
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-	        }
+	        }*/
 	        if(msg instanceof DirectoryTreeModel){
 	        	CreateDefaultTreeModel(conn,(DirectoryTreeModel)msg);
-	        	((DirectoryTreeModel) msg).setFileTable(buildTableModel(conn,"SELECT  *"+
-	            		" FROM files, mybox.users"+
-	            		" where isDirectory = 0  and UserID = " + ((DirectoryTreeModel) msg).getUser().getIDuser() + "isDeleted = 0;")); 
 	    		try{
 	    			client.sendToClient(msg);
 	    		}
+	        	catch (IOException e){
+	        		e.printStackTrace();
+	        	}
+	        }
+	        if(msg instanceof FileModel){
+	         	((FileModel) msg).setFileTable(buildTableModel(conn,"SELECT FileId,FileName,FilePath,size,Modified,CreatedTime,Permission"+
+	            		" FROM files "+
+	            		" where FilePath = '"+((FileModel) msg).getPath()+"' AND isDirectory = '0'  AND Owner = '" + ((FileModel) msg).getUser().getIDuser() + "' AND isDeleted = '0';")); 
+	        	try{
+	        		client.sendToClient(msg);
+	        	}
 	        	catch (IOException e){
 	        		e.printStackTrace();
 	        	}
@@ -275,7 +284,7 @@ private void CreateDefaultTreeModel(Connection conn,DirectoryTreeModel msg) {
 	try 
 	{
 		stmt = conn.createStatement();
-		ResultSet rs = stmt.executeQuery("SELECT * FROM Files WHERE Files.Owner=" +msg.getUser().getIDuser() + " AND Files.isDirectory=1 AND Files.isDeleted=0 ORDER BY FileName;");
+		ResultSet rs = stmt.executeQuery("SELECT * FROM Files WHERE Files.Owner='" +msg.getUser().getIDuser() + "' AND Files.isDirectory='1' AND Files.isDeleted='0' ORDER BY FileName;");
 		while (rs.next()) {
             msg.getDir().add(rs.getString("FilePath"));       
 		}
@@ -292,7 +301,7 @@ private String createDirectory(Connection con, CreateDirectory msg) {
 		try 
 		{
 			stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM Files where FileName ='"+ file.getTheFile().getName()+ "' AND FilePath ='"+path+"';");// AND FilePath = '"+ file.getTheFile().getAbsolutePath() +"' ;");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM Files where FileName ='"+ file.getFileName()+ "' AND FilePath ='"+path+"';");// AND FilePath = '"+ file.getTheFile().getAbsolutePath() +"' ;");
 			if(rs.next()){
 				System.out.println("file is in the User Dir");
 					return "file is in the User Dir";
@@ -337,7 +346,6 @@ private String createDirectory(Connection con, CreateDirectory msg) {
 private FileTreeUpdate createTreeFiles(Connection conn, FileTreeUpdate msg) {
 	String path = "UsersFiles/U_"+ msg.getUser().getIDuser() + "/";
 	File temp = new File(path);
-	
 	List<File> files = (List<File>) FileUtils.listFilesAndDirs(temp, TrueFileFilter.INSTANCE, TrueFileFilter.INSTANCE);
 	msg.setFiles(files);
 	return msg;
@@ -595,41 +603,32 @@ private String searchFile(Connection con, String file)
  */
 private String createNewFile(Connection con, UpLoadFile msg) {
 	MyFile file =   msg.getMyfile();
-	String path = "U_"+ msg.getUser().getIDuser() + "/"+file.getPath()+ file.getFileName() ;
+	String path =  file.getPath() ;
 	Statement stmt;
 		try 
 		{
 			stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM Files where FileName ='"+ file.getFileName()+ "' AND FilePath ='"+path+"';");// AND FilePath = '"+ file.getTheFile().getAbsolutePath() +"' ;");
 			if(rs.next()){
-				System.out.println("file is in the User Dir");
 					return "file is in the User Dir";
 					}
 					else {
 						System.out.println("insert to sql");
 						String insertTableSQL = "INSERT INTO Files"
-								+ "(FileName,FilePath,Owner) VALUES"
-								+ "(?,?,?)";
-		    			
-						//CreatedTime,Modified,Permission,Owner,IsDeleted,Description,isDirectory
+								+ "(FileName,FilePath,CreatedTime,Modified,Permission,Owner,IsDeleted,Description,isDirectory,size) VALUES"
+								+ "(?,?,?,?,700,?,0,'',0,?)";
 						java.sql.PreparedStatement preparedStatement = con.prepareStatement(insertTableSQL);
-						preparedStatement.setString(1, file.getTheFile().getName());
-						preparedStatement.setString(2, path);
-						preparedStatement.setInt(3,1);
-
-						//java.sql.Date bla = new Date(date)
-						//preparedStatement.setDate(3, new java.sql.Date((new Date(System.currentTimeMillis())).getTime()));
-						//preparedStatement.setDate(4, new java.sql.Date((new Date(System.currentTimeMillis())).getTime()));
-						//preparedStatement.setString(5, "0777");
-						//preparedStatement.setInt(6, msg.getUserID());
-						//preparedStatement.setInt(7, 0);
-					//	preparedStatement.setString(8, msg.getNewFile().getDescription());
-						//if(msg.getNewFile().getTheFile().isDirectory()) preparedStatement.setInt(9, 1);
-						//else preparedStatement.setInt(9,0 );
-						
+						preparedStatement.setString(1,file.getFileName());
+						preparedStatement.setString(2,file.getPath());
+						java.util.Date utildate = new Date();
+						java.sql.Date sqldate = new java.sql.Date(utildate.getTime());
+						preparedStatement.setDate(3, sqldate);
+						preparedStatement.setDate(4, sqldate);
+						preparedStatement.setInt(5, msg.getUser().getIDuser());
+						preparedStatement.setLong(6, file.getFsize());
 						preparedStatement.executeUpdate();
 			    		System.out.println("converting file");
-			    		FileUtils.writeByteArrayToFile(new File (path), msg.getMybytearray());		    			    		    		  
+			    		FileUtils.writeByteArrayToFile(new File (file.getPath() + file.getFileName()), file.getMybytearray());		    			    		    		  
 			    		
 						// execute insert SQL stetement
 						return "Upload Sucseeded";
@@ -682,6 +681,7 @@ public  TableModel buildTableModel(Connection con,String stat)
 			try 
 			{
 			stmt = con.createStatement();
+			System.out.println(stat);
 			ResultSet rs = stmt.executeQuery(stat);
 			return DbUtils.resultSetToTableModel(rs);
 			

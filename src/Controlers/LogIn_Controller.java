@@ -24,11 +24,11 @@ import SampleTreeFileView.*;
 
 public class LogIn_Controller extends AbstractTransfer{
 
-	static Login_Entity model ;
-	static Login_GUI view;
+	  Login_Entity model ;
+	  Login_GUI view;
 	
-	static ForgotPassword_Controller forgot_con;
-	static ForgotPassword_GUI forgot_gui;
+	 ForgotPassword_Controller forgot_con;
+	 ForgotPassword_GUI forgot_gui;
 	
 	ActionListener loginActionListener ;
 	ActionListener forgotActionListener ;
