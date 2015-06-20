@@ -3,15 +3,20 @@ package Entity;
 import java.io.File;
 import java.io.Serializable;
 
-public class UpLoadFile extends MyFile implements Serializable{
-
+public class UpLoadFile implements Serializable{
+	MyFile myfile;
 	User_Entity user;
-
-	public UpLoadFile(File file) {
-		super(file);
+	
+	public UpLoadFile() {
 		// TODO Auto-generated constructor stub
 	}
-	
+	public MyFile getMyfile() {
+		return myfile;
+	}
+
+	public void setMyfile(MyFile myfile) {
+		this.myfile = myfile;
+	}
 	public User_Entity getUser() {
 		return user;
 	}

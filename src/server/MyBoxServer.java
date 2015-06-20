@@ -594,13 +594,13 @@ private String searchFile(Connection con, String file)
  * @return String "OK File:  < file Name >  <path> Add" OR "File Already Exists"
  */
 private String createNewFile(Connection con, UpLoadFile msg) {
-	MyFile file =   msg;
-	String path = "UsersFiles/U_"+ msg.getUser().getIDuser() + "/"+ msg.getTheFile().getName() ;
+	MyFile file =   msg.getMyfile();
+	String path = "U_"+ msg.getUser().getIDuser() + "/"+file.getPath()+ file.getFileName() ;
 	Statement stmt;
 		try 
 		{
 			stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM Files where FileName ='"+ file.getTheFile().getName()+ "' AND FilePath ='"+path+"';");// AND FilePath = '"+ file.getTheFile().getAbsolutePath() +"' ;");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM Files where FileName ='"+ file.getFileName()+ "' AND FilePath ='"+path+"';");// AND FilePath = '"+ file.getTheFile().getAbsolutePath() +"' ;");
 			if(rs.next()){
 				System.out.println("file is in the User Dir");
 					return "file is in the User Dir";

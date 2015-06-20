@@ -20,7 +20,7 @@ import javax.swing.JTextField;
 import Entity.*;
 import GUI_final.*;
 import Client.*;
-import SampleTreeFileView.Main;
+import SampleTreeFileView.*;
 
 public class LogIn_Controller extends AbstractTransfer{
 

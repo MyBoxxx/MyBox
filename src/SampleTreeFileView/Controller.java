@@ -10,6 +10,11 @@ import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.Serializable;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.attribute.BasicFileAttributeView;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
 import java.util.Enumeration;
 
@@ -25,6 +30,10 @@ import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeModel;
+
+import java.io.IOException;
+import java.nio.file.*;
+import java.nio.file.attribute.*;
 
 import org.apache.commons.io.FileUtils;
 
@@ -92,7 +101,8 @@ public class Controller extends AbstractTransfer{
     		
     		}
     	};
-        //TO-DO    	
+
+    	
     	settingsActionListener = new ActionListener() {
     		
     		@Override
@@ -154,15 +164,16 @@ public class Controller extends AbstractTransfer{
 					JFileChooser fileChooser = new JFileChooser();
 					int returnValue = fileChooser.showOpenDialog(view.getGui());
 					if (returnValue == JFileChooser.APPROVE_OPTION) {
-						UpLoadFile newFile = new UpLoadFile(fileChooser.getSelectedFile());
-		      		      newFile.setIsDeleted(0);
-		      		    hfhjfj;  
-					      newFile.setMybytearray(FileUtils.readFileToByteArray(fileChooser.getSelectedFile()));
-					      newFile.setPath(model.getCurrPath());
-					      newFile.setUser(MainClient.clien.currUser);
-						
-						
-						//model.setNewFile(fileChooser.getSelectedFile());
+						UpLoadFile newFile = new UpLoadFile();
+						File file= fileChooser.getSelectedFile();
+						newFile.getMyfile().setFileName(file.getName());
+						newFile.getMyfile().setPath(model.getCurrPath());
+						newFile.getMyfile().setOwner(MainClient.clien.currUser.getIDuser());
+						newFile.getMyfile().setIsDeleted(0);
+						newFile.getMyfile().setIsDir(0);
+						newFile.getMyfile().setFSize(file.length());		      		    
+					    newFile.getMyfile().setMybytearray(FileUtils.readFileToByteArray(fileChooser.getSelectedFile()));
+					    newFile.setUser(MainClient.clien.currUser);				
 						sendToServer(newFile);
 					}
     			} catch(Throwable t) {
@@ -211,28 +222,27 @@ public class Controller extends AbstractTransfer{
     			
     		}
     	};
+    	
     	moveActionListener = new ActionListener() {
     		
     		@Override
     		public void actionPerformed(ActionEvent e) {
     			// TODO Auto-generated method stub
     			try {
-    				sendToServer(model);
+
     			} catch(Throwable t) {
     				//showThrowable(t);
     			}
     			
     		}
     	};	
+    	
     	deleteActionListener = new ActionListener() {
     	
     		@Override
     		public void actionPerformed(ActionEvent e) {
     			// TODO Auto-generated method stub
     			try {
-    				FileTable bla = new FileTable();
-    				bla.setUser(MainClient.clien.currUser);
-    				sendToServer(bla);
     			} catch(Throwable t) {
     				//showThrowable(t);
     			}
@@ -346,21 +356,22 @@ public class Controller extends AbstractTransfer{
 	
 	public void UpdateTree()
 	{
-		System.out.println(view.getTreeModel().toString());
 		view.getTree().setModel((TreeModel) view.getTreeModel());
 		view.getTree().repaint();
 		view.repaint();
 	}
-     public void updateFileTable(DirectoryTreeModel filetable)
+     public void updateFileTable(FileModel filetable)
      {
     	 view.getTable().setModel(filetable.getFileTable());
-    	 view.getTable().repaint();
+    	 view.getTable().validate();
+    	 view.getDetailView().repaint();
      }
 	
 	
 
 	public void setTree(ArrayList<String> dir, ArrayList<String> shared) {
 	
+		
 		for (String string : dir) {
 			buildTreeFromString(view.getModel(), string);
 		}
@@ -372,13 +383,19 @@ public class Controller extends AbstractTransfer{
 				buildTreeFromString(view.getModel(), string);
 			}
 		}
-	
+
+	      for (int i = 0; i < view.getTree().getRowCount(); i++) {
+	    	  view.getTree().expandRow(i);
+	    	 
+	        }
+	       
+		
+		view.getTree().getSelectionModel();
 		view.getTree().setRootVisible(true);
 		view.getTree().invalidate();
 		view.getTree().validate();
 		view.getTree().repaint();
 		view.getTree().setVisible(true);
-		
 		
 	}
 	
@@ -444,9 +461,6 @@ public class Controller extends AbstractTransfer{
         return index;
     }
 
-    public static void main(String[] args) {
-        new PathTest();
-    }
     
     public void setModel(Model model) {
 		this.model = model;
