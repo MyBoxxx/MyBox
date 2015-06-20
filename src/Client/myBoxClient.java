@@ -5,6 +5,7 @@
 package Client;
 
 import ocsf.client.*;
+import Controlers.ForgotPassword_Controller;
 import Controlers.LogIn_Controller;
 import Controlers.SystemAdminRequestsScreen_Controller;
 import Entity.*;
@@ -113,6 +114,10 @@ public class myBoxClient extends ObservableClient {
 			if(message instanceof CreateDirectory){
 				((Controller) currController).ShowMessage(((CreateDirectory) message).getAnser());
 				((Controller) currController).refreshListAndTree();
+			}
+			
+			if(message instanceof ForgotPassword_Entity){
+				((LogIn_Controller) currController).showMessage(((ForgotPassword_Entity) message).getPwd());
 			}
 			
 		

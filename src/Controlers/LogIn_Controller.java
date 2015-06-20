@@ -45,13 +45,14 @@ public class LogIn_Controller extends AbstractTransfer{
 			forgot_con = new ForgotPassword_Controller(new ForgotPassword_Entity(), forgot_gui);
 			Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 			forgot_gui.setLocation(dim.width/2-forgot_gui.getSize().width/2, dim.height/2-forgot_gui.getSize().height/2);
-			forgot_con.control();
+			forgot_gui.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 		}
 	}
 	
+
 	public void control(){
 		MainClient.clien.setCurrController(this);
 		
@@ -83,13 +84,11 @@ public class LogIn_Controller extends AbstractTransfer{
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 					if(!forgot_gui.isVisible()){
-						forgot_gui.setType(Type.POPUP);
-						forgot_gui.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+						forgot_con.control();
 						forgot_gui.setVisible(true);
+						forgot_gui.setState(JFrame.NORMAL);
 						}
 					else forgot_gui.toFront();
-				
-				
 			}
 		});
 
@@ -142,6 +141,9 @@ public class LogIn_Controller extends AbstractTransfer{
 			//testtyaron.main(null);
 		else Main.main(null);
 	}
-	
+	public void showMessage(String pwd) {
+		JOptionPane.showMessageDialog(null, pwd);
+		
+	}
 	
 }

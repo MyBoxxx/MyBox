@@ -140,7 +140,7 @@ public class MyBoxServer extends AbstractServer
 	  System.out.println("Message received: " + msg + " from " + client);
 	  try 
 	    {
-	        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/mybox","root","Braude");
+	        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/mybox","root","");
 	        //Connection conn = DriverManager.getConnection("jdbc:mysql://192.168.3.68/test","root","Root");
 	        System.out.println("SQL connection succeed");
 	        if(msg instanceof Login_Entity){
@@ -225,6 +225,19 @@ public class MyBoxServer extends AbstractServer
 	        		e.printStackTrace();
 	        	}
 	        }
+	        
+	        if(msg instanceof ForgotPassword_Entity){
+	        	forgotPassword(conn, (ForgotPassword_Entity)msg);
+	    		try{
+	    			client.sendToClient(msg);
+	    		}
+	        	catch (IOException e){
+	        		e.printStackTrace();
+	        	}
+	        }
+	        
+	        
+	        
 	        if(msg instanceof FileModel){
 	         	((FileModel) msg).setFileTable(buildTableModel(conn,"SELECT FileId,FileName,FilePath,size,Modified,CreatedTime,Permission,isDirectory"+
 	            		" FROM files "+
@@ -236,6 +249,8 @@ public class MyBoxServer extends AbstractServer
 	        		e.printStackTrace();
 	        	}
 	        }
+	        
+	        
 	        
 	        
 	        
@@ -539,6 +554,25 @@ private Boolean checkUserPassword(Connection con, Login_Entity log){
 			return true;
 		}
 		log.setUser(false);
+		return false;
+	} catch (SQLException e) {e.printStackTrace();
+	return null;
+	}
+	
+	
+}
+
+private Boolean forgotPassword(Connection con, ForgotPassword_Entity log){
+	
+	Statement stmt;
+	try 
+	{
+		stmt = con.createStatement();
+		ResultSet rs = stmt.executeQuery("SELECT * FROM Users where UserName ='"+ log.getEmail()+"';");
+		if(rs.next()) { //if user exist
+			log.setPwd(rs.getString("Password"));
+			return true;
+		}
 		return false;
 	} catch (SQLException e) {e.printStackTrace();
 	return null;

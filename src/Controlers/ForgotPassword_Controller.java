@@ -13,6 +13,7 @@ import java.net.MalformedURLException;
 
 import javax.swing.JOptionPane;
 
+import Client.MainClient;
 import Entity.*;
 
 public class ForgotPassword_Controller extends AbstractTransfer{
@@ -23,10 +24,12 @@ public class ForgotPassword_Controller extends AbstractTransfer{
 	ForgotPassword_Controller(ForgotPassword_Entity model,ForgotPassword_GUI view){
 		this.model = model;
 		this.view = view;
+		
 	}
 	
 	void control()
 	{
+
     view.getTxtEmail().addMouseListener(new MouseAdapter() {
     
 		@Override
@@ -45,15 +48,13 @@ public class ForgotPassword_Controller extends AbstractTransfer{
 	 view.getSumbit().addActionListener(new ActionListener() {	
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-			if(view.getTxtEmail().getText().equals("eyal")) 
+			if(view.getTxtEmail().getText().equals("E-mail")) 
 				{
-				JOptionPane.showMessageDialog(view.getContentPane(),  "Login OK!.");
-	        	
+				JOptionPane.showMessageDialog(view.getContentPane(),  "Nedd to put a valit mail address!.");
 				}
 			else {
-				JOptionPane.showMessageDialog(view.getContentPane(),  "Login Failed!.");
-				
+				model.setEmail(view.getTxtEmail().getText());
+				sendToServer(model);
 			}
 		}
 	});
@@ -74,4 +75,6 @@ public class ForgotPassword_Controller extends AbstractTransfer{
 	public static void setView(ForgotPassword_GUI view) {
 		ForgotPassword_Controller.view = view;
 	}
+
+
 }
