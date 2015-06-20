@@ -41,10 +41,5 @@ public class editGroup_Controller extends AbstractTransfer{
 				groupA.contol();
 			}
 		});
-	
-		
-		
 	}
-	
-	
 }

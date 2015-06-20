@@ -22,6 +22,10 @@ public class Limitpeopleingroup extends AbstractGUI {
 
 	private JPanel contentPane;
 	private JTextField textField;
+	private JButton btnOk;
+	private JButton btnCancel;
+	private Choice choice;
+	private JTextPane txtpnWriteNewNumber;
 
 	/**
 	 * Launch the application.
@@ -60,7 +64,7 @@ public class Limitpeopleingroup extends AbstractGUI {
 		txtpnChooseGroup.setBounds(66, 42, 81, 20);
 		contentPane.add(txtpnChooseGroup);
 		
-		Choice choice = new Choice();
+		choice = new Choice();
 		choice.setBounds(10, 70, 185, 26);
 		contentPane.add(choice);
 		
@@ -78,17 +82,52 @@ public class Limitpeopleingroup extends AbstractGUI {
 		contentPane.add(textField);
 		textField.setColumns(10);
 		
-		JTextPane txtpnWriteNewNumber = new JTextPane();
+		txtpnWriteNewNumber = new JTextPane();
 		txtpnWriteNewNumber.setText("Write New Number Of People");
 		txtpnWriteNewNumber.setBounds(235, 107, 151, 20);
 		contentPane.add(txtpnWriteNewNumber);
 		
-		JButton btnOk = new JButton("Ok");
+		btnOk = new JButton("Ok");
 		btnOk.setBounds(32, 209, 113, 41);
 		contentPane.add(btnOk);
 		
-		JButton btnCancel = new JButton("Cancel");
+		btnCancel = new JButton("Cancel");
 		btnCancel.setBounds(298, 209, 113, 41);
 		contentPane.add(btnCancel);
 	}
+
+	public JButton getBtnOk() {
+		return btnOk;
+	}
+
+	public void setBtnOk(JButton btnOk) {
+		this.btnOk = btnOk;
+	}
+
+	public JButton getBtnCancel() {
+		return btnCancel;
+	}
+
+	public void setBtnCancel(JButton btnCancel) {
+		this.btnCancel = btnCancel;
+	}
+
+	public Choice getChoice() {
+		return choice;
+	}
+
+	public void setChoice(Choice choice) {
+		this.choice = choice;
+	}
+
+	public JTextPane getTxtpnWriteNewNumber() {
+		return txtpnWriteNewNumber;
+	}
+
+	public void setTxtpnWriteNewNumber(JTextPane txtpnWriteNewNumber) {
+		this.txtpnWriteNewNumber = txtpnWriteNewNumber;
+	}
+	
+	
+	
 }

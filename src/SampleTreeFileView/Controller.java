@@ -4,6 +4,8 @@ import java.awt.Desktop;
 import java.awt.Window.Type;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -42,32 +44,30 @@ public class Controller extends AbstractTransfer{
     private Model model;
     private transient FileModel filemodel;
     private View view; 
+    
+    
     //private ActionListener actionListener;
     private ActionListener openFileActionListener;
-    
     private ActionListener settingsActionListener;
     private ActionListener logoutActionListener;
-    
     private ActionListener createNewFolderActionListener;
     private ActionListener uploadFileActionListener;
     private ActionListener searchActionListener;
-    
     private ActionListener GroupActionsListener;
-    
     private ActionListener moveActionListener;
     private ActionListener deleteActionListener;
     private ActionListener renameActionListener;
-    
     private ActionListener myFileActionListener; 
     private ActionListener sharedWithMeActionListener;
     private ActionListener trashActionListener;
-    RecycleBinScreen recycle;
-    GroupActions group;
-    
     private ActionListener aboutUsActionListener;
     private ActionListener helpActionListener;
-    
     private TreeSelectionListener treeSelectionListener;
+    
+    //GUIs
+    RecycleBinScreen recycle;
+    GroupActions group;
+    Settings_GUI settings;
     
     
     public Controller(Model model, View view){
@@ -101,11 +101,20 @@ public class Controller extends AbstractTransfer{
     		
     		@Override
     		public void actionPerformed(ActionEvent e) {
+    			try{
+    			if(settings==null)
+				{
+    			settings = new Settings_GUI();
+				Settings_Controller setting_control = new Settings_Controller(MainClient.clien.currUser,settings);
+				settings.setType(Type.NORMAL);
+				settings.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+				view.dispose();
+				settings.setVisible(true);
+				setting_control.control();
+				}
+
+    			else group.toFront();
     			
-    			// TODO Auto-generated method stub
-    			try {
-    				//((Desktop) model.getDesktop()).open(view.getCurrentFile());
-    				
     			} catch(Throwable t) {
     				//showThrowable(t);
     			}
@@ -114,18 +123,14 @@ public class Controller extends AbstractTransfer{
     	};
         //TO-DO
     	logoutActionListener = new ActionListener() {
-    		
     		@Override
     		public void actionPerformed(ActionEvent e) {
-    			// TODO Auto-generated method stub
-    			try {
-    				//((Desktop) model.getDesktop()).open(view.getCurrentFile());
-    			} catch(Throwable t) {
-    				//showThrowable(t);
-    			}
-    			
-    		}
-    	};
+    				view.dispose();
+    				LoginMain.main(null);
+    				//JOptionPane.showMessageDialog(null,"logout pressed");
+    			}				
+    		};					
+    	
     	
     	createNewFolderActionListener = new ActionListener() {
     		
@@ -177,7 +182,8 @@ public class Controller extends AbstractTransfer{
     		public void actionPerformed(ActionEvent e) {
     			// TODO Auto-generated method stub
     			try {
-    				//((Desktop) model.getDesktop()).open(view.getCurrentFile());
+    				Object result = JOptionPane.showInputDialog(view, "Enter name:");
+
     			} catch(Throwable t) {
     				//showThrowable(t);
     			}

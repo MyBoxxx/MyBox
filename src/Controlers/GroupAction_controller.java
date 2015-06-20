@@ -15,10 +15,7 @@ import javax.swing.JOptionPane;
 import Client.MainClient;
 import Entity.*;
 import GUI_final.*;
-import SampleTreeFileView.Controller;
-import SampleTreeFileView.Main;
-import SampleTreeFileView.Model;
-import SampleTreeFileView.View;
+import SampleTreeFileView.*;
 
 public class GroupAction_controller extends AbstractTransfer{
 
@@ -54,10 +51,10 @@ public class GroupAction_controller extends AbstractTransfer{
 		this.model = model;
 		this.view = view;
 		groupc =new EditGroup();
-	
 		changepremission = new RequestToChangeGroupPermission();
 		ask =new AskToJoinRemoveFromGroup();
 		delete = new RequestToDeleteGroup();
+		treeView = new View();
 	}
 	
 	public void setvisible()
@@ -120,14 +117,10 @@ public class GroupAction_controller extends AbstractTransfer{
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
-			//view.dispose();
-			treeView = new View();
-			c = new Controller(model, treeView);
-			treeView.setType(Type.NORMAL);
-			treeView.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+			c = new Controller(modelView, treeView);
 			view.dispose();
 			treeView.setVisible(true);
-			//bla.contol();
+			c.contol();
 		}
 	});
 		
