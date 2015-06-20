@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 
-@SuppressWarnings("serial") // To SetTable on Admin Request Screen;
+@SuppressWarnings("serial")
 public class SystemAdminRequestScree_List extends Abstract_Entity {
 
 	private TableModel tablemodel ;

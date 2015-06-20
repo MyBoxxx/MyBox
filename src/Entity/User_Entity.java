@@ -1,5 +1,4 @@
 package Entity;
-import java.sql.Date;
 import java.util.List;
 
 
@@ -11,7 +10,6 @@ public class User_Entity extends Abstract_Entity{
 	private String Password;
 	private boolean isLogedin ; // status of login - > true = in the system
 	private boolean isAdmin ;	// status of user -> true = is admin
-	private Date memberSiense;
 	
 	
 public User_Entity(int IDuser, String Username,String Password, int Status, boolean isLogedin, boolean isadmin){
@@ -26,54 +24,51 @@ public User_Entity(int IDuser, String Username,String Password, int Status, bool
 public User_Entity() {
 
 }
-
-public int getIDuser() {
-	return IDuser;
+	public User_Entity(String Username) {
+		this.Username = Username;
+	// TODO search in sql and complte
 }
 
-public void setIDuser(int iDuser) {
-	IDuser = iDuser;
-}
 
-public String getUsername() {
-	return Username;
-}
 
-public void setUsername(String username) {
-	Username = username;
-}
+	public int getIDuser() {
+		return IDuser;
+	}
 
-public String getPassword() {
-	return Password;
-}
+	public void setIDuser(int iDuser) {
+		IDuser = iDuser;
+	}
 
-public void setPassword(String password) {
-	Password = password;
-}
+	public String getUsername() {
+		return Username;
+	}
 
-public boolean isLogedin() {
-	return isLogedin;
-}
+	public void setUsername(String username) {
+		Username = username;
+	}
 
-public void setLogedin(boolean isLogedin) {
-	this.isLogedin = isLogedin;
-}
+	public String getPassword() {
+		return Password;
+	}
 
-public boolean isAdmin() {
-	return isAdmin;
-}
+	public void setPassword(String password) {
+		Password = password;
+	}
 
-public void setAdmin(boolean isAdmin) {
-	this.isAdmin = isAdmin;
-}
+	public boolean isLogedin() {
+		return isLogedin;
+	}
 
-public Date getMemberSiense() {
-	return memberSiense;
-}
+	public void setLogedin(boolean isLogedin) {
+		this.isLogedin = isLogedin;
+	}
 
-public void setMemberSiense(Date memberSiense) {
-	this.memberSiense = memberSiense;
-}
+	public boolean isAdmin() {
+		return isAdmin;
+	}
 
+	public void setAdmin(boolean isAdmin) {
+		this.isAdmin = isAdmin;
+	}
 	
 }
