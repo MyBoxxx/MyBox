@@ -81,21 +81,15 @@ public class Controller extends AbstractTransfer{
     public void contol(){   
     	System.out.println("MainControlerEnable");
 		MainClient.clien.setCurrController(this); // Set The Current Controller to this	
-        //TO-DO
-		String bla = "bla/"; 
-		sendToServer(new DirectoryTreeModel(MainClient.clien.currUser,bla));
-		//sendToServer(new FileModel("bla/", MainClient.clien.currUser));
+		sendToServer(new DirectoryTreeModel(MainClient.clien.currUser));
+		sendToServer(new FileModel("U_"+MainClient.clien.currUser.getIDuser(), MainClient.clien.currUser));
 		
 		
     	openFileActionListener = new ActionListener() {
     		
     		@Override
     		public void actionPerformed(ActionEvent e) {
-    			FileTreeUpdate filetree = new FileTreeUpdate();
-    			filetree.setUser(MainClient.clien.currUser);
-    			sendToServer(filetree);
-    			// TODO Auto-generated method stub
-    			
+    		
     		}
     	};
         //TO-DO    	
@@ -127,9 +121,9 @@ public class Controller extends AbstractTransfer{
     	logoutActionListener = new ActionListener() {
     		@Override
     		public void actionPerformed(ActionEvent e) {
+    				//sendToServer(logout);
     				view.dispose();
     				LoginMain.main(null);
-    				//JOptionPane.showMessageDialog(null,"logout pressed");
     			}				
     		};					
     	
@@ -140,11 +134,11 @@ public class Controller extends AbstractTransfer{
     		public void actionPerformed(ActionEvent e) {
     			// TODO Auto-generated method stub
     			try {
-    			File model = new File("\\file.exe");
-    			CreateFolderScreen view = new CreateFolderScreen();
-    			CreateFolder_Controller controllere = new CreateFolder_Controller(model,view);
-    			controllere.control();
-    			view.setVisible(true);
+    			File modelDir = new File("\\file.exe");
+    			CreateFolderScreen viewDir = new CreateFolderScreen();
+    			CreateFolder_Controller controllerDir = new CreateFolder_Controller(modelDir,viewDir);
+    			controllerDir.control();
+    			viewDir.setVisible(true);
     			} catch(Throwable t) {
     				//showThrowable(t);
     			}
@@ -161,10 +155,10 @@ public class Controller extends AbstractTransfer{
 					int returnValue = fileChooser.showOpenDialog(view.getGui());
 					if (returnValue == JFileChooser.APPROVE_OPTION) {
 						UpLoadFile newFile = new UpLoadFile(fileChooser.getSelectedFile());
-		      		     
-					      newFile.mybytearray = FileUtils.readFileToByteArray(fileChooser.getSelectedFile());
-					      //model.setNewFile(newFile);
-					      
+		      		      newFile.setIsDeleted(0);
+		      		    hfhjfj;  
+					      newFile.setMybytearray(FileUtils.readFileToByteArray(fileChooser.getSelectedFile()));
+					      newFile.setPath(model.getCurrPath());
 					      newFile.setUser(MainClient.clien.currUser);
 						
 						
