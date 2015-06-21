@@ -45,6 +45,7 @@ import server.FileTable;
 import Client.MainClient;
 import Client.myBoxClient;
 import Controlers.*;
+import Entity.DeleteFile;
 import Entity.FileTreeUpdate;
 import Entity.Folder_Entity;
 import Entity.MyFile;
@@ -278,8 +279,11 @@ public class Controller extends AbstractTransfer{
     	
     		@Override
     		public void actionPerformed(ActionEvent e) {
-    			// TODO Auto-generated method stub
     			try {
+    				DeleteFile delete = new DeleteFile();
+    				delete.getFile().setId(Integer.parseInt(view.getTable().getValueAt(view.getTable().getSelectedRow(), 0).toString()));
+    				delete.setUser(MainClient.clien.currUser);
+    				sendToServer(delete);
     			} catch(Throwable t) {
     				//showThrowable(t);
     			}

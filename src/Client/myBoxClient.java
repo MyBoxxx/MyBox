@@ -120,6 +120,10 @@ public class myBoxClient extends ObservableClient {
 				((LogIn_Controller) currController).showMessage(((ForgotPassword_Entity) message).getPwd());
 			}
 			
+			if(message instanceof DeleteFile){
+				((Controller) currController).ShowMessage(((DeleteFile) message).getAnswer());
+			}
+			
 		
 
 		} catch (Exception e) {
