@@ -142,7 +142,10 @@ public class LogIn_Controller extends AbstractTransfer{
 		else Main.main(null);
 	}
 	public void showMessage(String pwd) {
-		JOptionPane.showMessageDialog(null, pwd);
+		if (pwd!= null)
+			JOptionPane.showMessageDialog(null, "Your password is: " + pwd);
+		else
+			JOptionPane.showMessageDialog(null, "You are not a valid user in mybox");
 		
 	}
 	
