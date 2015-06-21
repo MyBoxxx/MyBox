@@ -26,6 +26,7 @@ public class Group_Entity extends Object_Entity {
 	public void setSharedHistory(ArrayList<String> sharedHistory) {
 		SharedHistory = sharedHistory;
 	}
+	
 	public Group_Entity(String fileName, String fileType, String modified,
 			int permission, String ownerId, String path, String description,
 			Boolean isDeleted, float size, String createDate,
