@@ -58,6 +58,16 @@ public class ForgotPassword_Controller extends AbstractTransfer{
 			}
 		}
 	});
+	 
+	 view.getBtnBack().addActionListener(new ActionListener() {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			view.dispose();
+			LoginMain.main(null);
+		}
+	});
+	 
 	}
 
 	public static ForgotPassword_Entity getModel() {
