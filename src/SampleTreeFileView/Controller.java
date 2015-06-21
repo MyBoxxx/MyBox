@@ -16,6 +16,7 @@ import java.nio.file.Paths;
 import java.nio.file.attribute.BasicFileAttributeView;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Enumeration;
 
 import javax.swing.Icon;
@@ -113,7 +114,30 @@ public class Controller extends AbstractTransfer{
     		public void actionPerformed(ActionEvent e) {
     		}
     	};
-
+		
+    	view.getEdit().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				MyFile temp = new MyFile();
+				temp.setId(Integer.parseInt(view.getTable().getValueAt(view.getTable().getSelectedRow(),0).toString()));
+		        temp.setFileName(view.getTable().getValueAt(view.getTable().getSelectedRow(),1).toString());
+		          temp.setPath(view.getTable().getValueAt(view.getTable().getSelectedRow(),2).toString());
+		    
+		           
+				temp.setFsize(Integer.parseInt(view.getTable().getValueAt(view.getTable().getSelectedRow(),3).toString()));
+		     		//temp.setCreatedTime(Date.parse(view.getDate().setText(view.getTable().getValueAt(view.getTable().getSelectedRow(),4).toString())));
+					
+					if(view.getTable().getValueAt(view.getTable().getSelectedRow(),7).toString().equals("1")){
+						view.getIsDirectory().setSelected(true);
+						view.getIsFile().setSelected(false);
+					}
+					else{
+						view.getIsDirectory().setSelected(false);
+						view.getIsFile().setSelected(true);
+				
+						}
+			}
+    	}		
+		);
     	
     	settingsActionListener = new ActionListener() {
     		
@@ -167,6 +191,7 @@ public class Controller extends AbstractTransfer{
     			
     		}
     	};
+    	
     	uploadFileActionListener = new ActionListener() {
     		
     		@Override
@@ -338,7 +363,7 @@ public class Controller extends AbstractTransfer{
             public void valueChanged(TreeSelectionEvent tse){
             		model.setCurrPath(replaceTreePath(tse));
             		sendToServer(new FileModel(model.getCurrPath(), MainClient.clien.currUser));
-            	
+            		
             }
 
 			private String replaceTreePath(TreeSelectionEvent tse) {
@@ -353,12 +378,16 @@ public class Controller extends AbstractTransfer{
 	        public void valueChanged(ListSelectionEvent event) {
 	            // do some actions here, for example
 	            // print first column value from selected row
-	        	if(event.getLastIndex()>0){
+	        	
 		            view.getFileName().setText(view.getTable().getValueAt(view.getTable().getSelectedRow(),1).toString());
 		            view.getPath().setText(view.getTable().getValueAt(view.getTable().getSelectedRow(),2).toString());
-		            if(view.getTable().getValueAt(view.getTable().getSelectedRow(),3)!=null)
+		    
+		            if(view.getTable().getValueAt(view.getTable().getSelectedRow(),3)!=null){
 					view.getFsize().setText(view.getTable().getValueAt(view.getTable().getSelectedRow(),3).toString());
-					view.getDate().setText(view.getTable().getValueAt(view.getTable().getSelectedRow(),4).toString());
+		            		}
+		            else 	view.getFsize().setText("");
+
+		     		view.getDate().setText(view.getTable().getValueAt(view.getTable().getSelectedRow(),4).toString());
 					
 					if(view.getTable().getValueAt(view.getTable().getSelectedRow(),7).toString().equals("1")){
 						view.getIsDirectory().setSelected(true);
@@ -369,10 +398,12 @@ public class Controller extends AbstractTransfer{
 						view.getIsFile().setSelected(true);
 					}
 	        	}
-	        }
+	        
 	       
 	    });		
-    }
+    
+    	
+    	}
 
 	public void refreshListAndTree(){
 		
@@ -409,7 +440,15 @@ public class Controller extends AbstractTransfer{
     	 
     	 view.getTable().setModel(filetable.getFileTable());
     	 view.getTable().validate();
-    	 view.getDetailView().repaint();
+     	 
+         view.getFileName().setText("");
+            view.getPath().setText("");
+			view.getFsize().setText("");
+			view.getDate().setText("");
+			
+			view.getIsDirectory().setSelected(false);
+			view.getIsFile().setSelected(false);
+		
      }
 	
      public void ShowMessage(String msg) {
