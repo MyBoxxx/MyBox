@@ -8,6 +8,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import GUI_final.*;
+import SampleTreeFileView.Controller;
 
 import java.net.MalformedURLException;
 
@@ -63,8 +64,7 @@ public class ForgotPassword_Controller extends AbstractTransfer{
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			view.dispose();
-			LoginMain.main(null);
+			
 		}
 	});
 	 

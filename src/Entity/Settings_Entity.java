@@ -4,6 +4,8 @@ public class Settings_Entity extends Abstract_Entity {
 	private String NewPassword;
 	private String OldPassword;
 	private int ID;
+	private String email;
+	
 	public Settings_Entity() {
 		super();
 	}
@@ -24,5 +26,11 @@ public class Settings_Entity extends Abstract_Entity {
 	}
 	public void setID(int iD) {
 		ID = iD;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
 	}	
 }

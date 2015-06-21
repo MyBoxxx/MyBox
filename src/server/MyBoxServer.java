@@ -154,9 +154,8 @@ public class MyBoxServer extends AbstractServer
 						e.printStackTrace();
 					}
 	        	 
-	        }
-	        		
-	        	
+	        }		
+	        /************************************************************************/  	
 	        if(msg instanceof SystemAdminReequestScreen_Entity){ 
 	        	((SystemAdminReequestScreen_Entity) msg).setTablemodel(buildTableModel(conn,"SELECT requestID,RequestType,status,AdminRequsts.UserId , UserName FROM AdminRequsts , Users Where Users.UserID = AdminRequsts.UserId; ")); 
 	        	try{
@@ -166,7 +165,17 @@ public class MyBoxServer extends AbstractServer
 	        		e.printStackTrace();
 	        	}
 	        }
-	        
+	   /************************************************************************/
+	        if(msg instanceof Settings_Entity){
+	        	changeName(conn, (Settings_Entity) msg);
+	    		try{
+	    			client.sendToClient(msg);
+	    		}
+	        	catch (IOException e){
+	        		e.printStackTrace();
+	        	}
+	        }
+	      
 	        if(msg instanceof UpLoadFile){
 	        	//fileTransfer
 	        	
@@ -571,6 +580,24 @@ private Boolean forgotPassword(Connection con, ForgotPassword_Entity log){
 		ResultSet rs = stmt.executeQuery("SELECT * FROM Users where UserName ='"+ log.getEmail()+"';");
 		if(rs.next()) { //if user exist
 			log.setPwd(rs.getString("Password"));
+			return true;
+		}
+		return false;
+	} catch (SQLException e) {e.printStackTrace();
+	return null;
+	}
+}
+
+private Boolean changeName(Connection con, Settings_Entity log){
+	
+	Statement stmt;
+	try 
+	{
+		stmt = con.createStatement();
+		ResultSet rs = stmt.executeQuery("SELECT * FROM Users where UserName ='"+ log.getEmail()+"';");
+		if(rs.next()) { //if user exist
+			log.setID(rs.getInt("UserID"));
+			int rs1= stmt.executeUpdate("UPDATE Users SET UserName = "+ log.getEmail() +"WHERE UserID=" +log.getID()+"';" );
 			return true;
 		}
 		return false;
