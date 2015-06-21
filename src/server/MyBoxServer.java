@@ -140,8 +140,8 @@ public class MyBoxServer extends AbstractServer
 	  System.out.println("Message received: " + msg + " from " + client);
 	  try 
 	    {
-	        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/mybox","root","");
-	        //Connection conn = DriverManager.getConnection("jdbc:mysql://192.168.3.68/test","root","Root");
+	        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/mybox","root","Braude");
+	        //Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/mybox","root","");
 	        System.out.println("SQL connection succeed");
 	        if(msg instanceof Login_Entity){
 	        	System.out.println("Try To Coneect as "+ ((Login_Entity)msg).getUsername());
@@ -673,7 +673,7 @@ private String createNewFile(Connection con, UpLoadFile msg) {
 						preparedStatement.setLong(6, file.getFsize());
 						preparedStatement.executeUpdate();
 			    		System.out.println("converting file");
-			    		FileUtils.writeByteArrayToFile(new File (file.getPath() + file.getFileName()), file.getMybytearray());		    			    		    		  
+			    		FileUtils.writeByteArrayToFile(new File (file.getPath() +"/"+ file.getFileName()), file.getMybytearray());		    			    		    		  
 			    		
 						// execute insert SQL stetement
 						return "Upload Sucseeded";
@@ -726,11 +726,8 @@ public  TableModel buildTableModel(Connection con,String stat)
 			try 
 			{
 			stmt = con.createStatement();
-			System.out.println(stat);
 			ResultSet rs = stmt.executeQuery(stat);
 			return DbUtils.resultSetToTableModel(rs);
-			
-			
 			}
 			catch (Exception e){
 				

@@ -44,6 +44,8 @@ import Entity.User_Entity;
 import GUI_final.AbstractGUI;
 
 import javax.swing.ListSelectionModel;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class View extends AbstractGUI{
 
@@ -64,9 +66,9 @@ public class View extends AbstractGUI{
     
 
     /* File controls. */
-     JButton openFile;
+     JButton DownloadFile;
      JButton deleteFile;
-     JButton newFile;
+     JButton newDir;
      JButton moveFile;
     
      /* File details. */
@@ -115,6 +117,8 @@ public class View extends AbstractGUI{
 	JMenuItem mntmCreateNewFolder;
 	JMenuItem mntmUploadfile;
 	JMenuItem mntmAboutUs;
+	private JButton edit;
+	private JToolBar toolBar_1;
 	
 	
 	
@@ -186,18 +190,18 @@ public class View extends AbstractGUI{
 		
 		
 		            
-		JToolBar toolBar = new JToolBar();
+		toolBar_1 = new JToolBar();
 		// mnemonics stop working in a floated toolbar
-		toolBar.setFloatable(false);
+		toolBar_1.setFloatable(false);
 
-		openFile = new JButton("Open");
-		openFile.setMnemonic('o');
+		DownloadFile = new JButton("Download");
+		DownloadFile.setMnemonic('o');
 		
-		toolBarInit(toolBar);
+		toolBarInit(toolBar_1);
 				
 		 fileView = new JPanel(new BorderLayout(3,3));
 		
-		fileView.add(toolBar,BorderLayout.NORTH);
+		fileView.add(toolBar_1,BorderLayout.NORTH);
 		fileView.add(fileMainDetails,BorderLayout.CENTER);
 		
 		detailView.add(fileView, BorderLayout.SOUTH);
@@ -243,18 +247,22 @@ public class View extends AbstractGUI{
 	}
 
 	private void toolBarInit(JToolBar toolBar) {
-		toolBar.add(openFile);
+		
+		edit = new JButton("edit");
+		edit.setMnemonic('o');
+		toolBar_1.add(edit);
+		toolBar.add(DownloadFile);
         
         // Check the actions are supported on this platform!
 		//openFile.setEnabled(desktop.isSupported(Desktop.Action.OPEN));
 		
 		toolBar.addSeparator();
 		
-		newFile = new JButton("New");
+		newDir = new JButton("New Directory");
 		
-		newFile.setMnemonic('n');
+		newDir.setMnemonic('n');
 		
-		toolBar.add(newFile);
+		toolBar.add(newDir);
 		
 		moveFile = new JButton("Move");
 		moveFile.setMnemonic('c');
@@ -294,6 +302,22 @@ public class View extends AbstractGUI{
 	}
 
 	
+
+	public JButton getDownloadFile() {
+		return DownloadFile;
+	}
+
+	public void setDownloadFile(JButton downloadFile) {
+		DownloadFile = downloadFile;
+	}
+
+	public JButton getEdit() {
+		return edit;
+	}
+
+	public void setEdit(JButton edit) {
+		this.edit = edit;
+	}
 
 	public JPanel getGui() {
 		  if (gui==null) {
@@ -384,7 +408,7 @@ public class View extends AbstractGUI{
 	}
 	public JButton getOpenFile() {
 		// TODO Auto-generated method stub
-		return openFile;
+		return DownloadFile;
 	}
 	
  	public void setTable(JTable table) {
@@ -408,11 +432,11 @@ public class View extends AbstractGUI{
 	}
 
 	public JButton getNewFile() {
-		return newFile;
+		return newDir;
 	}
 
 	public void setNewFile(JButton newFile) {
-		this.newFile = newFile;
+		this.newDir = newFile;
 	}
 
 	public JButton getMoveFile() {
@@ -582,7 +606,7 @@ public class View extends AbstractGUI{
 	}
 
 	public void setOpenFile(JButton openFile) {
-		this.openFile = openFile;
+		this.DownloadFile = openFile;
 	}
 	public JPanel getFileView() {
 		return fileView;
