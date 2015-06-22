@@ -70,7 +70,7 @@ public class Splash {
 			splashs.setProgress(80, "Making JAVA");
 			Thread.sleep(500);
 			splashs.setProgress(100, "100 Ein ma");
-			Thread.sleep(500);
+			Thread.sleep(1500);
 			splashs.splashOff();	
 
 	/**

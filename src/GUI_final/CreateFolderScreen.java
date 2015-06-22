@@ -89,12 +89,11 @@ public CreateFolderScreen() {
     contentPanel.add(lblLogo);
   }
 
-  public static void main(String[] args) {
+  public void init() {
     CreateFolderScreen jrframe = new CreateFolderScreen();
-    Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
-	int x = (int) ((dimension.getWidth() - jrframe.getWidth()) / 2);
-	int y = (int) ((dimension.getHeight() - jrframe.getHeight()) / 2);
-	jrframe.setLocation(x, y);
+    setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+	Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+	this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
     jrframe.setVisible(true);
   }
   

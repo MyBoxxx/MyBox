@@ -1,7 +1,10 @@
 package GUI_final;
 
+import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.Toolkit;
 import java.net.MalformedURLException;
+
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -36,6 +39,9 @@ public class Aboutus_GUI extends JFrame {
 	 * @throws MalformedURLException 
 	 */
 	public Aboutus_GUI() throws MalformedURLException {
+		setBounds(100, 100, 800, 600);
+		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+		this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
 		setBackground(Color.WHITE);		
 		setTitle("About Us");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

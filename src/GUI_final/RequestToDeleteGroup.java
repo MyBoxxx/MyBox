@@ -1,6 +1,8 @@
 package GUI_final;
 
+import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.Toolkit;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JComboBox;
@@ -51,7 +53,10 @@ public class RequestToDeleteGroup extends AbstractGUI{
 	 * Initialize the contents of the  
 	 */
 	private void initialize() {
-		 setBounds(100, 100, 800, 600);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 800, 600);
+		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+		this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
 		 getContentPane().setLayout(new CardLayout(0, 0));
 		
 		AskTo = new JPanel();

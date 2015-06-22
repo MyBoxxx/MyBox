@@ -3,8 +3,12 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Toolkit;
+
 import javax.swing.JTextField;
 import javax.swing.JEditorPane;
 import javax.swing.JTextPane;
@@ -12,12 +16,15 @@ import javax.swing.border.TitledBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+
 import java.awt.Button;
+
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JButton;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JRadioButton;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
@@ -48,9 +55,11 @@ public class RequestToChangeGroupPermission extends AbstractGUI{
 	public RequestToChangeGroupPermission() {
 		getContentPane().setBackground(new Color(59, 89, 151));
 		frmRequstToChange = new JFrame();
-		setBounds(6, 6, 800, 600);
 		getContentPane().setForeground(Color.BLACK);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 800, 600);
+		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+		this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
 		getContentPane().setLayout(null);
 		
 		UpperPanel = new JPanel();

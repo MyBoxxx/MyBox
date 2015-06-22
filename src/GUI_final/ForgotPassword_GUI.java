@@ -2,7 +2,9 @@ package GUI_final;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.net.MalformedURLException;
@@ -20,6 +22,7 @@ import javax.swing.JTextField;
 import java.awt.Font;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+
 import javax.swing.JButton;
 
 public class ForgotPassword_GUI extends JFrame {
@@ -30,7 +33,7 @@ public class ForgotPassword_GUI extends JFrame {
 	private JButton btnBack;
 
 
-	public static  void main(String[] args) {
+	public void init() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -54,9 +57,11 @@ public class ForgotPassword_GUI extends JFrame {
 	 */
 	public ForgotPassword_GUI() {
 		setBackground(Color.WHITE);
-		setTitle("Forgot Password\r\n");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setTitle("MyBox");
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 800, 600);
+		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+		this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
