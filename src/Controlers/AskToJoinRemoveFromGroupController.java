@@ -69,7 +69,10 @@ public class AskToJoinRemoveFromGroupController extends AbstractTransfer {
 					re.setRadio(1);
 				else if (jselected==false && rselected==true)
 					re.setRadio(2);
-				sendToServer(re);
+				
+				
+				if (re.getChooise().equals(null)==false)
+					sendToServer(re);
 			}
 		});
 		

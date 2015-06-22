@@ -543,11 +543,7 @@ public class Controller extends AbstractTransfer{
 		for (String string : dir) {
 			buildTreeFromString(treemodel, string);
 		}
-		
-
-
-	  
-	     
+		   
 		view.getTree().setModel(treemodel);
 		view.getTree().getSelectionModel();
 		view.getTree().setRootVisible(false);

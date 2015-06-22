@@ -9,6 +9,7 @@ import Controlers.AskToJoinRemoveFromGroupController;
 import Controlers.ForgotPassword_Controller;
 import Controlers.LogIn_Controller;
 import Controlers.RecycleBin_controller;
+import Controlers.RequestToChangeGroupePremission_Controller;
 import Controlers.RequestToDeleteGroup_Controller;
 import Controlers.SystemAdminRequestsScreen_Controller;
 import Controlers.editGroup_Controller;
@@ -146,7 +147,9 @@ public class myBoxClient extends ObservableClient {
 			}
 			if(message instanceof LoadGroup_Entity)
 			{
-				if(((LoadGroup_Entity) message).getChoice()==3)
+				if(((LoadGroup_Entity) message).getChoice()==4)
+					((RequestToChangeGroupePremission_Controller) currController).FillGroup(((LoadGroup_Entity) message));
+				else if(((LoadGroup_Entity) message).getChoice()==3)
 					((editGroup_Controller) currController).FillGroup(((LoadGroup_Entity) message));
 				else if(((LoadGroup_Entity) message).getChoice()==2)
 					((AskToJoinRemoveFromGroupController) currController).FillGroup(((LoadGroup_Entity) message));

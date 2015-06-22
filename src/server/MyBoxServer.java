@@ -1099,6 +1099,24 @@ private void request(Connection con, Request_Entity log) {
 					+" VALUES('Delete "+log.getChooise()+"','0','"+log.getUser().getIDuser()+"');"; // add row to all admin request";
 				 stmt.executeUpdate(s);
 	 		}
+	 		else if (log.getRadio()==4)
+	 		{
+			s="INSERT INTO adminrequsts(RequestType,status,UserId)"
+					+" VALUES('change permission to read group "+log.getChooise()+"','0','"+log.getUser().getIDuser()+"');"; // add row to all admin request";
+				 stmt.executeUpdate(s);
+	 		}
+	 		else if (log.getRadio()==5)
+	 		{
+			s="INSERT INTO adminrequsts(RequestType,status,UserId)"
+					+" VALUES('change permission to write group "+log.getChooise()+"','0','"+log.getUser().getIDuser()+"');"; // add row to all admin request";
+				 stmt.executeUpdate(s);
+	 		}
+	 		else if (log.getRadio()==6)
+	 		{
+			s="INSERT INTO adminrequsts(RequestType,status,UserId)"
+					+" VALUES('change permission to write and read group "+log.getChooise()+"','0','"+log.getUser().getIDuser()+"');"; // add row to all admin request";
+				 stmt.executeUpdate(s);
+	 		}
 		}
 	 
 	   

@@ -80,9 +80,9 @@ public class GroupAction_controller extends AbstractTransfer{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub=
 				rtcgpc = new RequestToChangeGroupePremission_Controller(MainClient.clien.currUser,changepremission);
-				view.setContentPane(changepremission.getContentPane());
+				view.dispose();
+				changepremission.setVisible(true);
 				rtcgpc.control();
 			}
 		});
