@@ -22,6 +22,7 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeSelectionModel;
 import javax.tools.FileObject;
@@ -549,8 +550,16 @@ public class Controller extends AbstractTransfer{
 		}
 		   
 		view.getTree().setModel(treemodel);
-		view.getTree().getSelectionModel();
 		view.getTree().setRootVisible(false);
+		
+		ImageIcon leafIcon = new ImageIcon(getClass().getResource("/images_icons/folder.gif"));
+		if (leafIcon != null) {
+			DefaultTreeCellRenderer renderer = new DefaultTreeCellRenderer();
+			renderer.setLeafIcon(leafIcon);
+			view.getTree().setCellRenderer(renderer);
+			} else {
+				System.err.println("Leaf icon missing; using default.");
+			}
 		view.getTree().getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
 		view.getTree().invalidate();
 		view.getTree().validate();

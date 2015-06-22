@@ -62,7 +62,6 @@ public class View extends AbstractGUI{
    
 
 	JPanel fileView;
-     JProgressBar progressBar;
     
 
     /* File controls. */
@@ -88,7 +87,6 @@ public class View extends AbstractGUI{
      JTextField name;
 	 Dimension preferredSize;
 	 Container fileDetailsLabels;
-	JPanel simpleOutput;
 	JButton renameFile;
 	JPanel southRadio;
 	JRadioButton newTypeDirectory;
@@ -126,11 +124,6 @@ public class View extends AbstractGUI{
 		getGui();
 		// show the file system roots.
 		Dimension widePreferred = new Dimension(200,150);
-		            
-		simpleOutput = new JPanel(new BorderLayout(3,3));
-		progressBar = new JProgressBar();
-		simpleOutput.add(progressBar, BorderLayout.EAST);
-		progressBar.setVisible(false);
 		    		    		                        
 		detailView = new JPanel(new BorderLayout(3,3));
 		scrollPane = new JScrollPane();
@@ -214,8 +207,6 @@ public class View extends AbstractGUI{
 		tree.setScrollsOnExpand(true);
 		treeScroll.setColumnHeaderView(tree);
 		gui.add(splitPane, BorderLayout.CENTER);
-		
-		gui.add(simpleOutput, BorderLayout.SOUTH);
 	
    }
 
@@ -392,13 +383,7 @@ public class View extends AbstractGUI{
 		this.table = table;
 	}
 
-	public JProgressBar getProgressBar() {
-		return progressBar;
-	}
 
-	public void setProgressBar(JProgressBar progressBar) {
-		this.progressBar = progressBar;
-	}
 
 	public JButton getDeleteFile() {
 		return deleteFile;
@@ -522,13 +507,6 @@ public class View extends AbstractGUI{
 		this.fileDetailsLabels = fileDetailsLabels;
 	}
 
-	public JPanel getSimpleOutput() {
-		return simpleOutput;
-	}
-
-	public void setSimpleOutput(JPanel simpleOutput) {
-		this.simpleOutput = simpleOutput;
-	}
 
 	public JButton getRenameFile() {
 		return renameFile;
