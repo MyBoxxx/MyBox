@@ -38,7 +38,7 @@ public class Aboutus_GUI extends JFrame {
 	public Aboutus_GUI() throws MalformedURLException {
 		setBackground(Color.WHITE);		
 		setTitle("About Us");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 727, 651);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
