@@ -1,12 +1,12 @@
 package SampleTreeFileView;
 
+import java.awt.Component;
 import java.awt.Container;
-import java.math.BigInteger;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.io.File;
-import java.math.BigInteger;
+import java.net.URL;
 import java.sql.Date;
 
 import javax.swing.Icon;
@@ -44,19 +44,17 @@ import Entity.User_Entity;
 import GUI_final.AbstractGUI;
 
 import javax.swing.ListSelectionModel;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class View extends AbstractGUI{
 
     /** Title of the application */
      static final String APP_TITLE = "MyBox";
-     private static final String INITIAL_VALUE = "0";
-     
-	    private BigInteger m_total;  // The total current value state.
 
 	/** Main GUI container */
      static JPanel gui;
  	private static DefaultMutableTreeNode root;
- 	private static DefaultTreeModel model;
  	private JTree tree;
  	private JMenuBar menuBar;
  	private JTable table;
@@ -68,23 +66,21 @@ public class View extends AbstractGUI{
     
 
     /* File controls. */
-     JButton openFile;
+     JButton DownloadFile;
      JButton deleteFile;
-     JButton newFile;
+     JButton newDir;
      JButton moveFile;
     
      /* File details. */
      JLabel fileName;
      JTextField path;
      JLabel date;
-     JLabel size;
+     JLabel fsize;
      JCheckBox readable;
      
 
 	JCheckBox writable;
      JCheckBox executable;
-     JRadioButton isDirectory;
-     JRadioButton isFile;
 
     /* GUI options/containers for new File/Directory creation.  Created lazily. */
      JPanel newFilePanel;
@@ -101,25 +97,28 @@ public class View extends AbstractGUI{
 	 public int rowIconPadding = 6;
 	JPanel detailView;
 	JPanel fileMainDetails;
-	 
+    private JRadioButton isDirectory;
+    private JRadioButton isFile;
 	
 	/*menu but*/
 	JButton btnNotifications;
 	JLabel lblLogInAs;
 	JMenuItem mntmHelp;
 	JMenuItem mntmTrash;
-	JCheckBoxMenuItem chckbxmntmSharedWithMe;
 	JCheckBoxMenuItem chckbxmntmMyFiles;
 	JMenuItem mntmRename;
 	JMenuItem mntmDelete;
 	JMenuItem mntmMove;
 	JMenuItem mntmGroupActions;
-	JMenuItem mntmSearch;
 	JMenuItem mntmLogOut;
 	JMenuItem mntmSettings;
 	JMenuItem mntmCreateNewFolder;
 	JMenuItem mntmUploadfile;
 	JMenuItem mntmAboutUs;
+	private JButton edit;
+	private JToolBar toolBar_1;
+	private JMenuItem Download;
+	private JMenuItem mntmEditFile;
 	
 	
 	
@@ -139,7 +138,11 @@ public class View extends AbstractGUI{
 		scrollPane.setPreferredSize(new Dimension((int)d.getWidth(), (int)d.getHeight()/2));
 		detailView.add(scrollPane);
 		            
-		table = new JTable();
+		table = new JTable(){
+			public boolean isCellEditable(int rowIndex,int colIndex) {
+				return false;
+			}
+		};
 		scrollPane.setViewportView(table);
 		table.setVisible(true);
 		    		
@@ -169,8 +172,8 @@ public class View extends AbstractGUI{
 		date = new JLabel();
 		fileDetailsValues.add(date);
 		fileDetailsLabels.add(new JLabel("File size", JLabel.TRAILING));
-		size = new JLabel();
-		fileDetailsValues.add(size);
+		fsize = new JLabel();
+		fileDetailsValues.add(fsize);
 		fileDetailsLabels.add(new JLabel("Type", JLabel.TRAILING));
 
 		JPanel flags = new JPanel(new FlowLayout(FlowLayout.LEADING,4,0));
@@ -187,18 +190,18 @@ public class View extends AbstractGUI{
 		
 		
 		            
-		JToolBar toolBar = new JToolBar();
+		toolBar_1 = new JToolBar();
 		// mnemonics stop working in a floated toolbar
-		toolBar.setFloatable(false);
+		toolBar_1.setFloatable(false);
 
-		openFile = new JButton("Open");
-		openFile.setMnemonic('o');
+		DownloadFile = new JButton("Download");
+		DownloadFile.setMnemonic('o');
 		
-		toolBarInit(toolBar);
+		toolBarInit(toolBar_1);
 				
 		 fileView = new JPanel(new BorderLayout(3,3));
 		
-		fileView.add(toolBar,BorderLayout.NORTH);
+		fileView.add(toolBar_1,BorderLayout.NORTH);
 		fileView.add(fileMainDetails,BorderLayout.CENTER);
 		
 		detailView.add(fileView, BorderLayout.SOUTH);
@@ -207,14 +210,8 @@ public class View extends AbstractGUI{
 		JSplitPane.HORIZONTAL_SPLIT,
 		treeScroll,
 		detailView);
-		
-		tree = new JTree(new DefaultTreeModel(
-			new DefaultMutableTreeNode("U_" + MainClient.clien.getCurrUser().getIDuser()) {
-				{
-				}
-			}
-		));
-		tree.setModel(getModel());
+		tree = new JTree();		
+		tree.setScrollsOnExpand(true);
 		treeScroll.setColumnHeaderView(tree);
 		gui.add(splitPane, BorderLayout.CENTER);
 		
@@ -222,23 +219,43 @@ public class View extends AbstractGUI{
 	
    }
 
+	public JRadioButton getIsDirectory() {
+		return isDirectory;
+	}
+
+	public void setIsDirectory(JRadioButton isDirectory) {
+		this.isDirectory = isDirectory;
+	}
+
+	public JRadioButton getIsFile() {
+		return isFile;
+	}
+
+	public void setIsFile(JRadioButton isFile) {
+		this.isFile = isFile;
+	}
+
 	public JTable getTable() {
 		return table;
 	}
 
 	private void toolBarInit(JToolBar toolBar) {
-		toolBar.add(openFile);
+		
+		edit = new JButton("Edit  ");
+		edit.setMnemonic('o');
+		toolBar_1.add(edit);
+		toolBar.add(DownloadFile);
         
         // Check the actions are supported on this platform!
 		//openFile.setEnabled(desktop.isSupported(Desktop.Action.OPEN));
 		
 		toolBar.addSeparator();
 		
-		newFile = new JButton("New");
+		newDir = new JButton("New Directory");
 		
-		newFile.setMnemonic('n');
+		newDir.setMnemonic('n');
 		
-		toolBar.add(newFile);
+		toolBar.add(newDir);
 		
 		moveFile = new JButton("Move");
 		moveFile.setMnemonic('c');
@@ -259,25 +276,28 @@ public class View extends AbstractGUI{
 		
 		toolBar.addSeparator();
 		
-		readable = new JCheckBox("Read  ");
-		readable.setMnemonic('a');
-		//readable.setEnabled(false);
-		toolBar.add(readable);
-		
-		writable = new JCheckBox("Write  ");
-		writable.setMnemonic('w');
-		//writable.setEnabled(false);
-		toolBar.add(writable);
-		
-		executable = new JCheckBox("Execute");
-		executable.setMnemonic('x');
-		//executable.setEnabled(false);
-		toolBar.add(executable);
+
 
 		
 	}
 
 	
+
+	public JButton getDownloadFile() {
+		return DownloadFile;
+	}
+
+	public void setDownloadFile(JButton downloadFile) {
+		DownloadFile = downloadFile;
+	}
+
+	public JButton getEdit() {
+		return edit;
+	}
+
+	public void setEdit(JButton edit) {
+		this.edit = edit;
+	}
 
 	public JPanel getGui() {
 		  if (gui==null) {
@@ -300,7 +320,7 @@ public class View extends AbstractGUI{
 	              JMenu mnFile = new JMenu("File");
 	              menuBar.add(mnFile);
 	              
-	              mntmCreateNewFolder = new JMenuItem("Create File / Folder");
+	              mntmCreateNewFolder = new JMenuItem("Create Folder");
 	               
 	              mnFile.add(mntmCreateNewFolder);
 	               
@@ -308,9 +328,9 @@ public class View extends AbstractGUI{
 	                
 	                
 	              mnFile.add(mntmUploadfile);
-	                
-	                 mntmSearch = new JMenuItem("Search");
-	                 mnFile.add(mntmSearch);
+	              
+	              Download = new JMenuItem("Download");
+	              mnFile.add(Download);
 	                 
 	                 JMenu mnGroup = new JMenu("Group");
 	                 menuBar.add(mnGroup);
@@ -332,14 +352,11 @@ public class View extends AbstractGUI{
 	                      mntmRename = new JMenuItem("ReName");
 	                      mnEdit.add(mntmRename);
 	                      
+	                      mntmEditFile = new JMenuItem("Edit File");
+	                      mnEdit.add(mntmEditFile);
+	                      
 	                      JMenu mnView = new JMenu("Go");
 	                      menuBar.add(mnView);
-	                      
-	                      JCheckBoxMenuItem chckbxmntmMyFiles_1 = new JCheckBoxMenuItem("My Files");
-	                      mnView.add(chckbxmntmMyFiles_1);
-	                      
-	                       chckbxmntmSharedWithMe = new JCheckBoxMenuItem("Shared With Me");
-	                       mnView.add(chckbxmntmSharedWithMe);
 	                       
 	                        mntmTrash = new JMenuItem("Trash");
 	                        mnView.add(mntmTrash);
@@ -368,7 +385,7 @@ public class View extends AbstractGUI{
 	}
 	public JButton getOpenFile() {
 		// TODO Auto-generated method stub
-		return openFile;
+		return DownloadFile;
 	}
 	
  	public void setTable(JTable table) {
@@ -392,11 +409,11 @@ public class View extends AbstractGUI{
 	}
 
 	public JButton getNewFile() {
-		return newFile;
+		return newDir;
 	}
 
 	public void setNewFile(JButton newFile) {
-		this.newFile = newFile;
+		this.newDir = newFile;
 	}
 
 	public JButton getMoveFile() {
@@ -431,8 +448,16 @@ public class View extends AbstractGUI{
 		this.date = date;
 	}
 
-	public void setSize(JLabel size) {
-		this.size = size;
+	public void setfSize(JLabel size) {
+		this.fsize = size;
+	}
+
+	public JLabel getFsize() {
+		return fsize;
+	}
+
+	public void setFsize(JLabel fsize) {
+		this.fsize = fsize;
 	}
 
 	public JCheckBox getReadable() {
@@ -459,21 +484,6 @@ public class View extends AbstractGUI{
 		this.executable = executable;
 	}
 
-	public JRadioButton getIsDirectory() {
-		return isDirectory;
-	}
-
-	public void setIsDirectory(JRadioButton isDirectory) {
-		this.isDirectory = isDirectory;
-	}
-
-	public JRadioButton getIsFile() {
-		return isFile;
-	}
-
-	public void setIsFile(JRadioButton isFile) {
-		this.isFile = isFile;
-	}
 
 	public JPanel getNewFilePanel() {
 		return newFilePanel;
@@ -573,7 +583,7 @@ public class View extends AbstractGUI{
 	}
 
 	public void setOpenFile(JButton openFile) {
-		this.openFile = openFile;
+		this.DownloadFile = openFile;
 	}
 	public JPanel getFileView() {
 		return fileView;
@@ -615,13 +625,6 @@ public class View extends AbstractGUI{
 		this.mntmTrash = mntmTrash;
 	}
 
-	public JCheckBoxMenuItem getChckbxmntmSharedWithMe() {
-		return chckbxmntmSharedWithMe;
-	}
-
-	public void setChckbxmntmSharedWithMe(JCheckBoxMenuItem chckbxmntmSharedWithMe) {
-		this.chckbxmntmSharedWithMe = chckbxmntmSharedWithMe;
-	}
 
 	public JCheckBoxMenuItem getChckbxmntmMyFiles() {
 		return chckbxmntmMyFiles;
@@ -663,13 +666,6 @@ public class View extends AbstractGUI{
 		this.mntmGroupActions = mntmGroupActions;
 	}
 
-	public JMenuItem getMntmSearch() {
-		return mntmSearch;
-	}
-
-	public void setMntmSearch(JMenuItem mntmSearch) {
-		this.mntmSearch = mntmSearch;
-	}
 
 	public JMenuItem getMntmLogOut() {
 		return mntmLogOut;
@@ -715,29 +711,29 @@ public class View extends AbstractGUI{
 		return APP_TITLE;
 	}
 	
-	public DefaultMutableTreeNode getTreeModel() {
-		if (root==null)
-		{
-			root = new DefaultMutableTreeNode("U_"+MainClient.clien.getCurrUser().getIDuser());
-		}
-		return root;
-	}
-
-	public void setTreeModel(DefaultMutableTreeNode root) {
-		this.root = root;
-	}
-	
-	public DefaultTreeModel getModel() {
-		if (model==null)
-		{
-			model = new DefaultTreeModel(getTreeModel());
-		}
-		return model;
-	}
-
-	public void setModel(DefaultTreeModel model) {
-		this.model = model;
-	}
+//	public DefaultMutableTreeNode getTreeModel() {
+//		if (root==null)
+//		{
+//			root = new DefaultMutableTreeNode("U_"+MainClient.clien.getCurrUser().getIDuser());
+//		}
+//		return root;
+//	}
+//
+//	public void setTreeModel(DefaultMutableTreeNode root) {
+//		this.root = root;
+//	}
+//	
+//	public DefaultTreeModel getModel() {
+//		if (model==null)
+//		{
+//			model = new DefaultTreeModel(getTreeModel());
+//		}
+//		return model;
+//	}
+//
+//	public void setModel(DefaultTreeModel model) {
+//		this.model = model;
+//	}
 
 public void setTree(JTree tree) {
 	this.tree = tree;
@@ -746,12 +742,7 @@ public void setTree(JTree tree) {
 public JTree getTree() {
 		return tree;
 	}
-public void reset() {
-    m_total = new BigInteger(INITIAL_VALUE);
-}
 	
-
-
 }
 
 

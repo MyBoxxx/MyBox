@@ -22,8 +22,11 @@ import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JList;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
+
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Toolkit;
 
 
 public class CangeFileFolderPermission extends AbstractGUI{
@@ -50,7 +53,7 @@ public class CangeFileFolderPermission extends AbstractGUI{
 	 * Create the application.
 	 */
     
-    public static  void main(String[] args) {
+    public void init() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -75,8 +78,10 @@ public class CangeFileFolderPermission extends AbstractGUI{
 		
 		 getContentPane().setBackground(new Color(59, 89, 151));
 		 setTitle("My Box");
-		 setBounds(100, 100, 800, 600);
 		 setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 800, 600);
+		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+		this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
 		 getContentPane().setLayout(null);
 		
 		

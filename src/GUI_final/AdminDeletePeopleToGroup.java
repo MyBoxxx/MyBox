@@ -11,10 +11,12 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JTextPane;
 
 import java.awt.Choice;
+import java.awt.Dimension;
 import java.awt.TextField;
 import java.awt.Button;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Toolkit;
 
 import javax.swing.JLabel;
 
@@ -69,8 +71,10 @@ public class AdminDeletePeopleToGroup extends AbstractGUI {
 		this.usr = usr;
 		this.grp = grp;
 		getContentPane().setBackground(new Color(59, 89, 151));
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 800, 600);
+		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+		this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(214, 20, 20));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

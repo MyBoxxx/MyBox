@@ -2,7 +2,9 @@ package GUI_final;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.net.MalformedURLException;
@@ -20,6 +22,7 @@ import javax.swing.JTextField;
 import java.awt.Font;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+
 import javax.swing.JButton;
 
 public class ForgotPassword_GUI extends JFrame {
@@ -27,10 +30,10 @@ public class ForgotPassword_GUI extends JFrame {
 	private JPanel contentPane;
 	private JTextField txtEmail;
 	private JButton sumbit;
-	private JLabel show_password;
+	private JButton btnBack;
 
 
-	public static  void main(String[] args) {
+	public void init() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -54,9 +57,11 @@ public class ForgotPassword_GUI extends JFrame {
 	 */
 	public ForgotPassword_GUI() {
 		setBackground(Color.WHITE);
-		setTitle("Forgot Password\r\n");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setTitle("MyBox");
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 800, 600);
+		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+		this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -96,24 +101,13 @@ public class ForgotPassword_GUI extends JFrame {
 		    contentPane.add(txtEmail);
 		    txtEmail.setColumns(10);
 		    
-		    show_password = new JLabel("");
-		    show_password.setForeground(Color.RED);
-		    show_password.setBounds(226, 409, 360, 29);
-		    contentPane.add(show_password);
+		    btnBack = new JButton("Back");
+		    btnBack.setBounds(63, 482, 117, 29);
+		    contentPane.add(btnBack);
 	}
 	public JTextField getTxtEmail() {
 		return txtEmail;
 	}
-
-	public JLabel getShow_password() {
-		return show_password;
-	}
-
-
-	public void setShow_password(JLabel show_password) {
-		this.show_password = show_password;
-	}
-
 
 	public void setTxtEmail(String newtxtEmail) {
 		this.txtEmail.setText(newtxtEmail); 
@@ -126,4 +120,14 @@ public class ForgotPassword_GUI extends JFrame {
 	public void setSumbit(JButton sumbit) {
 		this.sumbit = sumbit;
 	}
+
+	public JButton getBtnBack() {
+		return btnBack;
+	}
+
+
+	public void setBtnBack(JButton btnBack) {
+		this.btnBack = btnBack;
+	}
+	
 }

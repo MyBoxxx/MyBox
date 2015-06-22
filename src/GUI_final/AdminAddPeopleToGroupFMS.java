@@ -1,5 +1,6 @@
 package GUI_final;
 
+
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
@@ -20,7 +21,6 @@ import java.awt.Color;
 import java.awt.Font;
 
 import javax.swing.JLabel;
-
 
 import java.awt.SystemColor;
 import java.awt.event.ActionListener;

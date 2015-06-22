@@ -1,12 +1,17 @@
 package GUI_final;
 
+import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.Toolkit;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+
 import java.awt.Color;
+
 import javax.swing.JButton;
 import javax.swing.ImageIcon;
+
 import java.awt.Font;
 
 public class GroupActions extends AbstractGUI {
@@ -38,8 +43,10 @@ public class GroupActions extends AbstractGUI {
 		getContentPane().setBackground(new Color(59, 89, 151));
 		frame = new JFrame();
 		getContentPane().setForeground(Color.WHITE);
-		setBounds(100, 100, 800, 600);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 800, 600);
+		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+		this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
 		getContentPane().setLayout(null);
 		
 		lblGroupActions = new JLabel("");

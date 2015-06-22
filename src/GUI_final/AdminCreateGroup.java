@@ -1,7 +1,9 @@
 package GUI_final;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.Toolkit;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -58,8 +60,10 @@ public class AdminCreateGroup extends AbstractGUI {
 	public AdminCreateGroup(String grp, String usr) {
 		this.grp = grp;
 		this.usr = usr;
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 799, 600);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 800, 600);
+		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+		this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(59, 89, 151));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

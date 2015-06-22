@@ -31,26 +31,48 @@ import Client.MainClient;
 import Entity.Abstract_Entity;
 import Entity.MyFile;
 import GUI_final.CreateFolderScreen;
-import java.math.BigInteger;
 
 public class Model extends Abstract_Entity implements Serializable{
 	
 	private int UserID;
-	
-	    //... Constants
-	    private static final String INITIAL_VALUE = "0";
-	    private BigInteger m_total;  // The total current value state.
-	    //... Member variable defining state of calculator.
-	
 	
 	/** File-system tree. Built Lazily */
 	private JTree tree;
 	private DefaultMutableTreeNode root;
 	private DefaultTreeModel model;
 	private FileTableModel fileTableModel;
-	private TableModel tablemodel;
-	private String currFile;
-	private String currPath;
+	private String currFile ;
+	private MyFile MyCurrFile;
+	
+	public MyFile getMyCurrFile() {
+		return MyCurrFile;
+	}
+
+	public void setMyCurrFile(MyFile myCurrFile) {
+		MyCurrFile = myCurrFile;
+	}
+
+
+	private static String currPath ;
+	private String Getroot;
+	private ArrayList<String> dir;
+	public ArrayList<String> getDir() {
+		return dir;
+	}
+
+	public void setDir(ArrayList<String> dir) {
+		this.dir = dir;
+	}
+
+	public String getGetroot() {
+		return Getroot;
+	}
+
+	public void setGetroot(String getroot) {
+		Getroot = getroot;
+	}
+
+
 	public boolean cellSizesSet = false; 
 	/** currently selected File. */
     private File currentFile;
@@ -110,16 +132,6 @@ public MyFile getNewFile() {
 		this.currPath = currPath;
 	}
 
-	public TableModel getTablemodel() {
-		return tablemodel;
-	}
-
-	public void setTablemodel(TableModel tablemodel) {
-		this.tablemodel = tablemodel;
-	}
-
-
-
 
 
 	private void showErrorMessage(String errorMessage, String errorTitle,JPanel gui) {
@@ -148,9 +160,6 @@ public void setDesktop(Desktop desktop){
 
 */
 
-public void reset() {
-    m_total = new BigInteger(INITIAL_VALUE);
-}
 
 
 }

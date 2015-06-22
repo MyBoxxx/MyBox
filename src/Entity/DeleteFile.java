@@ -1,30 +1,43 @@
 package Entity;
 
 import java.io.Serializable;
+import java.sql.Connection;
 
 public class DeleteFile implements Serializable {
-	
-	String FileName;
-	String FilePath;
+	MyFile file;
 	User_Entity user;
-	
-	public String getFileName() {
-		return FileName;
+	String answer;
+
+	public DeleteFile() {
+		this.file = new MyFile();
 	}
-	public void setFileName(String fileName) {
-		FileName = fileName;
+
+	public DeleteFile(MyFile file) {
+		super();
+		this.file = file;
 	}
-	public String getFilePath() {
-		return FilePath;
+
+	public MyFile getFile() {
+		return file;
 	}
-	public void setFilePath(String filePath) {
-		FilePath = filePath;
+
+	public void setFile(MyFile file) {
+		this.file = file;
 	}
+
 	public User_Entity getUser() {
 		return user;
 	}
+
 	public void setUser(User_Entity user) {
 		this.user = user;
 	}
-	
+
+	public String getAnswer() {
+		return answer;
+	}
+
+	public void setAnswer(String answer) {
+		this.answer = answer;
+	}	
 }

@@ -20,15 +20,15 @@ import javax.swing.JTextField;
 import Entity.*;
 import GUI_final.*;
 import Client.*;
-import SampleTreeFileView.Main;
+import SampleTreeFileView.*;
 
 public class LogIn_Controller extends AbstractTransfer{
 
-	static Login_Entity model ;
-	static Login_GUI view;
+	  Login_Entity model ;
+	  Login_GUI view;
 	
-	static ForgotPassword_Controller forgot_con;
-	static ForgotPassword_GUI forgot_gui;
+	 ForgotPassword_Controller forgot_con;
+	 ForgotPassword_GUI forgot_gui;
 	
 	ActionListener loginActionListener ;
 	ActionListener forgotActionListener ;
@@ -45,13 +45,14 @@ public class LogIn_Controller extends AbstractTransfer{
 			forgot_con = new ForgotPassword_Controller(new ForgatPassword_Entity(model), forgot_gui);
 			Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 			forgot_gui.setLocation(dim.width/2-forgot_gui.getSize().width/2, dim.height/2-forgot_gui.getSize().height/2);
-			forgot_con.control();
+			forgot_gui.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 		}
 	}
 	
+
 	public void control(){
 		MainClient.clien.setCurrController(this);
 		
@@ -83,13 +84,11 @@ public class LogIn_Controller extends AbstractTransfer{
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 					if(!forgot_gui.isVisible()){
-						forgot_gui.setType(Type.POPUP);
-						forgot_gui.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+						forgot_con.control();
 						forgot_gui.setVisible(true);
+						forgot_gui.setState(JFrame.NORMAL);
 						}
 					else forgot_gui.toFront();
-				
-				
 			}
 		});
 
@@ -142,6 +141,12 @@ public class LogIn_Controller extends AbstractTransfer{
 			//testtyaron.main(null);
 		else Main.main(null);
 	}
-	
+	public void showMessage(String pwd) {
+		if (pwd!= null)
+			JOptionPane.showMessageDialog(null, "Your password is: " + pwd);
+		else
+			JOptionPane.showMessageDialog(null, "You are not a valid user in mybox");
+		
+	}
 	
 }

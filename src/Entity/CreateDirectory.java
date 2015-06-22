@@ -3,11 +3,29 @@ package Entity;
 import java.io.File;
 import java.io.Serializable;
 
-public class CreateDirectory extends MyFile implements Serializable {
+import org.w3c.dom.views.AbstractView;
+
+public class CreateDirectory  implements Serializable {
 	User_Entity user;
-	public CreateDirectory(File file) {
-		super(file);
-		// TODO Auto-generated constructor stub
+	MyFile myDir;
+	String Anser;
+	
+	public CreateDirectory() {
+		this.user = new User_Entity();
+		this.myDir = new MyFile();
+		
+	}
+	public MyFile getMyDir() {
+		return myDir;
+	}
+	public void setMyDir(MyFile myDir) {
+		this.myDir = myDir;
+	}
+	public String getAnser() {
+		return Anser;
+	}
+	public void setAnser(String anser) {
+		Anser = anser;
 	}
 	public User_Entity getUser() {
 		return user;

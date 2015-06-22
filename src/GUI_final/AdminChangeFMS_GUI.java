@@ -58,7 +58,7 @@ public class AdminChangeFMS_GUI extends AbstractGUI {
 	ArrayList <String> groups = new ArrayList<String>();
 		
 	
-	public static void main(String [] args){
+	public void init(){
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {

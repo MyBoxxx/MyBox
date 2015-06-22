@@ -6,32 +6,25 @@ package server;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Vector;
 
 import javax.swing.JTable;
-import javax.swing.JTree;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.DefaultTreeModel;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.filefilter.IOFileFilter;
 import org.apache.commons.io.filefilter.TrueFileFilter;
 
-import com.mysql.jdbc.PreparedStatement;
-
 import net.proteanit.sql.DbUtils;
-import Client.MainClient;
 import Entity.*;
 import SampleTreeFileView.DirectoryTreeModel;
 import SampleTreeFileView.FileModel;
@@ -144,7 +137,7 @@ public class MyBoxServer extends AbstractServer
 	  try 
 	    {
 	        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/mybox","root","");
-	        //Connection conn = DriverManager.getConnection("jdbc:mysql://192.168.3.68/test","root","Root");
+	        //Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/mybox","root","");
 	        System.out.println("SQL connection succeed");
 	        if(msg instanceof Login_Entity){
 	        	System.out.println("Try To Coneect as "+ ((Login_Entity)msg).getUsername());
@@ -157,9 +150,8 @@ public class MyBoxServer extends AbstractServer
 						e.printStackTrace();
 					}
 	        	 
-	        }
-	        		
-	        	
+	        }		
+	        /************************************************************************/  	
 	        if(msg instanceof SystemAdminReequestScreen_Entity){ 
 	        	((SystemAdminReequestScreen_Entity) msg).setTablemodel(buildTableModel(conn,"SELECT requestID,RequestType,status,AdminRequsts.UserId , UserName FROM AdminRequsts , Users Where Users.UserID = AdminRequsts.UserId; ")); 
 	        	try{
@@ -169,12 +161,25 @@ public class MyBoxServer extends AbstractServer
 	        		e.printStackTrace();
 	        	}
 	        }
+	   /************************************************************************/
 	        
+	        if(msg instanceof DeleteFile){ 
+	        	((DeleteFile)msg).setAnswer(deletemyDir(conn,(DeleteFile) msg));
+	        	try{
+	        		client.sendToClient(msg);
+	        	}
+	        	catch (IOException e){
+	        		e.printStackTrace();
+	        	}
+	        }
+	        /********************/
+	      
 	        if(msg instanceof UpLoadFile){
 	        	//fileTransfer
 	        	
 	        		try{
-	        			client.sendToClient(createNewFile(conn,(UpLoadFile) msg));
+	        			((UpLoadFile) msg).setAnser(createNewFile(conn,(UpLoadFile) msg));
+	        			client.sendToClient(msg);
 		        	}
 		        	catch (IOException e){
 		        		e.printStackTrace();
@@ -191,7 +196,8 @@ public class MyBoxServer extends AbstractServer
 	        }
 	        if(msg instanceof CreateDirectory){
 	        	try{
-	        		client.sendToClient(createDirectory(conn, (CreateDirectory) msg));
+	        		((CreateDirectory) msg).setAnser(createDirectory(conn, (CreateDirectory) msg));
+	        		client.sendToClient(msg);
 	        	}
 	        	catch(IOException e){
 	        		e.printStackTrace();
@@ -206,6 +212,7 @@ public class MyBoxServer extends AbstractServer
 	        		e.printStackTrace();
 	        	}
 	        }
+	        /*
 	        if(msg instanceof FileTable){
 	        	
 	        	((SystemAdminReequestScreen_Entity) msg).setTablemodel(buildTableModel(conn,"SELECT * FROM  Files WHERE Owner = '" + ((FileTable)msg).getUser().getIDuser() +"'; ")); 
@@ -216,12 +223,9 @@ public class MyBoxServer extends AbstractServer
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-	        }
+	        }*/
 	        if(msg instanceof DirectoryTreeModel){
 	        	CreateDefaultTreeModel(conn,(DirectoryTreeModel)msg);
-	        	((DirectoryTreeModel) msg).setFileTable(buildTableModel(conn,"SELECT  *"+
-	            		" FROM files, mybox.users"+
-	            		" where isDirectory = 0  and UserID = " + ((DirectoryTreeModel) msg).getUser().getIDuser() + "isDeleted = 0;")); 
 	    		try{
 	    			client.sendToClient(msg);
 	    		}
@@ -229,7 +233,65 @@ public class MyBoxServer extends AbstractServer
 	        		e.printStackTrace();
 	        	}
 	        }
-	       // ******CHANGE USER NAME******************///
+	        
+	        if(msg instanceof ForgotPassword_Entity){
+	        	forgotPassword(conn, (ForgotPassword_Entity)msg);
+	    		try{
+	    			client.sendToClient(msg);
+	    		}
+	        	catch (IOException e){
+	        		e.printStackTrace();
+	        	}
+	        }
+	        
+	        if(msg instanceof FileModel){
+	         	((FileModel) msg).setFileTable(buildTableModel(conn,"SELECT FileId,FileName,FilePath,size,Modified,CreatedTime,Permission,isDirectory"+
+	            		" FROM files "+
+	            		" where FilePath = '"+((FileModel) msg).getPath()+"' AND Owner = '" + ((FileModel) msg).getUser().getIDuser() + "' AND isDeleted = '0' ;")); 
+	        	try{
+	        		client.sendToClient(msg);
+	        	}
+	        	catch (IOException e){
+	        		e.printStackTrace();
+	        	}
+	        }
+	        /******************Recycle!*************/
+	        if(msg instanceof RecycleScreen_Entity){
+	          	if(((RecycleScreen_Entity) msg).getIdFile() != 0) restorFile(conn,((RecycleScreen_Entity) msg));
+	          	String str = "SELECT FileId,FileName,TimeDeleted,size,isDirectory ,CASE WHEN  deletedfile.TimeDeleted >= NOW() - INTERVAL 30 DAY THEN "
+	        			+ "true  ELSE false END isReostorable  FROM    deletedfile, files where  deletedfile.IDUser = '"+ ((RecycleScreen_Entity) msg).getUser().getIDuser()
+	        			+"' And deletedfile.IDFile = files.FileId AND files.IsDeleted = '1'";
+	        	((RecycleScreen_Entity) msg).setFileTable(buildTableModel(conn,str)); 
+	        	((RecycleScreen_Entity) msg).setIdFile(0);
+	        	try{
+	        		client.sendToClient(msg);
+	        	}
+	        	catch (IOException e){
+	        		e.printStackTrace();
+	        	}
+	        		
+	        }
+	        /**********************move File*************/
+	        if(msg instanceof Move_Entity){
+	        	((Move_Entity)msg).setAnswer(moveFile(conn,(Move_Entity)msg));
+	        	try{
+	        		client.sendToClient(msg);
+	        	}
+	        	catch (IOException e){
+	        		e.printStackTrace();
+	        	}
+	        }
+	        /**************************Rename File ***************/
+			if(msg instanceof Rename_Entity){
+				((Rename_Entity)msg).setAnswer(RenameFile(conn,(Rename_Entity)msg));
+				try{
+	        		client.sendToClient(msg);
+	        	}
+	        	catch (IOException e){
+	        		e.printStackTrace();
+	        	}
+			}
+			 // ******CHANGE USER NAME******************///
 	        if(msg instanceof SettingsName_Entitiy){
 	        	
 		    	changename(conn,((SettingsName_Entitiy)msg));
@@ -273,6 +335,58 @@ public class MyBoxServer extends AbstractServer
 	        	changegroup(conn,((Group_Entity)msg));
 	        }
 	      //******************************//
+	        
+	        if(msg instanceof EditFile_Entity){
+	        	File afile = new File(((EditFile_Entity)msg).getFile().getPath()+"/"+((EditFile_Entity)msg).getFile().getFileName());
+	        	try {
+					((EditFile_Entity)msg).getFile().mybytearray = FileUtils.readFileToByteArray(afile);
+					client.sendToClient(msg);
+	        	} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+	        	
+	        }
+	        if(msg instanceof ReplaceFile_Entity){
+	        	File old = new File(((ReplaceFile_Entity)msg).getFile().getPath() +"/"+((ReplaceFile_Entity)msg).getFile().getFileName());
+	        	old.delete();
+	        	File newFile = new File(((ReplaceFile_Entity)msg).getFile().getPath() +"/"+((ReplaceFile_Entity)msg).getFile().getFileName());
+	        	 try {
+					FileUtils.writeByteArrayToFile(newFile, ((ReplaceFile_Entity)msg).getFile().mybytearray);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+	        }
+	        if(msg instanceof DownloadFile_Entity){
+	          	File afile = new File(((DownloadFile_Entity)msg).getFile().getPath()+"/"+((DownloadFile_Entity)msg).getFile().getFileName());
+	        	try {
+					((DownloadFile_Entity)msg).getFile().mybytearray = FileUtils.readFileToByteArray(afile);
+					client.sendToClient(msg);
+	        	} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+	        }
+	        /************************************/
+	        if(msg instanceof GetNotification_Entity){
+	         	((GetNotification_Entity) msg).setFileTable(buildTableModel(conn,"SELECT IDNotification,Message,Satus FROM MyBox.notification Where IDuser = '"+((GetNotification_Entity)msg).getUser().getIDuser()+"';")); 
+	        	try{
+	        		client.sendToClient(msg);
+	        	}
+	        	catch (IOException e){
+	        		e.printStackTrace();
+	        	}
+	        }
+	        if(msg instanceof SetNotification_Entity){
+	        	String updateTableSQL = "UPDATE notification SET Satus = '1' WHERE  IDuser = '"+((SetNotification_Entity)msg).getUser().getIDuser()+"'; ";
+				java.sql.PreparedStatement preparedStatement = conn.prepareStatement(updateTableSQL);
+				preparedStatement .executeUpdate();	
+	        }
+	        
+	        
+	    
+	        conn.close();
 
 	    }catch (SQLException ex) 
 	 	    {/* handle any errors*/
@@ -280,148 +394,12 @@ public class MyBoxServer extends AbstractServer
 	        System.out.println("SQLState: " + ex.getSQLState());
 	        System.out.println("VendorError: " + ex.getErrorCode());
 	        }
-	  
-	  
-	  				
-	  
+	  	
+	    
 	  	//client.sendToClient(msg);
 	  }
-  
-  
-private void changegroup(Connection con, Group_Entity log) {
-	// TODO Auto-generated method stub
-	 Statement stmt;
-	 int id = 0;
-	 String name;
-	 String Des;
-	   try 
-		{
-		
-			stmt = con.createStatement();
-			if (log.getGroupname().equals(null)==false && log.getGroupdescript().equals(null)==false)
-			{
-			String s="SELECT IDGroup FROM myBox.Groups";
-			ResultSet rs= stmt.executeQuery(s);
-			while(rs.next()){
-					id = rs.getInt("IDGroup");
-			}
-			String sql= "UPDATE mybox.groups SET GroupName = "+log.getGroupname()+" GroupDescription = "
-			+log.getGroupdescript()+" WHERE IDGroup = "+ id +";";
-			java.sql.PreparedStatement ps1 = con.prepareStatement(sql);
-			stmt.executeUpdate(sql);
-			}
-			else if (log.getGroupname().equals(null)==true && log.getGroupdescript().equals(null)==true)
-			{
-				return;
-			}
-			else if (log.getGroupname().equals(null)==false && log.getGroupdescript().equals(null)==true)
-			{
-				String s="SELECT IDGroup FROM myBox.Groups";
-				ResultSet rs= stmt.executeQuery(s);
-				while(rs.next()){
-						id = rs.getInt("IDGroup");
-				}
-				String sql= "UPDATE mybox.groups SET GroupName = '"+log.getGroupname()+"' WHERE IDGroup = "+ id +";";
-				java.sql.PreparedStatement ps1 = con.prepareStatement(sql);
-				stmt.executeUpdate(sql);
-			}
-			else if (log.getGroupname().equals(null)==true && log.getGroupdescript().equals(null)==false)
-			{
-				String s="SELECT IDGroup FROM myBox.Groups";
-				ResultSet rs= stmt.executeQuery(s);
-				while(rs.next()){
-						id = rs.getInt("IDGroup");
-				}
-				String sql= "UPDATE mybox.groups SET GroupDescription = '"
-				+log.getGroupdescript()+"' WHERE IDGroup = "+ id +";";
-				java.sql.PreparedStatement ps1 = con.prepareStatement(sql);
-				stmt.executeUpdate(sql);
-			}
-			
-		}
-	   
-		
-		 catch (SQLException e) {e.printStackTrace();
-		
-		}
-	
-	
-	
-}
 
-private void request(Connection con, Request_Entity log) {
-	// TODO Auto-generated method stub
-	 Statement stmt;
-	 String s = null;
-	 try 
-		{
-			stmt = con.createStatement();
-			if (log.getRadio()==2)
-			{
-				s="INSERT INTO adminrequsts(RequestType,status,UserId)"
-						+" VALUES('RemovePeopleToGroup "+log.getChooise()+"','0','"+log.getUser().getIDuser()+"');"; 
-					 stmt.executeUpdate(s);
-			}
-			else if (log.getRadio()==1)
-			{
-				s="INSERT INTO adminrequsts(RequestType,status,UserId)"
-						+" VALUES('AddPeopleToGroup "+log.getChooise()+"','0','"+log.getUser().getIDuser()+"');"; // add row to all admin request";
-					 stmt.executeUpdate(s);
-			}
-	 		else if (log.getRadio()==3)
-	 		{
-			s="INSERT INTO adminrequsts(RequestType,status,UserId)"
-					+" VALUES('Delete "+log.getChooise()+"','0','"+log.getUser().getIDuser()+"');"; // add row to all admin request";
-				 stmt.executeUpdate(s);
-	 		}
-		}
-	 
-	   
-		 catch (SQLException e) {e.printStackTrace();
-		
-		}
-	
-}
-
-//==========================================//
-   private void LoadGroup(Connection con, LoadGroup_Entity log) {
-	// TODO Auto-generated method stub
-	   Statement stmt;
-	   String[] grop;
-	   try 
-		{
-		
-			stmt = con.createStatement();
-			if (log.getChoice()==2){
-			String s="SELECT * FROM myBox.Groups";
-			ResultSet rs= stmt.executeQuery(s);
-			while(rs.next()){
-					log.getGroups().add(rs.getString("GroupName"));
-			}
-		
-			//grop=log.getGroups().toArray(new String[log.getGroups().size()]);
-			}
-			if (log.getChoice()==1 || log.getChoice()==3){
-				String s="select  distinct GroupName "+
-						"from mybox.users ,mybox.useringroup, mybox.groups "+
-						"where  useringroup.IdUser =" + log.getUser().getIDuser() + " and groups.IDGroup = useringroup.IDGroup";
-				ResultSet rs= stmt.executeQuery(s);
-				while(rs.next()){
-						log.getGroups().add(rs.getString("GroupName"));
-				}
-			
-				//grop=log.getGroups().toArray(new String[log.getGroups().size()]);
-				}
-			
-		}
-	   
-		
-		 catch (SQLException e) {e.printStackTrace();
-		
-		}
-}
-
-/* 
+   /* 
  private void SystemAdminRequestScree_List_getList(Connection conn,
 		SystemAdminRequestScree_List msg) {
 	 Statement stmt;
@@ -443,68 +421,98 @@ private void request(Connection con, Request_Entity log) {
 }
 
 */
-//=========================Change password
-private void changepaword(Connection con, Settings_Entity log) {
-	// TODO Auto-generated method stub
-	Statement stmt;
-	int id =0;
-	try 
-	{
-	
-		stmt = con.createStatement();
-		String s="SELECT UserID FROM mybox.Users where UserName = '"+log.getOlduser().getUsername()+"' ;";
-		ResultSet rs= stmt.executeQuery(s);
-		while(rs.next()){
-		id = rs.getInt("UserID");
-		}
-		String sql= "UPDATE mybox.users SET Password = '"+log.getNewuser().getPassword()+"' WHERE UserID = '"+ id +"';";
-		java.sql.PreparedStatement ps1 = con.prepareStatement(sql);
-		stmt.executeUpdate(sql);
-		
-		}
-	 catch (SQLException e) {e.printStackTrace();
-	
-	}
-	
-}
-//===============================================//
-private void changename(Connection con,SettingsName_Entitiy log) {
-	// TODO Auto-generated method stub
-	Statement stmt;
-	int id =1  ;
-	try 
-	{
-	
-		stmt = con.createStatement();
-		String s="SELECT UserID FROM mybox.Users where UserName = '"+log.getOlduser().getUsername()+"' ;";
-		ResultSet rs= stmt.executeQuery(s);
-		while(rs.next()){
-		id = rs.getInt("UserID");
-		}
-		String sql= "UPDATE mybox.users SET UserName = '"+log.getNewuser().getUsername()+"' WHERE UserID = '"+ id +"';";
-		java.sql.PreparedStatement ps1 = con.prepareStatement(sql);
-		stmt.executeUpdate(sql);
-		
-		}
-	 catch (SQLException e) {e.printStackTrace();
-	
-	}
-}
-//********************************//
 
-private void CreateFileModel(Connection conn, FileModel msg) {
-	// TODO Auto-generated method stub
+  /**
+   * This method rename files
+   * @param con - connection to sql DB
+   * @param fileName - File that you want to rename 
+   * @param path - path of the file (to locate) 
+   * @param nfilename - the new file name
+   * @return String OK with file name changed to new name OR File '\' path NOT Exists 
+   */
+private String RenameFile(Connection con, Rename_Entity msg) {
+
+	  Statement stmt;
+		try 
+		{
+			stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM Files where FileId ='"+ msg.getFile().getId() + "' AND Owner = '"+msg.getUser().getIDuser() +"';");
+			if(rs.next()){
+				File afile = new File(rs.getString("FilePath")+"/"+rs.getString("FileName"));
+				afile.renameTo(new File(rs.getString("FilePath")+"/"+msg.getFile().getFileName()));
+				String updateTableSQL = "UPDATE Files SET FileName = ? WHERE FileId = ? ";
+				java.sql.PreparedStatement preparedStatement = con.prepareStatement(updateTableSQL);
+				preparedStatement.setString(1,msg.getFile().getFileName());
+				preparedStatement.setInt(2,msg.getFile().getId());
+				preparedStatement .executeUpdate();		    	
+				
+		    	return "OK" + rs.getString("FileName") + "changed to " + msg.getFile().getFileName() ;
+				}
+				else {
+					return "File '\' path NOT Exists";
+					}
+	    }
+		 catch (SQLException e) {e.printStackTrace();
+		return "problem1";
+		 }
+
+
+}
+
+private String restorFile(Connection conn, RecycleScreen_Entity msg) {
+	
+	 Statement stmt;
+		try 
+		{
+			stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM Files where FileId = '" +msg.getIdFile()+"' ;");
+			if(rs.next()){
+				String deleteSQL = "UPDATE Files SET IsDeleted=0 WHERE FileId = '" + msg.getIdFile()+ "' ;";
+				java.sql.PreparedStatement preparedStatement = conn.prepareStatement(deleteSQL);
+				java.util.Date utildate = new Date();
+				java.sql.Date sqldate = new java.sql.Date(utildate.getTime());
+				// execute delete SQL stetement
+				preparedStatement.executeUpdate();
+				String DeleteFromSQL = "DELETE FROM deletedfile WHERE IDFile = '" + msg.getIdFile()+ "';" ;
+				java.sql.PreparedStatement preparedStatement2 = conn.prepareStatement(DeleteFromSQL);
+				preparedStatement2.executeUpdate();
+				
+				
+				File afile = new File(rs.getString("FilePath")+"/" + rs.getString("FileName"));
+				File bfile = new File("deleted/"+msg.getIdFile());
+				try {
+					byte[] mybytearray = FileUtils.readFileToByteArray(bfile);
+					FileUtils.writeByteArrayToFile(afile,mybytearray);
+					bfile.delete();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				
+		    	return "OK " + msg.getIdFile() + "Restored";
+			}
+			else {
+				return "File OR path NOT Exists";
+			}
+	    }
+		 catch (SQLException e) {e.printStackTrace();
+		return "problem execute Delete";
+		 }
+	
+	
 	
 }
+
 
 private void CreateDefaultTreeModel(Connection conn,DirectoryTreeModel msg) {
 	Statement stmt;
 	try 
 	{
 		stmt = conn.createStatement();
-		ResultSet rs = stmt.executeQuery("SELECT * FROM Files WHERE Files.Owner=" +msg.getUser().getIDuser() + " AND Files.isDirectory=1 AND Files.isDeleted=0 ORDER BY FileName;");
+		ResultSet rs = stmt.executeQuery("SELECT * FROM Files WHERE Files.Owner='" +msg.getUser().getIDuser() + "' AND Files.isDirectory='1' AND Files.isDeleted='0' ORDER BY FileName;");
 		while (rs.next()) {
-            msg.getDir().add(rs.getString("FilePath"));       
+            msg.getDir().add(rs.getString("FilePath")+"/"+rs.getString("FileName"));       
 		}
 	}
 			 catch (SQLException e) {
@@ -513,46 +521,29 @@ private void CreateDefaultTreeModel(Connection conn,DirectoryTreeModel msg) {
 }
 
 private String createDirectory(Connection con, CreateDirectory msg) {
-	MyFile file =   msg;
-	String path = "UsersFiles/U_"+ msg.getUser().getIDuser() + "/" ;
+	MyFile file =   msg.getMyDir();
 	Statement stmt;
 		try 
 		{
 			stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM Files where FileName ='"+ file.getTheFile().getName()+ "' AND FilePath ='"+path+"';");// AND FilePath = '"+ file.getTheFile().getAbsolutePath() +"' ;");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM Files where FilePath ='"+ file.getPath() +"' AND FileName = '"+file.getFileName()+"';");
 			if(rs.next()){
-				System.out.println("file is in the User Dir");
-					return "file is in the User Dir";
+					return "directory is Exist";
 					}
 					else {
-						/* 
-						System.out.println("insert to sql");
-						String insertTableSQL = "INSERT INTO Files"
-								+ "(FileName,FilePath,isDirectory) VALUES"
-								+ "(?,?,?)";
-		    			
-						//CreatedTime,Modified,Permission,Owner,IsDeleted,Description,isDirectory
-						java.sql.PreparedStatement preparedStatement = con.prepareStatement(insertTableSQL);
-						preparedStatement.setString(1, file.getTheFile().getName());
-						preparedStatement.setString(2, path);
-						preparedStatement.setInt(3, 1);
+						String sql ="INSERT INTO files (FileName,FilePath,CreatedTime,Modified,Permission,Owner,IsDeleted,Description,isDirectory)" 
+											  +"VALUES (?,?,?,?,700,"+msg.getUser().getIDuser()+",0,"+file.getDescription()+",1)";
+						java.sql.PreparedStatement preparedStatement = con.prepareStatement(sql);
+						preparedStatement.setString(1,file.getFileName());
+						preparedStatement.setString(2,file.getPath());
+						java.util.Date utildate = new Date();
+						java.sql.Date sqldate = new java.sql.Date(utildate.getTime());
+						preparedStatement.setDate(3, sqldate);
+						preparedStatement.setDate(4, sqldate);
 						preparedStatement.executeUpdate();
-						//java.sql.Date bla = new Date(date)
-						//preparedStatement.setDate(3, new java.sql.Date((new Date(System.currentTimeMillis())).getTime()));
-						//preparedStatement.setDate(4, new java.sql.Date((new Date(System.currentTimeMillis())).getTime()));
-						//preparedStatement.setString(5, "0777");
-						//preparedStatement.setInt(6, msg.getUserID());
-						//preparedStatement.setInt(7, 0);
-					//	preparedStatement.setString(8, msg.getNewFile().getDescription());
-						//if(msg.getNewFile().getTheFile().isDirectory()) preparedStatement.setInt(9, 1);
-						//else preparedStatement.setInt(9,0 );
-						*/
 			    		System.out.println("converting file");
-			    		File bla = new File(path);
+			    		File bla = new File(file.getPath() +"/"+file.getFileName());
 			    		bla.mkdirs();
-			    		//FileUtils.mkdir_p(path);		    			    		    		  
-
-						// execute insert SQL stetement
 						return "Upload Sucseeded";
 					}
 	    }
@@ -564,7 +555,6 @@ private String createDirectory(Connection con, CreateDirectory msg) {
 private FileTreeUpdate createTreeFiles(Connection conn, FileTreeUpdate msg) {
 	String path = "UsersFiles/U_"+ msg.getUser().getIDuser() + "/";
 	File temp = new File(path);
-	
 	List<File> files = (List<File>) FileUtils.listFilesAndDirs(temp, TrueFileFilter.INSTANCE, TrueFileFilter.INSTANCE);
 	msg.setFiles(files);
 	return msg;
@@ -628,23 +618,31 @@ private String searchPath(Connection con, String path) {
  * @param npath - new place (path) to the file
  * @return - OK with file name and new path OR File '\' path NOT Exists 
  */
-/*
-private String moveFile(Connection con,MoveFile file) {
+
+private String moveFile(Connection con,Move_Entity file) {
 	  Statement stmt;
 		try 
 		{
 			stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM Files where FileName ='"+ fileName+ "' AND FilePath = '"+path +"' ;");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM Files where FileId ='"+ file.getFile().getId() + "' AND Owner = '"+file.getUser().getIDuser() +"' ;");
 			if(rs.next()){
-				String updateTableSQL = "UPDATE Files SET FilePath = ? WHERE FileName = ? AND FilePath = ? ";
-				java.sql.PreparedStatement preparedStatement = con.prepareStatement(updateTableSQL);
-				preparedStatement.setString(1,npath);
-				preparedStatement.setString(2,fileName);
-				preparedStatement.setString(3,path);
-				// execute insert SQL stetement
-				preparedStatement .executeUpdate();		    	
 				
-		    	return "OK"+ "file "+ fileName + "moved to" + npath;
+				try {
+					FileUtils.moveFile(new File(rs.getString("FilePath")+"/"+rs.getString("FileName")), new File(file.getFile().getPath()+"/"+rs.getString("FileName")));
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				String updateTableSQL = "UPDATE Files SET FilePath = ? WHERE  FileId = ? ";
+				java.sql.PreparedStatement preparedStatement = con.prepareStatement(updateTableSQL);
+				preparedStatement.setString(1,file.getFile().getPath());
+				preparedStatement.setInt(2, file.getFile().getId());
+				// execute insert SQL stetement
+				preparedStatement .executeUpdate();	
+				
+				
+		    	return "OK"+ "file "+ file.getFile().getFileName() + "moved to" + file.getFile().getPath();
 					}
 					else {
 						return "File '\' path NOT Exists";
@@ -687,73 +685,13 @@ private String getallfiles(Connection conn) {
 }
 
 /**
- * This method rename files
- * @param con - connection to sql DB
- * @param fileName - File that you want to rename 
- * @param path - path of the file (to locate) 
- * @param nfilename - the new file name
- * @return String OK with file name changed to new name OR File '\' path NOT Exists 
- */
-//************************************************************//
-private String renameFile(Connection con, String fileName, String path, String nfilename) {
-	  Statement stmt;
-		try 
-		{
-			stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM Files where FileName ='"+ fileName+ "' AND FilePath = '"+path +"';");
-			if(rs.next()){
-				String updateTableSQL = "UPDATE Files SET FileName = ? WHERE FileName = ? AND FilePath = ? ";
-				java.sql.PreparedStatement preparedStatement = con.prepareStatement(updateTableSQL);
-				preparedStatement.setString(1,nfilename);
-				preparedStatement.setString(2,fileName);
-				preparedStatement.setString(3,path);
-				preparedStatement .executeUpdate();		    	
-				
-		    	return "OK" + fileName + "changed to " + nfilename ;
-					}
-					else {
-						return "File '\' path NOT Exists";
-					}
-	    }
-		 catch (SQLException e) {e.printStackTrace();
-		return "problem1";
-		 }
-}
-
-//************************************************************//
-
-/**
  * This method delete file
  * @param con - connection to sql DB
  * @param fileName - File that you want to rename 
  * @param path - path of the file (to locate) 
  * @return String OK <file name> deleted OR File OR path NOT Exists
  */
-private String deleteFile(Connection con, String fileName, String path) {
-	  Statement stmt;
-		try 
-		{
-			stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM Files where FileName ='"+ fileName+ "' AND FilePath = '"+path +"' ;");
-			if(rs.next()){
-				String deleteSQL = "DELETE from Files WHERE FileName = ? AND FilePath = ?";
-				java.sql.PreparedStatement preparedStatement = con.prepareStatement(deleteSQL);
-				preparedStatement.setString(1,fileName);
-				preparedStatement.setString(2,path);
-				// execute delete SQL stetement
-				System.out.println("check123" + rs.next());
-				preparedStatement.executeUpdate();
-				
-		    	return "OK " + fileName + "deleted";
-					}
-					else {
-						return "File OR path NOT Exists";
-					}
-	    }
-		 catch (SQLException e) {e.printStackTrace();
-		return "problem execute Delete";
-		 }
-}
+
 
 /**
  * This method check username and password
@@ -784,6 +722,111 @@ private Boolean checkUserPassword(Connection con, Login_Entity log){
 	
 	
 }
+
+private Boolean forgotPassword(Connection con, ForgotPassword_Entity log){
+	
+	Statement stmt;
+	try 
+	{
+		stmt = con.createStatement();
+		ResultSet rs = stmt.executeQuery("SELECT * FROM Users where UserName ='"+ log.getEmail()+"';");
+		if(rs.next()) { //if user exist
+			log.setPwd(rs.getString("Password"));
+			return true;
+		}
+		return false;
+	} catch (SQLException e) {e.printStackTrace();
+	return null;
+	}
+}
+//==================================================================
+public String deletemyDir(Connection con, DeleteFile msg) {
+	 Statement stmt;
+	 String file,path;
+		try 
+		{
+			stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM Files where FileId=" +msg.getFile().getId()+ " AND Owner = '"+ msg.getUser().getIDuser() + "';");
+			if(rs.next()){
+				file = rs.getString("FileName");
+				path = rs.getString("FilePath");
+				if(rs.getInt("isDirectory")==1)
+				{
+					ResultSet rsFile = stmt.executeQuery("SELECT * FROM Files where FilePath = '" + rs.getString("FilePath") +"/" + rs.getString("FileName") + "' AND Owner = '"+ msg.getUser().getIDuser() + "';");
+					while(rsFile.next())
+					{
+						DeleteFile filemsg = new DeleteFile();
+						filemsg.setUser(msg.getUser());
+						filemsg.getFile().setId(rsFile.getInt("FileId"));
+						deletemyfiles(con, filemsg);
+					}
+				String deleteSQL = "UPDATE Files SET IsDeleted=1 WHERE FileId=" + msg.getFile().getId();
+				java.sql.PreparedStatement preparedStatement = con.prepareStatement(deleteSQL);
+				java.util.Date utildate = new Date();
+				java.sql.Date sqldate = new java.sql.Date(utildate.getTime());
+				// execute delete SQL stetement
+				preparedStatement.executeUpdate();
+				String UpdateSQL = "INSERT INTO deletedfile(IDFile,TimeDeleted,IDUser) VALUES ('"+msg.getFile().getId()+"','"+sqldate+"','"+msg.getUser().getIDuser()+"');"  ;
+				java.sql.PreparedStatement preparedStatement2 = con.prepareStatement(UpdateSQL);
+				preparedStatement2.executeUpdate();
+				
+				File afile = new File(path+"/" + file);
+				try {
+					System.out.println("blac");
+					FileUtils.deleteDirectory(afile);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					System.out.println("cant Delete Dir");
+				}
+				return "OK " + msg.getFile().getFileName() + "deleted";
+				}
+				else return deletemyfiles(con,msg);
+			}
+				
+	    }
+		 catch (SQLException e) {e.printStackTrace();
+		return "problem execute Delete";
+		 }
+		return "";
+}	
+public String deletemyfiles(Connection con, DeleteFile msg) {
+	 Statement stmt;
+		try 
+		{
+			stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM Files where FileId=" +msg.getFile().getId()+ " AND Owner = '"+ msg.getUser().getIDuser() + "' AND IsDeleted = 0;");
+			if(rs.next()){
+				String deleteSQL = "UPDATE Files SET IsDeleted=1 WHERE FileId=" + msg.getFile().getId();
+				java.sql.PreparedStatement preparedStatement = con.prepareStatement(deleteSQL);
+				java.util.Date utildate = new Date();
+				java.sql.Date sqldate = new java.sql.Date(utildate.getTime());
+				// execute delete SQL stetement
+				preparedStatement.executeUpdate();
+				String UpdateSQL = "INSERT INTO deletedfile(IDFile,TimeDeleted,IDUser) VALUES ('"+msg.getFile().getId()+"','"+sqldate+"','"+msg.getUser().getIDuser()+"');"  ;
+				java.sql.PreparedStatement preparedStatement2 = con.prepareStatement(UpdateSQL);
+				preparedStatement2.executeUpdate();
+				
+				File afile = new File(rs.getString("FilePath")+"/" + rs.getString("FileName"));
+				try {
+					byte[] mybytearray = FileUtils.readFileToByteArray(afile);
+					FileUtils.writeByteArrayToFile(new File("deleted/"+rs.getString("FileId")),mybytearray);
+					afile.delete();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				
+		    	return "OK " + msg.getFile().getFileName() + "deleted";
+			}
+			else {
+				return "File OR path NOT Exists";
+			}
+	    }
+		 catch (SQLException e) {e.printStackTrace();
+		return "problem execute Delete";
+		 }
+}	
 
 /**
  * This method search file in DB
@@ -824,42 +867,33 @@ private String searchFile(Connection con, String file)
  * @return String "OK File:  < file Name >  <path> Add" OR "File Already Exists"
  */
 private String createNewFile(Connection con, UpLoadFile msg) {
-	MyFile file =   msg;
-	String path = "UsersFiles/U_"+ msg.getUser().getIDuser() + "/"+ msg.getTheFile().getName() ;
+	MyFile file =   msg.getMyfile();
+	String path =  file.getPath() ;
 	Statement stmt;
 		try 
 		{
 			stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM Files where FileName ='"+ file.getTheFile().getName()+ "' AND FilePath ='"+path+"';");// AND FilePath = '"+ file.getTheFile().getAbsolutePath() +"' ;");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM Files where FileName ='"+ file.getFileName()+ "' AND FilePath ='"+path+"';");// AND FilePath = '"+ file.getTheFile().getAbsolutePath() +"' ;");
 			if(rs.next()){
-				System.out.println("file is in the User Dir");
 					return "file is in the User Dir";
 					}
 					else {
 						System.out.println("insert to sql");
 						String insertTableSQL = "INSERT INTO Files"
-								+ "(FileName,FilePath,Owner) VALUES"
-								+ "(?,?,?)";
-		    			
-						//CreatedTime,Modified,Permission,Owner,IsDeleted,Description,isDirectory
+								+ "(FileName,FilePath,CreatedTime,Modified,Permission,Owner,IsDeleted,Description,isDirectory,size) VALUES"
+								+ "(?,?,?,?,700,?,0,'',0,?)";
 						java.sql.PreparedStatement preparedStatement = con.prepareStatement(insertTableSQL);
-						preparedStatement.setString(1, file.getTheFile().getName());
-						preparedStatement.setString(2, path);
-						preparedStatement.setInt(3,1);
-
-						//java.sql.Date bla = new Date(date)
-						//preparedStatement.setDate(3, new java.sql.Date((new Date(System.currentTimeMillis())).getTime()));
-						//preparedStatement.setDate(4, new java.sql.Date((new Date(System.currentTimeMillis())).getTime()));
-						//preparedStatement.setString(5, "0777");
-						//preparedStatement.setInt(6, msg.getUserID());
-						//preparedStatement.setInt(7, 0);
-					//	preparedStatement.setString(8, msg.getNewFile().getDescription());
-						//if(msg.getNewFile().getTheFile().isDirectory()) preparedStatement.setInt(9, 1);
-						//else preparedStatement.setInt(9,0 );
-						
+						preparedStatement.setString(1,file.getFileName());
+						preparedStatement.setString(2,file.getPath());
+						java.util.Date utildate = new Date();
+						java.sql.Date sqldate = new java.sql.Date(utildate.getTime());
+						preparedStatement.setDate(3, sqldate);
+						preparedStatement.setDate(4, sqldate);
+						preparedStatement.setInt(5, msg.getUser().getIDuser());
+						preparedStatement.setLong(6, file.getFsize());
 						preparedStatement.executeUpdate();
 			    		System.out.println("converting file");
-			    		FileUtils.writeByteArrayToFile(new File (path), msg.getMybytearray());		    			    		    		  
+			    		FileUtils.writeByteArrayToFile(new File (file.getPath() +"/"+ file.getFileName()), file.getMybytearray());		    			    		    		  
 			    		
 						// execute insert SQL stetement
 						return "Upload Sucseeded";
@@ -914,8 +948,6 @@ public  TableModel buildTableModel(Connection con,String stat)
 			stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery(stat);
 			return DbUtils.resultSetToTableModel(rs);
-			
-			
 			}
 			catch (Exception e){
 				
@@ -953,6 +985,209 @@ public DefaultMutableTreeNode addNodes(DefaultMutableTreeNode curTop, File dir) 
       curDir.add(new DefaultMutableTreeNode(files.elementAt(fnum)));
     return curDir;
   }
+//===================== CHANGE USER GROUP==================
+private void changename(Connection con,SettingsName_Entitiy log) {
+	// TODO Auto-generated method stub
+	Statement stmt;
+	int id =1  ;
+	try 
+	{
+	
+		stmt = con.createStatement();
+		String s="SELECT UserID FROM mybox.Users where UserName = '"+log.getOlduser().getUsername()+"' ;";
+		ResultSet rs= stmt.executeQuery(s);
+		while(rs.next()){
+		id = rs.getInt("UserID");
+		}
+		String sql= "UPDATE mybox.users SET UserName = '"+log.getNewuser().getUsername()+"' WHERE UserID = '"+ id +"';";
+		java.sql.PreparedStatement ps1 = con.prepareStatement(sql);
+		stmt.executeUpdate(sql);
+		
+		}
+	 catch (SQLException e) {e.printStackTrace();
+	
+	}
+}
+//********************************//
+
+//=========================CHANGE PASSSWORD=======================
+private void changepaword(Connection con, Settings_Entity log) {
+	// TODO Auto-generated method stub
+	Statement stmt;
+	int id =0;
+	try 
+	{
+	
+		stmt = con.createStatement();
+		String s="SELECT UserID FROM mybox.Users where UserName = '"+log.getOlduser().getUsername()+"' ;";
+		ResultSet rs= stmt.executeQuery(s);
+		while(rs.next()){
+		id = rs.getInt("UserID");
+		}
+		String sql= "UPDATE mybox.users SET Password = '"+log.getNewuser().getPassword()+"' WHERE UserID = '"+ id +"';";
+		java.sql.PreparedStatement ps1 = con.prepareStatement(sql);
+		stmt.executeUpdate(sql);
+		
+		}
+	 catch (SQLException e) {e.printStackTrace();
+	
+	}
+	
+}
+//===============================================//
+
+//==================LOAD GROUP========================//
+private void LoadGroup(Connection con, LoadGroup_Entity log) {
+	// TODO Auto-generated method stub
+	   Statement stmt;
+	   String[] grop;
+	   try 
+		{
+		
+			stmt = con.createStatement();
+			if (log.getChoice()==2){
+			String s="SELECT * FROM myBox.Groups";
+			ResultSet rs= stmt.executeQuery(s);
+			while(rs.next()){
+					log.getGroups().add(rs.getString("GroupName"));
+			}
+		
+			//grop=log.getGroups().toArray(new String[log.getGroups().size()]);
+			}
+			if (log.getChoice()==1 || log.getChoice()==3){
+				String s="select  distinct GroupName "+
+						"from mybox.users ,mybox.useringroup, mybox.groups "+
+						"where  useringroup.IdUser =" + log.getUser().getIDuser() + " and groups.IDGroup = useringroup.IDGroup";
+				ResultSet rs= stmt.executeQuery(s);
+				while(rs.next()){
+						log.getGroups().add(rs.getString("GroupName"));
+				}
+			
+				//grop=log.getGroups().toArray(new String[log.getGroups().size()]);
+			}
+			
+	}
+   
+	
+	 catch (SQLException e) {e.printStackTrace();
+	
+	}
+}
+//===============REQUEST===============================//
+private void request(Connection con, Request_Entity log) {
+	// TODO Auto-generated method stub
+	 Statement stmt;
+	 String s = null;
+	 try 
+		{
+			stmt = con.createStatement();
+			if (log.getRadio()==2)
+			{
+				s="INSERT INTO adminrequsts(RequestType,status,UserId)"
+						+" VALUES('RemovePeopleToGroup "+log.getChooise()+"','0','"+log.getUser().getIDuser()+"');"; 
+					 stmt.executeUpdate(s);
+			}
+			else if (log.getRadio()==1)
+			{
+				s="INSERT INTO adminrequsts(RequestType,status,UserId)"
+						+" VALUES('AddPeopleToGroup "+log.getChooise()+"','0','"+log.getUser().getIDuser()+"');"; // add row to all admin request";
+					 stmt.executeUpdate(s);
+			}
+	 		else if (log.getRadio()==3)
+	 		{
+			s="INSERT INTO adminrequsts(RequestType,status,UserId)"
+					+" VALUES('Delete "+log.getChooise()+"','0','"+log.getUser().getIDuser()+"');"; // add row to all admin request";
+				 stmt.executeUpdate(s);
+	 		}
+	 		else if (log.getRadio()==4)
+	 		{
+			s="INSERT INTO adminrequsts(RequestType,status,UserId)"
+					+" VALUES('change permission to read group "+log.getChooise()+"','0','"+log.getUser().getIDuser()+"');"; // add row to all admin request";
+				 stmt.executeUpdate(s);
+	 		}
+	 		else if (log.getRadio()==5)
+	 		{
+			s="INSERT INTO adminrequsts(RequestType,status,UserId)"
+					+" VALUES('change permission to write group "+log.getChooise()+"','0','"+log.getUser().getIDuser()+"');"; // add row to all admin request";
+				 stmt.executeUpdate(s);
+	 		}
+	 		else if (log.getRadio()==6)
+	 		{
+			s="INSERT INTO adminrequsts(RequestType,status,UserId)"
+					+" VALUES('change permission to write and read group "+log.getChooise()+"','0','"+log.getUser().getIDuser()+"');"; // add row to all admin request";
+				 stmt.executeUpdate(s);
+	 		}
+		}
+	 
+	   
+		 catch (SQLException e) {e.printStackTrace();
+		
+		}
+	
+}
+
+
+private void changegroup(Connection con, Group_Entity log) {
+	// TODO Auto-generated method stub
+	 Statement stmt;
+	 int id = 0;
+	 String name;
+	 String Des;
+	   try 
+		{
+		
+			stmt = con.createStatement();
+			if (log.getGroupname().equals(null)==false && log.getGroupdescript().equals(null)==false)
+			{
+			String s="SELECT IDGroup FROM myBox.Groups";
+			ResultSet rs= stmt.executeQuery(s);
+			while(rs.next()){
+					id = rs.getInt("IDGroup");
+			}
+			String sql= "UPDATE mybox.groups SET GroupName = "+log.getGroupname()+" GroupDescription = "
+			+log.getGroupdescript()+" WHERE IDGroup = "+ id +";";
+			java.sql.PreparedStatement ps1 = con.prepareStatement(sql);
+			stmt.executeUpdate(sql);
+			}
+			else if (log.getGroupname().equals(null)==true && log.getGroupdescript().equals(null)==true)
+			{
+				return;
+			}
+			else if (log.getGroupname().equals(null)==false && log.getGroupdescript().equals(null)==true)
+			{
+				String s="SELECT IDGroup FROM myBox.Groups";
+				ResultSet rs= stmt.executeQuery(s);
+				while(rs.next()){
+						id = rs.getInt("IDGroup");
+				}
+				String sql= "UPDATE mybox.groups SET GroupName = '"+log.getGroupname()+"' WHERE IDGroup = "+ id +";";
+				java.sql.PreparedStatement ps1 = con.prepareStatement(sql);
+				stmt.executeUpdate(sql);
+			}
+			else if (log.getGroupname().equals(null)==true && log.getGroupdescript().equals(null)==false)
+			{
+				String s="SELECT IDGroup FROM myBox.Groups";
+				ResultSet rs= stmt.executeQuery(s);
+				while(rs.next()){
+						id = rs.getInt("IDGroup");
+				}
+				String sql= "UPDATE mybox.groups SET GroupDescription = '"
+				+log.getGroupdescript()+"' WHERE IDGroup = "+ id +";";
+				java.sql.PreparedStatement ps1 = con.prepareStatement(sql);
+				stmt.executeUpdate(sql);
+			}
+			
+		}
+	   
+		
+		 catch (SQLException e) {e.printStackTrace();
+		
+		}
+}
+
+
+
+}
 /*
 public TreeNode buildTree(){
     String[] names = new String[]; // fill this with the names of your plugins
@@ -983,7 +1218,7 @@ return tree;
 }
 
 */
-}
+
 /* OLD
 if(msg instanceof String){
 	try {
@@ -1080,3 +1315,29 @@ if(msg instanceof String){
 	}
 
 } */
+
+/*private String deleteFile(Connection con, String fileName, String path) {
+Statement stmt;
+	try 
+	{
+		stmt = con.createStatement();
+		ResultSet rs = stmt.executeQuery("SELECT * FROM Files where FileName ='"+ fileName+ "' AND FilePath = '"+path +"' ;");
+		if(rs.next()){
+			String deleteSQL = "DELETE from Files WHERE FileName = ? AND FilePath = ?";
+			java.sql.PreparedStatement preparedStatement = con.prepareStatement(deleteSQL);
+			preparedStatement.setString(1,fileName);
+			preparedStatement.setString(2,path);
+			// execute delete SQL stetement
+			System.out.println("check123" + rs.next());
+			preparedStatement.executeUpdate();
+			
+	    	return "OK " + fileName + "deleted";
+				}
+				else {
+					return "File OR path NOT Exists";
+				}
+  }
+	 catch (SQLException e) {e.printStackTrace();
+	return "problem execute Delete";
+	 }
+}*/

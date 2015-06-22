@@ -3,8 +3,10 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
 import java.awt.Color;
 import java.awt.FlowLayout;
+
 import javax.swing.JTextField;
 import javax.swing.JEditorPane;
 import javax.swing.JTextPane;
@@ -12,15 +14,20 @@ import javax.swing.border.TitledBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+
 import java.awt.Button;
+
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JButton;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JRadioButton;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
+
+import javax.swing.JComboBox;
 
 
 public class RequestToChangeGroupPermission extends AbstractGUI{
@@ -34,6 +41,7 @@ public class RequestToChangeGroupPermission extends AbstractGUI{
 	private JButton ButtonSend;
 	private JButton ButtonCancel;
 	private JLabel lblChangeGroupPremm;
+	private JComboBox<Object> comboBox;
 	
 	/**
 	 * Launch the application.
@@ -76,6 +84,10 @@ public class RequestToChangeGroupPermission extends AbstractGUI{
 		Rawrite.setBounds(20, 121, 141, 23);
 		UpperPanel.add(Rawrite);
 		
+		comboBox = new JComboBox<Object>();
+		comboBox.setBounds(343, 33, 111, 29);
+		UpperPanel.add(comboBox);
+		
 		ButtonPanel = new JPanel();
 		ButtonPanel.setBounds(135, 477, 561, 76);
 		ButtonPanel.setOpaque(false);
@@ -83,6 +95,7 @@ public class RequestToChangeGroupPermission extends AbstractGUI{
 		ButtonPanel.setLayout(null);
 		
 		ButtonSend = new JButton("Send Request");
+		ButtonSend.setEnabled(false);
 		ButtonSend.setIcon(new ImageIcon(RequestToChangeGroupPermission.class.getResource("/GUI_final/sendReuqest.PNG")));
 		ButtonSend.setBounds(33, 10, 167, 66);
 		ButtonPanel.add(ButtonSend);
@@ -166,5 +179,15 @@ public class RequestToChangeGroupPermission extends AbstractGUI{
 
 	public void setLblChangeGroupPremm(JLabel lblChangeGroupPremm) {
 		this.lblChangeGroupPremm = lblChangeGroupPremm;
+	}
+
+
+	public JComboBox<Object> getComboBox() {
+		return comboBox;
+	}
+
+
+	public void setComboBox(JComboBox<Object> comboBox) {
+		this.comboBox = comboBox;
 	}
 }

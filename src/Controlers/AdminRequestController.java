@@ -1,9 +1,15 @@
 package Controlers;
 
 import java.awt.event.MouseAdapter;
-import GUI_final.*;
-import Entity.*;
 import java.awt.event.MouseEvent;
+
+import Entity.adminRequestModel;
+import GUI_final.AdminAddPeopleToGroup;
+import GUI_final.AdminChangePermission;
+import GUI_final.AdminCreateGroup;
+import GUI_final.AdminDeletePeopleToGroup;
+import GUI_final.AdminRequest;
+import GUI_final.Adminbar;
 
 public class AdminRequestController extends AbstractTransfer {
 	

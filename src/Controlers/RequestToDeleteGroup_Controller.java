@@ -67,6 +67,7 @@ public class RequestToDeleteGroup_Controller extends AbstractTransfer{
 					Request_Entity re =new Request_Entity(MainClient.clien.currUser, 3);
 					re.setUser(MainClient.clien.currUser);
 					re.setChooise(view.getChoiceGroup().getSelectedItem().toString());
+					if (re.getChooise().equals(null)==false)
 					sendToServer(re);
 					
 				}

@@ -2,7 +2,9 @@ package GUI_final;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.Toolkit;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -15,6 +17,7 @@ import javax.swing.JButton;
 import javax.swing.JSpinner;
 import javax.swing.JTextArea;
 import javax.swing.JLabel;
+
 import java.awt.Font;
 import java.awt.SystemColor;
 import java.awt.event.ActionListener;
@@ -36,7 +39,7 @@ public class Adminbar extends AbstractGUI {
 	/**
 	 * Launch the application.
 	 */
-	public static  void main(String[] args) {
+	public void Initialize(){//*static  void main(String[] args) {**//
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -55,6 +58,8 @@ public class Adminbar extends AbstractGUI {
 	public Adminbar() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 800, 600);
+		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+		this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -165,7 +170,23 @@ public class Adminbar extends AbstractGUI {
 		return Cover;
 	}
 
-	public void setCover(JLabel cover) { 
+	public void setCover(JLabel cover) {
 		Cover = cover;
+	}
+
+	public void ChangeFMSLitsner(ActionListener listenForChnageFMSButton){
+		 btnChangeFms.addActionListener(listenForChnageFMSButton);
+	}
+	
+	public void NotifcationYesLitsner(ActionListener listenForNotifcationYesButton){
+		NotifcationYes.addActionListener(listenForNotifcationYesButton);
+	}
+	
+	public void NotifcationNoLitsner(ActionListener listenForNotifcationNoButton){
+		NotifcationYes.addActionListener(listenForNotifcationNoButton);
+	}
+	
+	public void QuitLitsner(ActionListener listenForQuitButton){
+		btnQuit.addActionListener(listenForQuitButton);
 	}
 }

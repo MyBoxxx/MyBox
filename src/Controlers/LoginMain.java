@@ -10,7 +10,6 @@ import Entity.*;
 
 public class LoginMain {
 	static Login_Entity model ;
-	
 	static Login_GUI view;
 	
 	

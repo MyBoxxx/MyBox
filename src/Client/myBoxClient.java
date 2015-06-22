@@ -6,7 +6,10 @@ package Client;
 
 import ocsf.client.*;
 import Controlers.AskToJoinRemoveFromGroupController;
+import Controlers.ForgotPassword_Controller;
 import Controlers.LogIn_Controller;
+import Controlers.RecycleBin_controller;
+import Controlers.RequestToChangeGroupePremission_Controller;
 import Controlers.RequestToDeleteGroup_Controller;
 import Controlers.SystemAdminRequestsScreen_Controller;
 import Controlers.editGroup_Controller;
@@ -17,15 +20,18 @@ import java.io.*;
 import Entity.*;
 
 import java.lang.reflect.Array;
-import java.util.ArrayList;
+import java.util.Date;
 import java.util.Enumeration;
+import java.util.Timer;
+import java.util.TimerTask;
 
-import javax.swing.JComboBox;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreeNode;
+
+import org.apache.commons.io.FileUtils;
 
 import server.FileTable;
 import Entity.*;
@@ -53,6 +59,7 @@ public class myBoxClient extends ObservableClient {
 	private  Object currController;
 	public  User_Entity currUser;
 
+	static String  filePath;
 
 
 	/**
@@ -80,7 +87,6 @@ public class myBoxClient extends ObservableClient {
 	 * @param msg
 	 *            The message from the server.
 	 */
-	@SuppressWarnings("unchecked")
 	public synchronized void handleMessageFromServer(Object message) {
 		System.out.println("Message received: " + message + " from Server");
 		try {
@@ -101,41 +107,103 @@ public class myBoxClient extends ObservableClient {
 				( (SystemAdminRequestsScreen_Controller) currController).refreshList();
 			}
 			
-			if(message instanceof FileTreeUpdate){
-				
-				DefaultMutableTreeNode bla1 = new DefaultMutableTreeNode();
-				for (File file : ((FileTreeUpdate)message).getFiles() ) {
-					if(file.isDirectory()) 
-						System.out.println("file: " + file.getCanonicalPath());
-				}	
-				JTree bla = new JTree(bla1);
-			}
-			if(message instanceof Model){
-				
-				( (Controller) currController).setModel((Model)message);
-
-			}
-			if(message instanceof FileTable){
-				((Controller) currController).getModel().setTablemodel(((FileTable) message).getTablemodel());
-				((Controller) currController).refreseList();
-			}
-			
 			if(message instanceof DirectoryTreeModel){	
 				((Controller) currController).setTree(((DirectoryTreeModel)message).getDir(),((DirectoryTreeModel)message).getShared());
-				((Controller) currController).updateFileTable(((DirectoryTreeModel) message));
 			}
-			//**********************NEW*********************************
+			if(message instanceof FileModel)
+			{
+				((Controller) currController).updateFileTable(((FileModel) message));
+			}
+			if(message instanceof UpLoadFile){
+				((Controller) currController).ShowMessage(((UpLoadFile) message).getAnser());
+				((Controller) currController).refreshListAndTree();
+			}
+			if(message instanceof CreateDirectory){
+				((Controller) currController).ShowMessage(((CreateDirectory) message).getAnser());
+				((Controller) currController).refreshListAndTree();
+			}
+			
+			if(message instanceof ForgotPassword_Entity){
+				((LogIn_Controller) currController).showMessage(((ForgotPassword_Entity) message).getPwd());
+			}
+			
+			if(message instanceof DeleteFile){
+				((Controller) currController).ShowMessage(((DeleteFile) message).getAnswer());
+				((Controller) currController).refreshListAndTree();
+			}
+			if(message instanceof RecycleScreen_Entity){
+				
+				((Controller) currController).RecycleBin(((RecycleScreen_Entity)message));
+				((Controller) currController).refreshListAndTree();
+			}
+			if(message instanceof Move_Entity){
+				
+				((Controller) currController).ShowMessage(((Move_Entity)message).getAnswer());;
+				((Controller) currController).refreshListAndTree();
+			}
+			if(message instanceof Rename_Entity){
+				((Controller) currController).ShowMessage(((Rename_Entity)message).getAnswer());;
+				((Controller) currController).refreshListAndTree();
+			}
 			if(message instanceof LoadGroup_Entity)
 			{
-				if(((LoadGroup_Entity) message).getChoice()==3)
+				if(((LoadGroup_Entity) message).getChoice()==4)
+					((RequestToChangeGroupePremission_Controller) currController).FillGroup(((LoadGroup_Entity) message));
+				else if(((LoadGroup_Entity) message).getChoice()==3)
 					((editGroup_Controller) currController).FillGroup(((LoadGroup_Entity) message));
 				else if(((LoadGroup_Entity) message).getChoice()==2)
 					((AskToJoinRemoveFromGroupController) currController).FillGroup(((LoadGroup_Entity) message));
 				else if(((LoadGroup_Entity) message).getChoice()==1)
 					((RequestToDeleteGroup_Controller) currController).FillGroup(((LoadGroup_Entity) message));
 			}
-			
-			
+			//***************************Edit File******************************
+			if(message instanceof EditFile_Entity){
+				File temp = new File ("C:/temp/"+ ((EditFile_Entity)message).getFile().getFileName());
+	    		FileUtils.writeByteArrayToFile(temp,((EditFile_Entity)message).getFile().mybytearray );	    		
+	    	    // Create the monitor
+	    		((Controller) currController).ShowMessage("Downloaded To c:/temp");
+	    		((Controller) currController).openFile("C:/temp/"+ ((EditFile_Entity)message).getFile().getFileName());
+	    		filePath = ((EditFile_Entity)message).getFile().getPath();
+	    		TimerTask task = new FileWatcher( temp ) {
+	    	        protected void onChange( File file ) {
+	    	          // here we code the action on a change
+	    	          System.out.println( "File "+ file.getName() +" have change !" );
+	    	          ReplaceFile_Entity replaceFile = new ReplaceFile_Entity();
+	    	         File afile = new File("c:/temp/"+file.getName() );
+			    	       try {
+								((ReplaceFile_Entity)replaceFile).getFile().mybytearray = FileUtils.readFileToByteArray(afile);        
+			    	    	} catch (IOException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+	    	          replaceFile.getFile().setFileName(file.getName() );
+	    	          replaceFile.getFile().setPath(filePath);
+		    	          try {
+							sendToServer(replaceFile);
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+	    	        }
+	    	      };
+
+	    	      Timer timer = new Timer();
+	    	      // repeat the check every second
+	    	      timer.schedule( task , new Date(), 1000 );
+			}
+		//**********************************Download File *******************************************//
+			if(message instanceof DownloadFile_Entity){
+				File temp = new File ("C:/downloads/"+ ((DownloadFile_Entity)message).getFile().getFileName());
+				FileUtils.writeByteArrayToFile(temp,((DownloadFile_Entity)message).getFile().mybytearray );	  
+				((Controller) currController).ShowMessage("Downloaded To c:/downloads");
+			}
+			/*************************************************************************************/
+			if(message instanceof GetNotification_Entity){
+				  
+				((Controller) currController).GetNotification ((GetNotification_Entity)message);
+			}
+
+
 			
 		
 

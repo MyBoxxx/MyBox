@@ -1,8 +1,9 @@
 package GUI_final;
 
+
 import java.sql.*;
 import java.util.*;
-import javax.swing.JFrame;
+
 import javax.swing.*;
 import javax.swing.table.TableColumn;
 
@@ -10,8 +11,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.SystemColor;
+import java.awt.Toolkit;
 
 public class AdminRequest extends AbstractGUI {
 	public static   JFrame frame;
@@ -39,7 +42,7 @@ public class AdminRequest extends AbstractGUI {
 			public void run() {
 				try {
 					AdminRequest frame = new AdminRequest();
-					frame.setVisible(true);
+					//frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -48,7 +51,10 @@ public class AdminRequest extends AbstractGUI {
 	}
 				
 	public AdminRequest(){
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 800, 600);
+		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+		this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
          columnNames = new Vector();
          data = new Vector();
          panel = new JPanel();   //

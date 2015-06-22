@@ -19,9 +19,13 @@ import javax.swing.JPanel;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
+import Entity.AdminChangeFMS_Entity;
 import Entity.User_Entity;
-import GUI_final.*;
-import Entity.*;
+import GUI_final.AdminAddPeopleToGroupFMS;
+import GUI_final.AdminChangeFMS_GUI;
+import GUI_final.Adminbar;
+import GUI_final.Limitpeopleingroup;
+
 
 
 

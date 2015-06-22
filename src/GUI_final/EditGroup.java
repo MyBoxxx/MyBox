@@ -1,6 +1,8 @@
 package GUI_final;
 
+import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -13,6 +15,7 @@ import javax.swing.JButton;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JEditorPane;
 import javax.swing.ImageIcon;
+
 import java.awt.Color;
 
 public class EditGroup extends AbstractGUI {
@@ -42,10 +45,12 @@ public class EditGroup extends AbstractGUI {
 	 */
 	public EditGroup() {
 		getContentPane().setBackground(new Color(59, 89, 151));
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 800, 600);
+		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+		this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
 		 panel = new JPanel();
-		 setBounds(6, 6, 800, 600);
 		 getContentPane().setLayout(null);
-		 setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		JLabel lEdit = new JLabel("Request To Edit name /Description Group");
 		lEdit.setBounds(271, 21, 307, 28);
 		getContentPane().add(lEdit);
@@ -55,7 +60,8 @@ public class EditGroup extends AbstractGUI {
 		getContentPane().add(lSelected);
 		
 		comboBox = new JComboBox();
-		comboBox.setM aximumRowCount(100);
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {"1", "2", "3", "4", "5"}));
+		comboBox.setMaximumRowCount(100);
 		comboBox.setBounds(313, 61, 117, 42);
 		getContentPane().add(comboBox);
 		comboBox.addActionListener(new ActionListener() {

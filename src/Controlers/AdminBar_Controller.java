@@ -11,9 +11,11 @@ import java.util.jar.JarOutputStream;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-import GUI_final.*;
-import Entity.*;
-
+import Client.MainClient;
+import Entity.Adminbar_model;
+import GUI_final.AdminChangeFMS_GUI;
+import GUI_final.AdminRequest;
+import GUI_final.Adminbar;
 
 
 
@@ -34,6 +36,7 @@ public class AdminBar_Controller {
 		adminChange = new AdminChangeFMS_GUI();
 	}
 	public void control(){
+		MainClient.clien.setCurrController(this);
 		
 		view.getNotifcationNo().setVisible(false);
 		view.getNotifcationYes().setVisible(false);
@@ -79,7 +82,7 @@ public class AdminBar_Controller {
 			@Override
 			public void actionPerformed(ActionEvent e) {
     					view.dispose();
-    					//LoginMain.main(null);
+    					LoginMain.main(null);
     					//JOptionPane.showMessageDialog(null,"logout pressed");
     				}				
     			});			
