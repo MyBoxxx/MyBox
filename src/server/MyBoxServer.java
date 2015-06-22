@@ -161,16 +161,6 @@ public class MyBoxServer extends AbstractServer
 	        	}
 	        }
 	   /************************************************************************/
-	        if(msg instanceof Settings_Entity){
-	        	changeName(conn, (Settings_Entity) msg);
-	    		try{
-	    			client.sendToClient(msg);
-	    		}
-	        	catch (IOException e){
-	        		e.printStackTrace();
-	        	}
-	        }
-	       /*********************/
 	        
 	        if(msg instanceof DeleteFile){ 
 	        	((DeleteFile)msg).setAnswer(deletemyDir(conn,(DeleteFile) msg));
@@ -300,13 +290,56 @@ public class MyBoxServer extends AbstractServer
 	        		e.printStackTrace();
 	        	}
 			}
-
+			 // ******CHANGE USER NAME******************///
+	        if(msg instanceof SettingsName_Entitiy){
+	        	
+		    	changename(conn,((SettingsName_Entitiy)msg));
+		  
+		    }
+	        //******************************//
+	        
+	        // ******CHANGE USER NAME******************///
+	        if(msg instanceof Settings_Entity){
+	        	
+		    	changepaword(conn,((Settings_Entity)msg));
+		  
+		    }
+	        //******************************//
+	        
+	        // ******Load GroupsE******************///
+	        if(msg instanceof LoadGroup_Entity){
+	        	
+		    	LoadGroup(conn,((LoadGroup_Entity)msg));
+		    	try {
+					client.sendToClient(msg);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		  
+		    }
+	        //******************************//
+	        
+	        // ******request to admin******************///
+	        if(msg instanceof Request_Entity){
+	        	
+		    	request(conn,((Request_Entity)msg));
+		  
+		    }
+	        //******************************//
+	        
+	        // ******request to admin******************///
+	        
+	        if(msg instanceof Group_Entity){
+	        	changegroup(conn,((Group_Entity)msg));
+	        }
+	      //******************************//
 	        
 	        
 	        
 	        
 	        
-	        
+	    
 	        conn.close();
 
 	    }catch (SQLException ex) 
@@ -660,25 +693,7 @@ private Boolean forgotPassword(Connection con, ForgotPassword_Entity log){
 	return null;
 	}
 }
-
-private Boolean changeName(Connection con, Settings_Entity log){
-	
-	Statement stmt;
-	try 
-	{
-		stmt = con.createStatement();
-		ResultSet rs = stmt.executeQuery("SELECT * FROM Users where UserName ='"+ log.getEmail()+"';");
-		if(rs.next()) { //if user exist
-			log.setID(rs.getInt("UserID"));
-			int rs1= stmt.executeUpdate("UPDATE Users SET UserName = "+ log.getEmail() +"WHERE UserID=" +log.getID()+"';" );
-			return true;
-		}
-		return false;
-	} catch (SQLException e) {e.printStackTrace();
-	return null;
-	}
-}
-
+//==================================================================
 public String deletemyDir(Connection con, DeleteFile msg) {
 	 Statement stmt;
 	 String file,path;
@@ -924,6 +939,194 @@ public DefaultMutableTreeNode addNodes(DefaultMutableTreeNode curTop, File dir) 
       curDir.add(new DefaultMutableTreeNode(files.elementAt(fnum)));
     return curDir;
   }
+//===================== CHANGE USER GROUP==================
+private void changename(Connection con,SettingsName_Entitiy log) {
+	// TODO Auto-generated method stub
+	Statement stmt;
+	int id =1  ;
+	try 
+	{
+	
+		stmt = con.createStatement();
+		String s="SELECT UserID FROM mybox.Users where UserName = '"+log.getOlduser().getUsername()+"' ;";
+		ResultSet rs= stmt.executeQuery(s);
+		while(rs.next()){
+		id = rs.getInt("UserID");
+		}
+		String sql= "UPDATE mybox.users SET UserName = '"+log.getNewuser().getUsername()+"' WHERE UserID = '"+ id +"';";
+		java.sql.PreparedStatement ps1 = con.prepareStatement(sql);
+		stmt.executeUpdate(sql);
+		
+		}
+	 catch (SQLException e) {e.printStackTrace();
+	
+	}
+}
+//********************************//
+
+//=========================CHANGE PASSSWORD=======================
+private void changepaword(Connection con, Settings_Entity log) {
+	// TODO Auto-generated method stub
+	Statement stmt;
+	int id =0;
+	try 
+	{
+	
+		stmt = con.createStatement();
+		String s="SELECT UserID FROM mybox.Users where UserName = '"+log.getOlduser().getUsername()+"' ;";
+		ResultSet rs= stmt.executeQuery(s);
+		while(rs.next()){
+		id = rs.getInt("UserID");
+		}
+		String sql= "UPDATE mybox.users SET Password = '"+log.getNewuser().getPassword()+"' WHERE UserID = '"+ id +"';";
+		java.sql.PreparedStatement ps1 = con.prepareStatement(sql);
+		stmt.executeUpdate(sql);
+		
+		}
+	 catch (SQLException e) {e.printStackTrace();
+	
+	}
+	
+}
+//===============================================//
+
+//==================LOAD GROUP========================//
+private void LoadGroup(Connection con, LoadGroup_Entity log) {
+	// TODO Auto-generated method stub
+	   Statement stmt;
+	   String[] grop;
+	   try 
+		{
+		
+			stmt = con.createStatement();
+			if (log.getChoice()==2){
+			String s="SELECT * FROM myBox.Groups";
+			ResultSet rs= stmt.executeQuery(s);
+			while(rs.next()){
+					log.getGroups().add(rs.getString("GroupName"));
+			}
+		
+			//grop=log.getGroups().toArray(new String[log.getGroups().size()]);
+			}
+			if (log.getChoice()==1 || log.getChoice()==3){
+				String s="select  distinct GroupName "+
+						"from mybox.users ,mybox.useringroup, mybox.groups "+
+						"where  useringroup.IdUser =" + log.getUser().getIDuser() + " and groups.IDGroup = useringroup.IDGroup";
+				ResultSet rs= stmt.executeQuery(s);
+				while(rs.next()){
+						log.getGroups().add(rs.getString("GroupName"));
+				}
+			
+				//grop=log.getGroups().toArray(new String[log.getGroups().size()]);
+			}
+			
+	}
+   
+	
+	 catch (SQLException e) {e.printStackTrace();
+	
+	}
+}
+//===============REQUEST===============================//
+private void request(Connection con, Request_Entity log) {
+	// TODO Auto-generated method stub
+	 Statement stmt;
+	 String s = null;
+	 try 
+		{
+			stmt = con.createStatement();
+			if (log.getRadio()==2)
+			{
+				s="INSERT INTO adminrequsts(RequestType,status,UserId)"
+						+" VALUES('RemovePeopleToGroup "+log.getChooise()+"','0','"+log.getUser().getIDuser()+"');"; 
+					 stmt.executeUpdate(s);
+			}
+			else if (log.getRadio()==1)
+			{
+				s="INSERT INTO adminrequsts(RequestType,status,UserId)"
+						+" VALUES('AddPeopleToGroup "+log.getChooise()+"','0','"+log.getUser().getIDuser()+"');"; // add row to all admin request";
+					 stmt.executeUpdate(s);
+			}
+	 		else if (log.getRadio()==3)
+	 		{
+			s="INSERT INTO adminrequsts(RequestType,status,UserId)"
+					+" VALUES('Delete "+log.getChooise()+"','0','"+log.getUser().getIDuser()+"');"; // add row to all admin request";
+				 stmt.executeUpdate(s);
+	 		}
+		}
+	 
+	   
+		 catch (SQLException e) {e.printStackTrace();
+		
+		}
+	
+}
+
+
+private void changegroup(Connection con, Group_Entity log) {
+	// TODO Auto-generated method stub
+	 Statement stmt;
+	 int id = 0;
+	 String name;
+	 String Des;
+	   try 
+		{
+		
+			stmt = con.createStatement();
+			if (log.getGroupname().equals(null)==false && log.getGroupdescript().equals(null)==false)
+			{
+			String s="SELECT IDGroup FROM myBox.Groups";
+			ResultSet rs= stmt.executeQuery(s);
+			while(rs.next()){
+					id = rs.getInt("IDGroup");
+			}
+			String sql= "UPDATE mybox.groups SET GroupName = "+log.getGroupname()+" GroupDescription = "
+			+log.getGroupdescript()+" WHERE IDGroup = "+ id +";";
+			java.sql.PreparedStatement ps1 = con.prepareStatement(sql);
+			stmt.executeUpdate(sql);
+			}
+			else if (log.getGroupname().equals(null)==true && log.getGroupdescript().equals(null)==true)
+			{
+				return;
+			}
+			else if (log.getGroupname().equals(null)==false && log.getGroupdescript().equals(null)==true)
+			{
+				String s="SELECT IDGroup FROM myBox.Groups";
+				ResultSet rs= stmt.executeQuery(s);
+				while(rs.next()){
+						id = rs.getInt("IDGroup");
+				}
+				String sql= "UPDATE mybox.groups SET GroupName = '"+log.getGroupname()+"' WHERE IDGroup = "+ id +";";
+				java.sql.PreparedStatement ps1 = con.prepareStatement(sql);
+				stmt.executeUpdate(sql);
+			}
+			else if (log.getGroupname().equals(null)==true && log.getGroupdescript().equals(null)==false)
+			{
+				String s="SELECT IDGroup FROM myBox.Groups";
+				ResultSet rs= stmt.executeQuery(s);
+				while(rs.next()){
+						id = rs.getInt("IDGroup");
+				}
+				String sql= "UPDATE mybox.groups SET GroupDescription = '"
+				+log.getGroupdescript()+"' WHERE IDGroup = "+ id +";";
+				java.sql.PreparedStatement ps1 = con.prepareStatement(sql);
+				stmt.executeUpdate(sql);
+			}
+			
+		}
+	   
+		
+		 catch (SQLException e) {e.printStackTrace();
+		
+		}
+	
+	
+	
+}
+
+
+
+
 
 /*
 public TreeNode buildTree(){

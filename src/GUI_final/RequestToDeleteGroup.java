@@ -3,6 +3,7 @@ package GUI_final;
 import java.awt.EventQueue;
 
 import javax.swing.DefaultListModel;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
@@ -18,12 +19,13 @@ import javax.swing.event.ListSelectionListener;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+
 import javax.swing.ImageIcon;
+
 import java.awt.Color;
 
 public class RequestToDeleteGroup extends AbstractGUI{
 
-	private JList list;
 	private JButton b1Ok;
 	private JButton b1Beck;
 	private JButton b2Send;
@@ -35,6 +37,7 @@ public class RequestToDeleteGroup extends AbstractGUI{
 	private JLabel lgroup;
 	private JLabel lblSelectGroup;
 	private JLabel lblNewLabel;
+	private JComboBox<Object> choiceGroup;
 
 
 	/**
@@ -61,18 +64,12 @@ public class RequestToDeleteGroup extends AbstractGUI{
 		lblDeletGroupWindow.setBounds(138, 39, 487, 101);
 		AskTo.add(lblDeletGroupWindow);
 		
-		list = new JList();
-		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		list.setBounds(35, 240, 172, 176);
-		AskTo.add(list);
-		DefaultListModel Glist = new DefaultListModel(); // need to fix get info from db
-		Glist.addElement("sandra");
-		Glist.addElement("yael");
-		Glist.addElement("sigal");
-		Glist.addElement("Sima ");
-		Glist.addElement("Sveta");
-		Glist.addElement("En Ma");
-		list.setModel(Glist);
+		
+
+		choiceGroup = new JComboBox<Object>();
+		choiceGroup.setBounds(6, 208, 185, 20);
+		AskTo.add(choiceGroup);
+		
 		
 		
 		panelbutton = new JPanel();
@@ -122,35 +119,6 @@ public class RequestToDeleteGroup extends AbstractGUI{
 		AreUSure.add(lgroup);
 	}
 	
-	 public void ButtonPressedActionlistinerOk(ActionListener listenforokbutton) {
-			b1Ok.addActionListener(listenforokbutton);
-		}
-	 public void ButtonPressedActionlistinerNextBeck(ActionListener listenforbeckbutton) {
-			b2Beck.addActionListener(listenforbeckbutton);
-		}
-	 
-	 public void ButtonPressedActionlistinerBeck(ActionListener listenforbeckbutton) {
-			b1Beck.addActionListener(listenforbeckbutton);
-		}
-	 
-	 public void isselected(ListSelectionListener listsection)
-	 {
-		 list.getSelectionModel().addListSelectionListener(listsection);;
-	 }
-	/*--------------------------------------------------- 
-	 public void ButtonPressedActionlistinersend(ActionListener listenforbeckbutton) {
-			b2Send.addActionListener(listenforbeckbutton);
-		}
-	---------------------------------------------- */
-
-
-	public JList getList() {
-		return list;
-	}
-
-	public void setList(JList list) {
-		this.list = list;
-	}
 
 	public JButton getB1Ok() {
 		return b1Ok;
@@ -223,4 +191,22 @@ public class RequestToDeleteGroup extends AbstractGUI{
 	public void setLgroup(JLabel lgroup) {
 		this.lgroup = lgroup;
 	}
+
+	public JButton getB1Beck() {
+		return b1Beck;
+	}
+
+	public void setB1Beck(JButton b1Beck) {
+		this.b1Beck = b1Beck;
+	}
+
+	public JComboBox<Object> getChoiceGroup() {
+		return choiceGroup;
+	}
+
+	public void setChoiceGroup(JComboBox<Object> choiceGroup) {
+		this.choiceGroup = choiceGroup;
+	}
+	
+	
 }

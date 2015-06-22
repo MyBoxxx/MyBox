@@ -69,6 +69,7 @@ public class GroupAction_controller extends AbstractTransfer{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
+			
 				egc = new editGroup_Controller(MainClient.clien.currUser,groupc);
 				view.dispose();
 				groupc.setVisible(true);
@@ -94,9 +95,9 @@ public class GroupAction_controller extends AbstractTransfer{
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				atjrfgc = new AskToJoinRemoveFromGroupController(MainClient.clien.currUser,ask);
+				atjrfgc.Control();
 				view.dispose();
 				ask.setVisible(true);
-				atjrfgc.Control();
 			}
 		});
 		

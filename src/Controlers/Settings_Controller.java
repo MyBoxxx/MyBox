@@ -1,6 +1,10 @@
 package Controlers;
 
 import java.awt.event.ActionEvent;
+
+import Client.MainClient;
+import Entity.*;
+
 import java.awt.event.ActionListener;
 import java.util.ResourceBundle.Control;
 
@@ -16,24 +20,37 @@ public class Settings_Controller extends AbstractTransfer {
 	
 	private User_Entity model;
 	private Settings_GUI view;
+	public String s;
 	
 	public Settings_Controller(User_Entity model, Settings_GUI view) {
 		super();
 		this.model = model;
 		this.view = view;
+		init();
 	}
+	private void init() {
+		// TODO Auto-generated method stub
+		view.getTxtfieldUserID().setText(model.getUsername());
+		
+	}
+	
 	
 	public void control(){
 		view.getBtnChangeName().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String result = JOptionPane.showInputDialog(view, "Enter New Name");
 				view.setTxtmyname(result);
+				s=result;
+				
 			}
 		});
 		
 		view.getBtnSaveSettings().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				sendToServer(model);
+				SettingsName_Entitiy sett= new SettingsName_Entitiy();
+				sett.setOlduser(MainClient.clien.currUser);
+				sett.getNewuser().setUsername(s);
+				sendToServer(sett);
 			}
 		});
 		
@@ -57,9 +74,11 @@ public class Settings_Controller extends AbstractTransfer {
 		
 		view.getBtnChangePwd().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				model.setOldPassword(view.getPwdCurrentPwd().getText());
-				model.setNewPassword(view.getPwdNewPwd().getText());
-				sendToServer(model);
+				
+				Settings_Entity settp= new Settings_Entity();
+				settp.setOlduser(MainClient.clien.currUser);
+				settp.getNewuser().setPassword((view.getPwdNewPwd()).getText());
+				sendToServer(settp);
 				JOptionPane.showMessageDialog(view, "Password Changed");
 			}
 		});

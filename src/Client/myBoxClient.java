@@ -5,10 +5,13 @@
 package Client;
 
 import ocsf.client.*;
+import Controlers.AskToJoinRemoveFromGroupController;
 import Controlers.ForgotPassword_Controller;
 import Controlers.LogIn_Controller;
 import Controlers.RecycleBin_controller;
+import Controlers.RequestToDeleteGroup_Controller;
 import Controlers.SystemAdminRequestsScreen_Controller;
+import Controlers.editGroup_Controller;
 import Entity.*;
 
 import java.io.*;
@@ -134,6 +137,15 @@ public class myBoxClient extends ObservableClient {
 			if(message instanceof Rename_Entity){
 				((Controller) currController).ShowMessage(((Rename_Entity)message).getAnswer());;
 				((Controller) currController).refreshListAndTree();
+			}
+			if(message instanceof LoadGroup_Entity)
+			{
+				if(((LoadGroup_Entity) message).getChoice()==3)
+					((editGroup_Controller) currController).FillGroup(((LoadGroup_Entity) message));
+				else if(((LoadGroup_Entity) message).getChoice()==2)
+					((AskToJoinRemoveFromGroupController) currController).FillGroup(((LoadGroup_Entity) message));
+				else if(((LoadGroup_Entity) message).getChoice()==1)
+					((RequestToDeleteGroup_Controller) currController).FillGroup(((LoadGroup_Entity) message));
 			}
 			
 		
