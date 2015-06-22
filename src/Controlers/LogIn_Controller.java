@@ -42,7 +42,7 @@ public class LogIn_Controller extends AbstractTransfer{
 		view.setVisible(true);
 		try {
 			forgot_gui = new ForgotPassword_GUI();
-			forgot_con = new ForgotPassword_Controller(new ForgotPassword_Entity(), forgot_gui);
+			forgot_con = new ForgotPassword_Controller(new ForgatPassword_Entity(model), forgot_gui);
 			Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 			forgot_gui.setLocation(dim.width/2-forgot_gui.getSize().width/2, dim.height/2-forgot_gui.getSize().height/2);
 			forgot_con.control();

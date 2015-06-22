@@ -27,6 +27,7 @@ public class ForgotPassword_GUI extends JFrame {
 	private JPanel contentPane;
 	private JTextField txtEmail;
 	private JButton sumbit;
+	private JLabel show_password;
 
 
 	public static  void main(String[] args) {
@@ -94,10 +95,25 @@ public class ForgotPassword_GUI extends JFrame {
 		    txtEmail.setBounds(226, 353, 360, 20);
 		    contentPane.add(txtEmail);
 		    txtEmail.setColumns(10);
+		    
+		    show_password = new JLabel("");
+		    show_password.setForeground(Color.RED);
+		    show_password.setBounds(226, 409, 360, 29);
+		    contentPane.add(show_password);
 	}
 	public JTextField getTxtEmail() {
 		return txtEmail;
 	}
+
+	public JLabel getShow_password() {
+		return show_password;
+	}
+
+
+	public void setShow_password(JLabel show_password) {
+		this.show_password = show_password;
+	}
+
 
 	public void setTxtEmail(String newtxtEmail) {
 		this.txtEmail.setText(newtxtEmail); 
@@ -110,5 +126,4 @@ public class ForgotPassword_GUI extends JFrame {
 	public void setSumbit(JButton sumbit) {
 		this.sumbit = sumbit;
 	}
-
 }

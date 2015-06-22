@@ -55,8 +55,7 @@ public class EditGroup extends AbstractGUI {
 		getContentPane().add(lSelected);
 		
 		comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"1", "2", "3", "4", "5"}));
-		comboBox.setMaximumRowCount(100);
+		comboBox.setM aximumRowCount(100);
 		comboBox.setBounds(313, 61, 117, 42);
 		getContentPane().add(comboBox);
 		comboBox.addActionListener(new ActionListener() {

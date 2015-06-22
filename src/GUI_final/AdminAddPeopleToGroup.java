@@ -3,10 +3,13 @@ package GUI_final;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
+import javax.print.DocFlavor.STRING;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTextPane;
 
@@ -17,6 +20,8 @@ import java.awt.Color;
 import java.awt.Font;
 
 import javax.swing.JLabel;
+
+
 
 import java.awt.SystemColor;
 import java.awt.event.ActionListener;
@@ -31,22 +36,24 @@ public class AdminAddPeopleToGroup extends AbstractGUI {
 	private JButton cancelButton;
 	private JButton OkButton;
 	private TextField textField;
-	private JTextPane textPane;
-	private Choice choose_user;
-	private JTextPane txtpnChooseUser_1;
-	private JTextPane txtpnChooseGroup;
-	private Choice choiceGroup;
-	private JLabel lblNewLabel;
+	private JTextField UserText;
+	private JTextField GroupFiled;
+	private JTextPane txtpnU;
+	private JTextPane txtpnGroup;
+	private String grp = new String();
+	private String usr = new String();
+	private JTextPane txtpnReason;
+	private JLabel CreateLabel;
 	
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	public void init(final String grp, final String usr) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					AdminAddPeopleToGroup frame = new AdminAddPeopleToGroup();
+					AdminAddPeopleToGroup frame = new AdminAddPeopleToGroup(grp ,usr);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -58,8 +65,12 @@ public class AdminAddPeopleToGroup extends AbstractGUI {
 	/**
 	 * Create the frame.
 	 */
-	public AdminAddPeopleToGroup() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	
+	public AdminAddPeopleToGroup(String grp, String usr) {
+		this.usr = usr;
+		this.grp = grp;
+		
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 800, 600);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(59, 89, 151));
@@ -67,71 +78,114 @@ public class AdminAddPeopleToGroup extends AbstractGUI {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		choiceGroup = new Choice();
-		choiceGroup.setBounds(430, 256, 185, 20);
-		choiceGroup.add("");
-		choiceGroup.add("100");
-		choiceGroup.add("ein ma");
-		choiceGroup.add("peter");
-		contentPane.add(choiceGroup);
-		
-		txtpnChooseGroup = new JTextPane();
-		txtpnChooseGroup.setForeground(SystemColor.textHighlightText);
-		txtpnChooseGroup.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		txtpnChooseGroup.setText("Choose Group");
-		txtpnChooseGroup.setBackground(new Color(59, 89, 151));
-		txtpnChooseGroup.setBounds(430, 230, 185, 20);
-		contentPane.add(txtpnChooseGroup);
-		
-		txtpnChooseUser_1 = new JTextPane();
-		txtpnChooseUser_1.setForeground(SystemColor.textHighlightText);
-		txtpnChooseUser_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		txtpnChooseUser_1.setText("Choose User");
-		txtpnChooseUser_1.setBackground(new Color(59, 89, 151));
-		txtpnChooseUser_1.setBounds(430, 282, 137, 20);
-		contentPane.add(txtpnChooseUser_1);
-		
-		choose_user = new Choice();
-		choose_user.add("");
-		choose_user.add("100");
-		choose_user.add("ein ma");
-		choose_user.add("peter");
-		choose_user.setBounds(430, 308, 185, 20);
-		contentPane.add(choose_user);
-		
-		textPane = new JTextPane();
-		textPane.setForeground(SystemColor.textHighlightText);
-		textPane.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		textPane.setText("Reason");
-		textPane.setBackground(new Color(59, 89, 151));
-		textPane.setBounds(430, 334, 67, 20);
-		contentPane.add(textPane);
-		
 		textField = new TextField();
-		textField.setBounds(430, 359, 185, 20);
+		textField.setBounds(427, 359, 185, 20);
 		contentPane.add(textField);
 		
-		OkButton = new JButton();		
-		OkButton.setIcon(new ImageIcon("src/GUI_final/OkButton.jpg"));
-		OkButton.setBounds(174, 426, 120, 42);
+		OkButton = new JButton();	
+		OkButton.setIcon(new ImageIcon("images/approved.png"));
+		OkButton.setOpaque(false);
+		OkButton.setContentAreaFilled(false); 
+		OkButton.setBorderPainted(false); 
+		OkButton.setBounds(174, 426, 150, 54);
 		contentPane.add(OkButton);
 		
 		cancelButton = new JButton();
-		cancelButton.setIcon(new ImageIcon("src/GUI_final/cancelButton.jpg"));
-		cancelButton.setBounds(442, 426, 209, 42);
+		cancelButton.setIcon(new ImageIcon("images/reject.png"));
+		cancelButton.setOpaque(false);
+		cancelButton.setContentAreaFilled(false); 
+		cancelButton.setBorderPainted(false); 
+		cancelButton.setBounds(442, 426, 150, 54);
 		contentPane.add(cancelButton);
 		
 		join= new JLabel();
-		join.setIcon(new ImageIcon("src/GUI_final/join.jpeg"));
-		join.setBounds(131, 167, 260	, 165);
+		join.setIcon(new ImageIcon("images/join.jpeg"));
+		join.setBounds(47, 250, 260	, 165);
 		contentPane.add(join);
 		
-		lblNewLabel = new JLabel("");
-		lblNewLabel.setIcon(new ImageIcon(AdminAddPeopleToGroup.class.getResource("/GUI_final/Add-People-To-Group.png")));
-		lblNewLabel.setBounds(146, 39, 479, 47);
-		contentPane.add(lblNewLabel);
+		UserText = new JTextField(usr);
+		UserText.setHorizontalAlignment(JTextField.LEFT);
+		UserText.setEditable(false);
+		UserText.setText(getUsr());
+		UserText.setBounds(426, 255, 185, 20);
+		contentPane.add(UserText);
+		
+		GroupFiled = new JTextField();
+		GroupFiled.setHorizontalAlignment(JTextField.LEFT);
+		GroupFiled.setEditable(false);
+		GroupFiled.setText(getGrp());
+		GroupFiled.setBounds(427, 309, 185, 20);
+		contentPane.add(GroupFiled);
+		
+		txtpnU = new JTextPane();
+		txtpnU.setBackground(Color.GREEN);
+		txtpnU.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		txtpnU.setText("User");
+		txtpnU.setBounds(338, 256, 73, 20);
+		contentPane.add(txtpnU);
+		
+		txtpnGroup = new JTextPane();
+		txtpnGroup.setBackground(Color.GREEN);
+		txtpnGroup.setText("Group\r\n");
+		txtpnGroup.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		txtpnGroup.setBounds(338, 308, 73, 20);
+		contentPane.add(txtpnGroup);
+		
+		txtpnReason = new JTextPane();
+		txtpnReason.setText("Reason\r\n");
+		txtpnReason.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		txtpnReason.setBackground(Color.GREEN);
+		txtpnReason.setBounds(339, 359, 73, 20);
+		contentPane.add(txtpnReason);
+		
+		CreateLabel = new JLabel("");
+		CreateLabel.setIcon(new ImageIcon("images/Add-People-To-Group.png"));
+		CreateLabel.setBounds(37, 32, 535, 199);
+		contentPane.add(CreateLabel);
 	}
 
+
+	public JTextPane getTxtpnU() {
+		return txtpnU;
+	}
+
+	public void setTxtpnU(JTextPane txtpnU) {
+		this.txtpnU = txtpnU;
+	}
+
+	public JTextPane getTxtpnGroup() {
+		return txtpnGroup;
+	}
+
+	public void setTxtpnGroup(JTextPane txtpnGroup) {
+		this.txtpnGroup = txtpnGroup;
+	}
+
+	public JTextPane getTxtpnReason() {
+		return txtpnReason;
+	}
+
+	public void setTxtpnReason(JTextPane txtpnReason) {
+		this.txtpnReason = txtpnReason;
+	}
+
+	public JTextField getUserText() {
+		return UserText;
+	}
+
+	public void setUserText(JTextField userText) {
+		UserText = userText;
+	}
+
+	public JTextField getGroupFiled() {
+		return GroupFiled;
+	}
+
+	public void setGroupFiled(JTextField groupFiled) {
+		GroupFiled = groupFiled;
+	}
+
+	
 
 	public void okListner(ActionListener listenForOkButton){
 		OkButton.addActionListener(listenForOkButton);
@@ -173,44 +227,29 @@ public class AdminAddPeopleToGroup extends AbstractGUI {
 		this.textField = textField;
 	}
 
-	public JTextPane getTextPane() {
-		return textPane;
+
+
+	public JLabel getCreateLabel() {
+		return CreateLabel;
 	}
 
-	public void setTextPane(JTextPane textPane) {
-		this.textPane = textPane;
+	public void setCreateLabel(JLabel createLabel) {
+		CreateLabel = createLabel;
 	}
 
-	public Choice getChoose_user() {
-		return choose_user;
+	public String getGrp() {
+		return grp;
 	}
 
-	public void setChoose_user(Choice choose_user) {
-		this.choose_user = choose_user;
+	public void setGrp(String grp) {
+		this.grp = grp;
 	}
 
-	public JTextPane getTxtpnChooseUser_1() {
-		return txtpnChooseUser_1;
+	public String getUsr() {
+		return usr;
 	}
 
-	public void setTxtpnChooseUser_1(JTextPane txtpnChooseUser_1) {
-		this.txtpnChooseUser_1 = txtpnChooseUser_1;
+	public void setUsr(String usr) {
+		this.usr = usr;
 	}
-
-	public JTextPane getTxtpnChooseGroup() {
-		return txtpnChooseGroup;
-	}
-
-	public void setTxtpnChooseGroup(JTextPane txtpnChooseGroup) {
-		this.txtpnChooseGroup = txtpnChooseGroup;
-	}
-
-	public Choice getChoiceGroup() {
-		return choiceGroup;
-	}
-
-	public void setChoiceGroup(Choice choiceGroup) {
-		this.choiceGroup = choiceGroup;
-	}
-
 }

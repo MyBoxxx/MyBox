@@ -1,10 +1,12 @@
 package SampleTreeFileView;
 
 import java.awt.Container;
+import java.math.BigInteger;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.io.File;
+import java.math.BigInteger;
 import java.sql.Date;
 
 import javax.swing.Icon;
@@ -40,12 +42,16 @@ import Client.myBoxClient;
 import Controlers.LogIn_Controller;
 import Entity.User_Entity;
 import GUI_final.AbstractGUI;
+
 import javax.swing.ListSelectionModel;
 
 public class View extends AbstractGUI{
 
     /** Title of the application */
      static final String APP_TITLE = "MyBox";
+     private static final String INITIAL_VALUE = "0";
+     
+	    private BigInteger m_total;  // The total current value state.
 
 	/** Main GUI container */
      static JPanel gui;
@@ -740,7 +746,12 @@ public void setTree(JTree tree) {
 public JTree getTree() {
 		return tree;
 	}
+public void reset() {
+    m_total = new BigInteger(INITIAL_VALUE);
+}
 	
+
+
 }
 
 

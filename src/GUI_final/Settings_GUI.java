@@ -100,7 +100,7 @@ public class Settings_GUI extends AbstractGUI {
 		ProfilePanel.add(UserImage);
 		  
 		JLabel LblUserID = new JLabel("Mybox user ID");
-		LblUserID.setBounds(243, 250, 73, 14);
+		LblUserID.setBounds(243, 250, 116, 14);
 		ProfilePanel.add(LblUserID);
 		  
 		  txtfieldUserID = new JTextField();
@@ -124,7 +124,7 @@ public class Settings_GUI extends AbstractGUI {
 		  ProfilePanel.add(txtDate);
 		  
 		  JLabel lblStatus = new JLabel("Status");
-		  lblStatus.setBounds(243, 287, 73, 14);
+		  lblStatus.setBounds(243, 287, 97, 14);
 		  ProfilePanel.add(lblStatus);
 		  
 		  txtActive = new JTextField();

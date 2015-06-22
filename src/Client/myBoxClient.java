@@ -5,8 +5,11 @@
 package Client;
 
 import ocsf.client.*;
+import Controlers.AskToJoinRemoveFromGroupController;
 import Controlers.LogIn_Controller;
+import Controlers.RequestToDeleteGroup_Controller;
 import Controlers.SystemAdminRequestsScreen_Controller;
+import Controlers.editGroup_Controller;
 import Entity.*;
 
 import java.io.*;
@@ -14,8 +17,10 @@ import java.io.*;
 import Entity.*;
 
 import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Enumeration;
 
+import javax.swing.JComboBox;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
@@ -75,6 +80,7 @@ public class myBoxClient extends ObservableClient {
 	 * @param msg
 	 *            The message from the server.
 	 */
+	@SuppressWarnings("unchecked")
 	public synchronized void handleMessageFromServer(Object message) {
 		System.out.println("Message received: " + message + " from Server");
 		try {
@@ -118,6 +124,17 @@ public class myBoxClient extends ObservableClient {
 				((Controller) currController).setTree(((DirectoryTreeModel)message).getDir(),((DirectoryTreeModel)message).getShared());
 				((Controller) currController).updateFileTable(((DirectoryTreeModel) message));
 			}
+			//**********************NEW*********************************
+			if(message instanceof LoadGroup_Entity)
+			{
+				if(((LoadGroup_Entity) message).getChoice()==3)
+					((editGroup_Controller) currController).FillGroup(((LoadGroup_Entity) message));
+				else if(((LoadGroup_Entity) message).getChoice()==2)
+					((AskToJoinRemoveFromGroupController) currController).FillGroup(((LoadGroup_Entity) message));
+				else if(((LoadGroup_Entity) message).getChoice()==1)
+					((RequestToDeleteGroup_Controller) currController).FillGroup(((LoadGroup_Entity) message));
+			}
+			
 			
 			
 		

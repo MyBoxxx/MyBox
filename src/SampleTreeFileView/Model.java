@@ -31,10 +31,17 @@ import Client.MainClient;
 import Entity.Abstract_Entity;
 import Entity.MyFile;
 import GUI_final.CreateFolderScreen;
+import java.math.BigInteger;
 
 public class Model extends Abstract_Entity implements Serializable{
 	
 	private int UserID;
+	
+	    //... Constants
+	    private static final String INITIAL_VALUE = "0";
+	    private BigInteger m_total;  // The total current value state.
+	    //... Member variable defining state of calculator.
+	
 	
 	/** File-system tree. Built Lazily */
 	private JTree tree;
@@ -140,6 +147,11 @@ public void setDesktop(Desktop desktop){
 
 
 */
+
+public void reset() {
+    m_total = new BigInteger(INITIAL_VALUE);
+}
+
 
 }
 

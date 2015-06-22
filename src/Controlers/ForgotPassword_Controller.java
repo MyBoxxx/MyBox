@@ -17,10 +17,12 @@ import Entity.*;
 
 public class ForgotPassword_Controller extends AbstractTransfer{
 
-	static ForgotPassword_Entity model ;
-	static ForgotPassword_GUI view;
+	private ForgatPassword_Entity model;
+	private ForgotPassword_GUI view;
 	
-	ForgotPassword_Controller(ForgotPassword_Entity model,ForgotPassword_GUI view){
+	
+	public ForgotPassword_Controller(ForgatPassword_Entity model,ForgotPassword_GUI view)
+	{
 		this.model = model;
 		this.view = view;
 	}
@@ -46,32 +48,11 @@ public class ForgotPassword_Controller extends AbstractTransfer{
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
-			if(view.getTxtEmail().getText().equals("eyal")) 
-				{
-				JOptionPane.showMessageDialog(view.getContentPane(),  "Login OK!.");
-	        	
-				}
-			else {
-				JOptionPane.showMessageDialog(view.getContentPane(),  "Login Failed!.");
+			sendToServer(model);
 				
 			}
-		}
-	});
-	}
-
-	public static ForgotPassword_Entity getModel() {
-		return model;
-	}
-
-	public static void setModel(ForgotPassword_Entity model) {
-		ForgotPassword_Controller.model = model;
-	}
-
-	public static ForgotPassword_GUI getView() {
-		return view;
-	}
-
-	public static void setView(ForgotPassword_GUI view) {
-		ForgotPassword_Controller.view = view;
-	}
+		});
 }
+}
+
+

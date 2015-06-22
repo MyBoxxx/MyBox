@@ -36,7 +36,7 @@ public class Adminbar extends AbstractGUI {
 	/**
 	 * Launch the application.
 	 */
-	public void Initialize(){//*static  void main(String[] args) {**//
+	public static  void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -165,23 +165,7 @@ public class Adminbar extends AbstractGUI {
 		return Cover;
 	}
 
-	public void setCover(JLabel cover) {
+	public void setCover(JLabel cover) { 
 		Cover = cover;
-	}
-
-	public void ChangeFMSLitsner(ActionListener listenForChnageFMSButton){
-		 btnChangeFms.addActionListener(listenForChnageFMSButton);
-	}
-	
-	public void NotifcationYesLitsner(ActionListener listenForNotifcationYesButton){
-		NotifcationYes.addActionListener(listenForNotifcationYesButton);
-	}
-	
-	public void NotifcationNoLitsner(ActionListener listenForNotifcationNoButton){
-		NotifcationYes.addActionListener(listenForNotifcationNoButton);
-	}
-	
-	public void QuitLitsner(ActionListener listenForQuitButton){
-		btnQuit.addActionListener(listenForQuitButton);
 	}
 }

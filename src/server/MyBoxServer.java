@@ -28,7 +28,10 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.IOFileFilter;
 import org.apache.commons.io.filefilter.TrueFileFilter;
 
+import com.mysql.jdbc.PreparedStatement;
+
 import net.proteanit.sql.DbUtils;
+import Client.MainClient;
 import Entity.*;
 import SampleTreeFileView.DirectoryTreeModel;
 import SampleTreeFileView.FileModel;
@@ -226,10 +229,50 @@ public class MyBoxServer extends AbstractServer
 	        		e.printStackTrace();
 	        	}
 	        }
+	       // ******CHANGE USER NAME******************///
+	        if(msg instanceof SettingsName_Entitiy){
+	        	
+		    	changename(conn,((SettingsName_Entitiy)msg));
+		  
+		    }
+	        //******************************//
 	        
+	        // ******CHANGE USER NAME******************///
+	        if(msg instanceof Settings_Entity){
+	        	
+		    	changepaword(conn,((Settings_Entity)msg));
+		  
+		    }
+	        //******************************//
 	        
+	        // ******Load GroupsE******************///
+	        if(msg instanceof LoadGroup_Entity){
+	        	
+		    	LoadGroup(conn,((LoadGroup_Entity)msg));
+		    	try {
+					client.sendToClient(msg);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		  
+		    }
+	        //******************************//
 	        
+	        // ******request to admin******************///
+	        if(msg instanceof Request_Entity){
+	        	
+		    	request(conn,((Request_Entity)msg));
+		  
+		    }
+	        //******************************//
 	        
+	        // ******request to admin******************///
+	        
+	        if(msg instanceof Group_Entity){
+	        	changegroup(conn,((Group_Entity)msg));
+	        }
+	      //******************************//
 
 	    }catch (SQLException ex) 
 	 	    {/* handle any errors*/
@@ -237,12 +280,148 @@ public class MyBoxServer extends AbstractServer
 	        System.out.println("SQLState: " + ex.getSQLState());
 	        System.out.println("VendorError: " + ex.getErrorCode());
 	        }
-	  	
-	    
+	  
+	  
+	  				
+	  
 	  	//client.sendToClient(msg);
 	  }
+  
+  
+private void changegroup(Connection con, Group_Entity log) {
+	// TODO Auto-generated method stub
+	 Statement stmt;
+	 int id = 0;
+	 String name;
+	 String Des;
+	   try 
+		{
+		
+			stmt = con.createStatement();
+			if (log.getGroupname().equals(null)==false && log.getGroupdescript().equals(null)==false)
+			{
+			String s="SELECT IDGroup FROM myBox.Groups";
+			ResultSet rs= stmt.executeQuery(s);
+			while(rs.next()){
+					id = rs.getInt("IDGroup");
+			}
+			String sql= "UPDATE mybox.groups SET GroupName = "+log.getGroupname()+" GroupDescription = "
+			+log.getGroupdescript()+" WHERE IDGroup = "+ id +";";
+			java.sql.PreparedStatement ps1 = con.prepareStatement(sql);
+			stmt.executeUpdate(sql);
+			}
+			else if (log.getGroupname().equals(null)==true && log.getGroupdescript().equals(null)==true)
+			{
+				return;
+			}
+			else if (log.getGroupname().equals(null)==false && log.getGroupdescript().equals(null)==true)
+			{
+				String s="SELECT IDGroup FROM myBox.Groups";
+				ResultSet rs= stmt.executeQuery(s);
+				while(rs.next()){
+						id = rs.getInt("IDGroup");
+				}
+				String sql= "UPDATE mybox.groups SET GroupName = '"+log.getGroupname()+"' WHERE IDGroup = "+ id +";";
+				java.sql.PreparedStatement ps1 = con.prepareStatement(sql);
+				stmt.executeUpdate(sql);
+			}
+			else if (log.getGroupname().equals(null)==true && log.getGroupdescript().equals(null)==false)
+			{
+				String s="SELECT IDGroup FROM myBox.Groups";
+				ResultSet rs= stmt.executeQuery(s);
+				while(rs.next()){
+						id = rs.getInt("IDGroup");
+				}
+				String sql= "UPDATE mybox.groups SET GroupDescription = '"
+				+log.getGroupdescript()+"' WHERE IDGroup = "+ id +";";
+				java.sql.PreparedStatement ps1 = con.prepareStatement(sql);
+				stmt.executeUpdate(sql);
+			}
+			
+		}
+	   
+		
+		 catch (SQLException e) {e.printStackTrace();
+		
+		}
+	
+	
+	
+}
 
-   /* 
+private void request(Connection con, Request_Entity log) {
+	// TODO Auto-generated method stub
+	 Statement stmt;
+	 String s = null;
+	 try 
+		{
+			stmt = con.createStatement();
+			if (log.getRadio()==2)
+			{
+				s="INSERT INTO adminrequsts(RequestType,status,UserId)"
+						+" VALUES('RemovePeopleToGroup "+log.getChooise()+"','0','"+log.getUser().getIDuser()+"');"; 
+					 stmt.executeUpdate(s);
+			}
+			else if (log.getRadio()==1)
+			{
+				s="INSERT INTO adminrequsts(RequestType,status,UserId)"
+						+" VALUES('AddPeopleToGroup "+log.getChooise()+"','0','"+log.getUser().getIDuser()+"');"; // add row to all admin request";
+					 stmt.executeUpdate(s);
+			}
+	 		else if (log.getRadio()==3)
+	 		{
+			s="INSERT INTO adminrequsts(RequestType,status,UserId)"
+					+" VALUES('Delete "+log.getChooise()+"','0','"+log.getUser().getIDuser()+"');"; // add row to all admin request";
+				 stmt.executeUpdate(s);
+	 		}
+		}
+	 
+	   
+		 catch (SQLException e) {e.printStackTrace();
+		
+		}
+	
+}
+
+//==========================================//
+   private void LoadGroup(Connection con, LoadGroup_Entity log) {
+	// TODO Auto-generated method stub
+	   Statement stmt;
+	   String[] grop;
+	   try 
+		{
+		
+			stmt = con.createStatement();
+			if (log.getChoice()==2){
+			String s="SELECT * FROM myBox.Groups";
+			ResultSet rs= stmt.executeQuery(s);
+			while(rs.next()){
+					log.getGroups().add(rs.getString("GroupName"));
+			}
+		
+			//grop=log.getGroups().toArray(new String[log.getGroups().size()]);
+			}
+			if (log.getChoice()==1 || log.getChoice()==3){
+				String s="select  distinct GroupName "+
+						"from mybox.users ,mybox.useringroup, mybox.groups "+
+						"where  useringroup.IdUser =" + log.getUser().getIDuser() + " and groups.IDGroup = useringroup.IDGroup";
+				ResultSet rs= stmt.executeQuery(s);
+				while(rs.next()){
+						log.getGroups().add(rs.getString("GroupName"));
+				}
+			
+				//grop=log.getGroups().toArray(new String[log.getGroups().size()]);
+				}
+			
+		}
+	   
+		
+		 catch (SQLException e) {e.printStackTrace();
+		
+		}
+}
+
+/* 
  private void SystemAdminRequestScree_List_getList(Connection conn,
 		SystemAdminRequestScree_List msg) {
 	 Statement stmt;
@@ -264,6 +443,54 @@ public class MyBoxServer extends AbstractServer
 }
 
 */
+//=========================Change password
+private void changepaword(Connection con, Settings_Entity log) {
+	// TODO Auto-generated method stub
+	Statement stmt;
+	int id =0;
+	try 
+	{
+	
+		stmt = con.createStatement();
+		String s="SELECT UserID FROM mybox.Users where UserName = '"+log.getOlduser().getUsername()+"' ;";
+		ResultSet rs= stmt.executeQuery(s);
+		while(rs.next()){
+		id = rs.getInt("UserID");
+		}
+		String sql= "UPDATE mybox.users SET Password = '"+log.getNewuser().getPassword()+"' WHERE UserID = '"+ id +"';";
+		java.sql.PreparedStatement ps1 = con.prepareStatement(sql);
+		stmt.executeUpdate(sql);
+		
+		}
+	 catch (SQLException e) {e.printStackTrace();
+	
+	}
+	
+}
+//===============================================//
+private void changename(Connection con,SettingsName_Entitiy log) {
+	// TODO Auto-generated method stub
+	Statement stmt;
+	int id =1  ;
+	try 
+	{
+	
+		stmt = con.createStatement();
+		String s="SELECT UserID FROM mybox.Users where UserName = '"+log.getOlduser().getUsername()+"' ;";
+		ResultSet rs= stmt.executeQuery(s);
+		while(rs.next()){
+		id = rs.getInt("UserID");
+		}
+		String sql= "UPDATE mybox.users SET UserName = '"+log.getNewuser().getUsername()+"' WHERE UserID = '"+ id +"';";
+		java.sql.PreparedStatement ps1 = con.prepareStatement(sql);
+		stmt.executeUpdate(sql);
+		
+		}
+	 catch (SQLException e) {e.printStackTrace();
+	
+	}
+}
+//********************************//
 
 private void CreateFileModel(Connection conn, FileModel msg) {
 	// TODO Auto-generated method stub
@@ -467,6 +694,7 @@ private String getallfiles(Connection conn) {
  * @param nfilename - the new file name
  * @return String OK with file name changed to new name OR File '\' path NOT Exists 
  */
+//************************************************************//
 private String renameFile(Connection con, String fileName, String path, String nfilename) {
 	  Statement stmt;
 		try 
@@ -491,6 +719,8 @@ private String renameFile(Connection con, String fileName, String path, String n
 		return "problem1";
 		 }
 }
+
+//************************************************************//
 
 /**
  * This method delete file

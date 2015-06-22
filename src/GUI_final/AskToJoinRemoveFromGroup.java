@@ -4,8 +4,10 @@ import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.AbstractButton;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
@@ -21,7 +23,9 @@ import java.awt.Choice;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.SystemColor;
+
 import javax.swing.UIManager;
+import javax.swing.ButtonGroup;
 
 public class AskToJoinRemoveFromGroup extends AbstractGUI{
 
@@ -30,9 +34,27 @@ public class AskToJoinRemoveFromGroup extends AbstractGUI{
 	private JButton btRequest;
 	private JButton btCacel;
 	private JLabel chooseGroup;
-	private Choice choiceGroup;
+	private JComboBox<Object> choiceGroup;
+	private JRadioButton rbjoin,rbremove;
+	private final ButtonGroup buttonGroup = new ButtonGroup();
 
 
+
+	public JRadioButton getRbjoin() {
+		return rbjoin;
+	}
+
+	public void setRbjoin(JRadioButton rbjoin) {
+		this.rbjoin = rbjoin;
+	}
+
+	public JRadioButton getRbremove() {
+		return rbremove;
+	}
+
+	public void setRbremove(JRadioButton rbremove) {
+		this.rbremove = rbremove;
+	}
 
 	/**
 	 * Create the application.
@@ -77,21 +99,20 @@ public class AskToJoinRemoveFromGroup extends AbstractGUI{
 		lblAskToJoin.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		lblAskToJoin.setIcon(new ImageIcon(AskToJoinRemoveFromGroup.class.getResource("/GUI_final/Ask-To-Join-Remove-From-.png")));
 		
-		Choice choiceGroup = new Choice();
+		choiceGroup = new JComboBox<Object>();
 		choiceGroup.setBounds(6, 208, 185, 20);
-		choiceGroup.add("");
-		choiceGroup.add("100");
-		choiceGroup.add("ein ma");
-		choiceGroup.add("peter");
+	
 		getContentPane().add(choiceGroup);
 		
-		JRadioButton rbRemove = new JRadioButton("Join");
-		rbRemove.setBounds(26, 285, 141, 23);
-		getContentPane().add(rbRemove);
+		rbjoin = new JRadioButton("Join");
+		buttonGroup.add(rbjoin);
+		rbjoin.setBounds(26, 285, 141, 23);
+		getContentPane().add(rbjoin);
 		
-		JRadioButton rbJoin = new JRadioButton("Remove");
-		rbJoin.setBounds(26, 320, 141, 23);
-		getContentPane().add(rbJoin);
+		rbremove = new JRadioButton("Remove");
+		buttonGroup.add(rbremove);
+		rbremove.setBounds(26, 320, 141, 23);
+		getContentPane().add(rbremove);
 	}
 
 	public JLabel getLblAskToJoin() {
@@ -126,12 +147,12 @@ public class AskToJoinRemoveFromGroup extends AbstractGUI{
 		this.btCacel = btCacel;
 	}
 
-	
-	public Choice getChoiceGroup() {
+
+	public JComboBox<Object> getChoiceGroup() {
 		return choiceGroup;
 	}
 
-	public void setChoiceGroup(Choice choiceGroup) {
+	public void setChoiceGroup(JComboBox<Object> choiceGroup) {
 		this.choiceGroup = choiceGroup;
 	}
 
@@ -142,4 +163,9 @@ public class AskToJoinRemoveFromGroup extends AbstractGUI{
 	public void setChooseGroup(JLabel chooseGroup) {
 		this.chooseGroup = chooseGroup;
 	}
+
+	public ButtonGroup getButtonGroup() {
+		return buttonGroup;
+	}
+	
 }

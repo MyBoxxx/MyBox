@@ -126,6 +126,8 @@ public class Controller extends AbstractTransfer{
     		@Override
     		public void actionPerformed(ActionEvent e) {
     				view.dispose();
+    				model.reset();
+    				view.reset();
     				LoginMain.main(null);
     				//JOptionPane.showMessageDialog(null,"logout pressed");
     			}				
