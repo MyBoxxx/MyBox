@@ -158,8 +158,12 @@ public class Controller extends AbstractTransfer{
     	logoutActionListener = new ActionListener() {
     		@Override
     		public void actionPerformed(ActionEvent e) {
-    			view.dispose();
-    			LoginMain.main(null);
+    			try {
+					MainClient.clien.closeConnection();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
     			}				
     		};					
     	
