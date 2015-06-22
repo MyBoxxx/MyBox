@@ -64,14 +64,14 @@ public class GroupAction_controller extends AbstractTransfer{
 	
 	  public void contol()
 	  { 
+		  //MainClient.clien.setCurrController(this);
 		view.getEdit().addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-			
 				egc = new editGroup_Controller(MainClient.clien.currUser,groupc);
-				view.setContentPane(groupc.getContentPane());
+				view.dispose();
+				groupc.setVisible(true);
 				egc.control();
 				
 			}
@@ -93,7 +93,8 @@ public class GroupAction_controller extends AbstractTransfer{
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				atjrfgc = new AskToJoinRemoveFromGroupController(MainClient.clien.currUser,ask);
-				view.setContentPane(ask.getContentPane());
+				view.dispose();
+				ask.setVisible(true);
 				atjrfgc.Control();
 			}
 		});
@@ -104,7 +105,8 @@ public class GroupAction_controller extends AbstractTransfer{
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
 			rtdgc = new RequestToDeleteGroup_Controller(MainClient.clien.currUser,delete);
-			view.setContentPane(delete.getContentPane());
+			view.dispose();
+			delete.setVisible(true);
 			rtdgc.control();
 		}
 	});

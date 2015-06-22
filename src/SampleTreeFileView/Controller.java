@@ -58,6 +58,7 @@ public class Controller extends AbstractTransfer{
     GroupActions group;
     Settings_GUI settings;
     Settings_Controller setting_control;
+    GroupAction_controller GroupA;
  
     RecycleBinScreen recycle;
     RecycleScreen_Entity recyMod ;
@@ -269,29 +270,31 @@ public class Controller extends AbstractTransfer{
     	};
     	
     	//*********************************** GroupActions
+  	
+    	group = new GroupActions();
+    	GroupA = new GroupAction_controller(MainClient.clien.currUser,group);
+    	group.setType(Type.NORMAL);
+    	group.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+    	group.setVisible(false);
+    	GroupA.contol();
     	GroupActionsListener = new ActionListener() {
-    		
-    		@Override
-    		public void actionPerformed(ActionEvent e) {
-    			// TODO Auto-generated method stub
-    			try {
-    					if(group==null)
-    					{
-    					group = new GroupActions();
-    					GroupAction_controller GroupA = new GroupAction_controller(MainClient.clien.currUser,group);
-    					group.setType(Type.NORMAL);
-    					group.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-    					group.setVisible(true);
-    					GroupA.contol();
-    					}
-   
-    				else group.toFront();
-    			} catch(Throwable t) {
-    				//showThrowable(t);
-    			}
-    			
-    		}
-    	};
+   		
+   		@Override
+   		public void actionPerformed(ActionEvent e) {
+   			try{
+   			if(group.isVisible()==false)
+				{
+				view.setVisible(false);
+				group.setVisible(true);
+				}
+   			else group.toFront();
+   			
+   			} catch(Throwable t) {
+   				//showThrowable(t);
+   			}
+   			
+   		}
+   	};
     	
     	
     	//*********************************** move File 

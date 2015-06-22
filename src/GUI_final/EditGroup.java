@@ -17,6 +17,8 @@ import javax.swing.JEditorPane;
 import javax.swing.ImageIcon;
 
 import java.awt.Color;
+import java.awt.Font;
+import javax.swing.UIManager;
 
 public class EditGroup extends AbstractGUI {
 
@@ -52,11 +54,15 @@ public class EditGroup extends AbstractGUI {
 		 panel = new JPanel();
 		 getContentPane().setLayout(null);
 		JLabel lEdit = new JLabel("Request To Edit name /Description Group");
-		lEdit.setBounds(271, 21, 307, 28);
+		lEdit.setForeground(UIManager.getColor("Button.select"));
+		lEdit.setFont(new Font("Lucida Grande", Font.PLAIN, 17));
+		lEdit.setBounds(216, 21, 362, 28);
 		getContentPane().add(lEdit);
 		
 		JLabel lSelected = new JLabel("Select Group");
-		lSelected.setBounds(87, 73, 86, 16);
+		lSelected.setForeground(UIManager.getColor("Button.select"));
+		lSelected.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		lSelected.setBounds(63, 73, 110, 16);
 		getContentPane().add(lSelected);
 		
 		comboBox = new JComboBox();
@@ -84,13 +90,14 @@ public class EditGroup extends AbstractGUI {
 		});
 		
 		lblNewName = new JLabel("New Name");
-		lblNewName.setEnabled(false);
-		lblNewName.setBounds(87, 169, 86, 16);
+		lblNewName.setForeground(UIManager.getColor("Button.select"));
+		lblNewName.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		lblNewName.setBounds(63, 168, 86, 16);
 		getContentPane().add(lblNewName);
 		
 		lblNewDescription = new JLabel("New Description");
-		lblNewDescription.setEnabled(false);
-		lblNewDescription.setBounds(87, 327, 128, 16);
+		lblNewDescription.setForeground(UIManager.getColor("Button.select"));
+		lblNewDescription.setBounds(63, 348, 128, 16);
 		getContentPane().add(lblNewDescription);
 		
 		b1X = new JButton("X");
@@ -110,7 +117,7 @@ public class EditGroup extends AbstractGUI {
 			}
 		});
 		b2X.setEnabled(false);
-		b2X.setBounds(514, 226, 20, 29);
+		b2X.setBounds(514, 343, 20, 29);
 		getContentPane().add(b2X);
 		
 		b2Place = new JButton("Place");
@@ -132,7 +139,7 @@ public class EditGroup extends AbstractGUI {
 			}
 		});
 		b3Place.setEnabled(false);
-		b3Place.setBounds(604, 226, 117, 29);
+		b3Place.setBounds(632, 168, 117, 153);
 		getContentPane().add(b3Place);
 		
 		editName = new JEditorPane();

@@ -24,6 +24,7 @@ public class GroupActions extends AbstractGUI {
 	private JButton requ2;
 	private JButton back;
 	private JLabel lblNewLabel;
+	private JButton btnCreateGroup;
 
 	/**
 	 * Launch the application.
@@ -74,6 +75,10 @@ public class GroupActions extends AbstractGUI {
 		back = new JButton("back");
 		back.setBounds(382, 474, 117, 29);
 		getContentPane().add(back);
+		
+		btnCreateGroup = new JButton("Create Group");
+		btnCreateGroup.setBounds(340, 348, 200, 29);
+		getContentPane().add(btnCreateGroup);
 		
 		lblNewLabel = new JLabel("");
 		lblNewLabel.setIcon(new ImageIcon(GroupActions.class.getResource("/GUI_final/EditGroupPic.png")));
