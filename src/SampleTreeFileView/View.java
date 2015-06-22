@@ -105,13 +105,11 @@ public class View extends AbstractGUI{
 	JLabel lblLogInAs;
 	JMenuItem mntmHelp;
 	JMenuItem mntmTrash;
-	JCheckBoxMenuItem chckbxmntmSharedWithMe;
 	JCheckBoxMenuItem chckbxmntmMyFiles;
 	JMenuItem mntmRename;
 	JMenuItem mntmDelete;
 	JMenuItem mntmMove;
 	JMenuItem mntmGroupActions;
-	JMenuItem mntmSearch;
 	JMenuItem mntmLogOut;
 	JMenuItem mntmSettings;
 	JMenuItem mntmCreateNewFolder;
@@ -119,6 +117,8 @@ public class View extends AbstractGUI{
 	JMenuItem mntmAboutUs;
 	private JButton edit;
 	private JToolBar toolBar_1;
+	private JMenuItem Download;
+	private JMenuItem mntmEditFile;
 	
 	
 	
@@ -210,15 +210,8 @@ public class View extends AbstractGUI{
 		JSplitPane.HORIZONTAL_SPLIT,
 		treeScroll,
 		detailView);
-		tree = new JTree();
-//		tree = new JTree(new DefaultTreeModel(
-//			new DefaultMutableTreeNode("U_" + MainClient.clien.getCurrUser().getIDuser()) {
-//				{
-//				}
-//			}
-//		));
-//		tree.setModel(getModel());
-		
+		tree = new JTree();		
+		tree.setScrollsOnExpand(true);
 		treeScroll.setColumnHeaderView(tree);
 		gui.add(splitPane, BorderLayout.CENTER);
 		
@@ -248,7 +241,7 @@ public class View extends AbstractGUI{
 
 	private void toolBarInit(JToolBar toolBar) {
 		
-		edit = new JButton("edit");
+		edit = new JButton("Edit  ");
 		edit.setMnemonic('o');
 		toolBar_1.add(edit);
 		toolBar.add(DownloadFile);
@@ -283,20 +276,7 @@ public class View extends AbstractGUI{
 		
 		toolBar.addSeparator();
 		
-		readable = new JCheckBox("Read  ");
-		readable.setMnemonic('a');
-		//readable.setEnabled(false);
-		toolBar.add(readable);
-		
-		writable = new JCheckBox("Write  ");
-		writable.setMnemonic('w');
-		//writable.setEnabled(false);
-		toolBar.add(writable);
-		
-		executable = new JCheckBox("Execute");
-		executable.setMnemonic('x');
-		//executable.setEnabled(false);
-		toolBar.add(executable);
+
 
 		
 	}
@@ -340,7 +320,7 @@ public class View extends AbstractGUI{
 	              JMenu mnFile = new JMenu("File");
 	              menuBar.add(mnFile);
 	              
-	              mntmCreateNewFolder = new JMenuItem("Create File / Folder");
+	              mntmCreateNewFolder = new JMenuItem("Create Folder");
 	               
 	              mnFile.add(mntmCreateNewFolder);
 	               
@@ -348,9 +328,9 @@ public class View extends AbstractGUI{
 	                
 	                
 	              mnFile.add(mntmUploadfile);
-	                
-	                 mntmSearch = new JMenuItem("Search");
-	                 mnFile.add(mntmSearch);
+	              
+	              Download = new JMenuItem("Download");
+	              mnFile.add(Download);
 	                 
 	                 JMenu mnGroup = new JMenu("Group");
 	                 menuBar.add(mnGroup);
@@ -372,14 +352,11 @@ public class View extends AbstractGUI{
 	                      mntmRename = new JMenuItem("ReName");
 	                      mnEdit.add(mntmRename);
 	                      
+	                      mntmEditFile = new JMenuItem("Edit File");
+	                      mnEdit.add(mntmEditFile);
+	                      
 	                      JMenu mnView = new JMenu("Go");
 	                      menuBar.add(mnView);
-	                      
-	                      JCheckBoxMenuItem chckbxmntmMyFiles_1 = new JCheckBoxMenuItem("My Files");
-	                      mnView.add(chckbxmntmMyFiles_1);
-	                      
-	                       chckbxmntmSharedWithMe = new JCheckBoxMenuItem("Shared With Me");
-	                       mnView.add(chckbxmntmSharedWithMe);
 	                       
 	                        mntmTrash = new JMenuItem("Trash");
 	                        mnView.add(mntmTrash);
@@ -648,13 +625,6 @@ public class View extends AbstractGUI{
 		this.mntmTrash = mntmTrash;
 	}
 
-	public JCheckBoxMenuItem getChckbxmntmSharedWithMe() {
-		return chckbxmntmSharedWithMe;
-	}
-
-	public void setChckbxmntmSharedWithMe(JCheckBoxMenuItem chckbxmntmSharedWithMe) {
-		this.chckbxmntmSharedWithMe = chckbxmntmSharedWithMe;
-	}
 
 	public JCheckBoxMenuItem getChckbxmntmMyFiles() {
 		return chckbxmntmMyFiles;
@@ -696,13 +666,6 @@ public class View extends AbstractGUI{
 		this.mntmGroupActions = mntmGroupActions;
 	}
 
-	public JMenuItem getMntmSearch() {
-		return mntmSearch;
-	}
-
-	public void setMntmSearch(JMenuItem mntmSearch) {
-		this.mntmSearch = mntmSearch;
-	}
 
 	public JMenuItem getMntmLogOut() {
 		return mntmLogOut;

@@ -39,6 +39,7 @@ import Controlers.*;
 import Entity.DeleteFile;
 import Entity.DownloadFile_Entity;
 import Entity.EditFile_Entity;
+import Entity.GetNotification_Entity;
 import Entity.Move_Entity;
 import Entity.MyFile;
 import Entity.RecycleScreen_Entity;
@@ -61,6 +62,10 @@ public class Controller extends AbstractTransfer{
     RecycleScreen_Entity recyMod ;
 	RecycleBin_controller recyCon;
     
+	Notification_Controller notificationCon;
+	Notification notificationGui;
+	GetNotification_Entity notificationEnt;
+	
     //private ActionListener actionListener;
     private ActionListener openFileActionListener;
     private ActionListener settingsActionListener;
@@ -80,6 +85,7 @@ public class Controller extends AbstractTransfer{
     private TreeSelectionListener treeSelectionListener;
     private ActionListener editFileActionListener;
     private ActionListener downloadFileActionListener;
+    private ActionListener notficationActionListener;
     
     public Controller(Model model, View view){
         this.model = model;
@@ -105,8 +111,36 @@ public class Controller extends AbstractTransfer{
 		refreshListAndTree();
 		desktop = Desktop.getDesktop();
 		model.setMyCurrFile(new MyFile());
-		 
- 
+		
+		//************************* notification
+		notificationGui = new Notification();
+		notificationGui.setVisible(false);
+		notificationEnt = new GetNotification_Entity();
+		notificationEnt.setUser(MainClient.clien.getCurrUser());
+		sendToServer(notificationEnt);
+		notificationCon = new Notification_Controller(notificationEnt, notificationGui);
+		notificationGui.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+		 notficationActionListener = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				//sendToServer(new RecycleScreen_Entity());
+				try {
+					if(notificationGui.isVisible()==false){
+						notificationGui.setVisible(true);
+						notificationGui.toFront();
+						notificationCon.control();
+					}
+					else notificationGui.toFront();
+						
+					}
+				 catch(Throwable t) {
+					//showThrowable(t);
+				}
+				
+			}
+		};
+		
     	//*********************************** Edit  Files 
     	editFileActionListener = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -385,7 +419,7 @@ public class Controller extends AbstractTransfer{
 		view.getMntmLogOut().addActionListener(logoutActionListener);
 		view.getMntmCreateNewFolder().addActionListener(createNewFolderActionListener);
 		view.getMntmUploadfile().addActionListener(uploadFileActionListener);
-		view.getMntmSearch().addActionListener(searchActionListener);
+
 		view.getMntmGroupActions().addActionListener(GroupActionsListener);
 		view.getMntmTrash().addActionListener(trashActionListener);
 		
@@ -401,7 +435,7 @@ public class Controller extends AbstractTransfer{
 		view.getMoveFile().addActionListener(moveActionListener);
 		view.getRenameFile().addActionListener(renameActionListener);
 		view.getDeleteFile().addActionListener(deleteActionListener);
-		
+		view.getBtnNotifications().addActionListener(notficationActionListener);
 		//tree
 		treeSelectionListener = new TreeSelectionListener() {
             public void valueChanged(TreeSelectionEvent tse){
@@ -510,13 +544,7 @@ public class Controller extends AbstractTransfer{
 			buildTreeFromString(treemodel, string);
 		}
 		
-		
-		if (view.getChckbxmntmSharedWithMe().isEnabled())
-		{
-			for (String string : shared) {
-				buildTreeFromString(treemodel, string);
-			}
-		}
+
 
 	  
 	     
@@ -603,6 +631,11 @@ public class Controller extends AbstractTransfer{
 
 	public void openFile(String string) throws IOException {
 		desktop.open(new File(string));		
+	}
+
+	public void GetNotification(GetNotification_Entity message) {
+		notificationCon.populate(message);
+		
 	}
 
     

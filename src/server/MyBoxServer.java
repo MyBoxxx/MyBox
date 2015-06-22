@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Collections;
@@ -366,6 +367,21 @@ public class MyBoxServer extends AbstractServer
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+	        }
+	        /************************************/
+	        if(msg instanceof GetNotification_Entity){
+	         	((GetNotification_Entity) msg).setFileTable(buildTableModel(conn,"SELECT IDNotification,Message,Satus FROM MyBox.notification Where IDuser = '"+((GetNotification_Entity)msg).getUser().getIDuser()+"';")); 
+	        	try{
+	        		client.sendToClient(msg);
+	        	}
+	        	catch (IOException e){
+	        		e.printStackTrace();
+	        	}
+	        }
+	        if(msg instanceof SetNotification_Entity){
+	        	String updateTableSQL = "UPDATE notification SET Satus = '1' WHERE  IDuser = '"+((SetNotification_Entity)msg).getUser().getIDuser()+"'; ";
+				java.sql.PreparedStatement preparedStatement = conn.prepareStatement(updateTableSQL);
+				preparedStatement .executeUpdate();	
 	        }
 	        
 	        
@@ -1149,15 +1165,11 @@ private void changegroup(Connection con, Group_Entity log) {
 		 catch (SQLException e) {e.printStackTrace();
 		
 		}
-	
-	
-	
 }
 
 
 
-
-
+}
 /*
 public TreeNode buildTree(){
     String[] names = new String[]; // fill this with the names of your plugins
@@ -1188,7 +1200,7 @@ return tree;
 }
 
 */
-}
+
 /* OLD
 if(msg instanceof String){
 	try {

@@ -194,7 +194,11 @@ public class myBoxClient extends ObservableClient {
 				FileUtils.writeByteArrayToFile(temp,((DownloadFile_Entity)message).getFile().mybytearray );	  
 				((Controller) currController).ShowMessage("Downloaded To c:/downloads");
 			}
-			
+			/*************************************************************************************/
+			if(message instanceof GetNotification_Entity){
+				  
+				((Controller) currController).GetNotification ((GetNotification_Entity)message);
+			}
 
 
 			
