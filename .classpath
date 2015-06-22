@@ -7,5 +7,6 @@
 	<classpathentry kind="lib" path="lib/JSplashScreen.jar"/>
 	<classpathentry kind="lib" path="lib/mysql-connector-java-3.1.11-bin.jar"/>
 	<classpathentry kind="lib" path="lib/rs2xml.jar"/>
+	<classpathentry kind="lib" path="lib/commons-vfs-2.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

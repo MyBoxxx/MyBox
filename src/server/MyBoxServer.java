@@ -335,8 +335,38 @@ public class MyBoxServer extends AbstractServer
 	        }
 	      //******************************//
 	        
-	        
-	        
+	        if(msg instanceof EditFile_Entity){
+	        	File afile = new File(((EditFile_Entity)msg).getFile().getPath()+"/"+((EditFile_Entity)msg).getFile().getFileName());
+	        	try {
+					((EditFile_Entity)msg).getFile().mybytearray = FileUtils.readFileToByteArray(afile);
+					client.sendToClient(msg);
+	        	} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+	        	
+	        }
+	        if(msg instanceof ReplaceFile_Entity){
+	        	File old = new File(((ReplaceFile_Entity)msg).getFile().getPath() +"/"+((ReplaceFile_Entity)msg).getFile().getFileName());
+	        	old.delete();
+	        	File newFile = new File(((ReplaceFile_Entity)msg).getFile().getPath() +"/"+((ReplaceFile_Entity)msg).getFile().getFileName());
+	        	 try {
+					FileUtils.writeByteArrayToFile(newFile, ((ReplaceFile_Entity)msg).getFile().mybytearray);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+	        }
+	        if(msg instanceof DownloadFile_Entity){
+	          	File afile = new File(((DownloadFile_Entity)msg).getFile().getPath()+"/"+((DownloadFile_Entity)msg).getFile().getFileName());
+	        	try {
+					((DownloadFile_Entity)msg).getFile().mybytearray = FileUtils.readFileToByteArray(afile);
+					client.sendToClient(msg);
+	        	} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+	        }
 	        
 	        
 	    

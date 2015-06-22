@@ -1,9 +1,11 @@
 package SampleTreeFileView;
 
+import java.awt.Desktop;
 import java.awt.Window.Type;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Enumeration;
 
@@ -22,14 +24,21 @@ import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeSelectionModel;
+import javax.tools.FileObject;
 import javax.xml.transform.OutputKeys;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.vfs.FileListener;
+import org.apache.commons.vfs.FileSystemManager;
+import org.apache.commons.vfs.VFS;
+import org.apache.commons.vfs.impl.DefaultFileMonitor;
 
 import server.FileTable;
 import Client.MainClient;
 import Controlers.*;
 import Entity.DeleteFile;
+import Entity.DownloadFile_Entity;
+import Entity.EditFile_Entity;
 import Entity.Move_Entity;
 import Entity.MyFile;
 import Entity.RecycleScreen_Entity;
@@ -41,15 +50,16 @@ public class Controller extends AbstractTransfer{
     private Model model;
     private View view; 
     
+    /** Used to open/edit/print files. */
+    private Desktop desktop;
     
     //GUIs
     GroupActions group;
     Settings_GUI settings;
-    Help_GUI help;
+ 
     RecycleBinScreen recycle;
     RecycleScreen_Entity recyMod ;
 	RecycleBin_controller recyCon;
-    
     
     //private ActionListener actionListener;
     private ActionListener openFileActionListener;
@@ -68,7 +78,8 @@ public class Controller extends AbstractTransfer{
     private ActionListener aboutUsActionListener;
     private ActionListener helpActionListener;
     private TreeSelectionListener treeSelectionListener;
-
+    private ActionListener editFileActionListener;
+    private ActionListener downloadFileActionListener;
     
     public Controller(Model model, View view){
         this.model = model;
@@ -92,38 +103,32 @@ public class Controller extends AbstractTransfer{
 		model.setCurrPath("U_"+MainClient.clien.currUser.getIDuser()+"");
 		model.setGetroot("U_"+MainClient.clien.currUser.getIDuser()+"");
 		refreshListAndTree();
-		
-    	openFileActionListener = new ActionListener() {
-    		
-    		@Override
-    		public void actionPerformed(ActionEvent e) {
-    		}
-    	};
-		
-    	view.getEdit().addActionListener(new ActionListener() {
+		desktop = Desktop.getDesktop();
+		model.setMyCurrFile(new MyFile());
+		 
+ 
+    	//*********************************** Edit  Files 
+    	editFileActionListener = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				MyFile temp = new MyFile();
-				temp.setId(Integer.parseInt(view.getTable().getValueAt(view.getTable().getSelectedRow(),0).toString()));
-		        temp.setFileName(view.getTable().getValueAt(view.getTable().getSelectedRow(),1).toString());
-		          temp.setPath(view.getTable().getValueAt(view.getTable().getSelectedRow(),2).toString());
-		    
-		           
-				temp.setFsize(Integer.parseInt(view.getTable().getValueAt(view.getTable().getSelectedRow(),3).toString()));
-		     		//temp.setCreatedTime(Date.parse(view.getDate().setText(view.getTable().getValueAt(view.getTable().getSelectedRow(),4).toString())));
-					
-					if(view.getTable().getValueAt(view.getTable().getSelectedRow(),7).toString().equals("1")){
-						view.getIsDirectory().setSelected(true);
-						view.getIsFile().setSelected(false);
-					}
-					else{
-						view.getIsDirectory().setSelected(false);
-						view.getIsFile().setSelected(true);
 				
-						}
+		        EditFile_Entity Edit = new EditFile_Entity(model.getMyCurrFile());
+		        Edit.setUser(MainClient.clien.currUser);
+		        sendToServer(Edit);
 			}
-    	}		
-		);
+    	};
     	
+    	//*********************************** Download  Files 
+
+    	downloadFileActionListener =  new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+		        DownloadFile_Entity download = new DownloadFile_Entity(model.getMyCurrFile());
+		        download.setUser(MainClient.clien.currUser);
+		        sendToServer(download);
+			}
+    	};
+
+    	//*********************************** Settings! 
     	settingsActionListener = new ActionListener() {
     		
     		@Override
@@ -148,7 +153,8 @@ public class Controller extends AbstractTransfer{
     			
     		}
     	};
-        //TO-DO
+    	
+    	//*********************************** logOut 
     	logoutActionListener = new ActionListener() {
     		@Override
     		public void actionPerformed(ActionEvent e) {
@@ -157,7 +163,7 @@ public class Controller extends AbstractTransfer{
     			}				
     		};					
     	
-    	
+    	//*********************************** new Folder 
     	createNewFolderActionListener = new ActionListener() {
     		
     		@Override
@@ -177,6 +183,7 @@ public class Controller extends AbstractTransfer{
     		}
     	};
     	
+    	//*********************************** upload! 
     	uploadFileActionListener = new ActionListener() {
     		
     		@Override
@@ -205,6 +212,8 @@ public class Controller extends AbstractTransfer{
     			
     		}
     	};
+    	
+    	//*********************************** search! 
     	searchActionListener = new ActionListener() {
     		
     		@Override
@@ -220,6 +229,7 @@ public class Controller extends AbstractTransfer{
     		}
     	};
     	
+    	//*********************************** GroupActions
     	GroupActionsListener = new ActionListener() {
     		
     		@Override
@@ -245,6 +255,8 @@ public class Controller extends AbstractTransfer{
     		}
     	};
     	
+    	
+    	//*********************************** move File 
     	moveActionListener = new ActionListener() {
     		
     		@Override
@@ -258,9 +270,7 @@ public class Controller extends AbstractTransfer{
     			Icon micon = new ImageIcon(EditGroup.class.getResource("/images_icons/office-moving-icon1.png"));
     			int choice = JOptionPane.showOptionDialog( null, jcb, "Select Where to Move", JOptionPane.OK_CANCEL_OPTION, 0, micon , null, null);
     			if(choice == JOptionPane.OK_OPTION && view.getTable().getValueAt(view.getTable().getSelectedRow(),7).toString().equals("0")){
-    				Move_Entity moving = new Move_Entity();
-    				moving.getFile().setId(Integer.parseInt(view.getTable().getValueAt(view.getTable().getSelectedRow(),0).toString()));
-    				moving.getFile().setFileName(view.getTable().getValueAt(view.getTable().getSelectedRow(),1).toString());
+    				Move_Entity moving = new Move_Entity(model.getMyCurrFile());
     				moving.getFile().setPath(jcb.getSelectedItem().toString());
     				moving.setUser(MainClient.clien.currUser);
     				sendToServer(moving);
@@ -269,13 +279,14 @@ public class Controller extends AbstractTransfer{
     		}
     	};	
     	
+    	
+    	//*********************************** delete 
     	deleteActionListener = new ActionListener() {
     	
     		@Override
     		public void actionPerformed(ActionEvent e) {
     			try {
-    				DeleteFile delete = new DeleteFile();
-    				delete.getFile().setId(Integer.parseInt(view.getTable().getValueAt(view.getTable().getSelectedRow(), 0).toString()));
+    				DeleteFile delete = new DeleteFile(model.getMyCurrFile());
     				delete.setUser(MainClient.clien.currUser);
     				sendToServer(delete);
     			} catch(Throwable t) {
@@ -285,6 +296,8 @@ public class Controller extends AbstractTransfer{
     		}
     	};
     	
+    	
+    	//*********************************** about
 		aboutUsActionListener = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -301,13 +314,15 @@ public class Controller extends AbstractTransfer{
 				
 			}
 		};
+		
+		
+		//*********************************** trash 
 		 recycle = new RecycleBinScreen();
 		 recycle.setVisible(false);
 		 recyMod = new RecycleScreen_Entity();
 		 recyCon = new RecycleBin_controller(recyMod, recycle);
 		 recyCon.control();
 		 recycle.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-		 
 		trashActionListener = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -327,15 +342,15 @@ public class Controller extends AbstractTransfer{
 				
 			}
 		};
+		
+		
+		//************************************ help!!!
 		helpActionListener = new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try{
-					Help_GUI help = new Help_GUI();
-					help.setType(Type.POPUP);
-					help.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-					help.setVisible(true);
+				
 				}
 				catch(Throwable t){
 					
@@ -350,11 +365,10 @@ public class Controller extends AbstractTransfer{
 				 String renameTo = JOptionPane.showInputDialog(view.getGui(), "New Name");
 				 if(renameTo != null ) 
 				 {
-					 Rename_Entity renameFile = new Rename_Entity();
-					 renameFile.getFile().setId(Integer.parseInt(view.getTable().getValueAt(view.getTable().getSelectedRow(),0).toString()));
+					 Rename_Entity renameFile = new Rename_Entity(model.getMyCurrFile());
 					 renameFile.getFile().setFileName(renameTo);
 					 renameFile.setUser(MainClient.clien.currUser);
-	    				sendToServer(renameFile);
+	    			 sendToServer(renameFile);
 				 }
 
 				// TODO Auto-generated method stub
@@ -370,6 +384,9 @@ public class Controller extends AbstractTransfer{
 		view.getMntmSearch().addActionListener(searchActionListener);
 		view.getMntmGroupActions().addActionListener(GroupActionsListener);
 		view.getMntmTrash().addActionListener(trashActionListener);
+		
+		view.getEdit().addActionListener(editFileActionListener);
+		view.getDownloadFile().addActionListener(downloadFileActionListener);
 		view.getMntmMove().addActionListener(moveActionListener);
 		view.getMntmDelete().addActionListener(deleteActionListener);
 		view.getMntmRename().addActionListener(renameActionListener);
@@ -385,6 +402,7 @@ public class Controller extends AbstractTransfer{
 		treeSelectionListener = new TreeSelectionListener() {
             public void valueChanged(TreeSelectionEvent tse){
             		model.setCurrPath(replaceTreePath(tse));
+            		//refreshListAndTree();
             		sendToServer(new FileModel(model.getCurrPath(), MainClient.clien.currUser));
             		
             }
@@ -401,10 +419,12 @@ public class Controller extends AbstractTransfer{
 	        public void valueChanged(ListSelectionEvent event) {
 	            // do some actions here, for example
 	            // print first column value from selected row
-	        	
+	        		
+	        		model.getMyCurrFile().setId( Integer.parseInt( view.getTable().getValueAt(view.getTable().getSelectedRow(),0).toString() ) );
 		            view.getFileName().setText(view.getTable().getValueAt(view.getTable().getSelectedRow(),1).toString());
+	        		model.getMyCurrFile().setFileName( view.getTable().getValueAt(view.getTable().getSelectedRow(),1).toString()  );
 		            view.getPath().setText(view.getTable().getValueAt(view.getTable().getSelectedRow(),2).toString());
-		    
+		            model.getMyCurrFile().setPath(view.getTable().getValueAt(view.getTable().getSelectedRow(),2).toString());
 		            if(view.getTable().getValueAt(view.getTable().getSelectedRow(),3)!=null){
 					view.getFsize().setText(view.getTable().getValueAt(view.getTable().getSelectedRow(),3).toString());
 		            		}
@@ -413,10 +433,12 @@ public class Controller extends AbstractTransfer{
 		     		view.getDate().setText(view.getTable().getValueAt(view.getTable().getSelectedRow(),4).toString());
 					
 					if(view.getTable().getValueAt(view.getTable().getSelectedRow(),7).toString().equals("1")){
+						model.getMyCurrFile().setIsDir(1);
 						view.getIsDirectory().setSelected(true);
 						view.getIsFile().setSelected(false);
 					}
 					else{
+						model.getMyCurrFile().setIsDir(0);
 						view.getIsDirectory().setSelected(false);
 						view.getIsFile().setSelected(true);
 					}
@@ -433,6 +455,7 @@ public class Controller extends AbstractTransfer{
 		view.getTree().removeAll();
 		view.getTable().revalidate();
 		view.getTree().revalidate();
+		model.setMyCurrFile(new MyFile());
 		sendToServer(new DirectoryTreeModel(MainClient.clien.currUser));
 		sendToServer(new FileModel(model.getCurrPath(), MainClient.clien.currUser));
 	}
@@ -453,12 +476,7 @@ public class Controller extends AbstractTransfer{
 		view.getTable().repaint();
 	}
 	
-//	public void UpdateTree()
-//	{
-//		view.getTree().setModel((TreeModel) view.g);
-//		view.getTree().repaint();
-//		view.repaint();
-//	}
+
 	
      public void updateFileTable(FileModel filetable)
      {
@@ -509,6 +527,7 @@ public class Controller extends AbstractTransfer{
 	    	  view.getTree().expandRow(i);
 	    	 
 	        }
+		
 		
 	}
 	
@@ -577,6 +596,10 @@ public class Controller extends AbstractTransfer{
 
         return index;
     }
+
+	public void openFile(String string) throws IOException {
+		desktop.open(new File(string));		
+	}
 
     
 	

@@ -14,6 +14,15 @@ public class Move_Entity extends Abstract_Entity {
 		this.user = new User_Entity();
 		this.file = new MyFile();
 	}
+	public Move_Entity(MyFile file) {
+		super();
+		this.file = file;
+	}
+	public Move_Entity(User_Entity user, MyFile file) {
+		super();
+		this.user = user;
+		this.file = file;
+	}
 	public User_Entity getUser() {
 		return user;
 	}

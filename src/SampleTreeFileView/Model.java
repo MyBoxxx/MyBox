@@ -42,6 +42,17 @@ public class Model extends Abstract_Entity implements Serializable{
 	private DefaultTreeModel model;
 	private FileTableModel fileTableModel;
 	private String currFile ;
+	private MyFile MyCurrFile;
+	
+	public MyFile getMyCurrFile() {
+		return MyCurrFile;
+	}
+
+	public void setMyCurrFile(MyFile myCurrFile) {
+		MyCurrFile = myCurrFile;
+	}
+
+
 	private static String currPath ;
 	private String Getroot;
 	private ArrayList<String> dir;

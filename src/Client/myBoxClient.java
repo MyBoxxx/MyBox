@@ -19,13 +19,18 @@ import java.io.*;
 import Entity.*;
 
 import java.lang.reflect.Array;
+import java.util.Date;
 import java.util.Enumeration;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreeNode;
+
+import org.apache.commons.io.FileUtils;
 
 import server.FileTable;
 import Entity.*;
@@ -53,6 +58,7 @@ public class myBoxClient extends ObservableClient {
 	private  Object currController;
 	public  User_Entity currUser;
 
+	static String  filePath;
 
 
 	/**
@@ -147,6 +153,50 @@ public class myBoxClient extends ObservableClient {
 				else if(((LoadGroup_Entity) message).getChoice()==1)
 					((RequestToDeleteGroup_Controller) currController).FillGroup(((LoadGroup_Entity) message));
 			}
+			//***************************Edit File******************************
+			if(message instanceof EditFile_Entity){
+				File temp = new File ("C:/temp/"+ ((EditFile_Entity)message).getFile().getFileName());
+	    		FileUtils.writeByteArrayToFile(temp,((EditFile_Entity)message).getFile().mybytearray );	    		
+	    	    // Create the monitor
+	    		((Controller) currController).ShowMessage("Downloaded To c:/temp");
+	    		((Controller) currController).openFile("C:/temp/"+ ((EditFile_Entity)message).getFile().getFileName());
+	    		filePath = ((EditFile_Entity)message).getFile().getPath();
+	    		TimerTask task = new FileWatcher( temp ) {
+	    	        protected void onChange( File file ) {
+	    	          // here we code the action on a change
+	    	          System.out.println( "File "+ file.getName() +" have change !" );
+	    	          ReplaceFile_Entity replaceFile = new ReplaceFile_Entity();
+	    	         File afile = new File("c:/temp/"+file.getName() );
+			    	       try {
+								((ReplaceFile_Entity)replaceFile).getFile().mybytearray = FileUtils.readFileToByteArray(afile);        
+			    	    	} catch (IOException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+	    	          replaceFile.getFile().setFileName(file.getName() );
+	    	          replaceFile.getFile().setPath(filePath);
+		    	          try {
+							sendToServer(replaceFile);
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+	    	        }
+	    	      };
+
+	    	      Timer timer = new Timer();
+	    	      // repeat the check every second
+	    	      timer.schedule( task , new Date(), 1000 );
+			}
+		//**********************************Download File *******************************************//
+			if(message instanceof DownloadFile_Entity){
+				File temp = new File ("C:/downloads/"+ ((DownloadFile_Entity)message).getFile().getFileName());
+				FileUtils.writeByteArrayToFile(temp,((DownloadFile_Entity)message).getFile().mybytearray );	  
+				((Controller) currController).ShowMessage("Downloaded To c:/downloads");
+			}
+			
+
+
 			
 		
 

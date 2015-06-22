@@ -12,6 +12,11 @@ public class DeleteFile implements Serializable {
 		this.file = new MyFile();
 	}
 
+	public DeleteFile(MyFile file) {
+		super();
+		this.file = file;
+	}
+
 	public MyFile getFile() {
 		return file;
 	}

@@ -12,6 +12,11 @@ public class Rename_Entity extends Abstract_Entity {
 			this.user = new User_Entity();
 			this.file = new MyFile();
 		}
+		public Rename_Entity(MyFile file) {
+			super();
+			this.file = file;
+			this.user = new User_Entity();
+		}
 		public User_Entity getUser() {
 			return user;
 		}
