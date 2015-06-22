@@ -1,70 +1,54 @@
 package SampleTreeFileView;
 
-import java.awt.Desktop;
 import java.awt.Window.Type;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.io.BufferedInputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.Serializable;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.attribute.BasicFileAttributeView;
-import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Enumeration;
 
 import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
-import javax.swing.JTree;
-import javax.swing.SwingUtilities;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
-import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreeSelectionModel;
-
-import java.io.IOException;
-import java.nio.file.*;
-import java.nio.file.attribute.*;
+import javax.xml.transform.OutputKeys;
 
 import org.apache.commons.io.FileUtils;
 
 import server.FileTable;
 import Client.MainClient;
-import Client.myBoxClient;
 import Controlers.*;
 import Entity.DeleteFile;
-import Entity.FileTreeUpdate;
-import Entity.Folder_Entity;
+import Entity.Move_Entity;
 import Entity.MyFile;
+import Entity.RecycleScreen_Entity;
+import Entity.Rename_Entity;
 import Entity.UpLoadFile;
-import Entity.User_Entity;
 import GUI_final.*;
-import Controlers.*;
 
 public class Controller extends AbstractTransfer{
     private Model model;
-    private transient FileModel filemodel;
     private View view; 
     
     
     //GUIs
-    RecycleBinScreen recycle;
     GroupActions group;
     Settings_GUI settings;
-    
+ 
+    RecycleBinScreen recycle;
+    RecycleScreen_Entity recyMod ;
+	RecycleBin_controller recyCon;
     
     
     //private ActionListener actionListener;
@@ -266,10 +250,20 @@ public class Controller extends AbstractTransfer{
     		@Override
     		public void actionPerformed(ActionEvent e) {
     			// TODO Auto-generated method stub
-    			try {
-
-    			} catch(Throwable t) {
-    				//showThrowable(t);
+    			String[] stockArr = model.getDir().toArray(new String[model.getDir().size()]);
+    			JComboBox jcb = new JComboBox(stockArr);
+    			jcb.addItem("U_"+MainClient.clien.getCurrUser().getIDuser());
+    			jcb.removeItem(model.getCurrPath());
+    			jcb.setEditable(false);
+    			Icon micon = new ImageIcon(EditGroup.class.getResource("/images_icons/office-moving-icon1.png"));
+    			int choice = JOptionPane.showOptionDialog( null, jcb, "Select Where to Move", JOptionPane.OK_CANCEL_OPTION, 0, micon , null, null);
+    			if(choice == JOptionPane.OK_OPTION && view.getTable().getValueAt(view.getTable().getSelectedRow(),7).toString().equals("0")){
+    				Move_Entity moving = new Move_Entity();
+    				moving.getFile().setId(Integer.parseInt(view.getTable().getValueAt(view.getTable().getSelectedRow(),0).toString()));
+    				moving.getFile().setFileName(view.getTable().getValueAt(view.getTable().getSelectedRow(),1).toString());
+    				moving.getFile().setPath(jcb.getSelectedItem().toString());
+    				moving.setUser(MainClient.clien.currUser);
+    				sendToServer(moving);
     			}
     			
     		}
@@ -307,17 +301,23 @@ public class Controller extends AbstractTransfer{
 				
 			}
 		};
+		 recycle = new RecycleBinScreen();
+		 recycle.setVisible(false);
+		 recyMod = new RecycleScreen_Entity();
+		 recyCon = new RecycleBin_controller(recyMod, recycle);
+		 recyCon.control();
+		 recycle.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+		 
 		trashActionListener = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
+				//sendToServer(new RecycleScreen_Entity());
 				try {
-					if(recycle == null){
-						recycle = new RecycleBinScreen();
-						recycle.setType(Type.POPUP);
-						recycle.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+					if(recycle.isVisible()==false){
 						recycle.setVisible(true);
-						}
+						recycle.toFront();
+					}
 					else recycle.toFront();
 						
 					}
@@ -332,13 +332,29 @@ public class Controller extends AbstractTransfer{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try{
-					RecycleBinScreen recycle = new RecycleBinScreen();
-					recycle.setVisible(true);
-					
+				
 				}
 				catch(Throwable t){
 					
 				}
+				
+			}
+		};
+		renameActionListener = new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				 String renameTo = JOptionPane.showInputDialog(view.getGui(), "New Name");
+				 if(renameTo != null ) 
+				 {
+					 Rename_Entity renameFile = new Rename_Entity();
+					 renameFile.getFile().setId(Integer.parseInt(view.getTable().getValueAt(view.getTable().getSelectedRow(),0).toString()));
+					 renameFile.getFile().setFileName(renameTo);
+					 renameFile.setUser(MainClient.clien.currUser);
+	    				sendToServer(renameFile);
+				 }
+
+				// TODO Auto-generated method stub
 				
 			}
 		};
@@ -410,11 +426,12 @@ public class Controller extends AbstractTransfer{
     	}
 
 	public void refreshListAndTree(){
-		
+		view.getTable().removeAll();
+		view.getTree().removeAll();
+		view.getTable().revalidate();
+		view.getTree().revalidate();
 		sendToServer(new DirectoryTreeModel(MainClient.clien.currUser));
 		sendToServer(new FileModel(model.getCurrPath(), MainClient.clien.currUser));
-
-	       
 	}
 
 	public void setVisible(boolean b) {
@@ -427,8 +444,9 @@ public class Controller extends AbstractTransfer{
 	}
 	
 	public void refreseList(FileTable message){
-		
+		view.getTable().removeAll();
 		view.getTable().setModel(message.getTablemodel());
+		view.getTable().revalidate();
 		view.getTable().repaint();
 	}
 	
@@ -460,7 +478,7 @@ public class Controller extends AbstractTransfer{
 	}
 
 	public void setTree(ArrayList<String> dir, ArrayList<String> shared) {
-	
+		model.setDir(dir);
 		DefaultMutableTreeNode root = new DefaultMutableTreeNode("U_"+MainClient.clien.getCurrUser().getIDuser());
 		DefaultTreeModel treemodel = new DefaultTreeModel(root);
 		for (String string : dir) {
@@ -491,6 +509,10 @@ public class Controller extends AbstractTransfer{
 		
 	}
 	
+	
+	public void RecycleBin(RecycleScreen_Entity rce){
+		recyCon.Repaint(rce);
+	}
 
     /**
      * Builds a tree from a given forward slash delimited string.

@@ -44,6 +44,15 @@ public class Model extends Abstract_Entity implements Serializable{
 	private String currFile ;
 	private static String currPath ;
 	private String Getroot;
+	private ArrayList<String> dir;
+	public ArrayList<String> getDir() {
+		return dir;
+	}
+
+	public void setDir(ArrayList<String> dir) {
+		this.dir = dir;
+	}
+
 	public String getGetroot() {
 		return Getroot;
 	}
@@ -139,6 +148,8 @@ public void setDesktop(Desktop desktop){
 
 
 */
+
+
 
 }
 

@@ -7,6 +7,7 @@ package Client;
 import ocsf.client.*;
 import Controlers.ForgotPassword_Controller;
 import Controlers.LogIn_Controller;
+import Controlers.RecycleBin_controller;
 import Controlers.SystemAdminRequestsScreen_Controller;
 import Entity.*;
 
@@ -96,11 +97,6 @@ public class myBoxClient extends ObservableClient {
 				( (SystemAdminRequestsScreen_Controller) currController).refreshList();
 			}
 			
-//
-//			if(message instanceof FileTable){
-//				((Controller) currController).refreseList((FileTable) message);
-//			}
-			
 			if(message instanceof DirectoryTreeModel){	
 				((Controller) currController).setTree(((DirectoryTreeModel)message).getDir(),((DirectoryTreeModel)message).getShared());
 			}
@@ -110,6 +106,7 @@ public class myBoxClient extends ObservableClient {
 			}
 			if(message instanceof UpLoadFile){
 				((Controller) currController).ShowMessage(((UpLoadFile) message).getAnser());
+				((Controller) currController).refreshListAndTree();
 			}
 			if(message instanceof CreateDirectory){
 				((Controller) currController).ShowMessage(((CreateDirectory) message).getAnser());
@@ -122,6 +119,21 @@ public class myBoxClient extends ObservableClient {
 			
 			if(message instanceof DeleteFile){
 				((Controller) currController).ShowMessage(((DeleteFile) message).getAnswer());
+				((Controller) currController).refreshListAndTree();
+			}
+			if(message instanceof RecycleScreen_Entity){
+				
+				((Controller) currController).RecycleBin(((RecycleScreen_Entity)message));
+				((Controller) currController).refreshListAndTree();
+			}
+			if(message instanceof Move_Entity){
+				
+				((Controller) currController).ShowMessage(((Move_Entity)message).getAnswer());;
+				((Controller) currController).refreshListAndTree();
+			}
+			if(message instanceof Rename_Entity){
+				((Controller) currController).ShowMessage(((Rename_Entity)message).getAnswer());;
+				((Controller) currController).refreshListAndTree();
 			}
 			
 		
