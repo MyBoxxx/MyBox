@@ -15,6 +15,7 @@ import Entity.Settings_Entity;
 import Entity.User_Entity;
 import GUI_final.Login_GUI;
 import GUI_final.Settings_GUI;
+import SampleTreeFileView.Controller;
 
 public class Settings_Controller extends AbstractTransfer {
 	
@@ -29,6 +30,7 @@ public class Settings_Controller extends AbstractTransfer {
 		init();
 	}
 	private void init() {
+		this.model = MainClient.clien.currUser;
 		// TODO Auto-generated method stub
 		view.getTxtfieldUserID().setText(model.getUsername());
 		
@@ -39,9 +41,10 @@ public class Settings_Controller extends AbstractTransfer {
 		view.getBtnChangeName().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String result = JOptionPane.showInputDialog(view, "Enter New Name");
+				if(result != null){
 				view.setTxtmyname(result);
 				s=result;
-				
+				}
 			}
 		});
 		
@@ -50,27 +53,22 @@ public class Settings_Controller extends AbstractTransfer {
 				SettingsName_Entitiy sett= new SettingsName_Entitiy();
 				sett.setOlduser(MainClient.clien.currUser);
 				sett.getNewuser().setUsername(s);
-				sendToServer(sett);
+				if (sett.getNewuser().getUsername().equals(null)==false)
+					{
+					sendToServer(sett);
+					MainClient.clien.currUser.setUsername(s);
+					}
 			}
 		});
 		
 		view.getBtnCancel().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				view.dispose();
+				view.setVisible(false);
+				((Controller) MainClient.clien.getCurrController() ).repaint();
+				((Controller) MainClient.clien.getCurrController() ).setVisible(true);
 			}
 		});
 		
-		view.getBtnDeleteAccount().addActionListener(new ActionListener() {
-		  	public void actionPerformed(ActionEvent e) {
-		  		int p = JOptionPane.showConfirmDialog(null, "Are you sure you want to Delete this account?", "Warning",JOptionPane.YES_NO_OPTION,JOptionPane.WARNING_MESSAGE);
-		          
-	            if (p == JOptionPane.YES_OPTION) {
-	            	sendToServer(model);
-	            	JOptionPane.showMessageDialog(null, "The account is deleted, GoodBye", "Account deleted", JOptionPane.INFORMATION_MESSAGE);
-			  		view.dispose();
-			  		}
-	            }
-		  });
 		
 		view.getBtnChangePwd().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

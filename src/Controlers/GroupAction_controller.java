@@ -114,10 +114,8 @@ public class GroupAction_controller extends AbstractTransfer{
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
-			c = new Controller(modelView, treeView);
-			view.dispose();
-			treeView.setVisible(true);
-			c.contol();
+			((Controller) MainClient.clien.getCurrController() ).setVisible(true);
+			view.setVisible(false);
 		}
 	});
 		

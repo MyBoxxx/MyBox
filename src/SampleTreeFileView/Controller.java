@@ -57,6 +57,7 @@ public class Controller extends AbstractTransfer{
     //GUIs
     GroupActions group;
     Settings_GUI settings;
+    Settings_Controller setting_control;
  
     RecycleBinScreen recycle;
     RecycleScreen_Entity recyMod ;
@@ -163,23 +164,23 @@ public class Controller extends AbstractTransfer{
     	};
 
     	//*********************************** Settings! 
+    	settings = new Settings_GUI();
+    	 setting_control = new Settings_Controller(MainClient.clien.currUser,settings);
+    	settings.setType(Type.NORMAL);
+    	settings.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+    	settings.setVisible(false);
+    	setting_control.control();
     	settingsActionListener = new ActionListener() {
     		
     		@Override
     		public void actionPerformed(ActionEvent e) {
     			try{
-    			if(settings==null)
+    			if(settings.isVisible()==false)
 				{
-    			settings = new Settings_GUI();
-				Settings_Controller setting_control = new Settings_Controller(MainClient.clien.currUser,settings);
-				settings.setType(Type.NORMAL);
-				settings.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-				view.dispose();
+				view.setVisible(false);
 				settings.setVisible(true);
-				setting_control.control();
 				}
-
-    			else group.toFront();
+    			else settings.toFront();
     			
     			} catch(Throwable t) {
     				//showThrowable(t);
@@ -280,7 +281,6 @@ public class Controller extends AbstractTransfer{
     					GroupAction_controller GroupA = new GroupAction_controller(MainClient.clien.currUser,group);
     					group.setType(Type.NORMAL);
     					group.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-    					view.dispose();
     					group.setVisible(true);
     					GroupA.contol();
     					}
@@ -454,7 +454,8 @@ public class Controller extends AbstractTransfer{
 
 		view.getTree().addTreeSelectionListener(treeSelectionListener);
 		view.getTable().getSelectionModel().addListSelectionListener(new ListSelectionListener(){
-	        public void valueChanged(ListSelectionEvent event) {
+	        
+		public void valueChanged(ListSelectionEvent event) {
 	            // do some actions here, for example
 	            // print first column value from selected row
 	        		
