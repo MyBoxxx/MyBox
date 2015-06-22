@@ -1,8 +1,10 @@
 package GUI_final;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
+import java.awt.Toolkit;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -21,6 +23,7 @@ import java.net.URL;
 
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
+
 
 
 
@@ -59,7 +62,7 @@ public class Help_GUI extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	public void init() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -79,7 +82,9 @@ public class Help_GUI extends JFrame {
 	public Help_GUI() throws MalformedURLException {
 		setTitle("Help");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 801, 598);
+		setBounds(100, 100, 800, 600);
+		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+		this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
 		contentPane = new JPanel();
 		contentPane.setBackground(SystemColor.textHighlight);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

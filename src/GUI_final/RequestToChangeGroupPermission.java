@@ -48,7 +48,7 @@ public class RequestToChangeGroupPermission extends AbstractGUI{
 	public RequestToChangeGroupPermission() {
 		getContentPane().setBackground(new Color(59, 89, 151));
 		frmRequstToChange = new JFrame();
-		setBounds(100, 100, 800, 600);
+		setBounds(6, 6, 800, 600);
 		getContentPane().setForeground(Color.BLACK);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		getContentPane().setLayout(null);

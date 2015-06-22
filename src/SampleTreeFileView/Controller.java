@@ -45,7 +45,7 @@ public class Controller extends AbstractTransfer{
     //GUIs
     GroupActions group;
     Settings_GUI settings;
- 
+    Help_GUI help;
     RecycleBinScreen recycle;
     RecycleScreen_Entity recyMod ;
 	RecycleBin_controller recyCon;
@@ -332,7 +332,10 @@ public class Controller extends AbstractTransfer{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try{
-				
+					Help_GUI help = new Help_GUI();
+					help.setType(Type.POPUP);
+					help.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+					help.setVisible(true);
 				}
 				catch(Throwable t){
 					
