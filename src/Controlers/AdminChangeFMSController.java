@@ -9,6 +9,7 @@ import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -18,35 +19,49 @@ import javax.swing.JPanel;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
+import Entity.AdminChangeFMS_Entity;
 import Entity.User_Entity;
-import GUI_final.AdminAddPeopleToGroup;
+import GUI_final.AdminAddPeopleToGroupFMS;
 import GUI_final.AdminChangeFMS_GUI;
 import GUI_final.Adminbar;
 import GUI_final.Limitpeopleingroup;
 
 
 
+
 public class AdminChangeFMSController extends AbstractTransfer {
 	
-	 User_Entity model;
+	 AdminChangeFMS_Entity model;
 	 AdminChangeFMS_GUI view;
 	 Adminbar admin;
 	 Limitpeopleingroup limit_view;
-	 AdminAddPeopleToGroup add_view;
-	 
+	 AdminAddPeopleToGroupFMS add_view;
+	 AdminChangeFMS_Entity admin_entity = new AdminChangeFMS_Entity();
+	 private String currentQuantity = new String();
+	 int value ;
 	
 	
 	
 	//ActionListener Home;
 	
-	AdminChangeFMSController(User_Entity model, AdminChangeFMS_GUI view){
+	
+	
+	public AdminChangeFMSController(AdminChangeFMS_Entity model,
+			AdminChangeFMS_GUI view){
+		// TODO Auto-generated constructor stub\
 		this.model = model;
 		this.view = view;
 		admin = new Adminbar();
 		limit_view = view.getLimit();
 		add_view = view.getAdd();
-	}	
-	
+		
+	}
+
+	//public AdminChangeFMSController(AdminChangeFMS_Entity model2,
+	//		AdminChangeFMS_GUI view2) {
+	//	// TODO Auto-generated constructor stub
+	//}
+
 	public void control(){
 		//MainClient.clien.setCurrController(this);
 		///////LIMIT TAB
@@ -73,12 +88,12 @@ public class AdminChangeFMSController extends AbstractTransfer {
 			}
 		}); 
 		
-		limit_view.getChoice().addActionListener(new ActionListener() {
+		limit_view.getGroupcomboBox().addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				 String selectedItem = (String) limit_view.getChoice().getSelectedItem();
+				 String selectedItem = (String) limit_view.getGroupcomboBox().getSelectedItem();
 				if ( !selectedItem.equals("")){					
 					if(!limit_view.getNewAmounText().getText().equals(""))
 						limit_view.getBtnOk().setEnabled(true);
@@ -90,14 +105,31 @@ public class AdminChangeFMSController extends AbstractTransfer {
 			}
 		});
 		
-		view.getHomeButton().addActionListener(new ActionListener() {			
+		
+		limit_view.getGroupcomboBox().addActionListener(new ActionListener() {
+			
 			@Override
-			public void actionPerformed(ActionEvent e) {				
-				view.setVisible(false);
-				admin.setVisible(true);				
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
 				
+				JComboBox combo = (JComboBox)e.getSource();
+				currentQuantity = (String)combo.getSelectedItem();
+				//System.out.println("ggfgfg");
+				admin_entity.setCurrentQuantity(currentQuantity);
+				//System.out.println(admin_entity.getCurrentQuantity());
 			}
-		});	
+		});
+		
+		
+		view.getHomeButton().addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				view.setVisible(false);
+				admin.setVisible(true);	
+			}
+		});
 		
 		limit_view.getBtnOk().addActionListener(new ActionListener() {
 			
@@ -128,7 +160,7 @@ public class AdminChangeFMSController extends AbstractTransfer {
 		
 		///ADD TAB
 		
-		add_view.getOkButton().setEnabled(false);	
+		/*add_view.getOkButton().setEnabled(false);	
 		
 		add_view.getChoose_user().addActionListener(new ActionListener() {
 			
@@ -166,19 +198,75 @@ public class AdminChangeFMSController extends AbstractTransfer {
 				}
 					
 			}
-		});		
+		});	*/	
 	
 		
 		///END //// LIMIT TAB
 	}
-	 public void changed() {
-		 String selectedItem = (String) add_view.getChoose_user().getSelectedItem();
+	 public AdminChangeFMS_Entity getModel() {
+		return model;
+	}
+
+	public void setModel(AdminChangeFMS_Entity model) {
+		this.model = model;
+	}
+
+	public AdminChangeFMS_GUI getView() {
+		return view;
+	}
+
+	public void setView(AdminChangeFMS_GUI view) {
+		this.view = view;
+	}
+
+	public Adminbar getAdmin() {
+		return admin;
+	}
+
+	public void setAdmin(Adminbar admin) {
+		this.admin = admin;
+	}
+
+	public Limitpeopleingroup getLimit_view() {
+		return limit_view;
+	}
+
+	public void setLimit_view(Limitpeopleingroup limit_view) {
+		this.limit_view = limit_view;
+	}
+
+	public AdminAddPeopleToGroupFMS getAdd_view() {
+		return add_view;
+	}
+
+	public void setAdd_view(AdminAddPeopleToGroupFMS add_view) {
+		this.add_view = add_view;
+	}
+
+	public String getCurrentQuantity() {
+		return currentQuantity;
+	}
+
+	public void setCurrentQuantity(String currentQuantity) {
+		this.currentQuantity = currentQuantity;
+	}
+
+	public int getValue() {
+		return value;
+	}
+
+	public void setValue(int value) {
+		this.value = value;
+	}
+
+	public void changed() {
+		 String selectedItem = (String) add_view.getUserChoice().getSelectedItem();
 	     if (limit_view.getNewAmounText().getText().equals("")){
 	    	 
 	       if (!selectedItem.equals(""))	 
-	    	   add_view.getOkButton().setEnabled(true);
+	    	   add_view.getBtnOk().setEnabled(true);
 	       else 
-		    	 add_view.getOkButton().setEnabled(false);
+		    	 add_view.getBtnOk().setEnabled(false);
 	     }
 	   
 
