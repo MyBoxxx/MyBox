@@ -71,8 +71,8 @@ public class GroupAction_controller extends AbstractTransfer{
 				// TODO Auto-generated method stub
 			
 				egc = new editGroup_Controller(MainClient.clien.currUser,groupc);
-				view.dispose();
-				groupc.setVisible(true);
+				view.setContentPane(groupc.getContentPane());
+				//groupc.setVisible(true);
 				egc.control();
 				
 			}

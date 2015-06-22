@@ -40,7 +40,7 @@ public class AdminRequest extends AbstractGUI {
 			public void run() {
 				try {
 					AdminRequest frame = new AdminRequest();
-					frame.setVisible(true);
+					//frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
