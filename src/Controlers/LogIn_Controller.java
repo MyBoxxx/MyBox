@@ -135,11 +135,15 @@ public class LogIn_Controller extends AbstractTransfer{
 	}
 
 	public void MakeLogin() {
-		view.dispose();
-		if(MainClient.clien.getCurrUser().isAdmin()) 
-			MainAdmin.main(null);
+		
+		if(MainClient.clien.getCurrUser().isLogedin()==true){
+			if(MainClient.clien.getCurrUser().isAdmin()) 
+				MainAdmin.main(null);
 			//testtyaron.main(null);
-		else Main.main(null);
+			else Main.main(null);
+			view.setVisible(false);
+		}
+		else showMessage("You Are Loged in");
 	}
 	public void showMessage(String pwd) {
 		if (pwd!= null)

@@ -266,6 +266,7 @@ public class myBoxClient extends ObservableClient {
 
 	public void quit() {
 		try {
+			sendToServer("Logout "+ MainClient.clien.getCurrUser().getIDuser());
 			closeConnection();
 		} catch (IOException e) {
 		}

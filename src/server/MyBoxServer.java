@@ -16,6 +16,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Vector;
 
+import javax.management.InstanceAlreadyExistsException;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
@@ -140,6 +141,19 @@ public class MyBoxServer extends AbstractServer
 	        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/myBox","root","Braude");
 	        //Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/mybox","root","");
 	        System.out.println("SQL connection succeed");
+	        if(msg instanceof String){
+	        	String ms = ((String)msg);
+	        	 String delims = " ";
+	             String[] tokens = ms.split(delims);
+	        	if(ms.startsWith("Logout")) {
+	        		Integer num = Integer.parseInt(tokens[1]);
+	        		System.out.println("logout"+ num);
+					String deleteSQL = "UPDATE Users SET isLogin='0' WHERE UserID = '" + num + "';"; 
+					java.sql.PreparedStatement preparedStatement = conn.prepareStatement(deleteSQL);
+					preparedStatement.executeUpdate();	
+	        	}
+	        	
+	        }
 	        
 	        if(msg instanceof Login_Entity){
 	        	System.out.println("Try To Coneect as "+ ((Login_Entity)msg).getUsername());
@@ -857,7 +871,12 @@ private Boolean checkUserPassword(Connection con, Login_Entity log){
 		if(rs.next()) { //if user exist
 			log.setIDuser(rs.getInt("UserID"));
 			if(rs.getString("isAdmin").equals("1")) log.setAdmin(true);
-			if(rs.getInt("isLogin")==1) log.setAdmin(true);
+			if(rs.getInt("isLogin")==0) {
+				log.setLogedin(true);
+				String deleteSQL = "UPDATE Users SET isLogin='1' WHERE UserID = '" + log.getIDuser() + "';"; 
+				java.sql.PreparedStatement preparedStatement = con.prepareStatement(deleteSQL);
+				preparedStatement.executeUpdate();
+			}
 			log.setUser(true);
 			return true;
 		}
