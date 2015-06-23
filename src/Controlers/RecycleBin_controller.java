@@ -42,7 +42,6 @@ public class RecycleBin_controller extends AbstractTransfer {
 
 	public void control(){
 		model.setUser(MainClient.clien.currUser);
-		sendToServer(model);
 		view.getTable().getSelectionModel().addListSelectionListener(new ListSelectionListener(){
 	        public void valueChanged(ListSelectionEvent event) {
 	        model.setIdFile(Integer.parseInt(view.getTable().getModel().getValueAt(view.getTable().getSelectedRow(), 0).toString()));

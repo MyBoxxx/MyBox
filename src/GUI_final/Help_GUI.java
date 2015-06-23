@@ -79,9 +79,9 @@ public class Help_GUI extends JFrame {
 	 * Create the frame.
 	 * @throws MalformedURLException 
 	 */
-	public Help_GUI() throws MalformedURLException {
+	public Help_GUI()  {
 		setTitle("Help");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 800, 600);
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
@@ -239,6 +239,11 @@ public class Help_GUI extends JFrame {
 		txtUpload.setColumns(10);
 		
 		backButton = new JButton();
+		backButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+			}
+		});
 		backButton.setIcon(new ImageIcon("images/back.png"));
 		backButton.setBackground(Color.WHITE);
 		backButton.setBounds(302, 446, 128, 76);

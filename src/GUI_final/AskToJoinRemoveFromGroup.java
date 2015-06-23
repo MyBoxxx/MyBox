@@ -90,8 +90,7 @@ public class AskToJoinRemoveFromGroup extends AbstractGUI{
 		getContentPane().add(btCacel);
 		
 		chooseGroup = new JLabel();
-		chooseGroup.setForeground(UIManager.getColor("Button.select"));
-		chooseGroup.setFont(new Font("Lucida Grande", Font.PLAIN, 17));
+		chooseGroup.setFont(new Font("Lucida Grande", Font.PLAIN, 16));
 		chooseGroup.setText("Select Group");
 		chooseGroup.setBounds(26, 137, 141, 47);
 		getContentPane().add(chooseGroup);
@@ -110,15 +109,11 @@ public class AskToJoinRemoveFromGroup extends AbstractGUI{
 		getContentPane().add(choiceGroup);
 		
 		rbjoin = new JRadioButton("Join");
-		rbjoin.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
-		rbjoin.setForeground(UIManager.getColor("Button.select"));
 		buttonGroup.add(rbjoin);
 		rbjoin.setBounds(26, 285, 141, 23);
 		getContentPane().add(rbjoin);
 		
 		rbremove = new JRadioButton("Remove");
-		rbremove.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
-		rbremove.setForeground(UIManager.getColor("Button.select"));
 		buttonGroup.add(rbremove);
 		rbremove.setBounds(26, 320, 141, 23);
 		getContentPane().add(rbremove);

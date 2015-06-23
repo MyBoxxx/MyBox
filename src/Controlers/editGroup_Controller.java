@@ -30,25 +30,20 @@ public class editGroup_Controller extends AbstractTransfer{
 	//Controllers
 	GroupAction_controller groupA;
 
-	editGroup_Controller(User_Entity model,EditGroup view){
+	public editGroup_Controller(User_Entity model,EditGroup view){
 		this.model = model;
 		this.view = view;
-		
 	}
 	
 	public void control(){
 		
-		MainClient.clien.setCurrController(this); // Set The Current Controller to this	
+		//MainClient.clien.setCurrController(this); // Set The Current Controller to this	
 		 
 		sendToServer(new LoadGroup_Entity(3,MainClient.clien.currUser));
 		
 		view.getB5Cancel().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				groupw=new GroupActions();
-				groupA = new GroupAction_controller(MainClient.clien.currUser,groupw);
-				view.dispose();
-				groupw.setVisible(true);
-				groupA.contol();
+				view.setVisible(false);
 			}
 		});
 		

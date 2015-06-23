@@ -34,7 +34,6 @@ public class Notification_Controller extends AbstractTransfer {
 	public void control(){
 		//change from 0 to Unread
 		
-		
 		for (int i = 0; i < view.getTable().getRowCount(); i++)
 		       {
 			if (view.getTable().getValueAt(i, 2).equals(0))		          

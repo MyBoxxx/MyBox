@@ -33,7 +33,7 @@ public class SystemAdminRequestsScreen_Controller extends AbstractTransfer {
 	}
 	
 	public void control(){
-		MainClient.clien.setCurrController(this); // Set The Current Controller to this	
+		//MainClient.clien.setCurrController(this); // Set The Current Controller to this	
 		SendRefreshList();
 		//request the list
 		

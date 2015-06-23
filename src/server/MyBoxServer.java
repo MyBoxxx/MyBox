@@ -25,6 +25,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.TrueFileFilter;
 
 import net.proteanit.sql.DbUtils;
+import Client.MainClient;
 import Entity.*;
 import SampleTreeFileView.DirectoryTreeModel;
 import SampleTreeFileView.FileModel;
@@ -133,12 +134,13 @@ public class MyBoxServer extends AbstractServer
 	     Class.forName("com.mysql.jdbc.Driver").newInstance();
 	    }catch (Exception ex) {/* handle the error*/}
 	    
-	  System.out.println("Message received: " + msg + " from " + client);
+	  System.out.println("Message received: " + msg + " from " + client );
 	  try 
 	    {
-	        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/mybox","root","");
+	        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/myBox","root","Braude");
 	        //Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/mybox","root","");
 	        System.out.println("SQL connection succeed");
+	        
 	        if(msg instanceof Login_Entity){
 	        	System.out.println("Try To Coneect as "+ ((Login_Entity)msg).getUsername());
 	        	if(checkUserPassword(conn,(Login_Entity)msg)) System.out.println("Login Succsed");
@@ -151,6 +153,7 @@ public class MyBoxServer extends AbstractServer
 					}
 	        	 
 	        }		
+	        
 	        /************************************************************************/  	
 	        if(msg instanceof SystemAdminReequestScreen_Entity){ 
 	        	((SystemAdminReequestScreen_Entity) msg).setTablemodel(buildTableModel(conn,"SELECT requestID,RequestType,status,AdminRequsts.UserId , UserName FROM AdminRequsts , Users Where Users.UserID = AdminRequsts.UserId; ")); 
@@ -161,7 +164,8 @@ public class MyBoxServer extends AbstractServer
 	        		e.printStackTrace();
 	        	}
 	        }
-	   /************************************************************************/
+	        
+	        /************************************************************************/
 	        
 	        if(msg instanceof DeleteFile){ 
 	        	((DeleteFile)msg).setAnswer(deletemyDir(conn,(DeleteFile) msg));
@@ -175,8 +179,6 @@ public class MyBoxServer extends AbstractServer
 	        /********************/
 	      
 	        if(msg instanceof UpLoadFile){
-	        	//fileTransfer
-	        	
 	        		try{
 	        			((UpLoadFile) msg).setAnser(createNewFile(conn,(UpLoadFile) msg));
 	        			client.sendToClient(msg);
@@ -370,7 +372,7 @@ public class MyBoxServer extends AbstractServer
 	        }
 	        /************************************/
 	        if(msg instanceof GetNotification_Entity){
-	         	((GetNotification_Entity) msg).setFileTable(buildTableModel(conn,"SELECT IDNotification,Message,Satus FROM MyBox.notification Where IDuser = '"+((GetNotification_Entity)msg).getUser().getIDuser()+"';")); 
+	         	((GetNotification_Entity) msg).setFileTable(buildTableModel(conn,"SELECT IDNotification,Message,Satus FROM notification Where IDuser = '"+((GetNotification_Entity)msg).getUser().getIDuser()+"';")); 
 	        	try{
 	        		client.sendToClient(msg);
 	        	}
@@ -383,7 +385,11 @@ public class MyBoxServer extends AbstractServer
 				java.sql.PreparedStatement preparedStatement = conn.prepareStatement(updateTableSQL);
 				preparedStatement .executeUpdate();	
 	        }
-	        
+	        if(msg instanceof CreateGroupEntity) {
+	        	String updateTableSQL = "INSERT INTO adminrequsts (RequestType,status,UserId) VALUES ('creategroup "+ ((CreateGroupEntity)msg).getName()+ "','0','"+((CreateGroupEntity)msg).getCurrUser().getIDuser()+"');";
+				java.sql.PreparedStatement preparedStatement = conn.prepareStatement(updateTableSQL);
+				preparedStatement .executeUpdate();	
+	        }
 	        
 	    
 	        conn.close();
@@ -994,12 +1000,12 @@ private void changename(Connection con,SettingsName_Entitiy log) {
 	{
 	
 		stmt = con.createStatement();
-		String s="SELECT UserID FROM mybox.Users where UserName = '"+log.getOlduser().getUsername()+"' ;";
+		String s="SELECT UserID FROM Users where UserName = '"+log.getOlduser().getUsername()+"' ;";
 		ResultSet rs= stmt.executeQuery(s);
 		while(rs.next()){
 		id = rs.getInt("UserID");
 		}
-		String sql= "UPDATE mybox.users SET UserName = '"+log.getNewuser().getUsername()+"' WHERE UserID = '"+ id +"';";
+		String sql= "UPDATE users SET UserName = '"+log.getNewuser().getUsername()+"' WHERE UserID = '"+ id +"';";
 		java.sql.PreparedStatement ps1 = con.prepareStatement(sql);
 		stmt.executeUpdate(sql);
 		
@@ -1019,12 +1025,12 @@ private void changepaword(Connection con, Settings_Entity log) {
 	{
 	
 		stmt = con.createStatement();
-		String s="SELECT UserID FROM mybox.Users where UserName = '"+log.getOlduser().getUsername()+"' ;";
+		String s="SELECT UserID FROM Users where UserName = '"+log.getOlduser().getUsername()+"' ;";
 		ResultSet rs= stmt.executeQuery(s);
 		while(rs.next()){
 		id = rs.getInt("UserID");
 		}
-		String sql= "UPDATE mybox.users SET Password = '"+log.getNewuser().getPassword()+"' WHERE UserID = '"+ id +"';";
+		String sql= "UPDATE users SET Password = '"+log.getNewuser().getPassword()+"' WHERE UserID = '"+ id +"';";
 		java.sql.PreparedStatement ps1 = con.prepareStatement(sql);
 		stmt.executeUpdate(sql);
 		
@@ -1046,7 +1052,7 @@ private void LoadGroup(Connection con, LoadGroup_Entity log) {
 		
 			stmt = con.createStatement();
 			if (log.getChoice()==2){
-			String s="SELECT * FROM myBox.Groups";
+			String s="SELECT * FROM Groups ;";
 			ResultSet rs= stmt.executeQuery(s);
 			while(rs.next()){
 					log.getGroups().add(rs.getString("GroupName"));
@@ -1055,8 +1061,8 @@ private void LoadGroup(Connection con, LoadGroup_Entity log) {
 			//grop=log.getGroups().toArray(new String[log.getGroups().size()]);
 			}
 			if (log.getChoice()==1 || log.getChoice()==3){
-				String s="select  distinct GroupName "+
-						"from mybox.users ,mybox.useringroup, mybox.groups "+
+				String s="SELECT distinct GroupName "+
+						"from users ,useringroup, Groups "+
 						"where  useringroup.IdUser =" + log.getUser().getIDuser() + " and groups.IDGroup = useringroup.IDGroup";
 				ResultSet rs= stmt.executeQuery(s);
 				while(rs.next()){
@@ -1139,12 +1145,12 @@ private void changegroup(Connection con, Group_Entity log) {
 			stmt = con.createStatement();
 			if (log.getGroupname().equals(null)==false && log.getGroupdescript().equals(null)==false)
 			{
-			String s="SELECT IDGroup FROM myBox.Groups";
+			String s="SELECT IDGroup FROM Groups";
 			ResultSet rs= stmt.executeQuery(s);
 			while(rs.next()){
 					id = rs.getInt("IDGroup");
 			}
-			String sql= "UPDATE mybox.groups SET GroupName = "+log.getGroupname()+" GroupDescription = "
+			String sql= "UPDATE groups SET GroupName = "+log.getGroupname()+" GroupDescription = "
 			+log.getGroupdescript()+" WHERE IDGroup = "+ id +";";
 			java.sql.PreparedStatement ps1 = con.prepareStatement(sql);
 			stmt.executeUpdate(sql);
@@ -1155,23 +1161,23 @@ private void changegroup(Connection con, Group_Entity log) {
 			}
 			else if (log.getGroupname().equals(null)==false && log.getGroupdescript().equals(null)==true)
 			{
-				String s="SELECT IDGroup FROM myBox.Groups";
+				String s="SELECT IDGroup FROM Groups";
 				ResultSet rs= stmt.executeQuery(s);
 				while(rs.next()){
 						id = rs.getInt("IDGroup");
 				}
-				String sql= "UPDATE mybox.groups SET GroupName = '"+log.getGroupname()+"' WHERE IDGroup = "+ id +";";
+				String sql= "UPDATE groups SET GroupName = '"+log.getGroupname()+"' WHERE IDGroup = "+ id +";";
 				java.sql.PreparedStatement ps1 = con.prepareStatement(sql);
 				stmt.executeUpdate(sql);
 			}
 			else if (log.getGroupname().equals(null)==true && log.getGroupdescript().equals(null)==false)
 			{
-				String s="SELECT IDGroup FROM myBox.Groups";
+				String s="SELECT IDGroup FROM Groups";
 				ResultSet rs= stmt.executeQuery(s);
 				while(rs.next()){
 						id = rs.getInt("IDGroup");
 				}
-				String sql= "UPDATE mybox.groups SET GroupDescription = '"
+				String sql= "UPDATE groups SET GroupDescription = '"
 				+log.getGroupdescript()+"' WHERE IDGroup = "+ id +";";
 				java.sql.PreparedStatement ps1 = con.prepareStatement(sql);
 				stmt.executeUpdate(sql);

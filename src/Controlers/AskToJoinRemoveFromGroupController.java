@@ -10,6 +10,7 @@ import java.util.ResourceBundle.Control;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import Client.MainClient;
@@ -32,24 +33,20 @@ public class AskToJoinRemoveFromGroupController extends AbstractTransfer {
 	private boolean jselected=false;
 	private boolean rselected=false;
 	
-	AskToJoinRemoveFromGroupController(User_Entity model,AskToJoinRemoveFromGroup view){
+	public AskToJoinRemoveFromGroupController(User_Entity model,AskToJoinRemoveFromGroup view){
 		this.model = model;
 		this.view = view;
 		groupA = new GroupActions();
 	}
 	
 	public void Control(){
-		MainClient.clien.setCurrController(this); // Set The Current Controller to this	
+		//MainClient.clien.setCurrController(this); // Set The Current Controller to this	
 		 
 		sendToServer(new LoadGroup_Entity(2,MainClient.clien.currUser));
 		
 			view.getBtCacel().addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					groupA=new GroupActions();
-					groupw = new GroupAction_controller(MainClient.clien.currUser,groupA);
-					view.dispose();
-					groupA.setVisible(true);
-					groupw.contol();
+					view.setVisible(false);
 				}
 			});
 		

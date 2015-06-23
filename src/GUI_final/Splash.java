@@ -62,15 +62,15 @@ public class Splash {
 			splashs.splashOn();
 			//call Method;
 			splashs.setProgress(20, "Init");
-			Thread.sleep(500);
+			Thread.sleep(1);
 			splashs.setProgress(40, "Loading");
-			Thread.sleep(500);
+			Thread.sleep(1);
 			splashs.setProgress(60, "Applying Configs");
-			Thread.sleep(500);
+			Thread.sleep(1);
 			splashs.setProgress(80, "Making JAVA");
-			Thread.sleep(500);
+			Thread.sleep(1);
 			splashs.setProgress(100, "100 Ein ma");
-			Thread.sleep(1500);
+			Thread.sleep(1);
 			splashs.splashOff();	
 
 	/**

@@ -13,15 +13,16 @@ import Entity.User_Entity;
 
 public class Main
 {
-	static Model model;
-	public static View view;
+	public static Controller controller;
+	static  Model model;
+	public static  View view;
 	public static void main(String[] argv) { 
        
                   try{
                 	  
                 	  model = new Model();
                 	  view = new View(); 
-                	  Controller controller = new Controller(model,view);
+                	   controller = new Controller(model,view);
                 	  controller.contol();
                 	view.setBounds(100, 100, 800, 600);
               		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();

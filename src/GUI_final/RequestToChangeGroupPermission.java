@@ -28,8 +28,6 @@ import java.awt.event.ActionEvent;
 import java.awt.Font;
 
 import javax.swing.JComboBox;
-import java.awt.SystemColor;
-import javax.swing.UIManager;
 
 
 public class RequestToChangeGroupPermission extends AbstractGUI{
@@ -64,30 +62,26 @@ public class RequestToChangeGroupPermission extends AbstractGUI{
 		getContentPane().setLayout(null);
 		
 		UpperPanel = new JPanel();
-		UpperPanel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null), "Please Select Group Premission", TitledBorder.LEADING, TitledBorder.TOP, null, UIManager.getColor("Button.select")));
-		UpperPanel.setForeground(UIManager.getColor("Button.select"));
+		UpperPanel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null), "Please Select Group Premission", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(128, 0, 0)));
+		UpperPanel.setForeground(Color.BLACK);
 		UpperPanel.setToolTipText("");
 		UpperPanel.setOpaque(false);
 		UpperPanel.setBounds(183, 131, 491, 186);
 		getContentPane().add(UpperPanel);
 		UpperPanel.setLayout(null);
 		
-		ChooseLabel = new JLabel("Choose One/both");
-		ChooseLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 17));
-		ChooseLabel.setForeground(UIManager.getColor("Button.select"));
+		ChooseLabel = new JLabel("Choose One/bouth");
+		ChooseLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 16));
+		ChooseLabel.setForeground(new Color(128, 0, 0));
 		ChooseLabel.setBounds(23, 45, 209, 29);
 		UpperPanel.add(ChooseLabel);
 		
 		RAdioRead = new JRadioButton("Read");
-		RAdioRead.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
-		RAdioRead.setForeground(UIManager.getColor("Button.select"));
-		RAdioRead.setBounds(36, 122, 141, 23);
+		RAdioRead.setBounds(20, 86, 141, 23);
 		UpperPanel.add(RAdioRead);
 		
 		Rawrite = new JRadioButton("Write");
-		Rawrite.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
-		Rawrite.setForeground(UIManager.getColor("Button.select"));
-		Rawrite.setBounds(36, 157, 141, 23);
+		Rawrite.setBounds(20, 121, 141, 23);
 		UpperPanel.add(Rawrite);
 		
 		comboBox = new JComboBox<Object>();

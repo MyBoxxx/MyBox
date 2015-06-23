@@ -62,6 +62,7 @@ public class View extends AbstractGUI{
    
 
 	JPanel fileView;
+     JProgressBar progressBar;
     
 
     /* File controls. */
@@ -87,6 +88,7 @@ public class View extends AbstractGUI{
      JTextField name;
 	 Dimension preferredSize;
 	 Container fileDetailsLabels;
+	JPanel simpleOutput;
 	JButton renameFile;
 	JPanel southRadio;
 	JRadioButton newTypeDirectory;
@@ -107,7 +109,7 @@ public class View extends AbstractGUI{
 	JMenuItem mntmRename;
 	JMenuItem mntmDelete;
 	JMenuItem mntmMove;
-	JMenuItem mntmGroupActions;
+	
 	JMenuItem mntmLogOut;
 	JMenuItem mntmSettings;
 	JMenuItem mntmCreateNewFolder;
@@ -115,15 +117,26 @@ public class View extends AbstractGUI{
 	JMenuItem mntmAboutUs;
 	private JButton edit;
 	private JToolBar toolBar_1;
-	private JMenuItem Download;
+		private JMenuItem Download;
 	private JMenuItem mntmEditFile;
 	
+	private JMenuItem AskToJouinGroup;
+
+
+	private JMenuItem ReqestToDelete;
+	private JMenuItem CreateGroup;
+	JMenuItem EditGroup;
 	
 	
 	public View() {
 		getGui();
 		// show the file system roots.
 		Dimension widePreferred = new Dimension(200,150);
+		            
+		simpleOutput = new JPanel(new BorderLayout(3,3));
+		progressBar = new JProgressBar();
+		simpleOutput.add(progressBar, BorderLayout.EAST);
+		progressBar.setVisible(false);
 		    		    		                        
 		detailView = new JPanel(new BorderLayout(3,3));
 		scrollPane = new JScrollPane();
@@ -207,6 +220,8 @@ public class View extends AbstractGUI{
 		tree.setScrollsOnExpand(true);
 		treeScroll.setColumnHeaderView(tree);
 		gui.add(splitPane, BorderLayout.CENTER);
+		
+		gui.add(simpleOutput, BorderLayout.SOUTH);
 	
    }
 
@@ -305,7 +320,7 @@ public class View extends AbstractGUI{
 	             mntmSettings = new JMenuItem("Settings");
 	             mnMybox.add(mntmSettings);
 	             
-	              mntmLogOut = new JMenuItem("Log Out");
+	              mntmLogOut = new JMenuItem("Exit");
 	              mnMybox.add(mntmLogOut);
 	              
 	              JMenu mnFile = new JMenu("File");
@@ -325,9 +340,18 @@ public class View extends AbstractGUI{
 	                 
 	                 JMenu mnGroup = new JMenu("Group");
 	                 menuBar.add(mnGroup);
-	                 
-	                  mntmGroupActions = new JMenuItem("Group Actions");
-	                  mnGroup.add(mntmGroupActions);
+	                  
+	                  AskToJouinGroup = new JMenuItem("AskToJouinGroup");
+	                  mnGroup.add(AskToJouinGroup);
+	                   
+	                   CreateGroup = new JMenuItem("Create Group");
+	                   mnGroup.add(CreateGroup);
+	                  
+	                   EditGroup = new JMenuItem("Edit Group");
+	                   mnGroup.add(EditGroup);
+	                   
+	                   ReqestToDelete = new JMenuItem("Reqest To Delete Group");
+	                   mnGroup.add(ReqestToDelete);
 	                   
 	                   JMenu mnEdit = new JMenu("Edit");
 	                   menuBar.add(mnEdit);
@@ -383,7 +407,13 @@ public class View extends AbstractGUI{
 		this.table = table;
 	}
 
+	public JProgressBar getProgressBar() {
+		return progressBar;
+	}
 
+	public void setProgressBar(JProgressBar progressBar) {
+		this.progressBar = progressBar;
+	}
 
 	public JButton getDeleteFile() {
 		return deleteFile;
@@ -507,6 +537,13 @@ public class View extends AbstractGUI{
 		this.fileDetailsLabels = fileDetailsLabels;
 	}
 
+	public JPanel getSimpleOutput() {
+		return simpleOutput;
+	}
+
+	public void setSimpleOutput(JPanel simpleOutput) {
+		this.simpleOutput = simpleOutput;
+	}
 
 	public JButton getRenameFile() {
 		return renameFile;
@@ -637,11 +674,11 @@ public class View extends AbstractGUI{
 	}
 
 	public JMenuItem getMntmGroupActions() {
-		return mntmGroupActions;
+		return EditGroup;
 	}
 
 	public void setMntmGroupActions(JMenuItem mntmGroupActions) {
-		this.mntmGroupActions = mntmGroupActions;
+		this.EditGroup = mntmGroupActions;
 	}
 
 
@@ -720,7 +757,53 @@ public void setTree(JTree tree) {
 public JTree getTree() {
 		return tree;
 	}
-	
+public JMenuItem getMntmEditFile() {
+	return mntmEditFile;
+}
+
+public void setMntmEditFile(JMenuItem mntmEditFile) {
+	this.mntmEditFile = mntmEditFile;
+}
+
+public JMenuItem getAskToJouinGroup() {
+	return AskToJouinGroup;
+}
+
+public void setAskToJouinGroup(JMenuItem askToJouinGroup) {
+	AskToJouinGroup = askToJouinGroup;
+}
+
+public JMenuItem getMntmReqestToDelete() {
+	return ReqestToDelete;
+}
+
+public void setMntmReqestToDelete(JMenuItem mntmReqestToDelete) {
+	this.ReqestToDelete = mntmReqestToDelete;
+}
+
+public JMenuItem getMntmCreateGroup() {
+	return CreateGroup;
+}
+
+public void setMntmCreateGroup(JMenuItem mntmCreateGroup) {
+	this.CreateGroup = mntmCreateGroup;
+}
+public JMenuItem getReqestToDelete() {
+	return ReqestToDelete;
+}
+
+public void setReqestToDelete(JMenuItem reqestToDelete) {
+	ReqestToDelete = reqestToDelete;
+}
+
+public JMenuItem getEditGroup() {
+	return EditGroup;
+}
+
+public void setEditGroup(JMenuItem editGroup) {
+	EditGroup = editGroup;
+}
+
 }
 
 

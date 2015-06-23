@@ -50,11 +50,6 @@ public class GroupAction_controller extends AbstractTransfer{
 	public GroupAction_controller(User_Entity model,GroupActions view){
 		this.model = model;
 		this.view = view;
-		groupc =new EditGroup();
-		changepremission = new RequestToChangeGroupPermission();
-		ask =new AskToJoinRemoveFromGroup();
-		delete = new RequestToDeleteGroup();
-		treeView = new View();
 	}
 	
 	public void setvisible()
@@ -64,19 +59,26 @@ public class GroupAction_controller extends AbstractTransfer{
 	
 	  public void contol()
 	  { 
-		  //MainClient.clien.setCurrController(this);
-		view.getEdit().addActionListener(new ActionListener() {
+			groupc =new EditGroup();
+			changepremission = new RequestToChangeGroupPermission();
+			ask =new AskToJoinRemoveFromGroup();
+			delete = new RequestToDeleteGroup();
+			
+			
+			view.getEdit().addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+			
 				egc = new editGroup_Controller(MainClient.clien.currUser,groupc);
-				view.dispose();
-				groupc.setVisible(true);
+				view.setContentPane(groupc.getContentPane());
 				egc.control();
 				
 			}
-		});  
-		view.getRequestchang().addActionListener(new ActionListener() {
+			});  
+			
+			view.getRequestchang().addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -84,42 +86,42 @@ public class GroupAction_controller extends AbstractTransfer{
 				view.dispose();
 				changepremission.setVisible(true);
 				rtcgpc.control();
-			}
-		});
+				}
+			});
 		
-	view.getAsk().addActionListener(new ActionListener() {
+			view.getAsk().addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				atjrfgc = new AskToJoinRemoveFromGroupController(MainClient.clien.currUser,ask);
-				view.dispose();
-				ask.setVisible(true);
+				view.setContentPane(ask.getContentPane());
 				atjrfgc.Control();
 			}
 		});
 		
-	view.getRequ2().addActionListener(new ActionListener() {
+			view.getRequ2().addActionListener(new ActionListener() {
 		
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-			rtdgc = new RequestToDeleteGroup_Controller(MainClient.clien.currUser,delete);
-			view.dispose();
-			delete.setVisible(true);
-			rtdgc.control();
-		}
-	});
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					// TODO Auto-generated method stub
+					rtdgc = new RequestToDeleteGroup_Controller(MainClient.clien.currUser,delete);
+					view.setContentPane(delete.getContentPane());
+					rtdgc.control();
+				}
+			});
 	
-	view.getBack().addActionListener(new ActionListener() {
-		
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-			((Controller) MainClient.clien.getCurrController() ).setVisible(true);
-			view.setVisible(false);
-		}
-	});
+		view.getBack().addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				c = new Controller(modelView, treeView);
+				view.dispose();
+				treeView.setVisible(true);
+				c.contol();
+			}
+		});
 		
 	  }
 	  

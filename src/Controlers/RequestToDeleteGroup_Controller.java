@@ -35,18 +35,13 @@ public class RequestToDeleteGroup_Controller extends AbstractTransfer{
 		this.view =view;
 	}
 		public void control(){
-			MainClient.clien.setCurrController(this); // Set The Current Controller to this	
+			//MainClient.clien.setCurrController(this); // Set The Current Controller to this	
 			 
 			sendToServer(new LoadGroup_Entity(1,MainClient.clien.currUser));
 			
 			view.getB1Cancel().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub=
-				groupA =new GroupActions();
-				groupw = new GroupAction_controller(MainClient.clien.currUser,groupA);
-				view.dispose();
-				groupA.setVisible(true);
-				groupw.contol();
+				view.setVisible(false);
 			}
 			});
 	

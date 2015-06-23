@@ -38,7 +38,7 @@ public class RequestToChangeGroupePremission_Controller extends AbstractTransfer
 	}
 		public void control(){
 			
-			MainClient.clien.setCurrController(this); // Set The Current Controller to this	
+			//MainClient.clien.setCurrController(this); // Set The Current Controller to this	
 			 
 			sendToServer(new LoadGroup_Entity(1,MainClient.clien.currUser));
 			

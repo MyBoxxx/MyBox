@@ -23,8 +23,6 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JPasswordField;
 
-import Client.MainClient;
-
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -57,7 +55,7 @@ public class Settings_GUI extends AbstractGUI {
 	 * @throws MalformedURLException 
 	 */
 	public Settings_GUI()  {
-		setTitle("MyBox User Setting");
+		setTitle("MyBox Settings!");
 		setBounds(100, 100, 800, 600);
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
@@ -81,7 +79,7 @@ public class Settings_GUI extends AbstractGUI {
 		txtmyname.setBackground(Color.WHITE);
 		txtmyname.setEditable(false);
 		txtmyname.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		txtmyname.setText(""+MainClient.clien.getCurrUser().getUsername());
+		txtmyname.setText("MyName");
 		txtmyname.setBorder(javax.swing.BorderFactory.createEmptyBorder());
 		txtmyname.setBounds(243, 182, 89, 50);
 		ProfilePanel.add(txtmyname);
@@ -95,7 +93,7 @@ public class Settings_GUI extends AbstractGUI {
 		btnSaveSettings.setBounds(243, 474, 116, 23);
 		ProfilePanel.add(btnSaveSettings);
 		
-		btnCancel = new JButton("Cancel & Back");
+		btnCancel = new JButton("Cancel");
 		btnCancel.setBounds(460, 474, 89, 23);
 		ProfilePanel.add(btnCancel);
 		  
@@ -106,13 +104,13 @@ public class Settings_GUI extends AbstractGUI {
 		ProfilePanel.add(UserImage);
 		  
 		JLabel LblUserID = new JLabel("Mybox user ID");
-		LblUserID.setBounds(243, 250, 116, 14);
+		LblUserID.setBounds(243, 250, 73, 14);
 		ProfilePanel.add(LblUserID);
 		  
 		  txtfieldUserID = new JTextField();
 		  txtfieldUserID.setBackground(Color.WHITE);
 		  txtfieldUserID.setEditable(false);
-		  txtfieldUserID.setText(""+MainClient.clien.getCurrUser().getIDuser());
+		  txtfieldUserID.setText("3831163");
 		  txtfieldUserID.setBounds(444, 244, 148, 25);
 		  ProfilePanel.add(txtfieldUserID);
 		  txtfieldUserID.setColumns(10);

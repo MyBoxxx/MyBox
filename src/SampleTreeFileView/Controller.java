@@ -1,5 +1,6 @@
 package SampleTreeFileView;
 
+
 import java.awt.Desktop;
 import java.awt.Window.Type;
 import java.awt.event.ActionEvent;
@@ -8,6 +9,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.concurrent.TimeUnit;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -37,15 +39,20 @@ import org.apache.commons.vfs.impl.DefaultFileMonitor;
 import server.FileTable;
 import Client.MainClient;
 import Controlers.*;
+import Entity.CreateGroupEntity;
 import Entity.DeleteFile;
 import Entity.DownloadFile_Entity;
 import Entity.EditFile_Entity;
 import Entity.GetNotification_Entity;
+import Entity.Group_Entity;
+import Entity.LoadGroup_Entity;
 import Entity.Move_Entity;
 import Entity.MyFile;
 import Entity.RecycleScreen_Entity;
 import Entity.Rename_Entity;
+import Entity.Settings_Entity;
 import Entity.UpLoadFile;
+import Entity.User_Entity;
 import GUI_final.*;
 
 public class Controller extends AbstractTransfer{
@@ -55,16 +62,27 @@ public class Controller extends AbstractTransfer{
     /** Used to open/edit/print files. */
     private Desktop desktop;
     
-    //GUIs
-    GroupActions group;
-    Settings_GUI settings;
-    Settings_Controller setting_control;
-    GroupAction_controller GroupA;
- 
+    //Group
+    EditGroup editGroupGui;
+    RequestToDeleteGroup deleteGroupGui;
+    AskToJoinRemoveFromGroup ATJRFgroupGui;
+    //--
+    editGroup_Controller editGroupCon;
+    RequestToDeleteGroup_Controller deleteGroupCon;
+    AskToJoinRemoveFromGroupController ATJRFgroupCon;
+    
+    
+    //Settings
+    User_Entity settingEnt;
+    Settings_Controller settingCon;
+    Settings_GUI settingsGui;
+    
+    //RecycleBin
     RecycleBinScreen recycle;
     RecycleScreen_Entity recyMod ;
 	RecycleBin_controller recyCon;
     
+	//Notification
 	Notification_Controller notificationCon;
 	Notification notificationGui;
 	GetNotification_Entity notificationEnt;
@@ -75,13 +93,10 @@ public class Controller extends AbstractTransfer{
     private ActionListener logoutActionListener;
     private ActionListener createNewFolderActionListener;
     private ActionListener uploadFileActionListener;
-    private ActionListener searchActionListener;
     private ActionListener GroupActionsListener;
     private ActionListener moveActionListener;
     private ActionListener deleteActionListener;
     private ActionListener renameActionListener;
-    private ActionListener myFileActionListener; 
-    private ActionListener sharedWithMeActionListener;
     private ActionListener trashActionListener;
     private ActionListener aboutUsActionListener;
     private ActionListener helpActionListener;
@@ -115,24 +130,29 @@ public class Controller extends AbstractTransfer{
 		desktop = Desktop.getDesktop();
 		model.setMyCurrFile(new MyFile());
 		
+		
+		
 		//************************* notification
 		notificationGui = new Notification();
 		notificationGui.setVisible(false);
 		notificationEnt = new GetNotification_Entity();
 		notificationEnt.setUser(MainClient.clien.getCurrUser());
-		sendToServer(notificationEnt);
 		notificationCon = new Notification_Controller(notificationEnt, notificationGui);
+		notificationCon.control();
 		notificationGui.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		 notficationActionListener = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				//sendToServer(new RecycleScreen_Entity());
+				sendToServer(notificationEnt);
+				try {
+					TimeUnit.MILLISECONDS.sleep(500);
+				} catch (InterruptedException e1) {
+			
+				}
 				try {
 					if(notificationGui.isVisible()==false){
 						notificationGui.setVisible(true);
 						notificationGui.toFront();
-						notificationCon.control();
 					}
 					else notificationGui.toFront();
 						
@@ -166,27 +186,33 @@ public class Controller extends AbstractTransfer{
     	};
 
     	//*********************************** Settings! 
-    	settings = new Settings_GUI();
-    	 setting_control = new Settings_Controller(MainClient.clien.currUser,settings);
-    	settings.setType(Type.NORMAL);
-    	settings.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-    	settings.setVisible(false);
-    	setting_control.control();
+    	settingEnt = new User_Entity();
+    	settingsGui = new Settings_GUI();
+    	settingsGui.setVisible(false);
+    	settingCon = new Settings_Controller(settingEnt, settingsGui);
+    	settingCon.control();
+    	settingsGui.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
     	settingsActionListener = new ActionListener() {
     		
     		@Override
     		public void actionPerformed(ActionEvent e) {
-    			try{
-    			if(settings.isVisible()==false)
-				{
-				view.setVisible(false);
-				settings.setVisible(true);
+    			sendToServer(new Settings_Entity());
+				try {
+					TimeUnit.MILLISECONDS.sleep(500);
+				} catch (InterruptedException e1) {
+			
 				}
-    			else settings.toFront();
-    			
-    			} catch(Throwable t) {
-    				//showThrowable(t);
-    			}
+				try {
+					if(settingsGui.isVisible()==false){
+						settingsGui.setVisible(true);
+						settingsGui.toFront();
+					}
+					else settingsGui.toFront();
+						
+					}
+				 catch(Throwable t) {
+					//showThrowable(t);
+				}
     			
     		}
     	};
@@ -196,10 +222,11 @@ public class Controller extends AbstractTransfer{
     		@Override
     		public void actionPerformed(ActionEvent e) {
     			try {
-					MainClient.clien.closeConnection();
-				} catch (IOException e1) {
+    				MainClient.clien.quit();
+    				} catch (Exception e1) {
 					// TODO Auto-generated catch block
-					e1.printStackTrace();
+						
+						e1.printStackTrace();
 				}
     			}				
     		};					
@@ -254,49 +281,126 @@ public class Controller extends AbstractTransfer{
     		}
     	};
     	
-    	//*********************************** search! 
-    	searchActionListener = new ActionListener() {
-    		
-    		@Override
-    		public void actionPerformed(ActionEvent e) {
-    			// TODO Auto-generated method stub
-    			try {
-    				Object result = JOptionPane.showInputDialog(view, "Enter name:");
-
-    			} catch(Throwable t) {
-    				//showThrowable(t);
-    			}
-    			
-    		}
-    	};
     	
     	//*********************************** GroupActions
-  	
-    	group = new GroupActions();
-    	GroupA = new GroupAction_controller(MainClient.clien.currUser,group);
-    	group.setType(Type.NORMAL);
-    	group.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-    	group.setVisible(false);
-    	GroupA.contol();
-    	GroupActionsListener = new ActionListener() {
-   		
-   		@Override
-   		public void actionPerformed(ActionEvent e) {
-   			try{
-   			if(group.isVisible()==false)
-				{
-				view.setVisible(false);
-				group.setVisible(true);
-				}
-   			else group.toFront();
-   			
-   			} catch(Throwable t) {
-   				//showThrowable(t);
-   			}
-   			
-   		}
-   	};
+//    	createGroupEntity = new User_Entity();
+//    	settingsGui = new Settings_GUI();
+//    	settingsGui.setVisible(false);
+//    	settingCon = new Settings_Controller(settingEnt, settingsGui);
+//    	settingCon.control();
+//    	settingsGui.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+//    	GroupActionsCreate = new ActionListener() {
+//    		
+//    		@Override
+//    		public void actionPerformed(ActionEvent e) {
+//    			try {
+//					if(settingsGui.isVisible()==false){
+//						settingsGui.setVisible(true);
+//						settingsGui.toFront();
+//					}
+//					else settingsGui.toFront();
+//						
+//					}
+//				 catch(Throwable t) {
+//					//showThrowable(t);
+//				}
+//    		}
+//    	};
+//    	settingEnt = new User_Entity();
+//    	settingsGui = new Settings_GUI();
+//    	settingsGui.setVisible(false);
+//    	settingCon = new Settings_Controller(settingEnt, settingsGui);
+//    	settingCon.control();
+//    	settingsGui.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+//    	
+        
+         editGroupGui = new EditGroup();
+         deleteGroupGui = new RequestToDeleteGroup();
+         ATJRFgroupGui = new AskToJoinRemoveFromGroup();
+       
+         editGroupCon = new editGroup_Controller(new User_Entity(), editGroupGui);
+         deleteGroupCon = new RequestToDeleteGroup_Controller(new User_Entity(), deleteGroupGui);
+         ATJRFgroupCon = new AskToJoinRemoveFromGroupController(new User_Entity(), ATJRFgroupGui);
+         editGroupGui.setVisible(false);
+         deleteGroupGui.setVisible(false); 
+         ATJRFgroupGui.setVisible(false); 
+         editGroupGui.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+         deleteGroupGui.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+         ATJRFgroupGui.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE); 
     	
+    	view.getAskToJouinGroup().addActionListener( new ActionListener() {
+    		@Override
+    		public void actionPerformed(ActionEvent e) {
+    			try {
+    				ATJRFgroupCon.Control();
+					if(ATJRFgroupGui.isVisible()==false){
+						ATJRFgroupGui.setVisible(true);
+						ATJRFgroupGui.toFront();
+					}
+					else ATJRFgroupGui.toFront();
+						
+					}
+				 catch(Throwable t) {
+					//showThrowable(t);
+				}
+    		}
+    	});
+    	
+    	view.getMntmCreateGroup().addActionListener( new ActionListener() {
+    		@Override
+    		public void actionPerformed(ActionEvent e) {
+    			try {
+   				 	String renameTo = JOptionPane.showInputDialog(view.getGui(), "New Group Name");
+   				 	if(renameTo != null ) 
+   				 	{
+   				 	CreateGroupEntity renameFile = new CreateGroupEntity(renameTo);
+   					 renameFile.setCurrUser(MainClient.clien.currUser);
+   	    			 sendToServer(renameFile);
+   				 	}
+					}
+				 catch(Throwable t) {
+					//showThrowable(t);
+				}
+    		}
+    	});
+    	
+    	view.getEditGroup().addActionListener( new ActionListener() {
+    		@Override
+    		public void actionPerformed(ActionEvent e) {
+    			try {
+    				editGroupCon.control();
+					if(editGroupGui.isVisible()==false){
+						editGroupGui.setVisible(true);
+						editGroupGui.toFront();
+					}
+					else editGroupGui.toFront();
+						
+					}
+				 catch(Throwable t) {
+					//showThrowable(t);
+				}
+    		}
+    	});
+    	view.getReqestToDelete().addActionListener(new ActionListener() {
+    		@Override
+    		public void actionPerformed(ActionEvent e) {
+    			try {
+    				deleteGroupCon.control();
+					if(deleteGroupGui.isVisible()==false){
+						deleteGroupGui.setVisible(true);
+						deleteGroupGui.toFront();
+					}
+					else deleteGroupGui.toFront();
+						
+					}
+				 catch(Throwable t) {
+					//showThrowable(t);
+				}
+    		}
+    	});
+ 
+    	
+    
     	
     	//*********************************** move File 
     	moveActionListener = new ActionListener() {
@@ -368,12 +472,14 @@ public class Controller extends AbstractTransfer{
 		trashActionListener = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				//sendToServer(new RecycleScreen_Entity());
+				
 				try {
+					sendToServer(recyMod);
+					TimeUnit.MILLISECONDS.sleep(500);
 					if(recycle.isVisible()==false){
 						recycle.setVisible(true);
 						recycle.toFront();
+						
 					}
 					else recycle.toFront();
 						
@@ -387,15 +493,24 @@ public class Controller extends AbstractTransfer{
 		
 		
 		//************************************ help!!!
+		final Help_GUI help = new Help_GUI();
+    	help.setVisible(false);
+    	help.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+    	
 		helpActionListener = new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				try{
-				
-				}
-				catch(Throwable t){
-					
+				try {
+					if(help.isVisible()==false){
+						help.setVisible(true);
+						help.toFront();
+					}
+					else notificationGui.toFront();
+						
+					}
+				 catch(Throwable t) {
+					//showThrowable(t);
 				}
 				
 			}
@@ -441,6 +556,7 @@ public class Controller extends AbstractTransfer{
 		view.getDeleteFile().addActionListener(deleteActionListener);
 		view.getBtnNotifications().addActionListener(notficationActionListener);
 		//tree
+		
 		treeSelectionListener = new TreeSelectionListener() {
             public void valueChanged(TreeSelectionEvent tse){
             		model.setCurrPath(replaceTreePath(tse));
@@ -458,8 +574,7 @@ public class Controller extends AbstractTransfer{
 
 		view.getTree().addTreeSelectionListener(treeSelectionListener);
 		view.getTable().getSelectionModel().addListSelectionListener(new ListSelectionListener(){
-	        
-		public void valueChanged(ListSelectionEvent event) {
+	        public void valueChanged(ListSelectionEvent event) {
 	            // do some actions here, for example
 	            // print first column value from selected row
 	        		
@@ -493,7 +608,7 @@ public class Controller extends AbstractTransfer{
     	
     	}
 
-	public void refreshListAndTree(){
+	public synchronized void refreshListAndTree() {
 		view.getTable().removeAll();
 		view.getTree().removeAll();
 		view.getTable().revalidate();
@@ -512,7 +627,7 @@ public class Controller extends AbstractTransfer{
 		
 	}
 	
-	public void refreseList(FileTable message){
+	public synchronized void refreseList(FileTable message){
 		view.getTable().removeAll();
 		view.getTable().setModel(message.getTablemodel());
 		view.getTable().revalidate();
@@ -521,7 +636,7 @@ public class Controller extends AbstractTransfer{
 	
 
 	
-     public void updateFileTable(FileModel filetable)
+     public synchronized void updateFileTable(FileModel filetable)
      {
     	 
     	 view.getTable().setModel(filetable.getFileTable());
@@ -551,15 +666,16 @@ public class Controller extends AbstractTransfer{
 		   
 		view.getTree().setModel(treemodel);
 		view.getTree().setRootVisible(false);
-		
 		ImageIcon leafIcon = new ImageIcon(getClass().getResource("/images_icons/folder.gif"));
-		if (leafIcon != null) {
-			DefaultTreeCellRenderer renderer = new DefaultTreeCellRenderer();
-			renderer.setLeafIcon(leafIcon);
-			view.getTree().setCellRenderer(renderer);
-			} else {
-				System.err.println("Leaf icon missing; using default.");
-			}
+        if (leafIcon != null) {
+            DefaultTreeCellRenderer renderer = new DefaultTreeCellRenderer();
+            renderer.setLeafIcon(leafIcon);
+            view.getTree().setCellRenderer(renderer);
+        } else {
+            System.err.println("Leaf icon missing; using default.");
+        }
+        
+
 		view.getTree().getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
 		view.getTree().invalidate();
 		view.getTree().validate();
@@ -647,6 +763,19 @@ public class Controller extends AbstractTransfer{
 		
 	}
 
+	public void EditGroup(LoadGroup_Entity load){
+
+//		if(load.getChoice()==4)
+//			RTCGPCCon.FillGroup(load);
+//		else 
+		if(load.getChoice()==3)
+			editGroupCon.FillGroup(load);
+		else if(load.getChoice()==2)
+			ATJRFgroupCon.FillGroup(load);
+		else if(load.getChoice()==1)
+			deleteGroupCon.FillGroup(load);;
+	}
+	
     
 	
 }

@@ -88,7 +88,7 @@ public class myBoxClient extends ObservableClient {
 	 *            The message from the server.
 	 */
 	public synchronized void handleMessageFromServer(Object message) {
-		System.out.println("Message received: " + message + " from Server");
+		System.out.println("Message received: " + message + " from Server" + MainClient.clien.getCurrController());
 		try {
 
 			if (message instanceof Login_Entity){ // user name and password is found ( 1.setCurrUser that is using application, 2.set status to 1)
@@ -100,6 +100,9 @@ public class myBoxClient extends ObservableClient {
 					((LogIn_Controller) currController).ErrorLogin();	
 				}
 			}
+			if(message instanceof ForgotPassword_Entity){
+				((LogIn_Controller) currController).showMessage(((ForgotPassword_Entity) message).getPwd());
+			}
 			
 			if(message instanceof SystemAdminReequestScreen_Entity)
 			{
@@ -107,6 +110,7 @@ public class myBoxClient extends ObservableClient {
 				( (SystemAdminRequestsScreen_Controller) currController).refreshList();
 			}
 			
+			//The View Update 
 			if(message instanceof DirectoryTreeModel){	
 				((Controller) currController).setTree(((DirectoryTreeModel)message).getDir(),((DirectoryTreeModel)message).getShared());
 			}
@@ -114,6 +118,9 @@ public class myBoxClient extends ObservableClient {
 			{
 				((Controller) currController).updateFileTable(((FileModel) message));
 			}
+			
+			
+			//Actions on Files 
 			if(message instanceof UpLoadFile){
 				((Controller) currController).ShowMessage(((UpLoadFile) message).getAnser());
 				((Controller) currController).refreshListAndTree();
@@ -123,9 +130,6 @@ public class myBoxClient extends ObservableClient {
 				((Controller) currController).refreshListAndTree();
 			}
 			
-			if(message instanceof ForgotPassword_Entity){
-				((LogIn_Controller) currController).showMessage(((ForgotPassword_Entity) message).getPwd());
-			}
 			
 			if(message instanceof DeleteFile){
 				((Controller) currController).ShowMessage(((DeleteFile) message).getAnswer());
@@ -144,17 +148,6 @@ public class myBoxClient extends ObservableClient {
 			if(message instanceof Rename_Entity){
 				((Controller) currController).ShowMessage(((Rename_Entity)message).getAnswer());;
 				((Controller) currController).refreshListAndTree();
-			}
-			if(message instanceof LoadGroup_Entity)
-			{
-				if(((LoadGroup_Entity) message).getChoice()==4)
-					((RequestToChangeGroupePremission_Controller) currController).FillGroup(((LoadGroup_Entity) message));
-				else if(((LoadGroup_Entity) message).getChoice()==3)
-					((editGroup_Controller) currController).FillGroup(((LoadGroup_Entity) message));
-				else if(((LoadGroup_Entity) message).getChoice()==2)
-					((AskToJoinRemoveFromGroupController) currController).FillGroup(((LoadGroup_Entity) message));
-				else if(((LoadGroup_Entity) message).getChoice()==1)
-					((RequestToDeleteGroup_Controller) currController).FillGroup(((LoadGroup_Entity) message));
 			}
 			//***************************Edit File******************************
 			if(message instanceof EditFile_Entity){
@@ -191,15 +184,24 @@ public class myBoxClient extends ObservableClient {
 	    	      // repeat the check every second
 	    	      timer.schedule( task , new Date(), 1000 );
 			}
+			
 		//**********************************Download File *******************************************//
 			if(message instanceof DownloadFile_Entity){
 				File temp = new File ("C:/downloads/"+ ((DownloadFile_Entity)message).getFile().getFileName());
 				FileUtils.writeByteArrayToFile(temp,((DownloadFile_Entity)message).getFile().mybytearray );	  
 				((Controller) currController).ShowMessage("Downloaded To c:/downloads");
 			}
+			
+			//Group Actions 
+			if(message instanceof LoadGroup_Entity)
+			{
+			
+			}
+			
+			
+			
 			/*************************************************************************************/
 			if(message instanceof GetNotification_Entity){
-				  
 				((Controller) currController).GetNotification ((GetNotification_Entity)message);
 			}
 
@@ -220,7 +222,7 @@ public class myBoxClient extends ObservableClient {
 	}
 
 	public  void setCurrUser(User_Entity currUser) {
-		currUser = currUser;
+		this.currUser = currUser;
 	}
 	public   Object getCurrController() {
 		return currController;
