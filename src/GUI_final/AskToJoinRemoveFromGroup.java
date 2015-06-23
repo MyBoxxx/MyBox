@@ -80,12 +80,12 @@ public class AskToJoinRemoveFromGroup extends AbstractGUI{
 	
 		
 		btRequest = new JButton();
-		btRequest.setIcon(new ImageIcon("src/GUI_final/sendReuqest.PNG"));
+		btRequest.setIcon(new ImageIcon(Login_GUI.class.getResource("/images_icons/sendReuqest.PNG")));
 		btRequest.setBounds(6, 495, 187, 60);
 		getContentPane().add(btRequest);
 		
 		btCacel = new JButton();
-		btCacel.setIcon(new ImageIcon("src/GUI_final/cancelButton.jpg"));
+		btCacel.setIcon(new ImageIcon(Login_GUI.class.getResource("/images_icons/cancelButton.jpg")));
 		btCacel.setBounds(554, 495, 217, 60);
 		getContentPane().add(btCacel);
 		
@@ -101,7 +101,7 @@ public class AskToJoinRemoveFromGroup extends AbstractGUI{
 		getContentPane().add(lblAskToJoin);
 		lblAskToJoin.setForeground(SystemColor.textHighlightText);
 		lblAskToJoin.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblAskToJoin.setIcon(new ImageIcon(AskToJoinRemoveFromGroup.class.getResource("/GUI_final/Ask-To-Join-Remove-From-.png")));
+		lblAskToJoin.setIcon(new ImageIcon(AskToJoinRemoveFromGroup.class.getResource("/images_icons/Ask-To-Join-Remove-From-.png")));
 		
 		choiceGroup = new JComboBox<Object>();
 		choiceGroup.setBounds(6, 208, 185, 20);

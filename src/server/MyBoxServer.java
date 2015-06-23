@@ -337,6 +337,40 @@ public class MyBoxServer extends AbstractServer
 	        	changegroup(conn,((Group_Entity)msg));
 	        }
 	      //******************************//
+// ******request to limit******************///
+	        
+	        if(msg instanceof LimitPeopleInGroup_Entity){
+	        	limit(conn,((LimitPeopleInGroup_Entity)msg));
+	        	
+	        }
+	        //=========================
+// *********** GET ALL USERS ******************///
+	        
+	        if(msg instanceof AdminAddPeopleFMS_Entity){
+	        	allusers(conn,((AdminAddPeopleFMS_Entity)msg));
+	        	try {
+					client.sendToClient(msg);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+	        	
+	        }
+	      //******************************//
+// *********** GET ALL USERS in group ******************///
+	        
+	        if(msg instanceof AdminDeletePeopleFMS_Entity){
+	        	AllGroupUser(conn,((AdminDeletePeopleFMS_Entity)msg));
+	        	try {
+					client.sendToClient(msg);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+	        	
+	        }
+	      //******************************//
+	        
 	        
 	        if(msg instanceof EditFile_Entity){
 	        	File afile = new File(((EditFile_Entity)msg).getFile().getPath()+"/"+((EditFile_Entity)msg).getFile().getFileName());
@@ -372,7 +406,7 @@ public class MyBoxServer extends AbstractServer
 	        }
 	        /************************************/
 	        if(msg instanceof GetNotification_Entity){
-	         	((GetNotification_Entity) msg).setFileTable(buildTableModel(conn,"SELECT IDNotification,Message,Satus FROM notification Where IDuser = '"+((GetNotification_Entity)msg).getUser().getIDuser()+"';")); 
+	         	((GetNotification_Entity) msg).setFileTable(buildTableModel(conn,"SELECT IDNotification,Message,status FROM notification Where IDuser = '"+((GetNotification_Entity)msg).getUser().getIDuser()+"';")); 
 	        	try{
 	        		client.sendToClient(msg);
 	        	}
@@ -381,7 +415,7 @@ public class MyBoxServer extends AbstractServer
 	        	}
 	        }
 	        if(msg instanceof SetNotification_Entity){
-	        	String updateTableSQL = "UPDATE notification SET Satus = '1' WHERE  IDuser = '"+((SetNotification_Entity)msg).getUser().getIDuser()+"'; ";
+	        	String updateTableSQL = "UPDATE notification SET Status = '1' WHERE  IDuser = '"+((SetNotification_Entity)msg).getUser().getIDuser()+"'; ";
 				java.sql.PreparedStatement preparedStatement = conn.prepareStatement(updateTableSQL);
 				preparedStatement .executeUpdate();	
 	        }
@@ -436,6 +470,113 @@ public class MyBoxServer extends AbstractServer
    * @param nfilename - the new file name
    * @return String OK with file name changed to new name OR File '\' path NOT Exists 
    */
+  //================All Group Users=================///
+private void AllGroupUser(Connection con,AdminDeletePeopleFMS_Entity log) {
+	// TODO Auto-generated method stub
+	  Statement stmt;
+	  
+	   try 
+		{
+		   stmt = con.createStatement();
+		   if(log.getId()==-1){
+		    
+			String s="select UserName "+
+					"from mybox.users ,mybox.useringroup, mybox.groups "+
+					"where  useringroup.IdUser = users.UserID and groups.IDGroup = useringroup.IDGroup " +
+					"and Groups.GroupName = '" + log.getName() + "';";
+					
+			ResultSet rs= stmt.executeQuery(s);
+			while(rs.next()){
+					log.getNames().add(rs.getString("UserName"));
+			}
+		   }
+		   else {
+					String sql="SELECT UserID FROM myBox.Users WHERE UserName='" + log.getName() + "';";
+					ResultSet rs1= stmt.executeQuery(sql);
+					while(rs1.next()){
+							log.setId(rs1.getInt(1));
+					}
+					String sql1="INSERT INTO notification SET message= '" + log.getName() + "deleted to group',  status = 0, IDuser = " + log.getId() + ";";
+					int rs2=stmt.executeUpdate(sql1); 
+					System.out.println(rs2);
+					
+					String sql2="DELETE FROM myBox.UserInGroup WHERE IdGroup='" + log.getId() + "';";
+					int rs3=stmt.executeUpdate(sql2); 
+					System.out.println(rs3);
+					
+		   }
+		}catch (SQLException e) 
+		   {e.printStackTrace();}	
+}
+//============================================//
+//====================== ALL USERS QUREY======
+private void allusers(Connection con,AdminAddPeopleFMS_Entity log) {
+	// TODO Auto-generated method stub
+	   Statement stmt;
+	  
+	   try 
+		{
+		   stmt = con.createStatement();
+		   if(log.getName()==null){
+			String s="SELECT UserName FROM myBox.Users";
+			ResultSet rs= stmt.executeQuery(s);
+			while(rs.next()){
+					log.getNames().add(rs.getString("UserName"));
+			}
+		   }
+		   else {
+			   
+				String s="SELECT UserId FROM myBox.Users WHERE UserName='" +log.getName() +"';";
+				ResultSet rs= stmt.executeQuery(s);
+				while(rs.next()){
+					log.setId(rs.getInt(1));
+			}
+				String sql="INSERT INTO notification SET message='" + log.getName() + " added to group', status = 0, IDuser = '" + log.getId() + "';";
+				int rs2=stmt.executeUpdate(sql); 
+				System.out.println(rs2);
+				
+				String sql2="INSERT INTO UserInGroup SET  DateJoin = '2015-06-23', IDuser = " + log.getId() + ";";
+				int rs3=stmt.executeUpdate(sql2); 
+				System.out.println(rs3);
+						
+				
+		   }
+		}catch (SQLException e) 
+	   {e.printStackTrace();}	
+	
+}
+//================================
+//===========================LIMIT==========================
+private void limit(Connection con,LimitPeopleInGroup_Entity log) {
+	// TODO Auto-generated method stub
+	  Statement stmt;
+	   String[] grop;
+	   try 
+		{
+		   if(log.getNewAmount()==-1){
+			stmt = con.createStatement();
+			String s="SELECT GroupLimit FROM myBox.Groups WHERE GroupName ='" + log.getName() + "';";
+			ResultSet rs= stmt.executeQuery(s);
+			while(rs.next()){
+					log.setOldAmount((rs.getInt(1)));
+			}
+		   }
+		   else{
+				stmt = con.createStatement();
+				String s="UPDATE Groups SET GroupLimit ='"+log.getNewAmount() +"'  WHERE GroupName ='" + log.getName() + "';";
+				int rs= stmt.executeUpdate(s);
+				
+				}
+			}catch (SQLException e) {e.printStackTrace();
+		
+			 }
+	
+}
+//=============================================
+  
+  
+  
+  
 private String RenameFile(Connection con, Rename_Entity msg) {
 
 	  Statement stmt;
@@ -1051,8 +1192,8 @@ private void LoadGroup(Connection con, LoadGroup_Entity log) {
 		{
 		
 			stmt = con.createStatement();
-			if (log.getChoice()==2){
-			String s="SELECT * FROM Groups ;";
+			if (log.getChoice()==2 || log.getChoice()==4 || log.getChoice()==5 || log.getChoice()==6 || log.getChoice()==7){
+			String s="SELECT * FROM Groups ; ";
 			ResultSet rs= stmt.executeQuery(s);
 			while(rs.next()){
 					log.getGroups().add(rs.getString("GroupName"));
@@ -1061,8 +1202,8 @@ private void LoadGroup(Connection con, LoadGroup_Entity log) {
 			//grop=log.getGroups().toArray(new String[log.getGroups().size()]);
 			}
 			if (log.getChoice()==1 || log.getChoice()==3){
-				String s="SELECT distinct GroupName "+
-						"from users ,useringroup, Groups "+
+				String s="select  distinct GroupName "+
+						"from mybox.users ,mybox.useringroup, mybox.groups "+
 						"where  useringroup.IdUser =" + log.getUser().getIDuser() + " and groups.IDGroup = useringroup.IDGroup";
 				ResultSet rs= stmt.executeQuery(s);
 				while(rs.next()){

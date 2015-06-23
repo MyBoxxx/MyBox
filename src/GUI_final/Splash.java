@@ -58,19 +58,19 @@ public class Splash {
 	public static void main() throws InterruptedException, MalformedURLException {
 		//JSplash splashs = new JSplash(URL , false, false, false, null);
 		
-			JSplash splashs = new JSplash(Splash.class.getResource("Cloud printing.png"), true, true, false, "V1",null,Color.RED,Color.BLACK);
+			JSplash splashs = new JSplash(Splash.class.getResource("/images_icons/Cloud printing.png"), true, true, false, "V1",null,Color.RED,Color.BLACK);
 			splashs.splashOn();
 			//call Method;
 			splashs.setProgress(20, "Init");
-			Thread.sleep(1);
+			Thread.sleep(100);
 			splashs.setProgress(40, "Loading");
-			Thread.sleep(1);
+			Thread.sleep(100);
 			splashs.setProgress(60, "Applying Configs");
-			Thread.sleep(1);
+			Thread.sleep(100);
 			splashs.setProgress(80, "Making JAVA");
-			Thread.sleep(1);
+			Thread.sleep(100);
 			splashs.setProgress(100, "100 Ein ma");
-			Thread.sleep(1);
+			Thread.sleep(100);
 			splashs.splashOff();	
 
 	/**

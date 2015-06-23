@@ -7,6 +7,7 @@ import java.awt.EventQueue;
 import javax.print.DocFlavor.STRING;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -28,7 +29,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 
-public class AdminAddPeopleToGroupFMS extends  JPanel {
+public class AdminAddPeopleToGroupFMS extends  AbstractGUI {
 
 	private JPanel contentPane;
 	private JTextPane txtpnUser;
@@ -38,15 +39,15 @@ public class AdminAddPeopleToGroupFMS extends  JPanel {
 	private JLabel addLabel;
 	private JButton btnOk;
 	private JButton buttonCancel;
-	private Choice userChoice;
-	private Choice groupChoice;
+	private JComboBox<Object> userChoice;
+	private JComboBox<Object> groupChoice;
 	private JTextPane ReasontextPane;
 	
 
 	/**
 	 * Launch the application.
 	 */
-	/*public void init() {
+	public void init() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -57,7 +58,7 @@ public class AdminAddPeopleToGroupFMS extends  JPanel {
 				}
 			}
 		});
-	}*/
+	}
 
 	/**
 	 * Create the frame.
@@ -67,13 +68,13 @@ public class AdminAddPeopleToGroupFMS extends  JPanel {
 		setBackground(SystemColor.textHighlight);
 		
 		
-		/*frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 800, 600);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(59, 89, 151));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(null);*/
+		contentPane.setLayout(null);
 		setLayout(null);
 		
 		txtpnUser = new JTextPane();
@@ -98,16 +99,16 @@ public class AdminAddPeopleToGroupFMS extends  JPanel {
 		add(txtpnReason);
 		
 		addLabel = new JLabel("");
-		addLabel.setIcon(new ImageIcon("images/Add-People-To-Group.png"));
+		addLabel.setIcon(new ImageIcon(Login_GUI.class.getResource("/images_icons/Add-People-To-Group.png")));
 		addLabel.setBounds(70, 11, 535, 199);
 		add(addLabel);
 		
-		userChoice = new Choice();
+		userChoice = new JComboBox<Object>();
 		userChoice.setFont(new Font("Dialog", Font.PLAIN, 16));
 		userChoice.setBounds(302, 291, 129, 17);
 		add(userChoice);
 		
-		groupChoice = new Choice();
+		groupChoice = new JComboBox<Object>();
 		groupChoice.setFont(new Font("Dialog", Font.PLAIN, 16));
 		groupChoice.setBounds(302, 235, 129, 17);
 		add(groupChoice);
@@ -118,7 +119,7 @@ public class AdminAddPeopleToGroupFMS extends  JPanel {
 		add(ReasontextPane);
 		
 		btnOk = new JButton("");
-		btnOk.setIcon(new ImageIcon("images/okButton.png"));
+		btnOk.setIcon(new ImageIcon(Login_GUI.class.getResource("/images_icons/okButton.png")));
 		btnOk.setOpaque(false);
 		btnOk.setContentAreaFilled(false); 
 		btnOk.setBorderPainted(false);
@@ -126,7 +127,7 @@ public class AdminAddPeopleToGroupFMS extends  JPanel {
 		add(btnOk);
 		
 		buttonCancel = new JButton("");
-		buttonCancel.setIcon(new ImageIcon("images/cancelButton.png"));
+		buttonCancel.setIcon(new ImageIcon(Login_GUI.class.getResource("/images_icons/cancelButton.png")));
 		buttonCancel.setOpaque(false);
 		buttonCancel.setContentAreaFilled(false);
 		buttonCancel.setBorderPainted(false);
@@ -135,25 +136,23 @@ public class AdminAddPeopleToGroupFMS extends  JPanel {
 	}
 
 
-	public Choice getUserChoice() {
+
+
+	public JComboBox<Object> getUserChoice() {
 		return userChoice;
 	}
 
-
-	public void setUserChoice(Choice userChoice) {
+	public void setUserChoice(JComboBox<Object> userChoice) {
 		this.userChoice = userChoice;
 	}
 
-
-	public Choice getGroupChoice() {
+	public JComboBox<Object> getGroupChoice() {
 		return groupChoice;
 	}
 
-
-	public void setGroupChoice(Choice groupChoice) {
+	public void setGroupChoice(JComboBox<Object> groupChoice) {
 		this.groupChoice = groupChoice;
 	}
-
 
 	public JTextPane getReasontextPane() {
 		return ReasontextPane;

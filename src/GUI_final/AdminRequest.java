@@ -63,7 +63,7 @@ public class AdminRequest extends AbstractGUI {
         try {
             Class.forName("com.mysql.jdbc.Driver").newInstance();
             Connection con = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/mybox", "root", "");
+                    "jdbc:mysql://localhost:3306/mybox", "root", "Braude");
             String sql = "select requestID,RequestType,status,UserName "+
 						"from adminrequsts a, users s "+
 						"where s.UserID = a.UserId";

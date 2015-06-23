@@ -1,32 +1,24 @@
 package GUI_final;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
-import javax.print.DocFlavor.STRING;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTextPane;
 
-import java.awt.Choice;
 import java.awt.Dimension;
 import java.awt.TextField;
-import java.awt.Button;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Toolkit;
 
 import javax.swing.JLabel;
 
-import java.awt.SystemColor;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 
 public class AdminAddPeopleToGroup extends AbstractGUI {
@@ -85,7 +77,7 @@ public class AdminAddPeopleToGroup extends AbstractGUI {
 		contentPane.add(textField);
 		
 		OkButton = new JButton();	
-		OkButton.setIcon(new ImageIcon("images/approved.png"));
+		OkButton.setIcon(new ImageIcon(Login_GUI.class.getResource("/images_icons/approved.png")));
 		OkButton.setOpaque(false);
 		OkButton.setContentAreaFilled(false); 
 		OkButton.setBorderPainted(false); 
@@ -93,7 +85,7 @@ public class AdminAddPeopleToGroup extends AbstractGUI {
 		contentPane.add(OkButton);
 		
 		cancelButton = new JButton();
-		cancelButton.setIcon(new ImageIcon("images/reject.png"));
+		cancelButton.setIcon(new ImageIcon(Login_GUI.class.getResource("/images_icons/reject.png")));
 		cancelButton.setOpaque(false);
 		cancelButton.setContentAreaFilled(false); 
 		cancelButton.setBorderPainted(false); 
@@ -101,7 +93,7 @@ public class AdminAddPeopleToGroup extends AbstractGUI {
 		contentPane.add(cancelButton);
 		
 		join= new JLabel();
-		join.setIcon(new ImageIcon("images/join.jpeg"));
+		join.setIcon(new ImageIcon(Login_GUI.class.getResource("/images_icons/join.jpeg")));
 		join.setBounds(47, 250, 260	, 165);
 		contentPane.add(join);
 		
@@ -141,7 +133,7 @@ public class AdminAddPeopleToGroup extends AbstractGUI {
 		contentPane.add(txtpnReason);
 		
 		CreateLabel = new JLabel("");
-		CreateLabel.setIcon(new ImageIcon("images/Add-People-To-Group.png"));
+		CreateLabel.setIcon(new ImageIcon(Login_GUI.class.getResource("/images_icons/Add-People-To-Group.png")));
 		CreateLabel.setBounds(37, 32, 535, 199);
 		contentPane.add(CreateLabel);
 	}

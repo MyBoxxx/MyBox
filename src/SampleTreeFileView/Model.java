@@ -27,6 +27,7 @@ import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
 
+import ocsftester.FileTableModel;
 import Client.MainClient;
 import Entity.Abstract_Entity;
 import Entity.MyFile;

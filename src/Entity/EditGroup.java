@@ -1,4 +1,4 @@
-package GUI_final;
+package Entity;
 
 import java.awt.Dimension;
 import java.awt.EventQueue;
@@ -15,6 +15,8 @@ import javax.swing.JButton;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JEditorPane;
 import javax.swing.ImageIcon;
+
+import GUI_final.AbstractGUI;
 
 import java.awt.Color;
 
@@ -148,18 +150,18 @@ public class EditGroup extends AbstractGUI {
 		
 		b4Send = new JButton("Send Request");
 		b4Send.setEnabled(false);
-		b4Send.setIcon(new ImageIcon(EditGroup.class.getResource("/GUI_final/sendReuqest.png")));
+		b4Send.setIcon(new ImageIcon(EditGroup.class.getResource("/images_icons/sendReuqest.png")));
 		b4Send.setBounds(49, 493, 185, 50);
 		getContentPane().add(b4Send);
 			
 			b5Cancel = new JButton("Cancel");
-			b5Cancel.setIcon(new ImageIcon(EditGroup.class.getResource("/GUI_final/cancelButton.jpg")));
+			b5Cancel.setIcon(new ImageIcon(EditGroup.class.getResource("/images_icons/cancelButton.jpg")));
 			b5Cancel.setBounds(535, 493, 214, 50);
 			getContentPane().add(b5Cancel);
 			getContentPane().add( panel);
 			
 			JLabel pic = new JLabel("");
-			pic.setIcon(new ImageIcon(EditGroup.class.getResource("/GUI_final/EditGroupPic.png")));
+			pic.setIcon(new ImageIcon(EditGroup.class.getResource("/images_icons/EditGroupPic.png")));
 			pic.setBounds(128, 6, 545, 566);
 			getContentPane().add(pic);
 	}

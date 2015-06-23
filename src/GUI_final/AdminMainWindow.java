@@ -67,26 +67,26 @@ public class AdminMainWindow extends AbstractGUI {
 		contentPane.setLayout(null);
 		
 		lblNotificationCenter = new JLabel();
-		lblNotificationCenter.setIcon(new ImageIcon("src/GUI_final/noti.png"));
+		lblNotificationCenter.setIcon(new ImageIcon(Login_GUI.class.getResource("/images_icons/noti.png")));
 		lblNotificationCenter.setBackground(new Color(41,91,150));
 		lblNotificationCenter.setBounds(182, 122, 336, 52);
 		contentPane.add(lblNotificationCenter);
 		
 		NotifcationNo = new JButton();
-		NotifcationNo.setIcon(new ImageIcon("src/GUI_final/notification_no.png"));
+		NotifcationNo.setIcon(new ImageIcon(Login_GUI.class.getResource("/images_icons/notification_no.png")));
 		NotifcationNo.setBounds(385, 180, 50, 52);
 		NotifcationNo.setBackground(new Color(41,91,150));
 		contentPane.add(NotifcationNo);
 		
 		NotifcationYes = new JButton();
-		NotifcationYes.setIcon(new ImageIcon("src/GUI_final/notification_yes.png"));
+		NotifcationYes.setIcon(new ImageIcon(Login_GUI.class.getResource("/images_icons/notification_yes.png")));
 		NotifcationYes.setBackground(new Color(41,91,150));
 		NotifcationYes.setBounds(327, 180, 52, 52);
 		contentPane.add(NotifcationYes);
 		
 		btnChangeFms = new JButton();		
 		btnChangeFms.setToolTipText("Chnage FMS");
-		btnChangeFms.setIcon(new ImageIcon("src/GUI_final/changeFMS.png"));
+		btnChangeFms.setIcon(new ImageIcon(Login_GUI.class.getResource("/images_icons/changeFMS.png")));
 		//btnChangeFms.setBackground(Color.WHITE);
 		btnChangeFms.setOpaque(false);
 		//btnChangeFms.setContentAreaFilled(false);
@@ -95,19 +95,19 @@ public class AdminMainWindow extends AbstractGUI {
 		contentPane.add(btnChangeFms);
 		
 		btnQuit = new JButton();
-		btnQuit.setIcon(new ImageIcon("src/GUI_final/logout_button.png"));
+		btnQuit.setIcon(new ImageIcon(Login_GUI.class.getResource("/images_icons/logout_button.png")));
 		btnQuit.setBackground(new Color(41,91,150));
 		btnQuit.setBounds(445, 200, 148, 138);
 		contentPane.add(btnQuit);
 		
 		lblSystemAdminWindow = new JLabel();
 		lblSystemAdminWindow.setBounds(290, 11, 293, 114);
-		lblSystemAdminWindow.setIcon(new ImageIcon("src/GUI_final/admin.png"));
+		lblSystemAdminWindow.setIcon(new ImageIcon(Login_GUI.class.getResource("/images_icons/admin.png")));
 		lblSystemAdminWindow.setBackground(null);
 		contentPane.add(lblSystemAdminWindow);
 		
 	    Cover = new JLabel();
-		Cover.setIcon(new ImageIcon("src/GUI_final/admin.jpg"));
+		Cover.setIcon(new ImageIcon(Login_GUI.class.getResource("/images_icons/admin.jpg")));
 		Cover.setBounds(0, 0, 593, 474);
 		contentPane.add(Cover);		
 		

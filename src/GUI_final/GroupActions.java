@@ -50,7 +50,7 @@ public class GroupActions extends AbstractGUI {
 		getContentPane().setLayout(null);
 		
 		lblGroupActions = new JLabel("");
-		lblGroupActions.setIcon(new ImageIcon(GroupActions.class.getResource("/GUI_final/Group-Action.png")));
+		lblGroupActions.setIcon(new ImageIcon(GroupActions.class.getResource("/images_icons/Group-Action.png")));
 		lblGroupActions.setFont(new Font("Lucida Grande", Font.PLAIN, 16));
 		lblGroupActions.setBounds(104, 40, 679, 83);
 		getContentPane().add(lblGroupActions);
@@ -76,7 +76,7 @@ public class GroupActions extends AbstractGUI {
 		getContentPane().add(back);
 		
 		lblNewLabel = new JLabel("");
-		lblNewLabel.setIcon(new ImageIcon(GroupActions.class.getResource("/GUI_final/EditGroupPic.png")));
+		lblNewLabel.setIcon(new ImageIcon(GroupActions.class.getResource("/images_icons/EditGroupPic.png")));
 		lblNewLabel.setBounds(187, -20, 822, 592);
 		getContentPane().add(lblNewLabel);
 	}

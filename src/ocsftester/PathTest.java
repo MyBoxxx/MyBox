@@ -1,4 +1,4 @@
-package SampleTreeFileView;
+package ocsftester;
 
 import java.util.Enumeration;
 

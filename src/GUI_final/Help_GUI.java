@@ -27,6 +27,14 @@ import javax.swing.JTextField;
 
 
 
+
+
+
+
+
+
+
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.SystemColor;
@@ -94,7 +102,7 @@ public class Help_GUI extends JFrame {
 	
 	  
 	    helpLabel = new JLabel();
-	    helpLabel.setIcon(new ImageIcon("images/help.jpg"));
+	    helpLabel.setIcon(new ImageIcon(Login_GUI.class.getResource("/images_icons/help.jpg")));
 	    helpLabel.setLocation(143, 401);
 	    helpLabel.setSize(150, 150);
 	    helpLabel.setBounds(166, 11, 472, 198);
@@ -110,7 +118,7 @@ public class Help_GUI extends JFrame {
 				sharing.init();
 			}
 		});
-		PhotosButton.setIcon(new ImageIcon("images/photos.png"));
+		PhotosButton.setIcon(new ImageIcon(Login_GUI.class.getResource("/images_icons/photos.png")));
 		PhotosButton.setBackground(Color.WHITE);
 		PhotosButton.setBounds(339, 329, 74, 74);
 		contentPane.add(PhotosButton);
@@ -123,7 +131,7 @@ public class Help_GUI extends JFrame {
 				share.init();
 			}
 		});
-		Settingbutton.setIcon(new ImageIcon("images/sharing.png"));
+		Settingbutton.setIcon(new ImageIcon(Login_GUI.class.getResource("/images_icons/sharing.png")));
 		Settingbutton.setBackground(Color.WHITE);
 		Settingbutton.setToolTipText("");
 		Settingbutton.setBounds(40, 220, 74, 74);
@@ -137,7 +145,7 @@ public class Help_GUI extends JFrame {
 				manage.init();
 			}
 		});
-		Loginbutton.setIcon(new ImageIcon("images/login.png"));
+		Loginbutton.setIcon(new ImageIcon(Login_GUI.class.getResource("/images_icons/login.png")));
 		Loginbutton.setBackground(Color.WHITE);
 		Loginbutton.setBounds(634, 220, 74, 74);
 		contentPane.add(Loginbutton);
@@ -149,7 +157,7 @@ public class Help_GUI extends JFrame {
 				sign.init();
 			}
 		});
-		accountButton.setIcon(new ImageIcon("images/account.png"));
+		accountButton.setIcon(new ImageIcon(Login_GUI.class.getResource("/images_icons/account.png")));
 		accountButton.setBackground(Color.WHITE);
 		accountButton.setBounds(339, 220, 74, 74);
 		contentPane.add(accountButton);
@@ -161,7 +169,7 @@ public class Help_GUI extends JFrame {
 				storage.init();
 			}
 		});
-		storageButton.setIcon(new ImageIcon("images/storage.png"));
+		storageButton.setIcon(new ImageIcon(Login_GUI.class.getResource("/images_icons/storage.png")));
 		storageButton.setBackground(Color.WHITE);
 		storageButton.setBounds(40, 329, 74, 74);
 		contentPane.add(storageButton);
@@ -173,7 +181,7 @@ public class Help_GUI extends JFrame {
 				delANDrec.init();
 			}
 		});
-		Syncingbutton.setIcon(new ImageIcon("images/syncing.png"));
+		Syncingbutton.setIcon(new ImageIcon(Login_GUI.class.getResource("/images_icons/syncing.png")));
 		Syncingbutton.setBackground(Color.WHITE);
 		Syncingbutton.setBounds(634, 329, 74, 74);
 		contentPane.add(Syncingbutton);
@@ -244,7 +252,7 @@ public class Help_GUI extends JFrame {
 				setVisible(false);
 			}
 		});
-		backButton.setIcon(new ImageIcon("images/back.png"));
+		backButton.setIcon(new ImageIcon(Login_GUI.class.getResource("/images_icons/back.png")));
 		backButton.setBackground(Color.WHITE);
 		backButton.setBounds(302, 446, 128, 76);
 		contentPane.add(backButton);

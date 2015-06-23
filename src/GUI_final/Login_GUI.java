@@ -46,6 +46,7 @@ public class Login_GUI extends AbstractGUI {
 	private JTextField txtOneOrMore;
 	private JPasswordField passwordField;
 	private JButton btnLogin ,btnForgotPassword ;
+	private JLabel lblWelcome;
 		
 
 	/**
@@ -81,7 +82,7 @@ public class Login_GUI extends AbstractGUI {
 		
 		    JLabel LoginTopBaner = new JLabel();
 		    LoginTopBaner.setIcon(new ImageIcon(Login_GUI.class.getResource("/images_icons/Login_top_pic.gif")));
-		    LoginTopBaner.setBounds(10, 32, 773, 257);
+		    LoginTopBaner.setBounds(10, 157, 773, 257);
 		    LoginTopBaner.setBackground(Color.WHITE);
 		
 		    contentPane.setLayout(null);
@@ -92,13 +93,13 @@ public class Login_GUI extends AbstractGUI {
 		    btnLogin.setFocusPainted(false); 
 		    btnLogin.setOpaque(false);
 		    
-		    btnLogin.setBounds(437, 396, 150, 150);
+		    btnLogin.setBounds(634, 412, 150, 150);
 		    LoginTopBaner.setBackground(Color.WHITE);
 		    contentPane.add(btnLogin);
 		    btnForgotPassword = new JButton(new ImageIcon(Login_GUI.class.getResource("/images_icons/login_forgot_password.png")));
 		    btnForgotPassword.setLocation(143, 401);
 		    btnForgotPassword.setSize(150, 150);
-		    btnForgotPassword.setBounds(215, 396, 150, 155);
+		    btnForgotPassword.setBounds(10, 407, 150, 155);
 		    btnForgotPassword.setBackground(Color.WHITE);
 		    btnForgotPassword.setBorderPainted(false); 
 		    btnForgotPassword.setContentAreaFilled(false); 
@@ -146,7 +147,7 @@ public class Login_GUI extends AbstractGUI {
 		    			 txtUserName.setText(s);
 		    	}
 		    });*/
-		    txtUserName.setBounds(205, 317, 387, 20);
+		    txtUserName.setBounds(194, 482, 387, 20);
 		    contentPane.add(txtUserName);
 		    txtUserName.setColumns(10);
 		    
@@ -156,7 +157,7 @@ public class Login_GUI extends AbstractGUI {
 		    txtOneOrMore.setEnabled(false);
 		    txtOneOrMore.setEditable(false);
 		    txtOneOrMore.setText("One or more fields are incorrect");
-		    txtOneOrMore.setBounds(205, 291, 319, 25);
+		    txtOneOrMore.setBounds(194, 446, 319, 25);
 		    txtOneOrMore.setBorder(javax.swing.BorderFactory.createEmptyBorder());
 		    txtOneOrMore.setVisible(false);
 		    //txtOneOrMore.setForeground(Color.RED);
@@ -180,8 +181,13 @@ public class Login_GUI extends AbstractGUI {
 		    	}
 		    }); */
 		    passwordField.setText("password");;
-		    passwordField.setBounds(205, 348, 387, 20);
+		    passwordField.setBounds(194, 513, 387, 20);
 		    contentPane.add(passwordField);
+		    
+		    lblWelcome = new JLabel("");
+		    lblWelcome.setIcon(new ImageIcon(Login_GUI.class.getResource("/images_icons/Welcome-To-MyBox.png")));
+		    lblWelcome.setBounds(-19, 0, 840, 140);
+		    contentPane.add(lblWelcome);
 		  
 		    //f.setVisible(true);
 	}

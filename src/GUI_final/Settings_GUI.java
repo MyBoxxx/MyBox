@@ -23,6 +23,8 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JPasswordField;
 
+import Client.MainClient;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -79,7 +81,7 @@ public class Settings_GUI extends AbstractGUI {
 		txtmyname.setBackground(Color.WHITE);
 		txtmyname.setEditable(false);
 		txtmyname.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		txtmyname.setText("MyName");
+		txtmyname.setText(MainClient.clien.getCurrUser().getUsername());
 		txtmyname.setBorder(javax.swing.BorderFactory.createEmptyBorder());
 		txtmyname.setBounds(243, 182, 89, 50);
 		ProfilePanel.add(txtmyname);
@@ -110,7 +112,7 @@ public class Settings_GUI extends AbstractGUI {
 		  txtfieldUserID = new JTextField();
 		  txtfieldUserID.setBackground(Color.WHITE);
 		  txtfieldUserID.setEditable(false);
-		  txtfieldUserID.setText("3831163");
+		  txtfieldUserID.setText(""+MainClient.clien.getCurrUser().getIDuser());
 		  txtfieldUserID.setBounds(444, 244, 148, 25);
 		  ProfilePanel.add(txtfieldUserID);
 		  txtfieldUserID.setColumns(10);

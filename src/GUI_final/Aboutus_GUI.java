@@ -52,14 +52,15 @@ public class Aboutus_GUI extends JFrame {
 		
 	    contentPane.setLayout(null);
 	    JLabel join = new JLabel();
-	    join.setIcon(new ImageIcon("src/GUI_final/about_us.jpg"));
+	    
+	    join.setIcon(new ImageIcon(Aboutus_GUI.class.getResource("/images_icons/about_us.jpg")));
 	    join.setBounds(0, -267, 800, 770);
 		contentPane.add(join);
 		
 		
 	    contentPane.setLayout(null);
 	    JLabel Names = new JLabel();	
-	    Names.setIcon(new ImageIcon("src/GUI_final/names.jpg"));
+	    Names.setIcon(new ImageIcon(Aboutus_GUI.class.getResource("/images_icons/names.jpg")));
 	    Names.setLocation(10, 276);
 	    Names.setSize(887, 492);	   
 		contentPane.add(Names);

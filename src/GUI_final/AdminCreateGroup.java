@@ -71,7 +71,7 @@ public class AdminCreateGroup extends AbstractGUI {
 		contentPane.setLayout(null);
 		
 		CreateLabel = new JLabel("");
-		CreateLabel.setIcon(new ImageIcon("images/Create-group.png"));
+		CreateLabel.setIcon(new ImageIcon(Login_GUI.class.getResource("/images_icons/Create-group.png")));
 		CreateLabel.setForeground(SystemColor.window);
 		CreateLabel.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		CreateLabel.setBounds(24, 24, 695, 94);
@@ -115,7 +115,7 @@ public class AdminCreateGroup extends AbstractGUI {
 		contentPane.add(ReasontextField);
 		
 		okButton = new JButton();
-		okButton.setIcon(new ImageIcon("images/approved.png"));
+		okButton.setIcon(new ImageIcon(Login_GUI.class.getResource("/images_icons/approved.png")));
 		okButton.setOpaque(false);
 		okButton.setContentAreaFilled(false); 
 		okButton.setBorderPainted(false);
@@ -123,7 +123,7 @@ public class AdminCreateGroup extends AbstractGUI {
 		contentPane.add(okButton);
 		
 		cancelButton = new JButton();
-		cancelButton.setIcon(new ImageIcon("images/reject.png"));
+		cancelButton.setIcon(new ImageIcon(Login_GUI.class.getResource("/images_icons/reject.png")));
 		cancelButton.setOpaque(false);
 		cancelButton.setContentAreaFilled(false); 
 		cancelButton.setBorderPainted(false);

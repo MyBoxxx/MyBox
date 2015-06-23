@@ -31,8 +31,9 @@ import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 
 
-public class Limitpeopleingroup extends JPanel {
-
+public class Limitpeopleingroup extends AbstractGUI {
+	
+	private JPanel contentPane;
 	private JTextField CuurenttextField;
 	private JTextField newAmounText;
 	private JTextPane txtpnCurrentNumberOf;
@@ -43,25 +44,26 @@ public class Limitpeopleingroup extends JPanel {
 	private JTextPane txtpnReason;
 	String GroupLimit = new String();
 	private JTextField ReasontextField;
-	private JComboBox GroupcomboBox;
+	private JComboBox<Object> GroupcomboBox;
 	private JTextPane txtpnChooseGroup;
 	ArrayList <String> result = new ArrayList<String>();
 	
 	/**
 	 * Launch the application.
 	 */
-	/*public void initialize() {
+	//public void initialize() {
+	public void init() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Limitpeopleingroup frame = new Limitpeopleingroup();
+					Limitpeopleingroup frame = new Limitpeopleingroup(null,null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 		});
-	}*/
+	}
 	
 	/**
 	 * Create the frame.
@@ -70,31 +72,31 @@ public class Limitpeopleingroup extends JPanel {
 		this.GroupLimit = GroupLimit;
 		this.result = result;
 		setBackground(SystemColor.textHighlight);
-		/*setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 643, 300);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 800, 600);
 		contentPane = new JPanel();
-		contentPane.setBackground(Color.WHITE);
+		contentPane.setBackground(SystemColor.textHighlight);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(null); */
-		//setLayout(null);
+		contentPane.setLayout(null); 
+		getContentPane().setLayout(null);
 		
 		
-		setLayout(null);
+		getContentPane().setLayout(null);
 		
 		txtpnCurrentNumberOf = new JTextPane();
 		txtpnCurrentNumberOf.setBounds(129, 260, 121, 28);
 		txtpnCurrentNumberOf.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		txtpnCurrentNumberOf.setBackground(Color.PINK);
 		txtpnCurrentNumberOf.setText("Current Amount\r\n");
-		add(txtpnCurrentNumberOf);
+		getContentPane().add(txtpnCurrentNumberOf);
 		
 		CuurenttextField = new JTextField(GroupLimit);
 		CuurenttextField.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		CuurenttextField.setBounds(272, 268, 86, 20);
 		CuurenttextField.setEditable(false);
 		CuurenttextField.setBackground(Color.WHITE);
-		add(CuurenttextField);
+		getContentPane().add(CuurenttextField);
 		CuurenttextField.setColumns(10);
 		
 		txtpnWriteNewNumber = new JTextPane();
@@ -102,62 +104,62 @@ public class Limitpeopleingroup extends JPanel {
 		txtpnWriteNewNumber.setBackground(Color.PINK);
 		txtpnWriteNewNumber.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		txtpnWriteNewNumber.setText("New amount\r\n");
-		add(txtpnWriteNewNumber);
+		getContentPane().add(txtpnWriteNewNumber);
 		
 		btnOk = new JButton("");			
-		btnOk.setBounds(10, 436, 150, 56);
-		btnOk.setIcon(new ImageIcon("images/okButton.png"));
+		btnOk.setBounds(10, 495, 150, 56);
+		btnOk.setIcon(new ImageIcon(Login_GUI.class.getResource("/images_icons/okButton.png")));
 		btnOk.setOpaque(false);
 		btnOk.setContentAreaFilled(false); 
 		btnOk.setBorderPainted(false);
-		add(btnOk);
+		getContentPane().add(btnOk);
 		
 		btnCancel = new JButton("");
-		btnCancel.setBounds(618, 433, 150, 56);
-		btnCancel.setIcon(new ImageIcon("images/cancelButton.png"));
+		btnCancel.setBounds(624, 495, 150, 56);
+		btnCancel.setIcon(new ImageIcon(Login_GUI.class.getResource("/images_icons/cancelButton.png")));
 		btnCancel.setOpaque(false);
 		btnCancel.setContentAreaFilled(false); 
 		btnCancel.setBorderPainted(false);
-		add(btnCancel);
+		getContentPane().add(btnCancel);
 		
 		newAmounText = new JTextField();
 		newAmounText.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		newAmounText.setBounds(272, 314, 86, 20);
 		newAmounText.setColumns(10);
-		add(newAmounText);
+		getContentPane().add(newAmounText);
 		
 		limitLabel = new JLabel();
-		limitLabel.setBounds(-89, -75, 691, 246);
+		limitLabel.setBounds(10, -15, 691, 246);
 		limitLabel.setOpaque(false);
-		limitLabel .setIcon(new ImageIcon("images/Limit-People-In-Group.png"));
-		add(limitLabel);
+		limitLabel .setIcon(new ImageIcon(Login_GUI.class.getResource("/images_icons/Limit-People-In-Group.png")));
+		getContentPane().add(limitLabel);
 		
 		txtpnReason = new JTextPane();
 		txtpnReason.setText("Reason\r\n");
 		txtpnReason.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		txtpnReason.setBackground(Color.PINK);
 		txtpnReason.setBounds(129, 365, 121, 22);
-		add(txtpnReason);
+		getContentPane().add(txtpnReason);
 		
-		String[] array = result.toArray(new String[result.size()]);
-		GroupcomboBox = new JComboBox<Object>(array);
+		//String[] array = result.toArray(new String[result.size()]);
+		GroupcomboBox = new JComboBox<Object>();
 		
 		GroupcomboBox.setFont(new Font("Dialog", Font.PLAIN, 16));
 		GroupcomboBox.setBounds(399, 312, 121, 22);
-		add(GroupcomboBox);
+		getContentPane().add(GroupcomboBox);
 		
 		ReasontextField = new JTextField();
 		ReasontextField.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		ReasontextField.setColumns(10);
 		ReasontextField.setBounds(272, 365, 86, 20);
-		add(ReasontextField);
+		getContentPane().add(ReasontextField);
 		
 		txtpnChooseGroup = new JTextPane();
 		txtpnChooseGroup.setText("Choose Group");
 		txtpnChooseGroup.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		txtpnChooseGroup.setBackground(Color.PINK);
 		txtpnChooseGroup.setBounds(399, 260, 121, 28);
-		add(txtpnChooseGroup);
+		getContentPane().add(txtpnChooseGroup);
 		
 		
 	}

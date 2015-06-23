@@ -1,4 +1,4 @@
-package server;
+package ocsftester;
 
 import java.io.Serializable;
 

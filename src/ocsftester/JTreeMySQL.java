@@ -1,4 +1,4 @@
-package SampleTreeFileView;
+package ocsftester;
 import java.awt.Color;
 import java.awt.Component;
 import java.sql.Connection;

@@ -6,6 +6,7 @@ import java.awt.EventQueue;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -26,18 +27,19 @@ import java.awt.event.MouseEvent;
 import java.awt.event.ActionEvent;
 
 import javax.swing.JTextField;
+
 import java.awt.Label;
 
 
-public class AdminDeletePeopleToGroupFMS extends  JPanel {
+public class AdminDeletePeopleToGroupFMS extends  AbstractGUI {
 
 	private JPanel contentPane;
 	private TextField ReasontextField;
 	private JTextPane textPane;
 	private JTextPane txtpnChooseUser_1;
 	private JTextPane txtpnChooseGroup;
-	private Choice groupChoice;
-	private Choice UserChoice;
+	private JComboBox<Object> groupChoice;
+	private JComboBox<Object> UserChoice;
 	private JLabel deleteLabel;
 	private JButton buttonOk;
 	private JButton buttonCancel;
@@ -46,7 +48,7 @@ public class AdminDeletePeopleToGroupFMS extends  JPanel {
 	/**
 	 * Launch the application.
 	 */
-	/*public void init() {
+	public void init() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -57,7 +59,7 @@ public class AdminDeletePeopleToGroupFMS extends  JPanel {
 				}
 			}
 		});
-	}*/
+	}
 
 	/**
 	 * Create the frame.
@@ -65,7 +67,7 @@ public class AdminDeletePeopleToGroupFMS extends  JPanel {
 	public AdminDeletePeopleToGroupFMS(){
 		setBackground(SystemColor.textHighlight);		
 		
-		/*getContentPane().setBackground(new Color(59, 89, 151));
+		getContentPane().setBackground(new Color(59, 89, 151));
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 800, 600);
 		contentPane = new JPanel();
@@ -73,7 +75,7 @@ public class AdminDeletePeopleToGroupFMS extends  JPanel {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		//setContentPane(contentPane);
 		contentPane.setLayout(null);
-		getContentPane().setLayout(null);*/
+		getContentPane().setLayout(null);
 		setLayout(null);
 		
 		txtpnChooseGroup = new JTextPane();
@@ -105,23 +107,23 @@ public class AdminDeletePeopleToGroupFMS extends  JPanel {
 		ReasontextField.setBounds(307, 369, 100, 19);
 		add(ReasontextField);
 		
-		groupChoice = new Choice();
+		groupChoice = new JComboBox<Object>();
 		groupChoice.setFont(new Font("Dialog", Font.PLAIN, 16));
 		groupChoice.setBounds(307, 286, 100, 17);
 		add(groupChoice);
 		
-		UserChoice = new Choice();
+		UserChoice = new JComboBox<Object>();
 		UserChoice.setFont(new Font("Dialog", Font.PLAIN, 16));
 		UserChoice.setBounds(307, 325, 100, 17);
 		add(UserChoice);
 		
 		deleteLabel = new JLabel("");
-		deleteLabel.setIcon(new ImageIcon("images/Remove-People-From-Group.png"));
+		deleteLabel.setIcon(new ImageIcon(Login_GUI.class.getResource("/images_icons/Remove-People-From-Group.png")));
 		deleteLabel.setBounds(20, 42, 722, 197);
 		add(deleteLabel);
 		
 		buttonOk = new JButton("");		
-		buttonOk.setIcon(new ImageIcon("images/okButton.png"));
+		buttonOk.setIcon(new ImageIcon(Login_GUI.class.getResource("/images_icons/okButton.png")));
 		buttonOk.setOpaque(false);
 		buttonOk.setContentAreaFilled(false); 
 		buttonOk.setBorderPainted(false);
@@ -130,7 +132,7 @@ public class AdminDeletePeopleToGroupFMS extends  JPanel {
 		
 		buttonCancel = new JButton("");
 		buttonCancel.setBounds(592, 429, 150, 56);
-		buttonCancel.setIcon(new ImageIcon("images/cancelButton.png"));
+		buttonCancel.setIcon(new ImageIcon(Login_GUI.class.getResource("/images_icons/cancelButton.png")));
 		buttonCancel.setOpaque(false);
 		buttonCancel.setContentAreaFilled(false);
 		buttonCancel.setBorderPainted(false);
@@ -177,27 +179,6 @@ public class AdminDeletePeopleToGroupFMS extends  JPanel {
 		this.txtpnChooseGroup = txtpnChooseGroup;
 	}
 
-
-	public Choice getGroupChoice() {
-		return groupChoice;
-	}
-
-
-	public void setGroupChoice(Choice groupChoice) {
-		this.groupChoice = groupChoice;
-	}
-
-
-	public Choice getUserChoice() {
-		return UserChoice;
-	}
-
-
-	public void setUserChoice(Choice userChoice) {
-		UserChoice = userChoice;
-	}
-
-
 	public JLabel getDeleteLabel() {
 		return deleteLabel;
 	}
@@ -207,6 +188,22 @@ public class AdminDeletePeopleToGroupFMS extends  JPanel {
 		this.deleteLabel = deleteLabel;
 	}
 
+
+	public JComboBox<Object> getGroupChoice() {
+		return groupChoice;
+	}
+
+	public void setGroupChoice(JComboBox<Object> groupChoice) {
+		this.groupChoice = groupChoice;
+	}
+
+	public JComboBox<Object> getUserChoice() {
+		return UserChoice;
+	}
+
+	public void setUserChoice(JComboBox<Object> userChoice) {
+		UserChoice = userChoice;
+	}
 
 	public JButton getButtonOk() {
 		return buttonOk;

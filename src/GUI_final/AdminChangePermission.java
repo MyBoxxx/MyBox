@@ -80,7 +80,7 @@ public class AdminChangePermission extends AbstractGUI {
 		contentPane.setLayout(null);
 		
 		lblNewLabel = new JLabel("");
-		lblNewLabel.setIcon(new ImageIcon("images/Change-Permission.png"));
+		lblNewLabel.setIcon(new ImageIcon(Login_GUI.class.getResource("/images_icons/Change-Permission.png")));
 		lblNewLabel.setForeground(SystemColor.window);
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 23));
 		lblNewLabel.setBounds(25, 11, 699, 74);
@@ -150,7 +150,7 @@ public class AdminChangePermission extends AbstractGUI {
 		contentPane.add(txtpnReason);
 		
 		okButton = new JButton();
-		okButton.setIcon(new ImageIcon("images/approved.png"));
+		okButton.setIcon(new ImageIcon(Login_GUI.class.getResource("/images_icons/approved.png")));
 		okButton.setOpaque(false);
 		okButton.setContentAreaFilled(false); 
 		okButton.setBorderPainted(false);
@@ -158,7 +158,7 @@ public class AdminChangePermission extends AbstractGUI {
 		contentPane.add(okButton);
 		
 		cancelButton = new JButton();
-		cancelButton.setIcon(new ImageIcon("images/reject.png"));
+		cancelButton.setIcon(new ImageIcon(Login_GUI.class.getResource("/images_icons/reject.png")));
 		cancelButton.setOpaque(false);
 		cancelButton.setContentAreaFilled(false); 
 		cancelButton.setBorderPainted(false);

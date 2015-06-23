@@ -111,7 +111,7 @@ public class AdminDeletePeopleToGroup extends AbstractGUI {
 		getContentPane().add(textField);
 		
 		DeleteButton = new JButton();		
-		DeleteButton.setIcon(new ImageIcon("images/approved.png"));
+		DeleteButton.setIcon(new ImageIcon(Login_GUI.class.getResource("/images_icons/approved.png")));
 		DeleteButton.setOpaque(false);
 		DeleteButton.setContentAreaFilled(false); 
 		DeleteButton.setBorderPainted(false);
@@ -119,7 +119,7 @@ public class AdminDeletePeopleToGroup extends AbstractGUI {
 		getContentPane().add(DeleteButton);
 		
 		cancelButton = new JButton();
-		cancelButton.setIcon(new ImageIcon("images/reject.png"));		
+		cancelButton.setIcon(new ImageIcon(Login_GUI.class.getResource("/images_icons/reject.png")));		
 		cancelButton.setOpaque(false);
 		cancelButton.setContentAreaFilled(false); 
 		cancelButton.setBorderPainted(false);
@@ -127,12 +127,12 @@ public class AdminDeletePeopleToGroup extends AbstractGUI {
 		getContentPane().add(cancelButton);
 		
 		join = new JLabel();
-		join.setIcon(new ImageIcon("images/deleteFromGroup.png"));		 
+		join.setIcon(new ImageIcon(Login_GUI.class.getResource("/images_icons/deleteFromGroup.png")));		 
 		join.setBounds(325, 49, 0	, 0);
 		getContentPane().add(join);
 		
 		deleteLabel = new JLabel();
-		deleteLabel.setIcon(new ImageIcon("images/Remove-People-From-Group.png"));
+		deleteLabel.setIcon(new ImageIcon(Login_GUI.class.getResource("/images_icons/Remove-People-From-Group.png")));
 		deleteLabel.setBounds(10, 11, 722, 197);
 		getContentPane().add(deleteLabel);
 		

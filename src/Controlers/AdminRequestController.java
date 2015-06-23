@@ -3,6 +3,7 @@ package Controlers;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import Entity.Adminbar_model;
 import Entity.adminRequestModel;
 import GUI_final.AdminAddPeopleToGroup;
 import GUI_final.AdminChangePermission;
@@ -33,6 +34,9 @@ public class AdminRequestController extends AbstractTransfer {
 		 view.getBtnBack().addMouseListener(new MouseAdapter() {
 	        	@Override
 	        	public void mouseClicked(MouseEvent e) {
+	        		Adminbar_model model=new Adminbar_model();
+					AdminBar_Controller a = new AdminBar_Controller(model, adminbar_view);
+					a.control();
 	        		view.setVisible(false);
 	        		adminbar_view.setVisible(true);
 	        	}

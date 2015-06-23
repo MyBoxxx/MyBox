@@ -30,30 +30,19 @@ import javax.swing.tree.TreeSelectionModel;
 import javax.tools.FileObject;
 import javax.xml.transform.OutputKeys;
 
+import ocsftester.FileTable;
+
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.vfs.FileListener;
 import org.apache.commons.vfs.FileSystemManager;
 import org.apache.commons.vfs.VFS;
 import org.apache.commons.vfs.impl.DefaultFileMonitor;
 
-import server.FileTable;
 import Client.MainClient;
 import Controlers.*;
-import Entity.CreateGroupEntity;
-import Entity.DeleteFile;
-import Entity.DownloadFile_Entity;
-import Entity.EditFile_Entity;
-import Entity.GetNotification_Entity;
-import Entity.Group_Entity;
-import Entity.LoadGroup_Entity;
-import Entity.Move_Entity;
-import Entity.MyFile;
-import Entity.RecycleScreen_Entity;
-import Entity.Rename_Entity;
-import Entity.Settings_Entity;
-import Entity.UpLoadFile;
-import Entity.User_Entity;
+import Entity.*;
 import GUI_final.*;
+import images_icons.*;
 
 public class Controller extends AbstractTransfer{
     private Model model;
@@ -318,7 +307,7 @@ public class Controller extends AbstractTransfer{
          deleteGroupGui = new RequestToDeleteGroup();
          ATJRFgroupGui = new AskToJoinRemoveFromGroup();
        
-         editGroupCon = new editGroup_Controller(new User_Entity(), editGroupGui);
+         editGroupCon = new editGroup_Controller(new User_Entity(),editGroupGui);
          deleteGroupCon = new RequestToDeleteGroup_Controller(new User_Entity(), deleteGroupGui);
          ATJRFgroupCon = new AskToJoinRemoveFromGroupController(new User_Entity(), ATJRFgroupGui);
          editGroupGui.setVisible(false);

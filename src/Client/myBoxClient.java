@@ -5,8 +5,12 @@
 package Client;
 
 import ocsf.client.*;
+import ocsftester.FileTable;
+import Controlers.AddPeopleFMS_Controller;
 import Controlers.AskToJoinRemoveFromGroupController;
+import Controlers.DeletePeopleFMS_Controller;
 import Controlers.ForgotPassword_Controller;
+import Controlers.LimitPeopleInGroup_Controller;
 import Controlers.LogIn_Controller;
 import Controlers.RecycleBin_controller;
 import Controlers.RequestToChangeGroupePremission_Controller;
@@ -33,7 +37,6 @@ import javax.swing.tree.TreeNode;
 
 import org.apache.commons.io.FileUtils;
 
-import server.FileTable;
 import Entity.*;
 import SampleTreeFileView.Controller;
 import SampleTreeFileView.DirectoryTreeModel;
@@ -92,7 +95,7 @@ public class myBoxClient extends ObservableClient {
 		try {
 
 			if (message instanceof Login_Entity){ // user name and password is found ( 1.setCurrUser that is using application, 2.set status to 1)
-				if(((Login_Entity) message).isUser() == true){
+				if(((Login_Entity) message).isUser() == true ){
 					this.currUser = (User_Entity) message;
 					((LogIn_Controller) currController).MakeLogin();
 				}
@@ -204,6 +207,33 @@ public class myBoxClient extends ObservableClient {
 			if(message instanceof GetNotification_Entity){
 				((Controller) currController).GetNotification ((GetNotification_Entity)message);
 			}
+			if(message instanceof LoadGroup_Entity)
+			{
+				if(((LoadGroup_Entity) message).getChoice()==4)
+					((RequestToChangeGroupePremission_Controller) currController).FillGroup(((LoadGroup_Entity) message));
+				else if(((LoadGroup_Entity) message).getChoice()==3)
+					((editGroup_Controller) currController).FillGroup(((LoadGroup_Entity) message));
+				else if(((LoadGroup_Entity) message).getChoice()==2)
+					((AskToJoinRemoveFromGroupController) currController).FillGroup(((LoadGroup_Entity) message));
+				else if(((LoadGroup_Entity) message).getChoice()==1)
+					((RequestToDeleteGroup_Controller) currController).FillGroup(((LoadGroup_Entity) message));
+				else if(((LoadGroup_Entity) message).getChoice()==5)
+					((LimitPeopleInGroup_Controller) currController).FillGroup(((LoadGroup_Entity) message));
+				else if(((LoadGroup_Entity) message).getChoice()==6)
+					((AddPeopleFMS_Controller) currController).FillGroup(((LoadGroup_Entity) message));
+				else if(((LoadGroup_Entity) message).getChoice()==7)
+					((DeletePeopleFMS_Controller) currController).FillGroup(((LoadGroup_Entity) message));
+			}
+			
+			//**************************ALL USERS**********************
+			if(message instanceof AdminAddPeopleFMS_Entity)
+				((AddPeopleFMS_Controller) currController).Filluser(((AdminAddPeopleFMS_Entity) message));
+			
+			//**************************ALL USERS in roup**********************
+			if(message instanceof AdminDeletePeopleFMS_Entity)
+				((DeletePeopleFMS_Controller) currController).Filluser(((AdminDeletePeopleFMS_Entity) message));
+			
+			
 
 
 			

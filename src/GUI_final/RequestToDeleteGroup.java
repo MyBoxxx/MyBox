@@ -65,7 +65,7 @@ public class RequestToDeleteGroup extends AbstractGUI{
 		AskTo.setLayout(null);
 		
 		JLabel lblDeletGroupWindow = new JLabel("");
-		lblDeletGroupWindow.setIcon(new ImageIcon(RequestToDeleteGroup.class.getResource("/GUI_final/Delete-Group.png")));
+		lblDeletGroupWindow.setIcon(new ImageIcon(RequestToDeleteGroup.class.getResource("/images_icons/Delete-Group.png")));
 		lblDeletGroupWindow.setBounds(138, 39, 487, 101);
 		AskTo.add(lblDeletGroupWindow);
 		
@@ -84,12 +84,12 @@ public class RequestToDeleteGroup extends AbstractGUI{
 		panelbutton.setLayout(null);
 		
 		b1Ok = new JButton("Ok");
-		b1Ok.setIcon(new ImageIcon(RequestToDeleteGroup.class.getResource("/GUI_final/sendReuqest.PNG")));
+		b1Ok.setIcon(new ImageIcon(RequestToDeleteGroup.class.getResource("/images_icons/sendReuqest.PNG")));
 		b1Ok.setBounds(22, 16, 180, 50);
 		panelbutton.add(b1Ok);
 		
 		b1Beck = new JButton("");
-		b1Beck.setIcon(new ImageIcon(RequestToDeleteGroup.class.getResource("/GUI_final/cancelButton.jpg")));
+		b1Beck.setIcon(new ImageIcon(RequestToDeleteGroup.class.getResource("/images_icons/cancelButton.jpg")));
 		b1Beck.setBounds(424, 16, 227, 50);
 		panelbutton.add(b1Beck);
 		
@@ -99,7 +99,7 @@ public class RequestToDeleteGroup extends AbstractGUI{
 		AskTo.add(lblSelectGroup);
 		
 		lblNewLabel = new JLabel("");
-		lblNewLabel.setIcon(new ImageIcon(RequestToDeleteGroup.class.getResource("/GUI_final/EditGroupPic.png")));
+		lblNewLabel.setIcon(new ImageIcon(RequestToDeleteGroup.class.getResource("/images_icons/EditGroupPic.png")));
 		lblNewLabel.setBounds(163, 6, 542, 566);
 		AskTo.add(lblNewLabel);
 		

@@ -1,4 +1,4 @@
-package SampleTreeFileView;
+package ocsftester;
 import javax.swing.*;
 import javax.swing.event.*;
 import javax.swing.tree.*;
