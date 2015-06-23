@@ -1,4 +1,4 @@
-package Entity;
+package GUI_final;
 
 import java.awt.Dimension;
 import java.awt.EventQueue;
@@ -15,8 +15,6 @@ import javax.swing.JButton;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JEditorPane;
 import javax.swing.ImageIcon;
-
-import GUI_final.AbstractGUI;
 
 import java.awt.Color;
 
